@@ -156,6 +156,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+
+        /*
+         * Custom
+         * */
+        Zizaco\Entrust\EntrustServiceProvider::class,
+
     ],
 
     /*
@@ -202,6 +208,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /*
+         * Custom
+         * */
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
     ],
 
 ];
