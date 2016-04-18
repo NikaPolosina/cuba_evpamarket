@@ -161,6 +161,8 @@ return [
          * Custom
          * */
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Appzcoder\CrudGenerator\CrudGeneratorServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -212,6 +214,8 @@ return [
          * Custom
          * */
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+        'Form'      => Collective\Html\FormFacade::class,
+        'HTML'      => Collective\Html\HtmlFacade::class,
     ],
 
 ];
