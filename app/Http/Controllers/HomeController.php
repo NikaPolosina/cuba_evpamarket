@@ -35,13 +35,9 @@ class HomeController extends Controller
     public function index(User $user, UserCompany $userCompany, Company $company,  $id = null)
     {
 
-        if(Auth::user()){
+        if(Auth::check()){
             $curentUser = Auth::user();
-
-            $results = DB::select('select * from companies where id = ?', [7]);
-
-dd($results);
-
+            $companies = $curentUser->getCompanies;
         }
 
         return view('home')->with('curentUser', $curentUser);
