@@ -16,6 +16,8 @@ Route::get('/', function () {
 });
 
 Route::auth();
+Route::get('/register-company', 'Auth\AuthController@registerCompany');
+Route::post('/register_company', 'Auth\AuthController@registerCompany');
 
 Route::get('/home', 'HomeController@index');
 

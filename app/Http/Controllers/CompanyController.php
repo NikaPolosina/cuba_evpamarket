@@ -9,6 +9,8 @@ use App\Company;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
+use App\Models\UserCompany;
+use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
@@ -22,8 +24,9 @@ class CompanyController extends Controller
     {
         $company = Company::paginate(15);
 
-        return view('company.company.index', compact('company'));
+        return view('company.index', compact('company'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -32,7 +35,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('company.company.create');
+        return view('company.create');
     }
 
     /**
@@ -42,13 +45,15 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['company_name' => 'required', 'company_description' => 'required', ]);
-
-        Company::create($request->all());
+       $this->createCompany();
 
         Session::flash('flash_message', 'Company added!');
-
         return redirect('company');
+    }
+
+    public function createCompany(array $company){
+//        $this->validate($request->input('company'), ['company_name' => 'required', 'company_description' => 'required', ]);
+        return Company::create($company);
     }
 
     /**
@@ -62,7 +67,7 @@ class CompanyController extends Controller
     {
         $company = Company::findOrFail($id);
 
-        return view('company.company.show', compact('company'));
+        return view('company.show', compact('company'));
     }
 
     /**
@@ -76,7 +81,7 @@ class CompanyController extends Controller
     {
         $company = Company::findOrFail($id);
 
-        return view('company.company.edit', compact('company'));
+        return view('company.edit', compact('company'));
     }
 
     /**
@@ -112,6 +117,12 @@ class CompanyController extends Controller
         Session::flash('flash_message', 'Company deleted!');
 
         return redirect('company');
+    }
+
+    public function attachUser($user, $company){
+        return DB::table('user_company')->insert(
+            array('user_id' => $user->id, 'company_id' => $company->id)
+        );
     }
 
 }

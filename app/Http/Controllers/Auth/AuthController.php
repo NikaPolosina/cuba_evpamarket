@@ -3,10 +3,20 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
+
+use Faker\Provider\hu_HU\Company;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
+use App\Http\Controllers\CompanyController;
+
+
+use App\Models\UserCompany;
+use Illuminate\Support\Facades\DB;
+//use Auth as AuthUser;
 
 class AuthController extends Controller
 {
@@ -68,5 +78,32 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+    public function registerCompany(Request $request, CompanyController $company){
+        if($request->isMethod('get')){
+            return view('company.register');
+        }
+
+
+        $user = $this->create($request->all());
+        if($user){
+
+           $companyObj = $company->createCompany($request->input('company'));
+
+            if($companyObj){
+                $r =  $company->attachUser($user, $companyObj);
+                Auth::login($user);
+
+                return redirect()->intended('home');
+
+
+
+
+            }
+
+
+        }
+
+
     }
 }
