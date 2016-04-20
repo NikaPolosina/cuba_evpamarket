@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-use Faker\Provider\hu_HU\Company;
+//use Faker\Provider\hu_HU\Company;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CompanyController;
-
+use App\Company;
 
 use App\Models\UserCompany;
 use Illuminate\Support\Facades\DB;
@@ -85,25 +85,25 @@ class AuthController extends Controller
         }
 
 
+
+
         $user = $this->create($request->all());
         if($user){
+            Auth::login($user);
+            $com = new Company([
+                'company_name' => $request->input('company')['company_name'],
+                'company_description' => $request->input('company')['company_description'],
+                'company_logo' => $request->input('company')['company_logo'],
+                'company_content' => $request->input('company')['company_content'],
+                'company_address' => $request->input('company')['company_address'],
+                'company_contact_info' => $request->input('company')['company_contact_info'],
+                'company_additional_info' => $request->input('company')['company_additional_info'],
+            ]);
 
-           $companyObj = $company->createCompany($request->input('company'));
-
-            if($companyObj){
-                $r =  $company->attachUser($user, $companyObj);
-                Auth::login($user);
-
-                return redirect()->intended('home');
-
-
-
-
-            }
-
-
+            $user->getCompanies()->save($com);
+            return redirect()->intended('home');
         }
 
-
     }
+
 }

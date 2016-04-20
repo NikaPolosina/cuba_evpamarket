@@ -37,9 +37,8 @@ class HomeController extends Controller
 
         if(Auth::check()){
             $curentUser = Auth::user();
-            $companies = $curentUser->getCompanies;
+           // $companies = $curentUser->getCompanies;
         }
-
         return view('home')->with('curentUser', $curentUser);
 
     }

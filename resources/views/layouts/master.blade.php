@@ -24,7 +24,7 @@
 	                <span class="icon-bar"></span>
 	                <span class="icon-bar"></span>
 	            </button>
-	            <a class="navbar-brand" href="#">CRUD App</a>
+	            <a class="navbar-brand" href="#">Cuba</a>
 	        </div>
 
 			<div class="collapse navbar-collapse" id="navbar-collapse-1">
@@ -34,7 +34,7 @@
 						<li><a href="{{ url('/auth/register') }}">Register</a></li>
 					@else
 						<li><a href="#">{{ Auth::user()->name }}</a></li>
-						<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+						<li><a href="{{ url('/auth/logout') }}">Выход</a></li>
 					@endif
 				</ul>
 			</div>
@@ -49,7 +49,7 @@
 	<hr/>
 
 	<div class="container">
-	    &copy; {{ date('Y') }}. Created by <a href="http://www.appzcoder.com">AppzCoder</a>
+	    &copy; {{ date('Y') }}.  <a href="http://www.cuba.evpamarket.com/">Cuba</a>
 	    <br/>
 	</div>
 

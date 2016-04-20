@@ -5,13 +5,13 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Register new company</div>
+                    <div class="panel-heading"><h4>Для регистрации владельца компании, заполните необходимые поля.</h4></div>
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/register_company') }}">
                             {!! csrf_field() !!}
 
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">Name</label>
+                                <label class="col-md-4 control-label">Имя</label>
 
                                 <div class="col-md-6">
                                     <input type="text" class="form-control" name="name" value="{{ old('name') }}">
@@ -25,7 +25,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">E-Mail Address</label>
+                                <label class="col-md-4 control-label">E-Mail</label>
 
                                 <div class="col-md-6">
                                     <input type="email" class="form-control" name="email" value="{{ old('email') }}">
@@ -39,7 +39,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">Password</label>
+                                <label class="col-md-4 control-label">Пароль</label>
 
                                 <div class="col-md-6">
                                     <input type="password" class="form-control" name="password">
@@ -53,7 +53,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">Confirm Password</label>
+                                <label class="col-md-4 control-label">Подтвердите пароль</label>
 
                                 <div class="col-md-6">
                                     <input type="password" class="form-control" name="password_confirmation">
@@ -67,52 +67,52 @@
                             </div>
 
                             <div class="form-group {{ $errors->has('company_name') ? 'has-error' : ''}}">
-                                {!! Form::label('company_name', 'Company Name: ', ['class' => 'col-sm-3 control-label']) !!}
+                                {!! Form::label('company_name', 'Название компании: ', ['class' => 'col-sm-3 control-label']) !!}
                                 <div class="col-sm-6">
                                     {!! Form::text('company[company_name]', null, ['class' => 'form-control', 'required' => 'required']) !!}
                                     {!! $errors->first('company_name', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
                             <div class="form-group {{ $errors->has('company_description') ? 'has-error' : ''}}">
-                                {!! Form::label('company_description', 'Company Description: ', ['class' => 'col-sm-3 control-label']) !!}
+                                {!! Form::label('company_description', 'Описание компании: ', ['class' => 'col-sm-3 control-label']) !!}
                                 <div class="col-sm-6">
                                     {!! Form::textarea('company[company_description]', null, ['class' => 'form-control', 'required' => 'required']) !!}
                                     {!! $errors->first('company_description', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
                             <div class="form-group {{ $errors->has('company_logo') ? 'has-error' : ''}}">
-                                {!! Form::label('company[company_logo]', 'Company Logo: ', ['class' => 'col-sm-3 control-label']) !!}
+                                {!! Form::label('company[company_logo]', 'Лого компании: ', ['class' => 'col-sm-3 control-label']) !!}
                                 <div class="col-sm-6">
                                     {!! Form::text('company[company_logo]', null, ['class' => 'form-control']) !!}
                                     {!! $errors->first('company_logo', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
                             <div class="form-group {{ $errors->has('company_content') ? 'has-error' : ''}}">
-                                {!! Form::label('company[company_content]', 'Company Content: ', ['class' => 'col-sm-3 control-label']) !!}
+                                {!! Form::label('company[company_content]', 'Детальная информацияо компании: ', ['class' => 'col-sm-3 control-label']) !!}
                                 <div class="col-sm-6">
                                     {!! Form::textarea('company[company_content]', null, ['class' => 'form-control']) !!}
                                     {!! $errors->first('company_content', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
                             <div class="form-group {{ $errors->has('company_address') ? 'has-error' : ''}}">
-                                {!! Form::label('company[company_address]', 'Company Address: ', ['class' => 'col-sm-3 control-label']) !!}
+                                {!! Form::label('company[company_address]', 'Адрес: ', ['class' => 'col-sm-3 control-label']) !!}
                                 <div class="col-sm-6">
                                     {!! Form::textarea('company[company_address]', null, ['class' => 'form-control']) !!}
                                     {!! $errors->first('company_address', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
                             <div class="form-group {{ $errors->has('company_contact_info') ? 'has-error' : ''}}">
-                                {!! Form::label('company[company_contact_info]', 'Company Contact Info: ', ['class' => 'col-sm-3 control-label']) !!}
+                                {!! Form::label('company[company_contact_info]', 'Контактная информация: ', ['class' => 'col-sm-3 control-label']) !!}
                                 <div class="col-sm-6">
                                     {!! Form::textarea('company[company_contact_info]', null, ['class' => 'form-control']) !!}
                                     {!! $errors->first('company_contact_info', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
-                            <div class="form-group {{ $errors->has('company-additional_info') ? 'has-error' : ''}}">
-                                {!! Form::label('company[company-additional_info]', 'Company-additional Info: ', ['class' => 'col-sm-3 control-label']) !!}
+                            <div class="form-group {{ $errors->has('company_additional_info') ? 'has-error' : ''}}">
+                                {!! Form::label('company[company_additional_info]', 'Доплнительная информация: ', ['class' => 'col-sm-3 control-label']) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::textarea('company[company-additional_info]', null, ['class' => 'form-control']) !!}
-                                    {!! $errors->first('company-additional_info', '<p class="help-block">:message</p>') !!}
+                                    {!! Form::textarea('company[company_additional_info]', null, ['class' => 'form-control']) !!}
+                                    {!! $errors->first('company_additional_info', '<p class="help-block">:message</p>') !!}
                                 </div>
                             </div>
 

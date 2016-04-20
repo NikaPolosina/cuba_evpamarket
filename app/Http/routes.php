@@ -16,10 +16,19 @@ Route::get('/', function () {
 });
 
 Route::auth();
+
+
+
 Route::get('/register-company', 'Auth\AuthController@registerCompany');
 Route::post('/register_company', 'Auth\AuthController@registerCompany');
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', [
+    'as' => 'home', 'uses' => 'HomeController@index'
+]);
+
+
+
+//Route::get('/home', 'HomeController@index');
 
 Route::group(['middleware' => ['web']], function () {
 	Route::resource('company', 'CompanyController');

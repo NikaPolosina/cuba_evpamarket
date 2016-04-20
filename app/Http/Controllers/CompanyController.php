@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Session;
 use App\Models\UserCompany;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class CompanyController extends Controller
 {
@@ -45,10 +46,16 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-       $this->createCompany();
+        $company =  $this->createCompany($request->except('_token'));
+        if($company){
+            $curentUser = Auth::user();
+            $curentUser->getCompanies()->save($company);
 
-        Session::flash('flash_message', 'Company added!');
-        return redirect('company');
+        }
+
+        //Session::flash('flash_message', 'Company added!');
+        return redirect()->intended('home');
+
     }
 
     public function createCompany(array $company){
@@ -100,7 +107,8 @@ class CompanyController extends Controller
 
         Session::flash('flash_message', 'Company updated!');
 
-        return redirect('company');
+        return redirect()->intended('home');
+
     }
 
     /**
@@ -113,10 +121,10 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         Company::destroy($id);
-
         Session::flash('flash_message', 'Company deleted!');
 
-        return redirect('company');
+        return redirect()->intended('home');
+
     }
 
     public function attachUser($user, $company){

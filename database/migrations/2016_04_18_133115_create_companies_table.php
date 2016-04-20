@@ -21,7 +21,7 @@ $table->string('company_logo');
 $table->text('company_content');
 $table->text('company_address');
 $table->text('company_contact_info');
-$table->longText('company-additional_info');
+$table->longText('company_additional_info');
 
                 $table->timestamps();
             });

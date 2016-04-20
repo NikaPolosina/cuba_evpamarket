@@ -12,16 +12,16 @@ class CreateUserCompanyTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_company', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
+        Schema::create('company_user', function (Blueprint $table) {
             $table->integer('company_id')->unsigned();
-
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
+            $table->integer('user_id')->unsigned();
             $table->foreign('company_id')
                 ->references('id')->on('companies')
                 ->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
+
 
 
         });
@@ -34,6 +34,6 @@ class CreateUserCompanyTable extends Migration
      */
     public function down()
     {
-        Schema::drop('user_company');
+        Schema::drop('company_user');
     }
 }
