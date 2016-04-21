@@ -14,9 +14,10 @@
                 </div>
 
                 <?php if(!Auth::user()){?>
-                <button type="button" class="btn btn-default"><a href="{{ url('/register') }}">Покупатель</a></button>
-                <button type="button" class="btn btn-default"><a href="{{ url('/register-company') }}">Продавец</a></button>
-
+                <form action="{{ url('/register') }}" style="display: inline-block"> <button type="submit" class="btn btn-default">Покупатель</button></form>
+                <form action="{{ url('/register-company') }}" style="display: inline-block"><button type="submit" class="btn btn-default">Продавец</button></form>
+         {{--
+--}}
             <?php } ?>
 
 

@@ -13,6 +13,9 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CompanyController;
 use App\Company;
+use App\Product;
+
+
 
 use App\Models\UserCompany;
 use Illuminate\Support\Facades\DB;
@@ -84,10 +87,14 @@ class AuthController extends Controller
             return view('company.register');
         }
 
+        $v = $this->validator($request->all());
+        if($v->fails()){
+            return redirect()->back()->withInput();
+        }
 
 
+            $user = $this->create($request->all());
 
-        $user = $this->create($request->all());
         if($user){
             Auth::login($user);
             $com = new Company([
@@ -99,11 +106,12 @@ class AuthController extends Controller
                 'company_contact_info' => $request->input('company')['company_contact_info'],
                 'company_additional_info' => $request->input('company')['company_additional_info'],
             ]);
-
             $user->getCompanies()->save($com);
             return redirect()->intended('home');
         }
 
     }
+
+
 
 }

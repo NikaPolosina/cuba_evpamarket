@@ -12,6 +12,7 @@ use Session;
 use App\Models\UserCompany;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use App\Http\Controllers\ProductsController;
 
 class CompanyController extends Controller
 {
@@ -75,6 +76,7 @@ class CompanyController extends Controller
         $company = Company::findOrFail($id);
 
         return view('company.show', compact('company'));
+
     }
 
     /**
@@ -101,12 +103,10 @@ class CompanyController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request, ['company_name' => 'required', 'company_description' => 'required', ]);
-
         $company = Company::findOrFail($id);
         $company->update($request->all());
 
         Session::flash('flash_message', 'Company updated!');
-
         return redirect()->intended('home');
 
     }
@@ -132,5 +132,8 @@ class CompanyController extends Controller
             array('user_id' => $user->id, 'company_id' => $company->id)
         );
     }
+
+
+
 
 }

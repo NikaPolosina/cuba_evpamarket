@@ -22,6 +22,8 @@ Route::auth();
 Route::get('/register-company', 'Auth\AuthController@registerCompany');
 Route::post('/register_company', 'Auth\AuthController@registerCompany');
 
+
+
 Route::get('/home', [
     'as' => 'home', 'uses' => 'HomeController@index'
 ]);
@@ -33,3 +35,8 @@ Route::get('/home', [
 Route::group(['middleware' => ['web']], function () {
 	Route::resource('company', 'CompanyController');
 });
+Route::group(['middleware' => ['web']], function () {
+	Route::resource('products', 'ProductsController');
+    Route::get('/products/create/{company_id}', 'ProductsController@create');
+});
+
