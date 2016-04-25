@@ -12,7 +12,7 @@ class CreateColumPhoneUsersTable extends Migration
      */
     public function up(){
         Schema::table('users', function($table){
-            $table->char('phone', 4)->after('email');
+            $table->char('phone', 15)->unique()->after('email');
         });
     }
 
@@ -23,7 +23,7 @@ class CreateColumPhoneUsersTable extends Migration
      */
     public function down(){
         Schema::table('users', function($table){
-            $table->dropColumn('phone', 4);
+            $table->dropColumn('phone');
         });
     }
 }

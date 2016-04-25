@@ -19,6 +19,8 @@ Route::any('/find', [ 'as' => 'find', 'uses' => 'ProductsController@findProduct'
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index' ]);
 Route::get('/register-company', 'Auth\AuthController@registerCompany');
 Route::post('/register_company', 'Auth\AuthController@registerCompany');
+//Route::get('/register', 'Auth\AuthController@registerUser');
+//Route::post('/register', 'Auth\AuthController@registerUser');
 
 
 Route::group(['middleware' => ['web']], function () {

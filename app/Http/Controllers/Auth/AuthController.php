@@ -15,7 +15,7 @@ use App\Http\Controllers\CompanyController;
 use App\Company;
 use App\Product;
 
-
+use Illuminate\Contracts\Validation;
 
 use App\Models\UserCompany;
 use Illuminate\Support\Facades\DB;
@@ -59,14 +59,18 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
+    protected function validator(array $data){
+
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
+            'phone' => 'required|string|max:15|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
+
     }
+
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -74,25 +78,58 @@ class AuthController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
-    {
+    protected function create(array $data){
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    protected function myValidator(array $data){
+
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'phone' => 'required|string|max:15|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+    }
+
+/*    public function registerUser(Request $request){
+        if($request->isMethod('get')){
+            return view('auth.register');
+        }
+
+
+        $v = $this->myValidator($request->all());
+
+//        dd($request->input('phone'));
+//        dd($v->fails());
+        dd($v->passes());
+        dd($v->messages());
+
+        dd($v->fails());
+        if ($v->fails())
+        {
+            die('Surprise, you are here 1 !!!');
+
+        }
+        dd($v);
+        die('Surprise, you are here !!!');
+
+    }*/
+
     public function registerCompany(Request $request, CompanyController $company){
         if($request->isMethod('get')){
             return view('company.register');
         }
-
         $v = $this->validator($request->all());
         if($v->fails()){
             return redirect()->back()->withInput()->withErrors($v);
         }
-
-
             $user = $this->create($request->all());
 
         if($user){
