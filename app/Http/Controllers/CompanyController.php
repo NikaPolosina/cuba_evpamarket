@@ -13,6 +13,9 @@ use App\Models\UserCompany;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use App\Http\Controllers\ProductsController;
+use App\User;
+/*use Illuminate\Database\Query\Builder;*/
+use PhpParser\Builder;
 
 class CompanyController extends Controller
 {
@@ -71,10 +74,9 @@ class CompanyController extends Controller
      *
      * @return Response
      */
-    public function show($id)
-    {
-        $company = Company::findOrFail($id);
+    public function show($id){
 
+        $company = Company::findOrFail($id);
         return view('company.show', compact('company'));
 
     }

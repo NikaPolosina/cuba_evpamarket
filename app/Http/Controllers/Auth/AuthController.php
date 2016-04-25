@@ -89,7 +89,7 @@ class AuthController extends Controller
 
         $v = $this->validator($request->all());
         if($v->fails()){
-            return redirect()->back()->withInput();
+            return redirect()->back()->withInput()->withErrors($v);
         }
 
 
@@ -114,4 +114,7 @@ class AuthController extends Controller
 
 
 
+
 }
+
+

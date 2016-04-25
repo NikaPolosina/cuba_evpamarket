@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bf2079af1a583084fbffbdfd30c90d0f",
-    "content-hash": "8d54b2f2e48e529c076cd46c65795542",
+    "hash": "3deb4775a12e96d4f9877b140c1023aa",
+    "content-hash": "e0d2551b394a864ec2591678c6017e36",
     "packages": [
         {
             "name": "appzcoder/crud-generator",
@@ -937,16 +937,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.20",
+            "version": "1.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "e87a786e3ae12a25cf78a71bb07b4b384bfaa83a"
+                "reference": "35a83cf67d80d7040f306c77b0a84b9fbcc4fbfb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/e87a786e3ae12a25cf78a71bb07b4b384bfaa83a",
-                "reference": "e87a786e3ae12a25cf78a71bb07b4b384bfaa83a",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/35a83cf67d80d7040f306c77b0a84b9fbcc4fbfb",
+                "reference": "35a83cf67d80d7040f306c77b0a84b9fbcc4fbfb",
                 "shasum": ""
             },
             "require": {
@@ -1016,7 +1016,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2016-03-14 21:54:11"
+            "time": "2016-04-22 10:56:25"
         },
         {
             "name": "monolog/monolog",
@@ -2564,6 +2564,52 @@
                 "testing"
             ],
             "time": "2015-04-02 19:54:00"
+        },
+        {
+            "name": "nicolaslopezj/searchable",
+            "version": "1.7.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nicolaslopezj/searchable.git",
+                "reference": "347f76dbe76606fdd99689cb7a125eb2221a3ea1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nicolaslopezj/searchable/zipball/347f76dbe76606fdd99689cb7a125eb2221a3ea1",
+                "reference": "347f76dbe76606fdd99689cb7a125eb2221a3ea1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "illuminate/database": "4.2.x|~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nicolaslopezj\\Searchable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Lopez",
+                    "email": "nicolaslopezj@me.com"
+                }
+            ],
+            "description": "Eloquent model search trait.",
+            "keywords": [
+                "database",
+                "eloquent",
+                "laravel",
+                "model",
+                "search",
+                "searchable"
+            ],
+            "time": "2016-01-27 20:51:18"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
