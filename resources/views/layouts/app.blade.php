@@ -46,14 +46,19 @@
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
+                @if(Auth::check())
+
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Домой</a></li>
                 </ul>
+                    @endif
+
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
+                        <li><a style="float: left" href="{{ url('/register-company') }}">Зарегестрировать магазин</a></li>
                         <li><a href="{{ url('/login') }}">Вход</a></li>
                         <li><a href="{{ url('/register') }}">Регистрация</a></li>
                     @else

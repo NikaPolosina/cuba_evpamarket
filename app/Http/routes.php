@@ -12,25 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+ return view('welcome');
 });
-
 Route::auth();
-
-
-
+Route::any('/find', [ 'as' => 'find', 'uses' => 'ProductsController@findProduct' ]);
+Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index' ]);
 Route::get('/register-company', 'Auth\AuthController@registerCompany');
 Route::post('/register_company', 'Auth\AuthController@registerCompany');
 
-
-
-Route::get('/home', [
-    'as' => 'home', 'uses' => 'HomeController@index'
-]);
-
-
-
-//Route::get('/home', 'HomeController@index');
 
 Route::group(['middleware' => ['web']], function () {
 	Route::resource('company', 'CompanyController');

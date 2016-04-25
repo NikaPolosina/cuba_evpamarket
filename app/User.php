@@ -4,11 +4,13 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 
 class User extends Authenticatable
 {
     use EntrustUserTrait;
+    use SearchableTrait;
     /**
      * The attributes that are mass assignable.
      *
@@ -30,8 +32,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function getCompanies()
-    {
+    public function getCompanies(){
         return $this->belongsToMany('App\Company');
     }
+
+
 }

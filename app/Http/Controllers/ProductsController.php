@@ -14,6 +14,7 @@ use Auth;
 
 
 class ProductsController extends Controller{
+
     /**
      * Display a listing of the resource.
      *
@@ -139,5 +140,21 @@ class ProductsController extends Controller{
         return false;
     }
 
+    public  function findProduct(Request $request){
 
+        if($request->input('find')){
+
+            $time = time();
+            $res = Product::search($request->input('find'))->get();
+            return view('welcome')->with(['data'=>$res, 'time'=>$time, 'search'=>$request->input('find')]);
+
+        }
+
+        return view('welcome');
+
+
+
+
+
+    }
 }
