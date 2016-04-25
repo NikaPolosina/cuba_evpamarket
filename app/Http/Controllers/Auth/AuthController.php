@@ -14,26 +14,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\CompanyController;
 use App\Company;
 use App\Product;
-
+use App\UserInformation;
 use Illuminate\Contracts\Validation;
 
 use App\Models\UserCompany;
 use Illuminate\Support\Facades\DB;
 //use Auth as AuthUser;
 
-class AuthController extends Controller
-{
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
-
+class AuthController extends Controller{
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
@@ -60,11 +48,15 @@ class AuthController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data){
-
         return Validator::make($data, [
+
             'name' => 'required|max:255',
+            'surname' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'phone' => 'required|string|max:15|unique:users',
+            'date_birth' => 'required',
+            'gender' => 'required|max:255',
+            'location' => 'required|max:255',
             'password' => 'required|min:6|confirmed',
         ]);
 
@@ -79,48 +71,35 @@ class AuthController extends Controller
      * @return User
      */
     protected function create(array $data){
-        return User::create([
-            'name' => $data['name'],
+        $v = $this->validator($data);
+        if($v->fails()){
+            return redirect()->back()->withInput()->withErrors($v);
+        }
+
+        $user =  User::create([
             'email' => $data['email'],
             'phone' => $data['phone'],
             'password' => bcrypt($data['password']),
         ]);
-    }
 
-    protected function myValidator(array $data){
-
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'phone' => 'required|string|max:15|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-
-    }
-
-/*    public function registerUser(Request $request){
-        if($request->isMethod('get')){
-            return view('auth.register');
-        }
+        if($user){
+            Auth::login($user);
+           $userinfo =  UserInformation::create([
+                'name' => $data['name'],
+                'surname' => $data['surname'],
+                'date_birth' => $data['date_birth'],
+                'gender' => $data['gender'],
+                'location' => $data['location'],
+            ]);
 
 
-        $v = $this->myValidator($request->all());
-
-//        dd($request->input('phone'));
-//        dd($v->fails());
-        dd($v->passes());
-        dd($v->messages());
-
-        dd($v->fails());
-        if ($v->fails())
-        {
-            die('Surprise, you are here 1 !!!');
+            $user->getUserInformation()->save($userinfo);
+            return redirect()->intended('home');
 
         }
-        dd($v);
-        die('Surprise, you are here !!!');
 
-    }*/
+    }
+
 
     public function registerCompany(Request $request, CompanyController $company){
         if($request->isMethod('get')){
