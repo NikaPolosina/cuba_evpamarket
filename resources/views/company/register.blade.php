@@ -86,29 +86,16 @@
 
 
                             <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">Пол</label>
+                                <label class="col-md-4 control-label">Стать</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="gender" value="{{ old('gender') }}">
+                                 {{--   <input type="text" class="form-control" name="gender" value="{{ old('gender') }}">--}}
+                                    <label class="checkbox-inline"><input name="gender" type="radio" value="1">Мужчина</label>
+                                    <label class="checkbox-inline"><input name="gender" type="radio" value="0">Женщина</label>
 
                                     @if ($errors->has('gender'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('gender') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-
-                            <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
-                                <label class="col-md-4 control-label">Адрес</label>
-
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="location" value="{{ old('location') }}">
-
-                                    @if ($errors->has('location'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('location') }}</strong>
                                     </span>
                                     @endif
                                 </div>
