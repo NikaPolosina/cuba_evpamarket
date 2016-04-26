@@ -1,7 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+
+
+
+
+    <script>
+
+
+
+        $(function() {
+            $( "#datepicker" ).datepicker({
+                changeMonth: true,
+                changeYear: true,
+                changeDay: true
+
+            }).datepicker( "option", "dateFormat", 'yy.mm.dd')
+            .datepicker({ minDate: "-1D", maxDate: "+1D" });
+
+        });
+    </script>
+
+
+
+
+
+    <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -14,6 +38,10 @@
 
 
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+
+
+
 
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -81,7 +109,8 @@
                             <label class="col-md-4 control-label">Дата рождения</label>
 
                             <div class="col-md-6">
-                                <input type="data" class="form-control" name="date_birth" value="{{ old('date_birth') }}">
+
+                                <input type="text" id="datepicker" class="form-control" name="date_birth" value="{{ old('date_birth') }}">
 
                                 @if ($errors->has('date_birth'))
                                     <span class="help-block">
