@@ -38,7 +38,7 @@ class AuthController extends Controller{
             'email' => 'required|email|max:255|unique:users',
             'phone' => 'required|string|max:15|unique:users',
             'date_birth' => 'required',
-            'gender' => 'required|max:255',
+            'gender' => 'required|boolean',
             'location' => 'required|max:255',
             'password' => 'required|min:6|confirmed',
         ]);
@@ -47,6 +47,7 @@ class AuthController extends Controller{
 
     protected function create(array $data){
         $v = $this->validator($data);
+
         if($v->fails()){
             return redirect()->back()->withInput()->withErrors($v);
         }
@@ -119,7 +120,7 @@ class AuthController extends Controller{
         }
 
     }
-    
+
 }
 
 
