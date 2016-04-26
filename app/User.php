@@ -17,10 +17,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $table = 'users';
-    protected $fillable = [ 'name', 'email', 'password', ];
+    protected $fillable = [ 'email', 'phone', 'password', ];
 
     public function getUserInfo(){
-        return $this->select('name', 'email')->get();
+        return $this->select('email', 'phone')->get();
     }
 
     /**
@@ -36,5 +36,9 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Company');
     }
 
+
+    public function getUserInformation(){
+        return $this->hasOne('App\UserInformation');
+    }
 
 }
