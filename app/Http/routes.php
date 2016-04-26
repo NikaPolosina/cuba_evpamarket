@@ -14,6 +14,9 @@
 Route::get('/', function () {
  return view('welcome');
 });
+
+
+
 Route::auth();
 Route::any('/find', [ 'as' => 'find', 'uses' => 'ProductsController@findProduct' ]);
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index' ]);
