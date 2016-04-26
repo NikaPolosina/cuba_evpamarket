@@ -81,7 +81,6 @@ class AuthController extends Controller{
             return view('company.register');
         }
         $v = $this->validator($request->all());
-
         if($v->fails()){
             return redirect()->back()->withInput()->withErrors($v);
         }

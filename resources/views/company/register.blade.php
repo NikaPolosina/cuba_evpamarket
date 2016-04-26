@@ -74,7 +74,8 @@
                                 <label class="col-md-4 control-label">Дата рождения</label>
 
                                 <div class="col-md-6">
-                                    <input type="data" class="form-control" name="date_birth" value="{{ old('date_birth') }}">
+
+                                    <input type="text" id="datepicker" class="form-control" name="date_birth" value="{{ old('date_birth') }}">
 
                                     @if ($errors->has('date_birth'))
                                         <span class="help-block">
@@ -101,6 +102,20 @@
                                 </div>
                             </div>
 
+
+                            <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
+                                <label class="col-md-4 control-label">Адрес</label>
+
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="location" value="{{ old('location') }}">
+
+                                    @if ($errors->has('location'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('location') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label">Пароль</label>
@@ -194,7 +209,7 @@
             </div>
         </div>
     </div>
-
+    {!! HTML::script('/js/registerList.js') !!}
 
     @if ($errors->any())
         <ul class="alert alert-danger">

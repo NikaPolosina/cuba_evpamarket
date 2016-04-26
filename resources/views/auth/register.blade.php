@@ -2,29 +2,6 @@
 
 @section('content')
 
-
-
-
-    <script>
-
-
-
-        $(function() {
-            $( "#datepicker" ).datepicker({
-                changeMonth: true,
-                changeYear: true,
-                changeDay: true
-
-            }).datepicker( "option", "dateFormat", 'yy.mm.dd')
-            .datepicker({ minDate: "-1D", maxDate: "+1D" });
-
-        });
-    </script>
-
-
-
-
-
     <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -32,17 +9,8 @@
                 <div class="panel-heading">Регистрация</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-
-
                         {!! csrf_field() !!}
-
-
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-
-
-
-
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Имя</label>
@@ -196,4 +164,5 @@
         </div>
     </div>
 </div>
+    {!! HTML::script('/js/registerList.js') !!}
 @endsection
