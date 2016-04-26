@@ -67,7 +67,6 @@ class AuthController extends Controller{
                 'location' => $data['location'],
             ]);
 
-
             $user->getUserInformation()->save($userinfo);
             return $user;
 
@@ -81,13 +80,29 @@ class AuthController extends Controller{
             return view('company.register');
         }
         $v = $this->validator($request->all());
+
         if($v->fails()){
             return redirect()->back()->withInput()->withErrors($v);
         }
-            $user = $this->create($request->all());
+
+        $user =  User::create([
+            'email' => $request->all()['email'],
+            'phone' => $request->all()['phone'],
+            'password' => bcrypt($request->all()['password']),
+        ]);
+
 
         if($user){
             Auth::login($user);
+
+            $userinfo =  UserInformation::create([
+                'name' => $request->all()['name'],
+                'surname' => $request->all()['surname'],
+                'date_birth' => $request->all()['date_birth'],
+                'gender' => $request->all()['gender'],
+                'location' => $request->all()['location'],
+            ]);
+
             $com = new Company([
                 'company_name' => $request->input('company')['company_name'],
                 'company_description' => $request->input('company')['company_description'],
@@ -97,15 +112,14 @@ class AuthController extends Controller{
                 'company_contact_info' => $request->input('company')['company_contact_info'],
                 'company_additional_info' => $request->input('company')['company_additional_info'],
             ]);
+
+            $user->getUserInformation()->save($userinfo);
             $user->getCompanies()->save($com);
             return redirect()->intended('home');
         }
 
     }
-
-
-
-
+    
 }
 
 
