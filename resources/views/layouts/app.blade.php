@@ -57,13 +57,14 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a style="float: left" href="{{ url('/register-company') }}">Зарегестрировать магазин</a></li>
+                        <li><a style="float: left" href="{{ url('/register-c') }}">Зарегестрация продавца</a></li>
                         <li><a href="{{ url('/login') }}">Вход</a></li>
                         <li><a href="{{ url('/register') }}">Регистрация</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->getUserInformation->name }} <span class="caret"></span>
+                                {{--{{ Auth::user()->getUserInformation->name }}--}}
+                                <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">

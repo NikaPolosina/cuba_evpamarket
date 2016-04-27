@@ -10,7 +10,7 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/register_company') }}">
                             {!! csrf_field() !!}
 
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                           {{-- <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label">Имя</label>
 
                                 <div class="col-md-6">
@@ -90,7 +90,7 @@
                                 <label class="col-md-4 control-label">Стать</label>
 
                                 <div class="col-md-6">
-                                 {{--   <input type="text" class="form-control" name="gender" value="{{ old('gender') }}">--}}
+                                 --}}{{--   <input type="text" class="form-control" name="gender" value="{{ old('gender') }}">--}}{{--
                                     <label class="checkbox-inline"><input name="gender" type="radio" value="1">Мужчина</label>
                                     <label class="checkbox-inline"><input name="gender" type="radio" value="0">Женщина</label>
 
@@ -143,7 +143,7 @@
                                     </span>
                                     @endif
                                 </div>
-                            </div>
+                            </div>--}}
 
                             <div class="form-group {{ $errors->has('company_name') ? 'has-error' : ''}}">
                                 {!! Form::label('company_name', 'Название компании: ', ['class' => 'col-sm-3 control-label']) !!}
