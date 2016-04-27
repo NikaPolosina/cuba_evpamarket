@@ -13,6 +13,7 @@ use App\User;
 use App\Company;
 use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
+use App\UserInformation;
 
 class HomeController extends Controller{
     /**
@@ -38,14 +39,15 @@ class HomeController extends Controller{
 
         if(Auth::check()){
             $curentUser = Auth::user();
+            $userInfo = $curentUser->getUserInformation;
             $companies = $curentUser->getCompanies;
         }
-
         if(Auth::user()->hasRole('company_owner')){
-            return view('home')->with('curentUser', $curentUser);
+            return view('home')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
         }
 
-        return view('homeSimpleUser')->with('curentUser', $curentUser);
+
+        return view('homeSimpleUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
 
     }
 }

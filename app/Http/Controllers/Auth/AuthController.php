@@ -80,6 +80,7 @@ class AuthController extends Controller{
             return redirect()->intended('home');
 
 
+
     }
 
     public function registerAditional(Request $request){

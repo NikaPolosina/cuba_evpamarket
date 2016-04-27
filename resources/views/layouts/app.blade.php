@@ -63,7 +63,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{--{{ Auth::user()->getUserInformation->name }}--}}
+                                {{ Auth::user()->getUserInformation->name }}
                                 <span class="caret"></span>
                             </a>
 
