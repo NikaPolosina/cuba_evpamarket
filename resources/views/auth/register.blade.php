@@ -6,13 +6,20 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Регистрация</div>
+                <div class="panel-heading">Регистрация №1</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-                        {!! csrf_field() !!}
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <?php
+                            if(isset($company)){?>
+
+                             <input type="hidden" name="company" value="true">
+
+                            <?php }
+                        ?>
+
+                        {{--<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Имя</label>
 
                             <div class="col-md-6">
@@ -24,9 +31,9 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>
+                        </div>--}}
 
-                        <div class="form-group{{ $errors->has('surname') ? ' has-error' : '' }}">
+                        {{--<div class="form-group{{ $errors->has('surname') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Фамилия</label>
 
                             <div class="col-md-6">
@@ -38,7 +45,7 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>
+                        </div>--}}
 
 
 
@@ -73,7 +80,7 @@
 
 
 
-                        <div class="form-group{{ $errors->has('date_birth') ? ' has-error' : '' }}">
+                       {{-- <div class="form-group{{ $errors->has('date_birth') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Дата рождения</label>
 
                             <div class="col-md-6">
@@ -86,14 +93,14 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>
+                        </div>--}}
 
 
-                        <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
+                        {{--<div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Стать</label>
 
                             <div class="col-md-6">
-                                {{--<input type="text" class="form-control" name="gender" value="{{ old('gender') }}">--}}
+                                --}}{{--<input type="text" class="form-control" name="gender" value="{{ old('gender') }}">--}}{{--
                                 <label class="checkbox-inline"><input name="gender" type="radio" value="1">Мужчина</label>
                                 <label class="checkbox-inline"><input name="gender" type="radio" value="0">Женщина</label>
 
@@ -103,11 +110,11 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>
+                        </div>--}}
 
 
 
-                        <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
+                       {{-- <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Адрес</label>
 
                             <div class="col-md-6">
@@ -120,7 +127,7 @@
                                 @endif
                             </div>
                         </div>
-
+--}}
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Пароль</label>
@@ -154,7 +161,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-user"></i>Зарегестрироватся
+                                    <i class="fa fa-btn fa-user"></i>Начать регистрацию
                                 </button>
                             </div>
                         </div>

@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Illuminate\Support\Facades\Auth;
-
-//use Faker\Provider\hu_HU\Company;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -16,92 +14,60 @@ use App\Company;
 use App\Product;
 use App\UserInformation;
 use Illuminate\Contracts\Validation;
-
 use App\Models\UserCompany;
 use Illuminate\Support\Facades\DB;
-//use Auth as AuthUser;
+use App\Models\Role;
+use App\Region;
+use App\City;
 
 class AuthController extends Controller{
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-    protected $redirectTo = '/';
+    protected $redirectTo = '/home';
 
     public function __construct(){
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+//        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
     protected function validator(array $data){
         return Validator::make($data, [
-
-            'name' => 'required|max:255',
-            'surname' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'phone' => 'required|string|max:15|unique:users',
-            'date_birth' => 'required',
-            'gender' => 'required|boolean',
-            'location' => 'required|max:255',
             'password' => 'required|min:6|confirmed',
         ]);
-
     }
-
+    protected function myValidator(array $data){
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'surname' => 'required|max:255',
+            'date_birth' => 'required',
+            'gender' => 'required|boolean',
+            'region' => 'max:255',
+            'city' => 'max:255',
+            'street' => 'max:255',
+            'address' => 'max:255',
+        ]);
+    }
     protected function create(array $data){
-        $v = $this->validator($data);
 
-        if($v->fails()){
-            return redirect()->back()->withInput()->withErrors($v);
-        }
-
-        $user =  User::create([
+        $user = User::create([
             'email' => $data['email'],
             'phone' => $data['phone'],
             'password' => bcrypt($data['password']),
         ]);
 
-        if($user){
-            Auth::login($user);
-           $userinfo =  UserInformation::create([
-                'name' => $data['name'],
-                'surname' => $data['surname'],
-                'date_birth' => $data['date_birth'],
-                'gender' => $data['gender'],
-                'location' => $data['location'],
-            ]);
+        $role = Role::findOrFail(2);
 
-            $user->getUserInformation()->save($userinfo);
-            return $user;
-
+        if(isset($data['company'])){
+            $role = Role::findOrFail(1);
         }
 
+        $user->attachRole($role);
+        return $user;
     }
 
-
     public function registerCompany(Request $request, CompanyController $company){
-        if($request->isMethod('get')){
-            return view('company.register');
-        }
-        $v = $this->validator($request->all());
-        if($v->fails()){
-            return redirect()->back()->withInput()->withErrors($v);
-        }
 
-        $user =  User::create([
-            'email' => $request->all()['email'],
-            'phone' => $request->all()['phone'],
-            'password' => bcrypt($request->all()['password']),
-        ]);
-
-
-        if($user){
-            Auth::login($user);
-
-            $userinfo =  UserInformation::create([
-                'name' => $request->all()['name'],
-                'surname' => $request->all()['surname'],
-                'date_birth' => $request->all()['date_birth'],
-                'gender' => $request->all()['gender'],
-                'location' => $request->all()['location'],
-            ]);
+            $user = Auth::user();
 
             $com = new Company([
                 'company_name' => $request->input('company')['company_name'],
@@ -113,12 +79,124 @@ class AuthController extends Controller{
                 'company_additional_info' => $request->input('company')['company_additional_info'],
             ]);
 
-            $user->getUserInformation()->save($userinfo);
+
             $user->getCompanies()->save($com);
+
             return redirect()->intended('home');
-        }
+
+
 
     }
+
+    public function registerAditional(Request $request){
+
+
+
+        $v = $this->myValidator($request->all());
+
+        if($v->fails()){
+            return redirect()->back()->withInput()->withErrors($v);
+        }
+
+        if(Auth::user()){
+           $userinfo =  UserInformation::create([
+                'name' => $request->input('name'),
+                'surname' => $request->input('surname'),
+                'date_birth' => $request->input('date_birth'),
+                'gender' => $request->input('gender'),
+                'region_id' => $request->input('region'),
+                'city_id' => $request->input('city'),
+                'street' => $request->input('street'),
+                'address' => $request->input('address'),
+                'country'=> 'Росия',
+            ]);
+
+            Auth::user()->getUserInformation()->save($userinfo);
+            return redirect('home');
+
+
+        }
+    }
+
+    public function registerC(){
+        return view('auth.register')->withCompany(true);
+    }
+
+
+      public function createRegion(){
+               $lang = 0; // russian
+               $headerOptions = array(
+                   'http' => array(
+                       'method' => "GET",
+                       'header' => "Accept-language: en\r\n" .
+                           "Cookie: remixlang=$lang\r\n"
+                   )
+               );
+               $methodUrl = 'http://api.vk.com/method/database.getCountries?v=5.5&code=RU&count=1000';
+               $streamContext = stream_context_create($headerOptions);
+               $json = file_get_contents($methodUrl, false, $streamContext);
+               $arr = json_decode($json, true);
+
+               foreach ($arr['response']['items'] as $value) {
+                   echo '<pre>';
+                   var_dump('===================================='.$value['title'].'====================================');
+                   echo '</pre>';
+                   $countryId = $value['id']; // Russia
+                   $lang = 0; // russian
+                   $headerOptions = array(
+                       'http' => array(
+                           'method' => "GET",
+                           'header' => "Accept-language: en\r\n" . // Вероятно этот параметр ни на что не влияет
+                               "Cookie: remixlang=$lang\r\n"
+                       )
+                   );
+                   $methodUrl = 'http://api.vk.com/method/database.getRegions?v=5.5&need_all=1&offset=0&count=1000&country_id=' . $countryId;
+                   $streamContext = stream_context_create($headerOptions);
+                   $json = file_get_contents($methodUrl, false, $streamContext);
+                   $arr = json_decode($json, true);
+                   foreach ($arr['response']['items'] as $value) {
+                       Region::create([
+                           'title' => $value['title'],
+                           'id_region' => $value['id'],
+                       ]);
+
+                   }
+               }
+
+           }
+      public function createSeaty(){
+          $countryId = 1;
+          $lang = 0;
+          $headerOptions = array(
+              'http' => array(
+                  'method' => "GET",
+                  'header' => "Accept-language: en\r\n" . // Вероятно этот параметр ни на что не влияет
+                      "Cookie: remixlang=$lang\r\n"
+              )
+          );
+            foreach(Region::all() as $val){
+                set_time_limit(0);
+
+               $regionId = $val->id_region;
+               $regionTitle = $val->title;
+                $methodUrl = 'http://api.vk.com/method/database.getCities?v=5.5&country_id=' . $countryId .'&region_id=' . $regionId . '&offset=0&need_all=1&count=1000';
+                $streamContext = stream_context_create($headerOptions);
+                $json = file_get_contents($methodUrl, false, $streamContext);
+                $arr = json_decode($json, true);
+
+                foreach($arr['response']['items'] as $value){
+
+
+                      $cityInfo = City::create([
+                       'title_cities' => $value['title'],
+                       'id_cities' => $value['id'],
+                   ]);
+                    Region::find($val->id)->getCities()->save($cityInfo);
+                }
+
+            }
+       }
+
 
 }
 

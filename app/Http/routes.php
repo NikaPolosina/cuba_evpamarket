@@ -22,8 +22,15 @@ Route::any('/find', [ 'as' => 'find', 'uses' => 'ProductsController@findProduct'
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index' ]);
 Route::get('/register-company', 'Auth\AuthController@registerCompany');
 Route::post('/register_company', 'Auth\AuthController@registerCompany');
+Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
+Route::get('/register-c', 'Auth\AuthController@registerC');
+
+
+Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
+
+
+
 //Route::get('/register', 'Auth\AuthController@registerUser');
-//Route::post('/register', 'Auth\AuthController@registerUser');
 
 
 Route::group(['middleware' => ['web']], function () {
@@ -33,4 +40,12 @@ Route::group(['middleware' => ['web']], function () {
 	Route::resource('products', 'ProductsController');
     Route::get('/products/create/{company_id}', 'ProductsController@create');
 });
+
+Route::get('/test', function(){
+    return view('auth.register_aditional');
+});
+Route::get('/homeSimpleUser', function(){
+    return view('homeSimpleUser');
+});
+
 

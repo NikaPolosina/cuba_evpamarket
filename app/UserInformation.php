@@ -13,7 +13,7 @@ class UserInformation extends Authenticatable
     use SearchableTrait;
 
     protected $table = 'user_informations';
-    protected $fillable = [ 'name', 'surname', 'date_birth', 'gender', 'location', ];
+    protected $fillable = [ 'name', 'surname', 'date_birth', 'gender', 'country', 'region_id', 'city_id', 'street', 'address'];
 
 
 
