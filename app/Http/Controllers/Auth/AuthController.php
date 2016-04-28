@@ -97,7 +97,7 @@ class AuthController extends Controller{
                 'gender' => $request->input('gender'),
                 'location' => $request->input('location'),
             ]);
-
+        
             Auth::user()->getUserInformation()->save($userinfo);
             return redirect('home');
 

@@ -62,10 +62,19 @@
                         <li><a href="{{ url('/register') }}">Регистрация</a></li>
                     @else
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->getUserInformation->name }}
-                                <span class="caret"></span>
-                            </a>
+
+                         <?php
+                                if(isset(Auth::user()->getUserInformation)){?>
+
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                 {{ Auth::user()->getUserInformation->name }}
+                                 <span class="caret"></span>
+                             </a>
+
+                            <?php    }
+
+                            ?>
+
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
