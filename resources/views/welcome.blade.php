@@ -83,7 +83,7 @@
                         </div>
 
                         <div class="panel-body">
-                            <img style="width: 100%; height: 70%" src="\img\bg.jpg" alt="альтернативный текст">
+                            <img style="width: 100%; height: 70%" src="/img/bg.jpg" alt="альтернативный текст">
                         </div>
 
                     </div>

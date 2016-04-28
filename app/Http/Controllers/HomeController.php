@@ -11,6 +11,8 @@ use App\Models\Role;
 use App\Models\UserCompany;
 use App\User;
 use App\Company;
+use App\Region;
+use App\City;
 use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use App\UserInformation;
@@ -33,7 +35,10 @@ class HomeController extends Controller{
     public function index(User $user, UserCompany $userCompany, Company $company, $id = NULL){
 
         if(!Auth::user()->getUserInformation){
-            return view('auth.register_aditional');
+            $region = Region::all();
+//            $city = City::all();
+            return view('auth.register_aditional')->with('region', $region);
+
         }
 
 

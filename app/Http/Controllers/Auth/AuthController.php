@@ -41,7 +41,10 @@ class AuthController extends Controller{
             'surname' => 'required|max:255',
             'date_birth' => 'required',
             'gender' => 'required|boolean',
-            'location' => 'required|max:255',
+            'region' => 'max:255',
+            'city' => 'max:255',
+            'street' => 'max:255',
+            'address' => 'max:255',
         ]);
     }
     protected function create(array $data){
@@ -87,7 +90,10 @@ class AuthController extends Controller{
 
     public function registerAditional(Request $request){
 
+
+
         $v = $this->myValidator($request->all());
+
         if($v->fails()){
             return redirect()->back()->withInput()->withErrors($v);
         }
@@ -98,7 +104,11 @@ class AuthController extends Controller{
                 'surname' => $request->input('surname'),
                 'date_birth' => $request->input('date_birth'),
                 'gender' => $request->input('gender'),
-                'location' => $request->input('location'),
+                'region_id' => $request->input('region'),
+                'city_id' => $request->input('city'),
+                'street' => $request->input('street'),
+                'address' => $request->input('address'),
+                'country'=> 'Росия',
             ]);
 
             Auth::user()->getUserInformation()->save($userinfo);
@@ -154,7 +164,7 @@ class AuthController extends Controller{
                }
 
            }
-      public function createSeati(){
+      public function createSeaty(){
           $countryId = 1;
           $lang = 0;
           $headerOptions = array(
@@ -186,11 +196,6 @@ class AuthController extends Controller{
 
             }
        }
-        public function cteateStreet(){
-        die('Surprise, you are here !!!');
-
-    }
-
 
 
 }

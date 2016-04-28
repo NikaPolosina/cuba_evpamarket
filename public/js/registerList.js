@@ -11,6 +11,10 @@ $(function() {
         .datepicker("option", "yearRange",  "1916:2001")
         .datepicker("option", "maxDate",  new Date(2001, 1 - 2, 31));
 
+    $(".chosen-select").chosen({no_results_text: "Oops, nothing found!"});
 
 
 });
+
+
+

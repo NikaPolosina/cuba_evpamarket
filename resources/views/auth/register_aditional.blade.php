@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -81,21 +80,96 @@
                         </div>
 
 
-
-                        <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Адрес</label>
-
+                        {{----------------------------------------------------------------------------------------------------------------------------}}
+                        <div class="form-group{{ $errors->has('region') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Регион</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="location" value="{{ old('location') }}">
+                                <div class="form-group">
+                                    <select class="chosen-select" name="region" id="sel1">
+                                        <option value="">Выбирите регион</option>
+                                        @foreach($region as $value)
+                                            <option value="{{$value->id}}">{{$value->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
-                                @if ($errors->has('location'))
+                        <script>
+                            $(document).ready(function(){
+
+                                $('#sel1').on('change', function(){
+                                    console.log($(this).val());
+                                    if($(this).val().length){
+                                        $.ajax({
+                                            type: "GET",
+                                                url: "/get-city-by-region/"+$(this).val(),
+                                            data: '',
+                                            success: function(data){
+                                                $('#sel2_holder').show();
+                                                var selector = $('#sel2');
+                                                selector.html('');
+                                                $.each(data, function(index, value) {
+                                                    selector.append('<option value="'+value.id+'">'+value.title_cities+'</option>');
+                                                    //console.log('<option value="'+value.id+'">'+value.title_cities+'</option>');
+                                                });
+
+
+
+
+
+
+                                            }
+                                        });
+                                    }
+
+
+                                });
+                            });
+
+
+                        </script>
+                        {{----------------------------------------------------------------------------------------------------------------------------}}
+                        <div style="display: none" id="sel2_holder" class="form-group{{ $errors->has('city_id') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Город</label>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <select class="form-control"  name="city" id="sel2">
+                                       {{-- @foreach($city as $value)
+                                            <option>{{$value->title_cities}}</option>
+                                        @endforeach--}}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{----------------------------------------------------------------------------------------------------------------------------}}
+
+
+                        <div class="form-group{{ $errors->has('street') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Улица</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="street" value="{{ old('street') }}">
+                                @if ($errors->has('street'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('location') }}</strong>
+                                        <strong>{{ $errors->first('street') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Дом</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="address" value="{{ old('address') }}">
+
+                                @if ($errors->has('address'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('address') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
 
 
