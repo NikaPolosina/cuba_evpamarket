@@ -24,6 +24,7 @@ Route::get('/register-company', 'Auth\AuthController@registerCompany');
 Route::post('/register_company', 'Auth\AuthController@registerCompany');
 Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
 Route::get('/register-c', 'Auth\AuthController@registerC');
+Route::get('/createRegion', 'Auth\AuthController@cteateStreet');
 
 
 //Route::get('/register', 'Auth\AuthController@registerUser');
@@ -43,3 +44,5 @@ Route::get('/test', function(){
 Route::get('/homeSimpleUser', function(){
     return view('homeSimpleUser');
 });
+
+

@@ -17,6 +17,8 @@ use Illuminate\Contracts\Validation;
 use App\Models\UserCompany;
 use Illuminate\Support\Facades\DB;
 use App\Models\Role;
+use App\Region;
+use App\City;
 
 class AuthController extends Controller{
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
@@ -84,6 +86,7 @@ class AuthController extends Controller{
     }
 
     public function registerAditional(Request $request){
+
         $v = $this->myValidator($request->all());
         if($v->fails()){
             return redirect()->back()->withInput()->withErrors($v);
@@ -97,7 +100,7 @@ class AuthController extends Controller{
                 'gender' => $request->input('gender'),
                 'location' => $request->input('location'),
             ]);
-        
+
             Auth::user()->getUserInformation()->save($userinfo);
             return redirect('home');
 
@@ -108,6 +111,87 @@ class AuthController extends Controller{
     public function registerC(){
         return view('auth.register')->withCompany(true);
     }
+
+
+      public function createRegion(){
+               $lang = 0; // russian
+               $headerOptions = array(
+                   'http' => array(
+                       'method' => "GET",
+                       'header' => "Accept-language: en\r\n" .
+                           "Cookie: remixlang=$lang\r\n"
+                   )
+               );
+               $methodUrl = 'http://api.vk.com/method/database.getCountries?v=5.5&code=RU&count=1000';
+               $streamContext = stream_context_create($headerOptions);
+               $json = file_get_contents($methodUrl, false, $streamContext);
+               $arr = json_decode($json, true);
+
+               foreach ($arr['response']['items'] as $value) {
+                   echo '<pre>';
+                   var_dump('===================================='.$value['title'].'====================================');
+                   echo '</pre>';
+                   $countryId = $value['id']; // Russia
+                   $lang = 0; // russian
+                   $headerOptions = array(
+                       'http' => array(
+                           'method' => "GET",
+                           'header' => "Accept-language: en\r\n" . // Вероятно этот параметр ни на что не влияет
+                               "Cookie: remixlang=$lang\r\n"
+                       )
+                   );
+                   $methodUrl = 'http://api.vk.com/method/database.getRegions?v=5.5&need_all=1&offset=0&count=1000&country_id=' . $countryId;
+                   $streamContext = stream_context_create($headerOptions);
+                   $json = file_get_contents($methodUrl, false, $streamContext);
+                   $arr = json_decode($json, true);
+                   foreach ($arr['response']['items'] as $value) {
+                       Region::create([
+                           'title' => $value['title'],
+                           'id_region' => $value['id'],
+                       ]);
+
+                   }
+               }
+
+           }
+      public function createSeati(){
+          $countryId = 1;
+          $lang = 0;
+          $headerOptions = array(
+              'http' => array(
+                  'method' => "GET",
+                  'header' => "Accept-language: en\r\n" . // Вероятно этот параметр ни на что не влияет
+                      "Cookie: remixlang=$lang\r\n"
+              )
+          );
+            foreach(Region::all() as $val){
+                set_time_limit(0);
+
+               $regionId = $val->id_region;
+               $regionTitle = $val->title;
+                $methodUrl = 'http://api.vk.com/method/database.getCities?v=5.5&country_id=' . $countryId .'&region_id=' . $regionId . '&offset=0&need_all=1&count=1000';
+                $streamContext = stream_context_create($headerOptions);
+                $json = file_get_contents($methodUrl, false, $streamContext);
+                $arr = json_decode($json, true);
+
+                foreach($arr['response']['items'] as $value){
+
+
+                      $cityInfo = City::create([
+                       'title_cities' => $value['title'],
+                       'id_cities' => $value['id'],
+                   ]);
+                    Region::find($val->id)->getCities()->save($cityInfo);
+                }
+
+            }
+       }
+        public function cteateStreet(){
+        die('Surprise, you are here !!!');
+
+    }
+
+
 
 }
 
