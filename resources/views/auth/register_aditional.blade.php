@@ -97,7 +97,6 @@
 
                         <script>
                             $(document).ready(function(){
-
                                 $('#sel1').on('change', function(){
                                     console.log($(this).val());
                                     if($(this).val().length){
@@ -115,10 +114,6 @@
                                                 });
 
 
-
-
-
-
                                             }
                                         });
                                     }
@@ -133,7 +128,7 @@
                         <div style="display: none" id="sel2_holder" class="form-group{{ $errors->has('city_id') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Город</label>
                             <div class="col-md-6">
-                                <div class="form-group">
+                                <div {{--class="form-group"--}}>
                                     <select class="form-control"  name="city" id="sel2">
                                        {{-- @foreach($city as $value)
                                             <option>{{$value->title_cities}}</option>
