@@ -71,6 +71,7 @@ class ProductsController extends Controller{
      * @return Response
      */
     public function show($id){
+
         $product = Product::findOrFail($id);
         return view('product.products.show', compact('product'));
     }

@@ -27,6 +27,10 @@ class Product extends Model
         return $this->belongsToMany('App\Company');
 
     }
+    public function getCategory()
+    {
+        return $this->hasOne('App\Category');
+    }
 
     protected $searchable = [ 'columns' => ['product_description' => 5,],];
 

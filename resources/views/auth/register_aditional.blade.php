@@ -97,6 +97,9 @@
 
                         <script>
                             $(document).ready(function(){
+                                $(".chosen-select").chosen({no_results_text: "Oops, nothing found!"});
+
+
                                 $('#sel1').on('change', function(){
                                     console.log($(this).val());
                                     if($(this).val().length){
@@ -106,12 +109,16 @@
                                             data: '',
                                             success: function(data){
                                                 $('#sel2_holder').show();
-                                                var selector = $('#sel2');
+                                                var selector = $('#sel2')
+
                                                 selector.html('');
+
                                                 $.each(data, function(index, value) {
+
                                                     selector.append('<option value="'+value.id+'">'+value.title_cities+'</option>');
-                                                    //console.log('<option value="'+value.id+'">'+value.title_cities+'</option>');
                                                 });
+
+                                                $('.chosen').chosen({no_results_text: "Oops, nothing found!"}).trigger("chosen:updated")
 
 
                                             }
@@ -129,7 +136,7 @@
                             <label class="col-md-4 control-label">Город</label>
                             <div class="col-md-6">
                                 <div {{--class="form-group"--}}>
-                                    <select class="form-control"  name="city" id="sel2">
+                                    <select class="chosen"  name="city" id="sel2">
                                        {{-- @foreach($city as $value)
                                             <option>{{$value->title_cities}}</option>
                                         @endforeach--}}

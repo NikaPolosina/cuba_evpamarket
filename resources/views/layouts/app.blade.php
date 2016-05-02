@@ -98,8 +98,15 @@
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="/plugins/chosen_v1.5.1/chosen.jquery.js"></script>
 
+<script>
+    console.log('1');
+</script>
 
     @yield('content')
+
+    <script>
+        console.log('3');
+    </script>
 
 
 

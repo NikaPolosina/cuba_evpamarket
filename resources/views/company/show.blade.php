@@ -1,7 +1,6 @@
 @extends('...layouts.master')
 
 @section('content')
-
     <h1>Компания</h1>
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
@@ -15,12 +14,18 @@
                      <td> {{ $company->company_name }} </td><td> {{ $company->company_description }} </td><td> {{ $company->company_logo }} </td>
                     <td> {{ $company->company_content }} </td> <td> {{ $company->company_address }} </td> <td> {{ $company->company_contact_info }} </td> <td> {{ $company->company_additional_info }} </td>
                 </tr>
-            </tbody>    
+            </tbody>
         </table>
     </div>
-<?php if(count($company->getProducts)){?>
-       {{-- @if(count($company->getProducts))--}}
 
+<?php
+
+if(count($company->getProducts)){
+
+
+?>
+
+       {{-- @if(count($company->getProducts))--}}
 
                 <h1>Продукты <a href="{{ url('products/create/'.$company->id) }}" class="btn btn-primary pull-right btn-sm">Добавить продукт</a></h1>
 
@@ -70,6 +75,8 @@
 --}}
 <?php
 }else{
+
+
 ?>
 
     <h1>Добавить продукт</h1>
@@ -78,6 +85,41 @@
     {!! Form::open(['url' => 'products', 'class' => 'form-horizontal']) !!}
 
     <input type="hidden" name="company_id" value="{{ $company->id }}"/>
+
+
+    <script>
+        console.log('2');
+    </script>
+    <script>
+        $(document).ready(function(){
+            console.log('jhdgkjh');
+            return false;
+
+            $(".chosen-select").chosen({no_results_text: "Oops, nothing found!"});
+
+        });
+
+
+    </script>
+
+
+
+    <div class="form-group{{ $errors->has('category_id') ? ' has-error' : '' }}">
+        <label class="col-md-4 control-label">Категория</label>
+        <div class="col-md-6">
+            <div class="form-group">
+                <select class="chosen-select" name="category_id" id="sel1">
+                    <option value="">Выбирите категорию</option>
+                    @foreach($category as $value)
+                        <option value="{{$value->id}}">{{$value->title}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+
 
     <div class="form-group {{ $errors->has('product_id') ? 'has-error' : ''}}">
         {!! Form::label('product_id', 'Номер товара: ', ['class' => 'col-sm-3 control-label']) !!}
