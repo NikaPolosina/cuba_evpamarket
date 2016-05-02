@@ -87,34 +87,56 @@ if(count($company->getProducts)){
     <input type="hidden" name="company_id" value="{{ $company->id }}"/>
 
 
-    <script>
-        console.log('2');
-    </script>
-    <script>
-        $(document).ready(function(){
-            console.log('jhdgkjh');
-            return false;
-
-            $(".chosen-select").chosen({no_results_text: "Oops, nothing found!"});
-
-        });
-
-
-    </script>
-
-
 
     <div class="form-group{{ $errors->has('category_id') ? ' has-error' : '' }}">
-        <label class="col-md-4 control-label">Категория</label>
-        <div class="col-md-6">
-            <div class="form-group">
+        <div class="col-md-6 col-md-offset-3">
+
+            <div id="custom-checkable" class=""></div>
+
+
+            <script>
+
+                var defaultData = [
+                    {
+                        text: 'Parent 1',
+                        href: '#parent1',
+                        nodes: [
+                            {
+                                text: 'Child 1',
+                                href: '#child1',
+                                nodes: [
+
+                                ]
+                            }
+                        ]
+                    }
+                ];
+
+                var data = <?=$category?>
+
+
+                $('#custom-checkable').treeview({
+//                    data: defaultData,
+                    data: data,
+                    showCheckbox: true,
+                    onNodeChecked: function(event, node) {
+                        console.log(node.text + ' was checked');
+                    },
+                    onNodeUnchecked: function (event, node) {
+                        console.log(node.text + ' was unchecked');
+                    }
+                });
+
+
+            </script>
+            {{--<div class="form-group">
                 <select class="chosen-select" name="category_id" id="sel1">
                     <option value="">Выбирите категорию</option>
                     @foreach($category as $value)
                         <option value="{{$value->id}}">{{$value->title}}</option>
                     @endforeach
                 </select>
-            </div>
+            </div>--}}
         </div>
     </div>
 
