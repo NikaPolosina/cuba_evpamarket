@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -16,6 +17,7 @@ use App\Http\Controllers\ProductsController;
 use App\User;
 /*use Illuminate\Database\Query\Builder;*/
 use PhpParser\Builder;
+
 
 class CompanyController extends Controller
 {
@@ -75,9 +77,10 @@ class CompanyController extends Controller
      * @return Response
      */
     public function show($id){
+        $category = Category::where('parent_id', '=', 0)->get();
 
         $company = Company::findOrFail($id);
-        return view('company.show', compact('company'));
+        return view('company.show')->with(['category' => $category, 'company'=>$company]);
 
     }
 

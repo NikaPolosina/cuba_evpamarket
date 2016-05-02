@@ -21,18 +21,18 @@ class Product extends Model
      *
      * @var array
      */
-    protected $fillable = ['product_id', 'product_description', 'product_image', 'product_price'];
+    protected $fillable = ['product_id', 'category_id', 'product_description', 'product_image', 'product_price'];
 
     public function getCompany(){
         return $this->belongsToMany('App\Company');
 
     }
+    public function getCategory()
+    {
+        return $this->hasOne('App\Category');
+    }
 
-    protected $searchable = [
-        'columns' => [
-            'product_description' => 5,
-        ],
-    ];
+    protected $searchable = [ 'columns' => ['product_description' => 5,],];
 
 
 }

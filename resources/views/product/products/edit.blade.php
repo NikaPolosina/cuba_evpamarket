@@ -42,7 +42,11 @@
                     {!! $errors->first('product_price', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
+    <?php
+    die('Surprise, you are here !!!');
 
+
+    ?>
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">

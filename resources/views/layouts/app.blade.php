@@ -13,7 +13,7 @@
 
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="\plugins\chosen_v1.5.1\chosen.css" rel="stylesheet">
+    <link href="/plugins/chosen_v1.5.1/chosen.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -98,8 +98,15 @@
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="/plugins/chosen_v1.5.1/chosen.jquery.js"></script>
 
+<script>
+    console.log('1');
+</script>
 
     @yield('content')
+
+    <script>
+        console.log('3');
+    </script>
 
 
 

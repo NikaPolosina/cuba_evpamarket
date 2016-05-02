@@ -7,8 +7,6 @@
 
     {!! Form::open(['url' => 'products', 'class' => 'form-horizontal']) !!}
     @if(isset($company))  <input type="hidden" name="company_id" value="{{ $company->id }}"/>  @endif
-
-
                 <div class="form-group {{ $errors->has('product_id') ? 'has-error' : ''}}">
                 {!! Form::label('product_id', 'Product Id: ', ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
