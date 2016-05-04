@@ -1,29 +1,13 @@
 @extends('...layouts.master')
 
 @section('content')
-    <h1>Компания</h1>
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
-            <tr>
-                <th>Название компании</th><th>Краткое описание</th><th>Company Logo</th><th>Описание</th><th>Адрес</th><th>Контактная информация</th><th>Дополнительная информация</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td> {{ $company->company_name }} </td><td> {{ $company->company_description }} </td><td> {{ $company->company_logo }} </td>
-                <td> {{ $company->company_content }} </td> <td> {{ $company->company_address }} </td> <td> {{ $company->company_contact_info }} </td> <td> {{ $company->company_additional_info }} </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <div style="border: solid 2px grey; padding: 10px;">
+    <h1>Компания -  <<{{ $company->company_name }}>> </h1>
+        <hr>
+
 
     <?php
-
     if(count($company->getProducts)){
-
-
-
     ?>
 
     {{-- @if(count($company->getProducts))--}}
@@ -68,6 +52,10 @@
                     </td>
                 </tr>
 
+
+
+
+
             @endforeach
             </tbody>
         </table>
@@ -84,6 +72,7 @@
 
     <h1>Добавить продукт</h1>
     <hr/>
+
 
     {!! Form::open(['url' => 'products', 'class' => 'form-horizontal']) !!}
 
@@ -209,6 +198,8 @@
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
+
+    </div>
     @endif
 @endsection
 
