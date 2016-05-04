@@ -1,96 +1,97 @@
 @extends('...layouts.master')
 
 @section('content')
-    <div style="border: solid 2px grey; padding: 10px;">
-    <h1>Компания -  <<{{ $company->company_name }}>> </h1>
-        <hr>
-
-
-    <?php
-    if(count($company->getProducts)){
-    ?>
-
-    {{-- @if(count($company->getProducts))--}}
-
-    <h1>Продукты <a href="{{ url('products/create/'.$company->id) }}" class="btn btn-primary pull-right btn-sm">Добавить продукт</a></h1>
-
-    <div class="table">
+    <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <thead>
-            <tr>
-                <th>S.No</th><th>Категория</th><th>Товар</th><th>Описание товара</th><th>Фото</th><th>Цена</th><th>Действие</th>
-            </tr>
+                <tr>
+                    <th>Название компании</th><th>Краткое описание</th><th>Company Logo</th><th>Описание</th><th>Адрес</th><th>Контактная информация</th><th>Дополнительная информация</th>
+                </tr>
             </thead>
             <tbody>
-            {{-- */$x=0;/* --}}
-            @foreach ($company->getProducts as $item)
-
-
-
-                {{-- */$x++;/* --}}
                 <tr>
-                    <td>{{ $x }}</td>
-                    <td>{{ $item->getCategory['title'] }}</td><td><a href="{{ url('products', $item->id) }}">{{ $item->product_name }}</a></td><td>{{ $item->product_description }}</td><td>{{ $item->product_image }}</td><td>{{ $item->product_price }}</td>
-                    <td>
-
-
-                        <a href="{{ url('products/' . $item->id . '/edit') }}">
-                            <button type="submit" class="btn btn-primary btn-xs">Изменить</button>
-                        </a> /
-
-
-
-                        {!! Form::open([
-                        'method'=>'DELETE',
-                        'url' => ['products', $item->id],
-                        'style' => 'display:inline'
-                        ]) !!}
-                        {!! Form::submit('Удалить', ['class' => 'btn btn-danger btn-xs']) !!}
-                        {!! Form::close() !!}
-
-
-                    </td>
+                     <td> {{ $company->company_name }} </td><td> {{ $company->company_description }} </td><td> {{ $company->company_logo }} </td>
+                    <td> {{ $company->company_content }} </td> <td> {{ $company->company_address }} </td> <td> {{ $company->company_contact_info }} </td> <td> {{ $company->company_additional_info }} </td>
                 </tr>
-
-
-
-
-
-            @endforeach
             </tbody>
         </table>
-
     </div>
 
-    {{--   @endif
---}}
     <?php
-    }else{
+        if(count($company->getProducts)){
+    ?>
+{{-- @if(count($company->getProducts))--}}
+<div class="row">
+        <div class="col-sm-9">
+            <h1>Все продукты компании <a href="{{ url('products/create/'.$company->id) }}" class="btn btn-primary pull-right btn-sm">Добавить продукт</a></h1>
+            <div class="table">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>S.No</th><th>Категория</th><th>Товар</th><th>Описание товара</th><th>Фото</th><th>Цена</th><th>Действие</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{-- */$x=0;/* --}}
+                    @foreach ($company->getProducts as $item)
 
 
+
+                        {{-- */$x++;/* --}}
+                        <tr>
+                            <td>{{ $x }}</td>
+                            <td>{{ $item->getCategory['title'] }}</td><td><a href="{{ url('products', $item->id) }}">{{ $item->product_name }}</a></td><td>{{ $item->product_description }}</td><td>{{ $item->product_image }}</td><td>{{ $item->product_price }}</td>
+                            <td>
+
+
+                                <a href="{{ url('products/' . $item->id . '/edit') }}">
+                                    <button type="submit" class="btn btn-primary btn-xs">Изменить</button>
+                                </a> /
+
+
+
+                                {!! Form::open([
+                                'method'=>'DELETE',
+                                'url' => ['products', $item->id],
+                                'style' => 'display:inline'
+                                ]) !!}
+                                {!! Form::submit('Удалить', ['class' => 'btn btn-danger btn-xs']) !!}
+                                {!! Form::close() !!}
+
+
+                            </td>
+                        </tr>
+
+
+
+
+
+                    @endforeach
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+</div>
+
+    <a href="/product-editor/<?=$company->id?>" class="btn btn-info">Редактор товаров</a>
+
+    <?php
+
+}else{
     ?>
 
     <h1>Добавить продукт</h1>
     <hr/>
 
-
     {!! Form::open(['url' => 'products', 'class' => 'form-horizontal']) !!}
 
     <input type="hidden" name="company_id" value="{{ $company->id }}"/>
 
-
-
     <div class="allCategory form-group{{ $errors->has('product_name') ? ' has-error' : '' }}">
         <div class="col-md-6 col-md-offset-3">
-
             <div id="custom-checkable" class=""></div>
-
-
             <script>
-
-
-
-
 
                 var defaultData = [
                     {
@@ -117,8 +118,6 @@
                             showCheckbox: true,
                             enableLinks: true,
 
-
-
                             onNodeChecked: function(event, node) {
                                 console.log(node.href);
                                 $('.product_category').val(node.href)
@@ -135,22 +134,9 @@
                 });
 
 
-
-
             </script>
-            {{--<div class="form-group">
-                <select class="chosen-select" name="category_id" id="sel1">
-                    <option value="">Выбирите категорию</option>
-                    @foreach($category as $value)
-                        <option value="{{$value->id}}">{{$value->title}}</option>
-                    @endforeach
-                </select>
-            </div>--}}
         </div>
     </div>
-
-
-
 
     <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
         {!! Form::hidden('product_category', null, ['class' => 'product_category']) !!}

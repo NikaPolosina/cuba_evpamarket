@@ -29,6 +29,9 @@ Route::get('/register-c', 'Auth\AuthController@registerC');
 Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
 
 
+Route::get('/product-editor/{id}', 'ProductsController@productEditor');
+
+
 
 //Route::get('/register', 'Auth\AuthController@registerUser');
 

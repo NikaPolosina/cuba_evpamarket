@@ -196,9 +196,55 @@ class ProductsController extends Controller{
 
         return view('welcome');
 
+    }
+
+    public function checkCat($search, $arr){
+        foreach ($arr as $value) {
+//            dd(in_array($search, $value));
+            if(in_array($search, $value)) return true;
+        }
+        return false;
+    }
+
+    public function productEditor($id){
+
+        $company = Company::findOrFail($id);
+
+        foreach ($company->getProducts as $value) {
+            $parentId = $value->getCategory->toArray()['parent_id'];
+
+            if(isset($this->category) && $this->checkCat($parentId, $this->category))
+                continue;
+
+            do{
+                $current = Category::find($parentId)->toArray();
+                $parentId = $current['parent_id'];
+                $this->category[] = $current;
+            }while($parentId != 0);
+
+            $this->category[] = $value->getCategory->toArray();
+        }
+
+        foreach ($this->category as $value) {
+            $value['text'] = $value['title'];
+            $value['href'] = $value['id'];
+            $value['nodes'] = array();
+
+            $this->nCategory[$value['parent_id']][] = $value;
+        }
+        ksort($this->nCategory);
+        $this->nCategory = array_reverse($this->nCategory, true);
+
+        foreach ($this->nCategory as $key => $value) {
+            foreach ($value as $k => $v) {
+                if(array_key_exists($v['id'], $this->nCategory)){
+                    $this->nCategory[$key][$k]['nodes'] = $this->nCategory[$v['id']];
+                    unset($this->nCategory[$v['id']]);
+                }
+            }
+        }
 
 
-
-
+        return view('product.products.productsEditor')->with(['category' => json_encode($this->nCategory[0]), 'company'=>$company]);
     }
 }
