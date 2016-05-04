@@ -5,79 +5,82 @@
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <thead>
-                <tr>
-                    <th>Название компании</th><th>Краткое описание</th><th>Company Logo</th><th>Описание</th><th>Адрес</th><th>Контактная информация</th><th>Дополнительная информация</th>
-                </tr>
+            <tr>
+                <th>Название компании</th><th>Краткое описание</th><th>Company Logo</th><th>Описание</th><th>Адрес</th><th>Контактная информация</th><th>Дополнительная информация</th>
+            </tr>
             </thead>
             <tbody>
-                <tr>
-                     <td> {{ $company->company_name }} </td><td> {{ $company->company_description }} </td><td> {{ $company->company_logo }} </td>
-                    <td> {{ $company->company_content }} </td> <td> {{ $company->company_address }} </td> <td> {{ $company->company_contact_info }} </td> <td> {{ $company->company_additional_info }} </td>
-                </tr>
+            <tr>
+                <td> {{ $company->company_name }} </td><td> {{ $company->company_description }} </td><td> {{ $company->company_logo }} </td>
+                <td> {{ $company->company_content }} </td> <td> {{ $company->company_address }} </td> <td> {{ $company->company_contact_info }} </td> <td> {{ $company->company_additional_info }} </td>
+            </tr>
             </tbody>
         </table>
     </div>
 
-<?php
+    <?php
 
-if(count($company->getProducts)){
-
-
-?>
-
-       {{-- @if(count($company->getProducts))--}}
-
-                <h1>Продукты <a href="{{ url('products/create/'.$company->id) }}" class="btn btn-primary pull-right btn-sm">Добавить продукт</a></h1>
-
-                <div class="table">
-                    <table class="table table-bordered table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th>S.No</th><th>Номер товара</th><th>Описание товара</th><th>Фото</th><th>Цена</th><th>Действие</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {{-- */$x=0;/* --}}
-                        @foreach ($company->getProducts as $item)
-
-                            {{-- */$x++;/* --}}
-                            <tr>
-                                <td>{{ $x }}</td>
-                                <td><a href="{{ url('products', $item->id) }}">{{ $item->product_id }}</a></td><td>{{ $item->product_description }}</td><td>{{ $item->product_image }}</td><td>{{ $item->product_price }}</td>
-                                <td>
-
-
-                                    <a href="{{ url('products/' . $item->id . '/edit') }}">
-                                        <button type="submit" class="btn btn-primary btn-xs">Изменить</button>
-                                    </a> /
+    if(count($company->getProducts)){
 
 
 
-                                    {!! Form::open([
-                                    'method'=>'DELETE',
-                                    'url' => ['products', $item->id],
-                                    'style' => 'display:inline'
-                                    ]) !!}
-                                    {!! Form::submit('Удалить', ['class' => 'btn btn-danger btn-xs']) !!}
-                                    {!! Form::close() !!}
+    ?>
+
+    {{-- @if(count($company->getProducts))--}}
+
+    <h1>Продукты <a href="{{ url('products/create/'.$company->id) }}" class="btn btn-primary pull-right btn-sm">Добавить продукт</a></h1>
+
+    <div class="table">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th>S.No</th><th>Категория</th><th>Товар</th><th>Описание товара</th><th>Фото</th><th>Цена</th><th>Действие</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{-- */$x=0;/* --}}
+            @foreach ($company->getProducts as $item)
 
 
-                                </td>
-                            </tr>
 
-                        @endforeach
-                        </tbody>
-                    </table>
+                {{-- */$x++;/* --}}
+                <tr>
+                    <td>{{ $x }}</td>
+                    <td>{{ $item->getCategory['title'] }}</td><td><a href="{{ url('products', $item->id) }}">{{ $item->product_name }}</a></td><td>{{ $item->product_description }}</td><td>{{ $item->product_image }}</td><td>{{ $item->product_price }}</td>
+                    <td>
 
-                </div>
 
-     {{--   @endif
+                        <a href="{{ url('products/' . $item->id . '/edit') }}">
+                            <button type="submit" class="btn btn-primary btn-xs">Изменить</button>
+                        </a> /
+
+
+
+                        {!! Form::open([
+                        'method'=>'DELETE',
+                        'url' => ['products', $item->id],
+                        'style' => 'display:inline'
+                        ]) !!}
+                        {!! Form::submit('Удалить', ['class' => 'btn btn-danger btn-xs']) !!}
+                        {!! Form::close() !!}
+
+
+                    </td>
+                </tr>
+
+            @endforeach
+            </tbody>
+        </table>
+
+    </div>
+
+    {{--   @endif
 --}}
-<?php
-}else{
+    <?php
+    }else{
 
 
-?>
+    ?>
 
     <h1>Добавить продукт</h1>
     <hr/>
@@ -88,7 +91,7 @@ if(count($company->getProducts)){
 
 
 
-    <div class="form-group{{ $errors->has('category_id') ? ' has-error' : '' }}">
+    <div class="allCategory form-group{{ $errors->has('product_name') ? ' has-error' : '' }}">
         <div class="col-md-6 col-md-offset-3">
 
             <div id="custom-checkable" class=""></div>
@@ -96,10 +99,15 @@ if(count($company->getProducts)){
 
             <script>
 
+
+
+
+
                 var defaultData = [
                     {
                         text: 'Parent 1',
                         href: '#parent1',
+
                         nodes: [
                             {
                                 text: 'Child 1',
@@ -114,18 +122,30 @@ if(count($company->getProducts)){
 
                 var data = <?=$category?>
 
-
-                $('#custom-checkable').treeview({
+                        $('#custom-checkable').treeview({
 //                    data: defaultData,
-                    data: data,
-                    showCheckbox: true,
-                    onNodeChecked: function(event, node) {
-                        console.log(node.text + ' was checked');
-                    },
-                    onNodeUnchecked: function (event, node) {
-                        console.log(node.text + ' was unchecked');
-                    }
+                            data: data,
+                            showCheckbox: true,
+                            enableLinks: true,
+
+
+
+                            onNodeChecked: function(event, node) {
+                                console.log(node.href);
+                                $('.product_category').val(node.href)
+
+                            },
+                            onNodeUnchecked: function (event, node) {
+                                $('.product_category').val('')
+                                console.log(node.text + ' was unchecked');
+                            }
+                        }).treeview('collapseAll');
+                $('.allCategory').click(function(){
+                    //действия
+                    return false;
                 });
+
+
 
 
             </script>
@@ -143,11 +163,12 @@ if(count($company->getProducts)){
 
 
 
-    <div class="form-group {{ $errors->has('product_id') ? 'has-error' : ''}}">
-        {!! Form::label('product_id', 'Номер товара: ', ['class' => 'col-sm-3 control-label']) !!}
+    <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
+        {!! Form::hidden('product_category', null, ['class' => 'product_category']) !!}
+        {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-6">
-            {!! Form::number('product_id', null, ['class' => 'form-control']) !!}
-            {!! $errors->first('product_id', '<p class="help-block">:message</p>') !!}
+            {!! Form::text('product_name', null, ['class' => 'form-control']) !!}
+            {!! $errors->first('product_name', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
     <div class="form-group {{ $errors->has('product_description') ? 'has-error' : ''}}">

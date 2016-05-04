@@ -100,6 +100,8 @@ class CompanyController extends Controller
     }
 
     public function show($id){
+
+
         $this->category = Category::all()->toArray();
 
         foreach ($this->category as $value) {
@@ -120,8 +122,8 @@ class CompanyController extends Controller
                 }
             }
         }
-
         $company = Company::findOrFail($id);
+
         return view('company.show')->with(['category' => json_encode($this->nCategory[0]), 'company'=>$company]);
 
     }

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>Edit Product</h1>
+    <h1>Добавление продукта</h1>
     <hr/>
 
     {!! Form::model($product, [
@@ -14,11 +14,11 @@
     @if(count($product->getCompany))  <input type="hidden" name="company_id" value="{{ $product->getCompany[0]->id }}"/>  @endif
 
 
-                <div class="form-group {{ $errors->has('product_id') ? 'has-error' : ''}}">
-                {!! Form::label('product_id', 'Product Id: ', ['class' => 'col-sm-3 control-label']) !!}
+                <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
+                {!! Form::label('product_id', 'Продукт: ', ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::number('product_id', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('product_id', '<p class="help-block">:message</p>') !!}
+                    {!! Form::text('product_name', null, ['class' => 'form-control']) !!}
+                    {!! $errors->first('product_name', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('product_description') ? 'has-error' : ''}}">
@@ -42,11 +42,7 @@
                     {!! $errors->first('product_price', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-    <?php
-    die('Surprise, you are here !!!');
 
-
-    ?>
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">

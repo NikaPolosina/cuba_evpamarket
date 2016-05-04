@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -14,6 +15,11 @@ use Auth;
 
 
 class ProductsController extends Controller{
+    public function __construct(){
+
+
+
+    }
 
     /**
      * Display a listing of the resource.
@@ -21,6 +27,7 @@ class ProductsController extends Controller{
      * @return Response
      */
     public function index(){
+
         $products = Product::paginate(15);
         return view('product.products.index', compact('products'));
     }
@@ -34,7 +41,33 @@ class ProductsController extends Controller{
     {
         if($request->route('company_id') && self::hasCompany($request->route('company_id')) ){
             $company = Company::find($request->route('company_id'));
-            return view('product.products.create')->with('company', $company);
+
+
+
+            $this->category = Category::all()->toArray();
+
+            foreach ($this->category as $value) {
+                $value['text'] = $value['title'];
+                $value['href'] = $value['id'];
+                $value['nodes'] = array();
+
+                $this->nCategory[$value['parent_id']][] = $value;
+            }
+            ksort($this->nCategory);
+            $this->nCategory = array_reverse($this->nCategory, true);
+
+            foreach ($this->nCategory as $key => $value) {
+                foreach ($value as $k => $v) {
+                    if(array_key_exists($v['id'], $this->nCategory)){
+                        $this->nCategory[$key][$k]['nodes'] = $this->nCategory[$v['id']];
+                        unset($this->nCategory[$v['id']]);
+                    }
+                }
+            }
+
+
+
+            return view('product.products.create')->with('company', $company)->with(['category' => json_encode($this->nCategory[0])]);
 
 
         }
@@ -47,15 +80,22 @@ class ProductsController extends Controller{
      * @return Response
      */
     public function store(Request $request){
+
         $this->validate($request, ['product_description' => 'required', ]);
         $newProduct = new Product([
-            'product_id'          => $request->input('product_id'),
+            'product_name'          => $request->input('product_name'),
             'product_description' => $request->input('product_description'),
             'product_image'       => $request->input('product_image'),
             'product_price'       => $request->input('product_price'),
+            'category_id'       => $request->input('product_category'),
         ]);
 
+
+
+
+
         $company = Company::find($request->input('company_id'));
+
         $company->getProducts()->save($newProduct);
         Session::flash('flash_message', 'Product added!');
 
@@ -73,6 +113,7 @@ class ProductsController extends Controller{
     public function show($id){
 
         $product = Product::findOrFail($id);
+
         return view('product.products.show', compact('product'));
     }
 
@@ -84,6 +125,7 @@ class ProductsController extends Controller{
      * @return Response
      */
     public function edit(Request $request, $id){
+
         $product = Product::findOrFail($id);
         return view('product.products.edit', compact('product'));
     }
@@ -96,6 +138,7 @@ class ProductsController extends Controller{
      * @return Response
      */
     public function update($id, Request $request){
+
         $this->validate($request, ['product_description' => 'required',]);
         $product = Product::findOrFail($id);
         $product->update($request->all());
