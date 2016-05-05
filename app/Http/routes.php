@@ -24,6 +24,8 @@ Route::get('/register-company', 'Auth\AuthController@registerCompany');
 Route::post('/register_company', 'Auth\AuthController@registerCompany');
 Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
 Route::get('/register-c', 'Auth\AuthController@registerC');
+Route::any('/get-product-list', 'ProductsController@getProductList');
+Route::any('/products/destroy-check', 'ProductsController@destroyCheck');
 
 
 Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');

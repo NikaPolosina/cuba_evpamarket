@@ -42,15 +42,12 @@ class ProductsController extends Controller{
         if($request->route('company_id') && self::hasCompany($request->route('company_id')) ){
             $company = Company::find($request->route('company_id'));
 
-
-
             $this->category = Category::all()->toArray();
 
             foreach ($this->category as $value) {
                 $value['text'] = $value['title'];
                 $value['href'] = $value['id'];
                 $value['nodes'] = array();
-
                 $this->nCategory[$value['parent_id']][] = $value;
             }
             ksort($this->nCategory);
@@ -158,18 +155,23 @@ class ProductsController extends Controller{
      * @return Response
      */
     public function destroy(Request $request, $id){
-
-
         $company = Product::find($id)->getCompany;
-
         Product::destroy($id);
         Session::flash('flash_message', 'Product deleted!');
-
-
         return redirect('company/'.$company[0]->id);//isufisugsnu
      //   return redirect('products');
     }
+        public function destroyCheck(Request $request){
 
+            foreach($request['checkId'] as $value){
+                Product::destroy($value);
+            }
+            Session::flash('flash_message', 'Product deleted all!');
+
+
+
+
+        }
     /**
      * check if user attach to company
      *
@@ -200,29 +202,41 @@ class ProductsController extends Controller{
 
     public function checkCat($search, $arr){
         foreach ($arr as $value) {
-//            dd(in_array($search, $value));
-            if(in_array($search, $value)) return true;
+            if($search == $value['id']) return false;
         }
-        return false;
+        return true;
     }
 
     public function productEditor($id){
 
+
         $company = Company::findOrFail($id);
 
+        $this->category = array();
+
         foreach ($company->getProducts as $value) {
+
             $parentId = $value->getCategory->toArray()['parent_id'];
 
-            if(isset($this->category) && $this->checkCat($parentId, $this->category))
+            if(!$this->checkCat($value->getCategory->toArray()['id'], $this->category))
                 continue;
+
+            $this->category[] = $value->getCategory->toArray();
+
+
+
 
             do{
                 $current = Category::find($parentId)->toArray();
                 $parentId = $current['parent_id'];
-                $this->category[] = $current;
-            }while($parentId != 0);
 
-            $this->category[] = $value->getCategory->toArray();
+                if(!$this->checkCat($current['id'], $this->category))
+                    break;
+
+
+                $this->category[] = $current;
+
+            }while($parentId != 0);
         }
 
         foreach ($this->category as $value) {
@@ -244,7 +258,43 @@ class ProductsController extends Controller{
             }
         }
 
-
         return view('product.products.productsEditor')->with(['category' => json_encode($this->nCategory[0]), 'company'=>$company]);
     }
+
+    public function getProductList(Request $request){
+
+        $companyId = $request->input('companyId');
+        $categoriId = $request->input('categoryId');
+
+        $this->category[] = Category::find($categoriId)->toArray();
+        $parentId = $this->category[0]['parent_id'];
+
+        do{
+            $current = Category::find($parentId)->toArray();
+            $parentId = $current['parent_id'];
+
+            $this->category[] = $current;
+
+        }while($parentId != 0);
+
+        foreach ($this->category as $value) {
+            $value['text'] = $value['title'];
+            $value['href'] = $value['id'];
+            $value['nodes'] = array();
+
+            $this->nCategory[$value['parent_id']][] = $value;
+        }
+        ksort($this->nCategory);
+
+      $company = Company::find($companyId);
+        $products = $company->getProducts()->where('category_id', '=', $categoriId)->get();
+
+        if(count($products)){
+            return view('product.products.productEditoList')->with('products', $products)->with('category', $this->nCategory)->with('company', $companyId);
+
+        }
+            return '';
+    }
+
+
 }

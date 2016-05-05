@@ -22,7 +22,7 @@
     ?>
 {{-- @if(count($company->getProducts))--}}
 <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-12 ">
             <h1>Все продукты компании <a href="{{ url('products/create/'.$company->id) }}" class="btn btn-primary pull-right btn-sm">Добавить продукт</a></h1>
             <div class="table">
                 <table class="table table-bordered table-striped table-hover">
