@@ -16,10 +16,6 @@
 
                 <script>
 
-
-
-
-
                     var defaultData = [
                         {
                             text: 'Parent 1',

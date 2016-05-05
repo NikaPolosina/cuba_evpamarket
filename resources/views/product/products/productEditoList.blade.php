@@ -18,7 +18,6 @@
             foreach ($category as $value) {
                 $bread = $bread.$value[0]['title'].' > ';
             }
-
             echo $bread;
             ?>
 
@@ -70,9 +69,47 @@
     </tbody>
 
 </table>
-<a href="{{ url('products/create/'.$company) }}" class="btn btn-primary pull-left btn-sm">+</a>
-<a href="{{--{{ url('products/destroy-check') }}--}}" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">x</a>
+<input class="cimpanyIdclass" type="hidden" name="cimpanyId" value="{{$company}}"/>
+<input class="categoryIdclass" type="hidden" name="categoryId" value="{{$value[0]['id']}}"/>
+<a {{--href="{{ url('products/create-by-category/'.$company) }}"--}} class="addCategoryProduct btn btn-primary pull-left btn-sm">+</a>
+<a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">x</a>
+
+
+
+
 <script>
+
+$('.addCategoryProduct').on('click', function(){
+
+  var companyId = $('.cimpanyIdclass').val();
+  var categoryId = $('.categoryIdclass').val();
+    console.log(companyId);
+    console.log(categoryId);
+    return false;
+
+
+
+
+  /*  $.ajax({
+        type: "POST",
+        url: "/products/destroy-check",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            id: '<?=$company?>',
+            checkId: selected
+        },
+        success: function(msg){
+            inputs.each(function() {
+                $(this).parents('tr').eq(0).remove();
+            });
+        }
+    });*/
+
+
+});
+
     $('#destroycheck').on('click', function() {
         event.preventDefault();
         var selected = [];
@@ -94,19 +131,10 @@
                 inputs.each(function() {
                     $(this).parents('tr').eq(0).remove();
                 });
-
-                
-
             }
         });
 
+
     });
-
-
-
-
-
-
-
 
 </script>

@@ -37,8 +37,7 @@ class ProductsController extends Controller{
      *
      * @return Response
      */
-    public function create(Request $request)
-    {
+    public function create(Request $request){
         if($request->route('company_id') && self::hasCompany($request->route('company_id')) ){
             $company = Company::find($request->route('company_id'));
 
@@ -62,13 +61,18 @@ class ProductsController extends Controller{
                 }
             }
 
-
-
             return view('product.products.create')->with('company', $company)->with(['category' => json_encode($this->nCategory[0])]);
 
 
         }
         return redirect()->intended('home');
+    }
+    public function createByCategory(Request $request, $id){
+
+        die('Surprise, you are here !!!');
+
+
+
     }
 
     /**
