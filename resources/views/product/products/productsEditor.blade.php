@@ -89,5 +89,37 @@
             </div>
     </div>
     @endif
+    <script>
+        $(document).ready(function(){
+            $('#product_list').delegate('.paginate a', 'click',  function(){
+                event.preventDefault();
+                
+
+                var a = $(this);
+                var url = a.attr("href");
+                var id = url.substring(url.lastIndexOf('=') + 1)
+                if(id.length){
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/get-product-list?page="+id,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            companyId: '<?=$company->id?>',
+                            categoryId: $('.categoryIdclass').val()
+                        },
+                        success: function(msg){
+                            $('#product_list').html(msg);
+                        }
+                    });
+
+                }
+
+            });
+        });
+
+    </script>
 @endsection
 

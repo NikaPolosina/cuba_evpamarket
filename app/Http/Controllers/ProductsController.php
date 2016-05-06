@@ -27,8 +27,7 @@ class ProductsController extends Controller{
      * @return Response
      */
     public function index(){
-
-        $products = Product::paginate(15);
+        $products = Product::paginate(3);
         return view('product.products.index', compact('products'));
     }
 
@@ -38,6 +37,8 @@ class ProductsController extends Controller{
      * @return Response
      */
     public function create(Request $request){
+
+
 
         if($request->route('company_id') && self::hasCompany($request->route('company_id')) ){
             $company = Company::find($request->route('company_id'));
@@ -81,6 +82,7 @@ class ProductsController extends Controller{
      * @return Response
      */
     public function store(Request $request){
+
         $this->validate($request, ['product_description' => 'required', ]);
         $newProduct = new Product([
             'product_name'          => $request->input('product_name'),
@@ -95,18 +97,25 @@ class ProductsController extends Controller{
         return redirect('company/'.$company->id);
     }
     public function storeCategory(Request $request){
-        $this->validate($request, ['product_description' => 'required', ]);
+
         $newProduct = new Product([
-            'product_name'        => $request['product_name'],
-            'product_description' => $request['product_description'],
-            'product_image'       => $request['product_image'],
-            'product_price'       => $request['product_price'],
-            'category_id'         => $request['categoryId'],
+            'product_name'        => $request['checkId']['name'],
+            'product_description' => $request['checkId']['description'],
+            'product_image'       => $request['checkId']['photo'],
+            'product_price'       => $request['checkId']['price'],
+            'category_id'         => $request['checkId']['category_id'],
         ]);
-        $company = Company::find($request['company_id']);
+
+        $company = Company::find($request['id']);
         $company->getProducts()->save($newProduct);
-        Session::flash('flash_message', 'Product added!');
-        return redirect('company/'.$request['company_id']);
+        if($newProduct->id){
+
+
+            return view('product.products.singleProductTr')->with(['item' => $newProduct]);
+
+        }
+        return response()->json(['success' => false]);
+
 
     }
 
@@ -118,9 +127,7 @@ class ProductsController extends Controller{
      * @return Response
      */
     public function show($id){
-
         $product = Product::findOrFail($id);
-
         return view('product.products.show', compact('product'));
     }
 
@@ -273,6 +280,7 @@ class ProductsController extends Controller{
 
     public function getProductList(Request $request){
 
+
         $companyId = $request->input('companyId');
         $categoriId = $request->input('categoryId');
 
@@ -297,7 +305,8 @@ class ProductsController extends Controller{
         ksort($this->nCategory);
 
       $company = Company::find($companyId);
-        $products = $company->getProducts()->where('category_id', '=', $categoriId)->get();
+
+        $products = $company->getProducts()->where('category_id', '=', $categoriId)->paginate(2);
 
         if(count($products)){
             return view('product.products.productEditoList')->with('products', $products)->with('category', $this->nCategory)->with('company', $companyId);
@@ -305,6 +314,5 @@ class ProductsController extends Controller{
         }
             return '';
     }
-
 
 }

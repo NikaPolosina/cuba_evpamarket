@@ -35,81 +35,56 @@
 
     @foreach ($products as $item)
 
-        <tr>
-
-            <td><input class="option" type="checkbox" name="option" value="{{ $item->id }}"></td><td><a href="{{ url('products', $item->id) }}">{{ $item->product_name }}</a></td><td>{{ $item->product_description }}</td><td>{{ $item->product_image }}</td><td>{{ $item->product_price }}</td>
-            <td>
-
-
-
-                <a href="{{ url('products/' . $item->id . '/edit') }}">
-                    <button type="submit" class="btn btn-primary btn-xs">Изменить</button>
-                </a>
-
-
-
-                {!! Form::open([
-                'method'=>'DELETE',
-                'url' => ['products', $item->id],
-                'style' => 'display:inline'
-                ]) !!}
-                {!! Form::submit('Удалить', ['class' => 'btn btn-danger btn-xs']) !!}
-                {!! Form::close() !!}
-
-
-            </td>
-        </tr>
-
-
-
-
+        @include('product.products.singleProductTr', array('item' => $item))
 
     @endforeach
 
     </tbody>
 
 </table>
+<div class="paginate">
+        <?php echo $products->render(); ?>
+</div>
 <input class="cimpanyIdclass" type="hidden" name="cimpanyId" value="{{$company}}"/>
 <input class="categoryIdclass" type="hidden" name="categoryId" value="{{$value[0]['id']}}"/>
-
-
 
 <a class="addCategoryProduct btn btn-primary pull-left btn-sm">+</a>
 <a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">x</a>
 <div class="col-sm-12">
     <div class="addProductCategory" style="display: none">
-    {!! Form::open(['url' => 'products-category', 'class' => 'form-horizontal']) !!}
+    {!! Form::open(['class' => 'form-horizontal']) !!}
+    {{--{!! Form::open(['url' => 'products-category', 'class' => 'form-horizontal']) !!}--}}
 
 
     @if(isset($company))  <input type="hidden" name="company_id" value="{{$company}}"/>  @endif
 
     <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
-        <input class="categoryIdclass" type="hidden" name="categoryId" value="{{$value[0]['id']}}"/>
+        <input data-name="category_id" class="categoryIdclass" type="hidden" name="categoryId" value="{{$value[0]['id']}}"/>
 
         {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-6">
-            {!! Form::text('product_name', null, ['class' => 'form-control']) !!}
+            {!! Form::text('product_name', null, ['class' => 'form-control', 'data-name' =>'name']) !!}
             {!! $errors->first('product_name', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
     <div class="form-group {{ $errors->has('product_description') ? 'has-error' : ''}}">
         {!! Form::label('product_description', 'Описание: ', ['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-6">
-            {!! Form::textarea('product_description', null, ['class' => 'form-control', 'required' => 'required']) !!}
+            {!! Form::text('product_description', null, ['class' => 'form-control', 'required' => 'required', 'data-name' =>'description']) !!}
             {!! $errors->first('product_description', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
     <div class="form-group {{ $errors->has('product_image') ? 'has-error' : ''}}">
         {!! Form::label('product_image', 'Фото: ', ['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-6">
-            {!! Form::text('product_image', null, ['class' => 'form-control']) !!}
+            {!! Form::text('product_image', null, ['class' => 'form-control', 'data-name' =>'photo']) !!}
             {!! $errors->first('product_image', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
     <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
         {!! Form::label('product_price', 'Цена: ', ['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-6">
-            {!! Form::number('product_price', null, ['class' => 'form-control']) !!}
+            {!! Form::number('product_price', null, ['class' => 'form-control', 'data-name' =>'price']) !!}
             {!! $errors->first('product_price', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
@@ -127,32 +102,42 @@
 
 <script>
 
-$('.addCategoryProduct').on('click', function(){
-
-  var companyId = $('.cimpanyIdclass').val();
-  var categoryId = $('.categoryIdclass').val();
-
-    $.ajax({
-        type: "POST",
-        url: "/products/create-by-category",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-            companyId: companyId,
-            categoryId: categoryId
-        },
-        success: function(msg){
-            console.log('ura');
 
 
-            $('.addProductCategory').toggle();
-
-        }
+    $('.addCategoryProduct').on('click', function(){
+        $('.addProductCategory').toggle();
     });
 
+    $('.form-horizontal').on('submit', function(){
+        event.preventDefault();
+        var selected1 = {};
+        var inputs = $('.addProductCategory').find('[data-name]');
+        
+        
+        inputs.each(function() {
+            selected1[$(this).attr('data-name')] = $(this).val();
+        });
 
-});
+
+        $.ajax({
+            type: "POST",
+            url: "/products-category",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: '<?=$company?>',
+                checkId: selected1
+            },
+            success: function(data){
+                $('.tBody').append(data);
+                inputs.each(function() {
+                    $(this).val('');
+                });
+                $('.addCategoryProduct').click();
+            }
+        });
+    });
 
 $('#destroycheck').on('click', function() {
         event.preventDefault();
@@ -180,6 +165,8 @@ $('#destroycheck').on('click', function() {
 
 
     });
+
+
 
 </script>
 
