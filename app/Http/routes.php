@@ -26,7 +26,11 @@ Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
 Route::get('/register-c', 'Auth\AuthController@registerC');
 Route::any('/get-product-list', 'ProductsController@getProductList');
 Route::any('/products/destroy-check', 'ProductsController@destroyCheck');
-Route::any('/products/create-by-category/{company}', 'ProductsController@createByCategory');
+Route::any('/products/create-by-category', 'ProductsController@createByCategory');
+Route::any('/products-category', ['as' => 'products-category', 'uses' => 'ProductsController@storeCategory']);
+
+
+
 
 
 Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');

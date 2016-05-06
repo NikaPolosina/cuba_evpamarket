@@ -38,6 +38,7 @@ class ProductsController extends Controller{
      * @return Response
      */
     public function create(Request $request){
+
         if($request->route('company_id') && self::hasCompany($request->route('company_id')) ){
             $company = Company::find($request->route('company_id'));
 
@@ -67,10 +68,9 @@ class ProductsController extends Controller{
         }
         return redirect()->intended('home');
     }
-    public function createByCategory(Request $request, $id){
-
-        die('Surprise, you are here !!!');
-
+    public function createByCategory(Request $request){
+        $companyId = $request['companyId'];
+        $categoryId = $request['categoryId'];
 
 
     }
@@ -81,7 +81,6 @@ class ProductsController extends Controller{
      * @return Response
      */
     public function store(Request $request){
-
         $this->validate($request, ['product_description' => 'required', ]);
         $newProduct = new Product([
             'product_name'          => $request->input('product_name'),
@@ -90,17 +89,24 @@ class ProductsController extends Controller{
             'product_price'       => $request->input('product_price'),
             'category_id'       => $request->input('product_category'),
         ]);
-
-
-
-
-
         $company = Company::find($request->input('company_id'));
-
         $company->getProducts()->save($newProduct);
         Session::flash('flash_message', 'Product added!');
-
         return redirect('company/'.$company->id);
+    }
+    public function storeCategory(Request $request){
+        $this->validate($request, ['product_description' => 'required', ]);
+        $newProduct = new Product([
+            'product_name'        => $request['product_name'],
+            'product_description' => $request['product_description'],
+            'product_image'       => $request['product_image'],
+            'product_price'       => $request['product_price'],
+            'category_id'         => $request['categoryId'],
+        ]);
+        $company = Company::find($request['company_id']);
+        $company->getProducts()->save($newProduct);
+        Session::flash('flash_message', 'Product added!');
+        return redirect('company/'.$request['company_id']);
 
     }
 
