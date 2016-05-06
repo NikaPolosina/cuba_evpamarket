@@ -46,13 +46,14 @@
         <?php echo $products->render(); ?>
 </div>
 <input class="cimpanyIdclass" type="hidden" name="cimpanyId" value="{{$company}}"/>
-<input class="categoryIdclass" type="hidden" name="categoryId" value="{{$value[0]['id']}}"/>
 
 <a class="addCategoryProduct btn btn-primary pull-left btn-sm">+</a>
 <a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">x</a>
 <div class="col-sm-12">
     <div class="addProductCategory" style="display: none">
-    {!! Form::open(['class' => 'form-horizontal']) !!}
+        <input class="categoryIdclass" type="hidden" name="categoryId" value="{{$value[0]['id']}}"/>
+
+        {!! Form::open(['class' => 'form-horizontal']) !!}
     {{--{!! Form::open(['url' => 'products-category', 'class' => 'form-horizontal']) !!}--}}
 
 
@@ -112,7 +113,7 @@
         event.preventDefault();
         var selected1 = {};
         var inputs = $('.addProductCategory').find('[data-name]');
-        
+
         
         inputs.each(function() {
             selected1[$(this).attr('data-name')] = $(this).val();
@@ -131,9 +132,13 @@
             },
             success: function(data){
                 $('.tBody').append(data);
+
                 inputs.each(function() {
-                    $(this).val('');
+                    if($(this).attr('data-name') != 'category_id'){
+                        $(this).val('');
+                    }
                 });
+
                 $('.addCategoryProduct').click();
             }
         });

@@ -306,7 +306,7 @@ class ProductsController extends Controller{
 
       $company = Company::find($companyId);
 
-        $products = $company->getProducts()->where('category_id', '=', $categoriId)->paginate(2);
+        $products = $company->getProducts()->where('category_id', '=', $categoriId)->paginate(5);
 
         if(count($products)){
             return view('product.products.productEditoList')->with('products', $products)->with('category', $this->nCategory)->with('company', $companyId);
