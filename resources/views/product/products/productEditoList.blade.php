@@ -53,7 +53,7 @@
     <div class="addProductCategory" style="display: none">
         <input class="categoryIdclass" type="hidden" name="categoryId" value="{{$value[0]['id']}}"/>
 
-        {!! Form::open(['class' => 'form-horizontal']) !!}
+        {!! Form::open(['class' => 'form-horizontal ', 'id'=> 'product_form']) !!}
     {{--{!! Form::open(['url' => 'products-category', 'class' => 'form-horizontal']) !!}--}}
 
 
@@ -61,6 +61,7 @@
 
     <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
         <input data-name="category_id" class="categoryIdclass" type="hidden" name="categoryId" value="{{$value[0]['id']}}"/>
+        <input class="product_id" type="hidden" name="product_id" value="">
 
         {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-6">
@@ -93,7 +94,8 @@
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit('Create', ['class' => 'btn btn-primary form-control']) !!}
+            {!! Form::submit('Create', ['class' => 'create btn btn-primary form-control']) !!}
+            {!! Form::submit('Update', ['class' => 'update btn btn-primary form-control']) !!}
         </div>
     </div>
     {!! Form::close() !!}
@@ -107,6 +109,15 @@
 
     $('.addCategoryProduct').on('click', function(){
         $('.addProductCategory').toggle();
+        $('#product_form').find('input.update').hide();
+        $('#product_form').find('input.create').show();
+
+        var inputs = $('.addProductCategory').find('[data-name]');
+        inputs.each(function() {
+            if($(this).attr('data-name') != 'category_id'){
+                $(this).val('');
+            }
+        });
     });
 
     $('.form-horizontal').on('submit', function(){

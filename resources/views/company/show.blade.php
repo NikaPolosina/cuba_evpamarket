@@ -1,11 +1,12 @@
-@extends('...layouts.master')
+@extends('...layouts.app')
 
 @section('content')
+
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>Название компании</th><th>Краткое описание</th><th>Company Logo</th><th>Описание</th><th>Адрес</th><th>Контактная информация</th><th>Дополнительная информация</th>
+                    <th>Название магазина</th><th>Краткое описание</th><th>Logo</th><th>Описание</th><th>Адрес</th><th>Контактная информация</th><th>Дополнительная информация</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,7 +24,7 @@
 {{-- @if(count($company->getProducts))--}}
 <div class="row">
         <div class="col-sm-12 ">
-            <h1>Все продукты компании <a href="{{ url('products/create/'.$company->id) }}" class="btn btn-primary pull-right btn-sm">Добавить продукт</a></h1>
+            <h1>Все продукты магазина <a href="{{ url('products/create/'.$company->id) }}" class="btn btn-primary pull-right btn-sm">Добавить продукт</a></h1>
             <div class="table">
                 <table class="table table-bordered table-striped table-hover">
                     <thead>

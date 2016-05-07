@@ -6,11 +6,9 @@
 
 
 
-        <a href="{{ url('products/' . $item->id . '/edit') }}">
-            <button type="submit" class="btn btn-primary btn-xs">Изменить</button>
+        <a href="{{ url('products/' . $item->id . '/edit-categoty') }}">
+            <button type="submit" class="editCategoryButton btn btn-primary btn-xs">Изменить</button>
         </a>
-
-
 
         {!! Form::open([
         'method'=>'DELETE',

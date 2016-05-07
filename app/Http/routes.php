@@ -39,6 +39,7 @@ Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
 
 
 Route::get('/product-editor/{id}', 'ProductsController@productEditor');
+Route::post('/products/edit-categoty', 'ProductsController@editCategory');
 
 
 
@@ -59,5 +60,10 @@ Route::get('/test', function(){
 Route::get('/homeSimpleUser', function(){
     return view('homeSimpleUser');
 });
+
+
+
+/*  Products  */
+Route::post('/products/ajax-update', ['as'=>'product-ajax-update', 'uses'=>'ProductsController@productAjaxUpdate']);
 
 

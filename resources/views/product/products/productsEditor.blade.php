@@ -1,9 +1,10 @@
-@extends('...layouts.master')
+@extends('...layouts.app')
 
 @section('content')
 
     <div style="border: solid 2px darkgrey; padding: 10px;">
         <div class="table-responsive">
+
           <h1 style="text-align: center">{{ $company->company_name }} </h1>
             <hr>
         </div>
@@ -121,5 +122,88 @@
         });
 
     </script>
+
+    <script>
+
+        $('#product_list').delegate('.editCategoryButton', 'click', function(){
+            $('.form-group ').find('.productId').val('');
+
+            event.preventDefault();
+            var id = $(this).parents('tr').eq(0).find('.option').val();
+
+            var inputs = $('.addProductCategory').find('[data-name]');
+            inputs.each(function() {
+                if($(this).attr('data-name') != 'category_id'){
+                    $(this).val('');
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/products/edit-categoty",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    productId: id
+                },
+                success: function(msg){
+
+                    $('.form-group').find('.product_id').val(msg.id);
+                    $('.form-group').find('input[data-name="name"]').val(msg.product_name);
+                    $('.form-group').find('input[data-name="description"]').val(msg.product_description);
+                    $('.form-group').find('input[data-name="photo"]').val(msg.product_image);
+                    $('.form-group').find('input[data-name="price"]').val(msg.product_price);
+
+                    $('.addProductCategory').show();
+                    $('#product_form').find('input.create').hide();
+                    $('#product_form').find('input.update').show();
+
+                    $('#product_form').find('input[type="text"]').eq(0).focus();
+
+
+                }
+            });
+
+        });
+
+        $('#product_list').delegate('.update', 'click', function(){
+            var buttom = $(this);
+//            buttom.disable();
+
+            event.preventDefault();
+
+            var data = {};
+            data['id'] = $('.form-group').find('.product_id').val();
+            data['name'] = $('.form-group').find('input[data-name="name"]').val();
+            data['description'] = $('.form-group').find('input[data-name="description"]').val();
+            data['photo'] = $('.form-group').find('input[data-name="photo"]').val();
+            data['price'] = $('.form-group').find('input[data-name="price"]').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/products/ajax-update",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: data,
+                success: function(msg){
+//                    buttom.enable();
+
+                    $('.addProductCategory').hide();
+                    var currentTr = $('#product_list').find('.option[value="'+data.id+'"]').parents('tr').eq(0);
+
+                    currentTr.after(msg);
+
+
+                    currentTr.remove();
+
+                }
+            });
+
+        });
+
+    </script>
+
 @endsection
 

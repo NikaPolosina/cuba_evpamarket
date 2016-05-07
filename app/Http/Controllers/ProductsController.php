@@ -139,9 +139,14 @@ class ProductsController extends Controller{
      * @return Response
      */
     public function edit(Request $request, $id){
-
         $product = Product::findOrFail($id);
         return view('product.products.edit', compact('product'));
+    }
+    public function editCategory(Request $request){
+        $id = $request->input('productId');
+        $product = Product::find($id)->toArray();
+        return response()->json($product);
+        
     }
 
     /**
@@ -158,10 +163,9 @@ class ProductsController extends Controller{
         $product->update($request->all());
         Session::flash('flash_message', 'Product updated!');
 
-        $company = Company::find($request->input('company_id')); //hskfheshg
+        $company = Company::find($request->input('company_id'));
 
-        return redirect('company/'.$company->id);//isufisugsnu
-      //  return redirect('products');// сюда
+        return redirect('company/'.$company->id);
     }
 
     /**
@@ -225,7 +229,6 @@ class ProductsController extends Controller{
     }
 
     public function productEditor($id){
-
 
         $company = Company::findOrFail($id);
 
@@ -314,5 +317,43 @@ class ProductsController extends Controller{
         }
             return '';
     }
+    
+    public function productAjaxUpdate(Request $request){
+
+        $data = $request->all();
+        if($request->input('id')){
+            //dd($request->all());
+
+            $product = Product::findOrFail($request->input('id'));
+
+            $result = $product->update(array(
+                'product_name'=>$data['name'],
+                'product_description'=>$data['description'],
+                'product_image'=>$data['photo'],
+                'product_price'=>$data['price'],
+                ));
+
+            if($result){
+                return view('product.products.singleProductTr')->with(['item' => $product]);
+            }
+            return '';
+        }
+
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

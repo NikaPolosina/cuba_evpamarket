@@ -14,12 +14,12 @@
 
 
 
-                            <h1>Мои компании <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Добавить компанию</a></h1>
+                            <h1>Мои магазины <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Добавить магазин</a></h1>
                             <div class="table">
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead>
                                     <tr>
-                                        <th>№</th><th>Имя компании</th><th>Описание</th><th>Company Logo</th><th>Действие</th>
+                                        <th>№</th><th>Имя магазина</th><th>Описание</th><th>Logo</th><th>Действие</th>
                                     </tr>
                                     </thead>
                                     <tbody>
