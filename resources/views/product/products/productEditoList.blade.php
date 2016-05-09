@@ -15,9 +15,13 @@
 
             <?php
             $bread = '';
-            foreach ($category as $value) {
-                $bread = $bread.$value[0]['title'].' > ';
-            }
+                if(count($category) > 0){
+                    foreach ($category as $value) {
+                        $bread = $bread.$value[0]['title'].' > ';
+                    }
+                }else{
+                    $value = $mainCategory;
+                }
             echo $bread;
             ?>
 
@@ -32,12 +36,12 @@
     </thead>
     <tbody class="tBody">
 
-
     @foreach ($products as $item)
 
         @include('product.products.singleProductTr', array('item' => $item))
 
     @endforeach
+
 
     </tbody>
 
@@ -45,6 +49,9 @@
 <div class="paginate">
         <?php echo $products->render(); ?>
 </div>
+
+
+
 <input class="cimpanyIdclass" type="hidden" name="cimpanyId" value="{{$company}}"/>
 
 <a class="addCategoryProduct btn btn-primary pull-left btn-sm">+</a>
@@ -105,8 +112,6 @@
 
 <script>
 
-
-
     $('.addCategoryProduct').on('click', function(){
         $('.addProductCategory').toggle();
         $('#product_form').find('input.update').hide();
@@ -125,7 +130,7 @@
         var selected1 = {};
         var inputs = $('.addProductCategory').find('[data-name]');
 
-        
+
         inputs.each(function() {
             selected1[$(this).attr('data-name')] = $(this).val();
         });
@@ -155,7 +160,7 @@
         });
     });
 
-$('#destroycheck').on('click', function() {
+    $('#destroycheck').on('click', function() {
         event.preventDefault();
         var selected = [];
         var inputs = $('.tBody').find('input:checked');
@@ -181,7 +186,6 @@ $('#destroycheck').on('click', function() {
 
 
     });
-
 
 
 </script>

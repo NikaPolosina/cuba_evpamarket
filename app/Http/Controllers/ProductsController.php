@@ -283,33 +283,42 @@ class ProductsController extends Controller{
 
     public function getProductList(Request $request){
 
-
         $companyId = $request->input('companyId');
         $categoriId = $request->input('categoryId');
 
-        $this->category[] = Category::find($categoriId)->toArray();
+        $this->category[] = Category::find($categoriId[0])->toArray();
         $parentId = $this->category[0]['parent_id'];
 
-        do{
-            $current = Category::find($parentId)->toArray();
-            $parentId = $current['parent_id'];
 
-            $this->category[] = $current;
+        if($parentId != 0){
+            do{
 
-        }while($parentId != 0);
+                $current = Category::find($parentId)->toArray();
+                $parentId = $current['parent_id'];
 
-        foreach ($this->category as $value) {
-            $value['text'] = $value['title'];
-            $value['href'] = $value['id'];
-            $value['nodes'] = array();
+                $this->category[] = $current;
 
-            $this->nCategory[$value['parent_id']][] = $value;
+            }while($parentId != 0);
+
+            foreach ($this->category as $value) {
+                $value['text'] = $value['title'];
+                $value['href'] = $value['id'];
+                $value['nodes'] = array();
+
+                $this->nCategory[$value['parent_id']][] = $value;
+            }
+            ksort($this->nCategory);
+        }else{
+            $this->nCategory[$this->category[0]['parent_id']] = $this->category;
         }
-        ksort($this->nCategory);
 
-      $company = Company::find($companyId);
+        
+        $company = Company::find($companyId);
 
-        $products = $company->getProducts()->where('category_id', '=', $categoriId)->paginate(5);
+
+        $products = $company->getProducts()->whereIn('category_id', $categoriId)->paginate(3);
+
+
 
         if(count($products)){
             return view('product.products.productEditoList')->with('products', $products)->with('category', $this->nCategory)->with('company', $companyId);

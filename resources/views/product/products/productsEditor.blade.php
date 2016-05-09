@@ -18,6 +18,7 @@
 
                     <div id="custom-checkable" class=""></div>
                     <script>
+                        var categories = [];
 
                         var data = <?=$category?>
 
@@ -38,6 +39,27 @@
                                             });
                                         }
 
+
+
+                                        categories.push(node['id']);
+
+                                        if(node['nodes'].length > 0){
+                                            var childrens = node['nodes'];
+                                            do{
+                                                childrens.forEach(function(currentNode, key){
+                                                    categories.push(currentNode['id']);
+                                                    if(currentNode['nodes'].length > 0){
+                                                        currentNode['nodes'].forEach(function(nNode, k){
+                                                            childrens.push(nNode);
+                                                        });
+                                                    }
+                                                    childrens.splice(key, 1);
+                                                });
+                                            }while(childrens.length > 0);
+                                        }
+
+
+
                                         $.ajax({
                                             type: "POST",
                                             url: "/get-product-list",
@@ -46,7 +68,7 @@
                                             },
                                             data: {
                                                 companyId: '<?=$company->id?>',
-                                                categoryId: node.href
+                                                categoryId: categories
                                             },
                                             success: function(msg){
                                                     $('#product_list').html(msg);
@@ -109,7 +131,7 @@
                         },
                         data: {
                             companyId: '<?=$company->id?>',
-                            categoryId: $('.categoryIdclass').val()
+                            categoryId: categories
                         },
                         success: function(msg){
                             $('#product_list').html(msg);
