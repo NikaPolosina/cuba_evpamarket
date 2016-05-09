@@ -28,6 +28,7 @@
                                     showCheckbox: true,
                                     enableLinks: true,
                                     onNodeChecked: function(event, node) {
+                                        categories = [];
                                         $('#product_list').html('');
                                         var list = $('#custom-checkable').treeview('getChecked');
                                         if(list.length > 1){

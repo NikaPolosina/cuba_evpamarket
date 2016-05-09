@@ -316,7 +316,7 @@ class ProductsController extends Controller{
         $company = Company::find($companyId);
 
 
-        $products = $company->getProducts()->whereIn('category_id', $categoriId)->paginate(3);
+        $products = $company->getProducts()->whereIn('category_id', $categoriId)->paginate(5);
 
 
 
