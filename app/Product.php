@@ -31,7 +31,7 @@ class Product extends Model
         return $this->hasOne('App\Category', 'id', 'category_id');
     }
 
-    protected $searchable = [ 'columns' => ['product_description' => 5,],];
+    protected $searchable = [ 'columns' => ['product_name' => 5,],];
 
 
 }

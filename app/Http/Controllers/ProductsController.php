@@ -15,30 +15,12 @@ use Auth;
 
 
 class ProductsController extends Controller{
-    public function __construct(){
 
-
-
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
     public function index(){
         $products = Product::paginate(3);
         return view('product.products.index', compact('products'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
     public function create(Request $request){
-
-
 
         if($request->route('company_id') && self::hasCompany($request->route('company_id')) ){
             $company = Company::find($request->route('company_id'));
@@ -75,12 +57,6 @@ class ProductsController extends Controller{
 
 
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
     public function store(Request $request){
 
         $this->validate($request, ['product_description' => 'required', ]);
@@ -97,7 +73,6 @@ class ProductsController extends Controller{
         return redirect('company/'.$company->id);
     }
     public function storeCategory(Request $request){
-
         $newProduct = new Product([
             'product_name'        => $request['checkId']['name'],
             'product_description' => $request['checkId']['description'],
@@ -118,26 +93,10 @@ class ProductsController extends Controller{
 
 
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     *
-     * @return Response
-     */
     public function show($id){
         $product = Product::findOrFail($id);
         return view('product.products.show', compact('product'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     *
-     * @return Response
-     */
     public function edit(Request $request, $id){
         $product = Product::findOrFail($id);
         return view('product.products.edit', compact('product'));
@@ -148,14 +107,6 @@ class ProductsController extends Controller{
         return response()->json($product);
         
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     *
-     * @return Response
-     */
     public function update($id, Request $request){
 
         $this->validate($request, ['product_description' => 'required',]);
@@ -167,14 +118,6 @@ class ProductsController extends Controller{
 
         return redirect('company/'.$company->id);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     *
-     * @return Response
-     */
     public function destroy(Request $request, $id){
         $company = Product::find($id)->getCompany;
         Product::destroy($id);
@@ -182,7 +125,7 @@ class ProductsController extends Controller{
         return redirect('company/'.$company[0]->id);//isufisugsnu
      //   return redirect('products');
     }
-        public function destroyCheck(Request $request){
+    public function destroyCheck(Request $request){
 
             foreach($request['checkId'] as $value){
                 Product::destroy($value);
@@ -193,11 +136,7 @@ class ProductsController extends Controller{
 
 
         }
-    /**
-     * check if user attach to company
-     *
-     *
-     * */
+
     public static function hasCompany($companyId){
         if(Auth::check() && count(Auth::user()->getCompanies)){
             foreach (Auth::user()->getCompanies as $value) {
@@ -210,7 +149,6 @@ class ProductsController extends Controller{
     public  function findProduct(Request $request){
 
         if($request->input('find')){
-
             $time = time();
             $res = Product::search($request->input('find'))->get();
             return view('welcome')->with(['data'=>$res, 'time'=>$time, 'search'=>$request->input('find')]);
@@ -220,8 +158,21 @@ class ProductsController extends Controller{
         return view('welcome');
 
     }
+    public function getProductAll(Request $request){
+        $productAll = Product::all();
+        $companyAll = Company::all();
+        return view('welcome')->with(['productAll'=>$productAll])->with(['companyAll'=>$companyAll]);
+    }
+    public function singleProduct(Request $request, $id){
+
+        $singleProduct = Product::find($id)->toArray();
+        return view('product.products.singleProductInfo')->with('singleProduct',  $singleProduct);
+
+
+    }
 
     public function checkCat($search, $arr){
+
         foreach ($arr as $value) {
             if($search == $value['id']) return false;
         }

@@ -10,10 +10,12 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+/*
 Route::get('/', function () {
  return view('welcome');
-});
+});*/
+Route::get('/', 'ProductsController@getProductAll');
+
 
 
 
@@ -35,11 +37,17 @@ Route::get('/get-product-paginate', ['as' => 'get-product-paginate', 'uses' => '
 
 
 
+
+
+
+
+
 Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
 
 
 Route::get('/product-editor/{id}', 'ProductsController@productEditor');
 Route::post('/products/edit-categoty', 'ProductsController@editCategory');
+Route::get('/single-product/{id}', 'ProductsController@singleProduct');
 
 
 

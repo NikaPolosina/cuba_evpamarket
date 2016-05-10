@@ -19,6 +19,7 @@
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="/plugins/chosen_v1.5.1/chosen.jquery.js"></script>
     <script src="/js/bootstrap-treeview.js"></script>
+
     {{--<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>--}}
 
                     <!-- Fonts -->
@@ -78,8 +79,9 @@
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a style="float: left" href="{{ url('/register-c') }}">Зарегестрация продавца</a></li>
-                        <li><a href="{{ url('/login') }}">Вход</a></li>
                         <li><a href="{{ url('/register') }}">Регистрация</a></li>
+                        <li><a href="{{ url('/login') }}">Вход</a></li>
+
                     @else
                         <li class="dropdown">
 
