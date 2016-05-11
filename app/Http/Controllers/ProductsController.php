@@ -16,8 +16,11 @@ use Auth;
 
 class ProductsController extends Controller{
 
+    public $paginCnt = 5;
+
     public function index(){
-        $products = Product::paginate(3);
+
+        $products = Product::paginate($this->paginCnt);
         return view('product.products.index', compact('products'));
     }
     public function create(Request $request){
@@ -73,6 +76,9 @@ class ProductsController extends Controller{
         return redirect('company/'.$company->id);
     }
     public function storeCategory(Request $request){
+
+
+
         $newProduct = new Product([
             'product_name'        => $request['checkId']['name'],
             'product_description' => $request['checkId']['description'],
@@ -81,13 +87,15 @@ class ProductsController extends Controller{
             'category_id'         => $request['checkId']['category_id'],
         ]);
 
-        $company = Company::find($request['id']);
+        $idJson= $request['id'];
+        $idNoJson = json_decode($idJson, true);
+        $company = Company::find($idNoJson['id']);
+
+
+
         $company->getProducts()->save($newProduct);
         if($newProduct->id){
-
-
             return view('product.products.singleProductTr')->with(['item' => $newProduct]);
-
         }
         return response()->json(['success' => false]);
 
@@ -104,7 +112,9 @@ class ProductsController extends Controller{
     public function editCategory(Request $request){
         $id = $request->input('productId');
         $product = Product::find($id)->toArray();
-        return response()->json($product);
+        $productCategory = Product::find($id)->getCategory;
+
+        return response()->json(['product' => $product, 'productCategory' => $productCategory]);
         
     }
     public function update($id, Request $request){
@@ -126,6 +136,8 @@ class ProductsController extends Controller{
      //   return redirect('products');
     }
     public function destroyCheck(Request $request){
+
+
 
             foreach($request['checkId'] as $value){
                 Product::destroy($value);
@@ -180,47 +192,33 @@ class ProductsController extends Controller{
     }
 
     public function productEditor($id){
-
         $company = Company::findOrFail($id);
-
         $this->category = array();
+            foreach ($company->getProducts as $value) {
+                $parentId = $value->getCategory->toArray()['parent_id'];
+                if(!$this->checkCat($value->getCategory->toArray()['id'], $this->category))
+                    continue;
+                $this->category[] = $value->getCategory->toArray();
 
-        foreach ($company->getProducts as $value) {
+                do{
+                    $current = Category::find($parentId)->toArray();
+                    $parentId = $current['parent_id'];
 
-            $parentId = $value->getCategory->toArray()['parent_id'];
+                    if(!$this->checkCat($current['id'], $this->category))
+                        break;
+                    $this->category[] = $current;
 
-            if(!$this->checkCat($value->getCategory->toArray()['id'], $this->category))
-                continue;
-
-            $this->category[] = $value->getCategory->toArray();
-
-
-
-
-            do{
-                $current = Category::find($parentId)->toArray();
-                $parentId = $current['parent_id'];
-
-                if(!$this->checkCat($current['id'], $this->category))
-                    break;
-
-
-                $this->category[] = $current;
-
-            }while($parentId != 0);
-        }
-
-        foreach ($this->category as $value) {
-            $value['text'] = $value['title'];
-            $value['href'] = $value['id'];
-            $value['nodes'] = array();
-
-            $this->nCategory[$value['parent_id']][] = $value;
-        }
-        ksort($this->nCategory);
-        $this->nCategory = array_reverse($this->nCategory, true);
-
-        foreach ($this->nCategory as $key => $value) {
+                }while($parentId != 0);
+            }
+            foreach ($this->category as $value) {
+                $value['text'] = $value['title'];
+                $value['href'] = $value['id'];
+                $value['nodes'] = array();
+                $this->nCategory[$value['parent_id']][] = $value;
+            }
+            ksort($this->nCategory);
+            $this->nCategory = array_reverse($this->nCategory, true);
+            foreach ($this->nCategory as $key => $value) {
             foreach ($value as $k => $v) {
                 if(array_key_exists($v['id'], $this->nCategory)){
                     $this->nCategory[$key][$k]['nodes'] = $this->nCategory[$v['id']];
@@ -229,7 +227,7 @@ class ProductsController extends Controller{
             }
         }
 
-        return view('product.products.productsEditor')->with(['category' => json_encode($this->nCategory[0]), 'company'=>$company]);
+        return view('product.products.productsEditor')->with(['category' => json_encode($this->nCategory[0]), 'company'=>$company, 'paginCnt'=>$this->paginCnt]);
     }
 
     public function getProductList(Request $request){
@@ -237,52 +235,50 @@ class ProductsController extends Controller{
         $companyId = $request->input('companyId');
         $categoriId = $request->input('categoryId');
 
-        $this->category[] = Category::find($categoriId[0])->toArray();
-        $parentId = $this->category[0]['parent_id'];
-
-
-        if($parentId != 0){
-            do{
-
-                $current = Category::find($parentId)->toArray();
-                $parentId = $current['parent_id'];
-
-                $this->category[] = $current;
-
-            }while($parentId != 0);
-
-            foreach ($this->category as $value) {
-                $value['text'] = $value['title'];
-                $value['href'] = $value['id'];
-                $value['nodes'] = array();
-
-                $this->nCategory[$value['parent_id']][] = $value;
-            }
-            ksort($this->nCategory);
-        }else{
-            $this->nCategory[$this->category[0]['parent_id']] = $this->category;
-        }
-
-        
         $company = Company::find($companyId);
 
+        if($categoriId){
+            $this->category[] = Category::find($categoriId[0])->toArray();
+            $parentId = $this->category[0]['parent_id'];
 
-        $products = $company->getProducts()->whereIn('category_id', $categoriId)->paginate(5);
+            if($parentId != 0){
+                do{
 
+                    $current = Category::find($parentId)->toArray();
+                    $parentId = $current['parent_id'];
 
+                    $this->category[] = $current;
+
+                }while($parentId != 0);
+
+                foreach ($this->category as $value) {
+                    $value['text'] = $value['title'];
+                    $value['href'] = $value['id'];
+                    $value['nodes'] = array();
+
+                    $this->nCategory[$value['parent_id']][] = $value;
+                }
+                ksort($this->nCategory);
+            }else{
+                $this->nCategory[$this->category[0]['parent_id']] = $this->category;
+            }
+
+            $products = $company->getProducts()->whereIn('category_id', $categoriId)->paginate($this->paginCnt);
+        }else{
+            $this->nCategory = null;
+            $products = $company->getProducts()->paginate($this->paginCnt);
+        }
 
         if(count($products)){
-            return view('product.products.productEditoList')->with('products', $products)->with('category', $this->nCategory)->with('company', $companyId);
-
+            return view('product.products.productEditorList')->with('products', $products)->with('category', $this->nCategory);
         }
-            return '';
+        return '';
     }
     
     public function productAjaxUpdate(Request $request){
-
         $data = $request->all();
+
         if($request->input('id')){
-            //dd($request->all());
 
             $product = Product::findOrFail($request->input('id'));
 

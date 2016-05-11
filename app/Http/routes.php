@@ -17,8 +17,6 @@ Route::get('/', function () {
 Route::get('/', 'ProductsController@getProductAll');
 
 
-
-
 Route::auth();
 Route::any('/find', [ 'as' => 'find', 'uses' => 'ProductsController@findProduct' ]);
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index' ]);
@@ -36,8 +34,9 @@ Route::get('/get-product-paginate', ['as' => 'get-product-paginate', 'uses' => '
 
 
 
-
-
+Route::get('/file', function () {
+ return view('file');
+});
 
 
 

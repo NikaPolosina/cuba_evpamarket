@@ -4,10 +4,6 @@
 
 @section('content')
 <div class="row">
-
-
-
-
         @if (Auth::guest())
                     <div class="col-md-2">
                         <div class="panel panel-default">

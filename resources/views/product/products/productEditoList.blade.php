@@ -66,6 +66,7 @@
 
     @if(isset($company))  <input type="hidden" name="company_id" value="{{$company}}"/>  @endif
 
+
     <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
         <input data-name="category_id" class="categoryIdclass" type="hidden" name="categoryId" value="{{$value[0]['id']}}"/>
         <input class="product_id" type="hidden" name="product_id" value="">

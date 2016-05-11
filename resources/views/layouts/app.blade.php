@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +8,6 @@
     <title>Laravel</title>
 
 
-
             <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -20,7 +16,6 @@
     <script src="/plugins/chosen_v1.5.1/chosen.jquery.js"></script>
     <script src="/js/bootstrap-treeview.js"></script>
 
-    {{--<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>--}}
 
                     <!-- Fonts -->
 
@@ -28,8 +23,8 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
     <link href="/plugins/chosen_v1.5.1/chosen.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
 
 
 
@@ -42,11 +37,15 @@
         .fa-btn {
             margin-right: 6px;
         }
+        #app-layout{
+            padding-top: 0px;
+        }
     </style>
 
 
 </head>
 <body id="app-layout">
+
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
@@ -86,9 +85,7 @@
                         <li class="dropdown">
 
                          <?php
-
                                 if(Auth::user()->getUserInformation){
-
                             ?>
 
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -113,10 +110,6 @@
 
 
     @yield('content')
-
-
-
-
 
 </body>
 </html>
