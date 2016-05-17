@@ -14,7 +14,6 @@
 Route::get('/', function () {
  return view('welcome');
 });*/
-Route::get('/', 'ProductsController@getProductAll');
 
 
 Route::auth();
@@ -24,12 +23,21 @@ Route::get('/register-company', 'Auth\AuthController@registerCompany');
 Route::post('/register_company', 'Auth\AuthController@registerCompany');
 Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
 Route::get('/register-c', 'Auth\AuthController@registerC');
+
+
+/*----------------ProductController--------------------*/
+Route::get('/', 'ProductsController@getProductAll');
 Route::any('/get-product-list', 'ProductsController@getProductList');
 Route::any('/products/destroy-check', 'ProductsController@destroyCheck');
 Route::any('/products/create-by-category', 'ProductsController@createByCategory');
 Route::any('/products-category', ['as' => 'products-category', 'uses' => 'ProductsController@storeCategory']);
 Route::get('/get-product-paginate', ['as' => 'get-product-paginate', 'uses' => 'ProductsController@productPaginate']);
-
+Route::get('/product-editor/{id}', 'ProductsController@productEditor');
+Route::post('/products/edit-categoty', 'ProductsController@editCategory');
+Route::post('/destroy', 'ProductsController@destroy');
+Route::get('/single-product/{id}', 'ProductsController@singleProduct');
+Route::post('/products/ajax-update', ['as'=>'product-ajax-update', 'uses'=>'ProductsController@productAjaxUpdate']);
+Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 'uses'=>'ProductsController@attachCategoryToCompany']);
 
 
 
@@ -38,19 +46,7 @@ Route::get('/file', function () {
  return view('file');
 });
 
-
-
-
 Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
-
-
-Route::get('/product-editor/{id}', 'ProductsController@productEditor');
-Route::post('/products/edit-categoty', 'ProductsController@editCategory');
-Route::get('/single-product/{id}', 'ProductsController@singleProduct');
-
-
-
-//Route::get('/register', 'Auth\AuthController@registerUser');
 
 
 Route::group(['middleware' => ['web']], function () {
@@ -70,7 +66,6 @@ Route::get('/homeSimpleUser', function(){
 
 
 
-/*  Products  */
-Route::post('/products/ajax-update', ['as'=>'product-ajax-update', 'uses'=>'ProductsController@productAjaxUpdate']);
+
 
 

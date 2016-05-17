@@ -28,7 +28,7 @@
                                         {{-- */$x++;/* --}}
                                         <tr>
                                             <td>{{ $x }}</td>
-                                            <td><a href="{{ url('company', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td><td>{{ $item->company_logo }}</td>
+                                            <td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td><td>{{ $item->company_logo }}</td>
                                             <td>
                                                 <a href="{{ url('company/' . $item->id . '/edit') }}">
                                                     <button type="submit" class="btn btn-primary btn-xs">Редактировать</button>

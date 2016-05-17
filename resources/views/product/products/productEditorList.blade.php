@@ -1,13 +1,13 @@
 <table class="table table-bordered table-striped table-hover">
     <thead>
     <tr>
-        <th colspan="6">
+        <th colspan="7">
             <?php
                 if($category){
                     $mainCategory = array_shift($category);
                     echo $mainCategory[0]['title'];
                 }else{
-                    echo 'All Products';
+                    echo 'Все продукты магазина';
                 }
             ?>
         </th>
@@ -18,7 +18,7 @@
     <?php
     if($category){ ?>
         <tr>
-            <th colspan="6">
+            <th colspan="7">
                 <?php
                     $bread = '';
                     if(count($category) > 0){
@@ -43,7 +43,7 @@
 
 
 
-    <th>№0</th><th>Товар</th><th>Описание товара</th><th>Фото</th><th>Цена</th><th>Действие</th>
+    <th></th><th>Товар</th><th>Описание товара</th><th>Описание расширеное</th><th>Фото</th><th>Цена</th><th>Действие</th>
     </tr>
     </thead>
     <tbody class="tBody">

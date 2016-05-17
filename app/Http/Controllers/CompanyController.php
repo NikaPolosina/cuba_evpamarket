@@ -32,6 +32,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
+
         $company = Company::paginate(15);
 
         return view('company.index', compact('company'));
@@ -100,7 +101,6 @@ class CompanyController extends Controller
     }
 
     public function show($id){
-
 
         $this->category = Category::all()->toArray();
 

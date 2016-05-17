@@ -1,5 +1,4 @@
 <meta charset="utf-8">
-
 <!-- Bootstrap styles -->
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <!-- Generic page styles -->
@@ -126,109 +125,134 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     <h1>Добавить товар @if(isset($company))  в компанию - {!!$company->company_name!!}  @endif  </h1>
     <hr/>
-    <div class="row">
-        <div class="form-group{{ $errors->has('product_name') ? ' has-error' : '' }}">
-            <div class="col-md-3">
-                <div id="custom-checkable" class=""></div>
-                <script>
-                    var defaultData = [
-                        {
-                            text: 'Parent 1',
-                            href: '#parent1',
 
-                            nodes: [
-                                {
-                                    text: 'Child 1',
-                                    href: '#child1',
-                                    nodes: [
+        <div class="col-sm-12">
+            <div class="row">
+                     <div class="col-md-3 form-group{{ $errors->has('product_name') ? ' has-error' : '' }}">
 
-                                    ]
-                                }
-                            ]
-                        }
-                    ];
+                            <div id="custom-checkable" class=""></div>
+                            <script>
 
-                    var data = <?=$category?>
+                                var data = <?=$category?>
 
-                            $('#custom-checkable').treeview({
-                                data: data,
-                                showCheckbox: true,
-                                enableLinks: true,
-                                onNodeChecked: function(event, node) {
-                                    console.log(node.href);
-                                    $('.product_category').val(node.href)
+                                        $('#custom-checkable').treeview({
+                                            data: data,
+                                            showCheckbox: true,
+                                            enableLinks: true,
+                                            onNodeChecked: function(event, node) {
+                                                console.log(node.href);
+                                                $('.product_category').val(node.href)
 
-                                },
-                                onNodeUnchecked: function (event, node) {
-                                    $('.product_category').val('')
-                                    console.log(node.text + ' was unchecked');
-                                }
-                            }).treeview('collapseAll');
-                </script>
-            </div>
-        </div>
+                                            },
+                                            onNodeUnchecked: function (event, node) {
+                                                $('.product_category').val('')
+                                                console.log(node.text + ' was unchecked');
+                                            }
+                                        }).treeview('collapseAll');
+                            </script>
+
+
+                     </div>
+
+
+                    <div class="col-sm-9">
+                        <div class="row">
+                        <!-- The file upload form used as target for the file upload widget -->
+                        <form id="fileupload" action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data">
 
 
 
+                                @if(isset($company))  <input type="hidden" name="company_id" value="{{ $company->id }}"/>  @endif
+                                <div class="col-sm-6">
+                                        <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
+                                            {!! Form::hidden('product_category', null, ['class' => 'product_category']) !!}
+                                            {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
+
+                                                {!! Form::text('product_name', null, ['class' => 'form-control']) !!}
+                                                {!! $errors->first('product_name', '<p class="help-block">:message</p>') !!}
+                                        </div>
+
+                                        <div class="form-group {{ $errors->has('product_description') ? 'has-error' : ''}}">
+                                            {!! Form::label('product_description', 'Описание: ', ['class' => 'col-sm-3 control-label']) !!}
+
+                                                {!! Form::textarea('product_description', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                                {!! $errors->first('product_description', '<p class="help-block">:message</p>') !!}
+                                        </div>
 
 
-        <div class="container">
-            <!-- The file upload form used as target for the file upload widget -->
-            <form id="fileupload" action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data">
-                <!-- Redirect browsers with JavaScript disabled to the origin page -->
-                <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
-                <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-                <div class="row fileupload-buttonbar">
-                    <div class="col-lg-7">
-                        <!-- The fileinput-button span is used to style the file input field as button -->
-                       <span class="btn btn-success fileinput-button">
-                           <i class="glyphicon glyphicon-plus"></i>
-                           <span>Add files...</span>
-                           <input type="file" name="files[]" multiple>
-                       </span>
-                        <button type="submit" class="btn btn-primary start">
-                            <i class="glyphicon glyphicon-upload"></i>
-                            <span>Start upload</span>
-                        </button>
-                        <button type="reset" class="btn btn-warning cancel">
-                            <i class="glyphicon glyphicon-ban-circle"></i>
-                            <span>Cancel upload</span>
-                        </button>
-                        <button type="button" class="btn btn-danger delete">
-                            <i class="glyphicon glyphicon-trash"></i>
-                            <span>Delete</span>
-                        </button>
-                        <input type="checkbox" class="toggle">
-                        <!-- The global file processing state -->
-                        <span class="fileupload-process"></span>
-                    </div>
-                    <!-- The global progress state -->
-                    <div class="col-lg-5 fileupload-progress fade">
-                        <!-- The global progress bar -->
-                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                                        <!-- Redirect browsers with JavaScript disabled to the origin page -->
+                                        <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
+                                        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                                    <span style="font-weight: 700;">Фото:</span>
+                                        <div class="row fileupload-buttonbar" style="float: right;">
+
+                                                <!-- The fileinput-button span is used to style the file input field as button -->
+                                               <span class="btn btn-success fileinput-button">
+                                                   <i class="glyphicon glyphicon-plus"></i>
+                                                   <span>Add files...</span>
+                                                   <input type="file" name="files[]" multiple>
+                                               </span>
+                                                <button type="submit" class="btn btn-primary start">
+                                                    <i class="glyphicon glyphicon-upload"></i>
+                                                    <span>Start upload</span>
+                                                </button>
+                                                <button type="reset" class="btn btn-warning cancel">
+                                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                                    <span>Cancel upload</span>
+                                                </button>
+                                                <button type="button" class="btn btn-danger delete">
+                                                    <i class="glyphicon glyphicon-trash"></i>
+                                                    <span>Delete</span>
+                                                </button>
+                                                <input type="checkbox" class="toggle">
+                                                <!-- The global file processing state -->
+                                                <span class="fileupload-process"></span>
+
+
+                                        </div>
+
+                                            <!-- The global progress state -->
+                                            <div style="display: none;" class="col-lg-5 fileupload-progress fade">
+                                                <!-- The global progress bar -->
+                                                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                                                </div>
+                                                <!-- The extended global progress state -->
+                                                <div class="progress-extended">&nbsp;</div>
+                                            </div>
+
+                                    <!-- The table listing the files available for upload/download -->
+                                    <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+
+
+                                      {{--  <div class="form-group {{ $errors->has('product_image') ? 'has-error' : ''}}">
+                                            {!! Form::label('product_image', 'фото: ', ['class' => 'col-sm-3 control-label']) !!}
+
+                                                {!! Form::text('product_image', null, ['class' => 'form-control']) !!}
+                                                {!! $errors->first('product_image', '<p class="help-block">:message</p>') !!}
+
+                                        </div>--}}
+
+                                        <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
+                                            {!! Form::label('product_price', 'Цена: ', ['class' => 'col-sm-3 control-label']) !!}
+
+                                                {!! Form::number('product_price', null, ['class' => 'form-control']) !!}
+                                                {!! $errors->first('product_price', '<p class="help-block">:message</p>') !!}
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-9 col-sm-3">
+                                                {!! Form::submit('Create', ['class' => 'btn btn-primary form-control']) !!}
+                                            </div>
+                                        </div>
+                                </div>
+
+                            </form>
                         </div>
-                        <!-- The extended global progress state -->
-                        <div class="progress-extended">&nbsp;</div>
-                    </div>
-                </div>
-                <!-- The table listing the files available for upload/download -->
-                <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-            </form>
-        </div>
+                     </div>
 
         <!-- The blueimp Gallery widget -->
         <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
@@ -242,47 +266,11 @@
         </div>
 
 
+                 {{--   {!! Form::open(['url' => 'products', 'class' => 'form-horizontal']) !!}--}}
 
-        {!! Form::open(['url' => 'products', 'class' => 'form-horizontal']) !!}
-
-        @if(isset($company))  <input type="hidden" name="company_id" value="{{ $company->id }}"/>  @endif
-
-        <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
-            {!! Form::hidden('product_category', null, ['class' => 'product_category']) !!}
-            {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
-            <div class="col-sm-6">
-                {!! Form::text('product_name', null, ['class' => 'form-control']) !!}
-                {!! $errors->first('product_name', '<p class="help-block">:message</p>') !!}
-            </div>
+                  {{--
+                    {!! Form::close() !!}--}}
         </div>
-        <div class="form-group {{ $errors->has('product_description') ? 'has-error' : ''}}">
-            {!! Form::label('product_description', 'Описание: ', ['class' => 'col-sm-3 control-label']) !!}
-            <div class="col-sm-6">
-                {!! Form::textarea('product_description', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                {!! $errors->first('product_description', '<p class="help-block">:message</p>') !!}
-            </div>
-        </div>
-        <div class="form-group {{ $errors->has('product_image') ? 'has-error' : ''}}">
-            {!! Form::label('product_image', 'фото: ', ['class' => 'col-sm-3 control-label']) !!}
-            <div class="col-sm-6">
-                {!! Form::file('product_image', null, ['class' => 'form-control']) !!}
-                {!! $errors->first('product_image', '<p class="help-block">:message</p>') !!}
-            </div>
-        </div>
-
-        <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
-            {!! Form::label('product_price', 'Цена: ', ['class' => 'col-sm-3 control-label']) !!}
-            <div class="col-sm-6">
-                {!! Form::number('product_price', null, ['class' => 'form-control']) !!}
-                {!! $errors->first('product_price', '<p class="help-block">:message</p>') !!}
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-3">
-                {!! Form::submit('Create', ['class' => 'btn btn-primary form-control']) !!}
-            </div>
-        </div>
-        {!! Form::close() !!}
     </div>
 
 

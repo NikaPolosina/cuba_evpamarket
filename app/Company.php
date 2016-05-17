@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\Category;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +14,9 @@ class Company extends Model{
     public function getProducts(){
         return $this->belongsToMany('App\Product');
 
+    }
+    public function getCategoryCompany(){
+        return $this->belongsToMany('App\Category');
     }
 
 }

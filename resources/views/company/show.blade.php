@@ -1,7 +1,10 @@
 @extends('...layouts.app')
 
 @section('content')
+<?php
+die('Surprise, you are here !!!');
 
+?>
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <thead>
@@ -24,6 +27,7 @@
 {{-- @if(count($company->getProducts))--}}
 <div class="row">
         <div class="col-sm-12 ">
+
             <h1>Все продукты магазина <a href="{{ url('products/create/'.$company->id) }}" class="btn btn-primary pull-right btn-sm">Добавить продукт</a></h1>
             <div class="table">
                 <table class="table table-bordered table-striped table-hover">
@@ -47,7 +51,7 @@
 
                                 <a href="{{ url('products/' . $item->id . '/edit') }}">
                                     <button type="submit" class="btn btn-primary btn-xs">Изменить</button>
-                                </a> /
+                                </a>
 
 
 
