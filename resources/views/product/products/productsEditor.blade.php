@@ -25,6 +25,7 @@
                     <div id="custom-checkable1" class="">
                     </div>
                 </div>
+
         <script>
             var a = $('.allCategoryBlock').find('.selectCategory');
             var ul = a.find('ul[data-id="select_input"]');
@@ -75,7 +76,7 @@
                 });
 
 
-                
+
             })
 
         </script>
@@ -94,14 +95,14 @@
 
                 <!-- Modal -->
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content col-md-10 col-sm-offset-1">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="myModalLabel">Добавление товара</h4>
                             </div>
                             <div class="modal-body">
-                                ...
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
@@ -109,14 +110,19 @@
                                 <button type="button" class="btn update btn-primary">Обновить</button>
 
 
+
+
+
+
                             </div>
                         </div>
                     </div>
                 </div>
-                <script>
-                 
-                </script>
+
 {{-----------------------------------------------------------------}}
+
+
+
 
                 <div class="table" id="product_list">
                     @include('product.products.productEditorList', array(
@@ -127,66 +133,131 @@
 
                 <div class="product-editor">
                     <div class="col-sm-12">
-                       <div style="display: block">
-                            <div class="addProductCategory">
-                            {!! Form::open(['class' => 'form-horizontal ', 'id'=> 'product_form']) !!}
-                            <div style="display: none" class="form-group {{ $errors->has('id') ? 'has-error' : ''}}">
-                                {!! Form::label('product_id', 'Id: ', ['class' => 'col-sm-3 control-label']) !!}
-                                <div class="col-sm-6">
-                                    {!! Form::text('product_id', null, ['class' => 'form-control', 'data-name' =>'product_id']) !!}
-                                </div>
-                            </div>
-                            <div class="form-group {{ $errors->has('category_name') ? 'has-error' : ''}}">
-                                {!! Form::label('category_name', 'Категория: ', ['class' => 'col-sm-3 control-label']) !!}
-                                <div class="col-sm-6">
-                                    <select   name="category_name"  data-name="category_name">
-                                        @if(count($myCategories))
+                        <div class="row">
+                            <form id="fileupload" action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data">
+                                <div style="display: block">
+                                    <div class="col-sm-4">
 
-                                        @foreach($myCategories as $value)
-                                                <option  value="{{$value['id']}}">{{$value['title']}}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
-                                {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
-                                <div class="col-sm-6">
-                                    {!! Form::text('product_name', null, ['class' => 'form-control', 'data-name' =>'name']) !!}
-                                </div>
-                            </div>
-                            <div class="form-group {{ $errors->has('product_description') ? 'has-error' : ''}}">
-                                {!! Form::label('product_description', 'Краткое описание: ', ['class' => 'col-sm-3 control-label']) !!}
-                                <div class="col-sm-6">
-                                    {!! Form::text('product_description', null, ['class' => 'form-control', 'required' => 'required', 'data-name' =>'description']) !!}
-                                </div>
-                            </div>
-                            <div class="form-group {{ $errors->has('content') ? 'has-error' : ''}}">
-                                {!! Form::label('content', 'Полное описание: ', ['class' => 'col-sm-3 control-label']) !!}
-                                <div class="col-sm-6">
-                                    {!! Form::text('content', null, ['class' => 'form-control', 'data-name' =>'content']) !!}
-                                </div>
-                            </div>
-                            <div class="form-group {{ $errors->has('product_image') ? 'has-error' : ''}}">
-                                {!! Form::label('product_image', 'Фото: ', ['class' => 'col-sm-3 control-label']) !!}
-                                <div class="col-sm-6">
-                                    {!! Form::text('product_image', null, ['class' => 'form-control', 'data-name' =>'photo']) !!}
-                                </div>
-                            </div>
-                            <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
-                                {!! Form::label('product_price', 'Цена: ', ['class' => 'col-sm-3 control-label']) !!}
-                                <div class="col-sm-6">
-                                    {!! Form::number('product_price', null, ['class' => 'form-control', 'data-name' =>'price']) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-3">
+                                                <div class="addProductCategory">
+                                                {!! Form::open(['class' => 'form-horizontal ', 'id'=> 'product_form']) !!}
+                                                <div style="display: none" class="form-group {{ $errors->has('id') ? 'has-error' : ''}}">
+                                                    {!! Form::label('product_id', 'Id: ', ['class' => 'control-label']) !!}
+                                                    {!! Form::text('product_id', null, ['class' => 'form-control', 'data-name' =>'product_id']) !!}
+                                                </div>
+                                                <div class="form-group {{ $errors->has('category_name') ? 'has-error' : ''}}">
+                                                    {!! Form::label('category_name', 'Категория: ', ['class' => 'col-sm-3 control-label']) !!}
+                                                        <select   name="category_name"  data-name="category_name">
+                                                            @if(count($myCategories))
 
+                                                            @foreach($myCategories as $value)
+                                                                    <option  value="{{$value['id']}}">{{$value['title']}}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                </div>
+                                                <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
+                                                    {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
+                                                    {!! Form::text('product_name', null, ['class' => 'form-control', 'data-name' =>'name']) !!}
+                                                </div>
+                                                <div class="form-group {{ $errors->has('product_description') ? 'has-error' : ''}}">
+                                                    {!! Form::label('product_description', 'Краткое описание: ', ['class' => 'col-sm-3 control-label']) !!}
+                                                    {!! Form::text('product_description', null, ['class' => 'form-control', 'required' => 'required', 'data-name' =>'description']) !!}
+                                                </div>
+                                                <div class="form-group {{ $errors->has('content') ? 'has-error' : ''}}">
+                                                    {!! Form::label('content', 'Полное описание: ', ['class' => 'col-sm-3 control-label']) !!}
+                                                    {!! Form::text('content', null, ['class' => 'form-control', 'data-name' =>'content']) !!}
+                                                </div>
+
+
+
+
+                                                <!-- Redirect browsers with JavaScript disabled to the origin page -->
+                                                <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
+                                                <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                                                <span style="font-weight: 700;">Фото:</span>
+                                                <div class="row fileupload-buttonbar" style="float: right;">
+
+                                                    <!-- The fileinput-button span is used to style the file input field as button -->
+                                                               <span class="btn btn-success fileinput-button">
+                                                                   <i class="glyphicon glyphicon-plus"></i>
+                                                                   <span>Add files...</span>
+                                                                   <input type="file" name="files[]" multiple>
+                                                               </span>
+                                                  {{--  <button type="submit" class="btn btn-primary start">
+                                                        <i class="glyphicon glyphicon-upload"></i>
+                                                        <span>Start upload</span>
+                                                    </button>--}}
+                                                    <button type="reset" class="btn btn-warning cancel">
+                                                        <i class="glyphicon glyphicon-ban-circle"></i>
+                                                        <span>Cancel upload</span>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger delete">
+                                                        <i class="glyphicon glyphicon-trash"></i>
+                                                        <span>Delete</span>
+                                                    </button>
+                                                    <input type="checkbox" class="toggle">
+                                                    <!-- The global file processing state -->
+                                                    <span class="fileupload-process"></span>
+
+
+                                                </div>
+
+                                                <!-- The global progress state -->
+                                                <div style="display: none;" class="col-lg-5 fileupload-progress fade">
+                                                    <!-- The global progress bar -->
+                                                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                                        <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                                                    </div>
+                                                    <!-- The extended global progress state -->
+                                                    <div class="progress-extended">&nbsp;</div>
+                                                </div>
+
+                                                <!-- The table listing the files available for upload/download -->
+                                                <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+
+
+
+
+
+                                                    <div class="form-group {{ $errors->has('product_image') ? 'has-error' : ''}}">
+                                                        {!! Form::label('product_image', 'Фото: ', ['class' => 'col-sm-3 control-label']) !!}
+
+                                                            {!! Form::text('product_image', null, ['class' => 'form-control', 'data-name' =>'photo']) !!}
+
+                                                    </div>
+                                                    <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
+                                                        {!! Form::label('product_price', 'Цена: ', ['class' => 'col-sm-3 control-label']) !!}
+
+                                                            {!! Form::number('product_price', null, ['class' => 'form-control', 'data-name' =>'price']) !!}
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-offset-3 col-sm-3">
+
+                                                        </div>
+                                                    </div>
+
+                                                    </div>
+                                                            {!! Form::close() !!}
+                                     </div>
                                 </div>
-                            </div>
-                            {!! Form::close() !!}
+                            </form>
                         </div>
-                       </div>
+
+
+
+                        <!-- The blueimp Gallery widget -->
+                        <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+                            <div class="slides"></div>
+                            <h3 class="title"></h3>
+                            <a class="prev">‹</a>
+                            <a class="next">›</a>
+                            <a class="close">×</a>
+                            <a class="play-pause"></a>
+                            <ol class="indicator"></ol>
+                        </div>
+
+
                     </div>
                 </div>
 
@@ -329,7 +400,13 @@
                 $('#myModal').delegate('.create', 'click', function (){
                     event.preventDefault();
                     var selected1 = {};
+
                     var inputs = $('#myModal').find('.addProductCategory').find('[data-name]');
+                     var img = $('.files');
+
+
+
+
 
                     inputs.each(function() {
                         selected1[$(this).attr('data-name')] = $(this).val();
@@ -412,7 +489,7 @@
 
 
                 $('#myModal').find('.modal-body').html($('.addProductCategory'));
-                
+
 //                $('.addProductCategory').toggle();
 
                 $('#product_form').find('input.update').hide();

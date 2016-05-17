@@ -160,7 +160,7 @@
                     <div class="col-sm-9">
                         <div class="row">
                         <!-- The file upload form used as target for the file upload widget -->
-                        <form id="fileupload" action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data">
+                            <form id="fileupload" action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data">
 
 
 
