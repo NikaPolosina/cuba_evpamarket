@@ -55,7 +55,10 @@
     </tbody>
 </table>
 
-<a class="addCategoryProduct btn btn-primary pull-left btn-sm">+</a>
+{{--<a class="addCategoryProduct btn btn-primary pull-left btn-sm">+</a>--}}
+<button type="button" class="addCategoryProduct btn btn-primary pull-left btn-sm" data-toggle="modal" data-target="#myModal">
+    +
+</button>
 <a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">x</a>
 
 <div class="paginate">

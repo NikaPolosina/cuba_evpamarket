@@ -19,19 +19,13 @@
                     <div style="display: none" class="selectCategory">
                         <h4>Выбранные категории</h4>
                         <ul data-id="select_input"> </ul>
-
                         <button type="submit" style="float: right" class="addCategoryCompany btn btn-primary btn-xs">Добавить</button>
-
                     </div>
                     <h4>Все категории</h4>
                     <div id="custom-checkable1" class="">
-
-
                     </div>
                 </div>
-
         <script>
-
             var a = $('.allCategoryBlock').find('.selectCategory');
             var ul = a.find('ul[data-id="select_input"]');
 
@@ -76,12 +70,7 @@
                     },
                     success: function (msg) {
                         location.reload();
-
-
                         $('.allCategoryBlock').hide();
-
-
-
                     }
                 });
 
@@ -89,54 +78,64 @@
                 
             })
 
-
         </script>
-
 
                 <hr>
                 <h4>Мои категории</h4>
                 <div class="allCategory form-group{{ $errors->has('product_name') ? ' has-error' : '' }}">
-
                     <div id="custom-checkable" class="">
 
-
-
                     </div>
-
                 </div>
             </div>
 
-
-
-
             <div class="col-sm-9">
+                {{-----------------------------------------------------------}}
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Добавление товара</h4>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                                <button type="button" class="btn create btn-primary">Создать</button>
+                                <button type="button" class="btn update btn-primary">Обновить</button>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                 
+                </script>
+{{-----------------------------------------------------------------}}
+
                 <div class="table" id="product_list">
                     @include('product.products.productEditorList', array(
                                     'products' => $company->getProducts()->paginate($paginCnt),
                                     'category' => false
                                      ))
-
                 </div>
 
-
                 <div class="product-editor">
-                  {{--  <a class="addCategoryProduct btn btn-primary pull-left btn-sm">+</a>
-                    <a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">x</a>--}}
-
                     <div class="col-sm-12">
-                        <div class="addProductCategory" style="display: none">
+                       <div style="display: block">
+                            <div class="addProductCategory">
                             {!! Form::open(['class' => 'form-horizontal ', 'id'=> 'product_form']) !!}
-
-                           {{-- <input type="hidden" name="product_id" value="" data-name="product_id"/>--}}
-
                             <div style="display: none" class="form-group {{ $errors->has('id') ? 'has-error' : ''}}">
                                 {!! Form::label('product_id', 'Id: ', ['class' => 'col-sm-3 control-label']) !!}
                                 <div class="col-sm-6">
                                     {!! Form::text('product_id', null, ['class' => 'form-control', 'data-name' =>'product_id']) !!}
                                 </div>
                             </div>
-
-
                             <div class="form-group {{ $errors->has('category_name') ? 'has-error' : ''}}">
                                 {!! Form::label('category_name', 'Категория: ', ['class' => 'col-sm-3 control-label']) !!}
                                 <div class="col-sm-6">
@@ -180,29 +179,22 @@
                                     {!! Form::number('product_price', null, ['class' => 'form-control', 'data-name' =>'price']) !!}
                                 </div>
                             </div>
-
-
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-3">
-                                    {!! Form::submit('Создать', ['class' => 'create btn btn-primary form-control']) !!}
-                                    {!! Form::submit('Обновить', ['class' => 'update btn btn-primary form-control']) !!}
+
                                 </div>
                             </div>
                             {!! Form::close() !!}
-
-
                         </div>
+                       </div>
                     </div>
-
                 </div>
+
 
             </div>
         </div>
 
-
-
         <script>
-
             var categories = [];
             var currentCategory = null;
             var data = <?=$category?>;
@@ -244,7 +236,6 @@
                             } while (childrens.length > 0);
                         }
 
-
                         $.ajax({
                             type: "POST",
                             url: "/get-product-list",
@@ -256,20 +247,15 @@
                                 categoryId: categories
                             },
                             success: function (msg) {
-
-
-
                                 $('#product_list').html(msg);
                             }
                         });
-
                     },
                     onNodeUnchecked: function (event, node) {
                         $('.product_category').val('')
                         $('#product_list').html('');
                         categories = [];
                         currentCategory = null;
-
                         $.ajax({
                             type: "POST",
                             url: "/get-product-list",
@@ -284,15 +270,10 @@
                                 $('#product_list').html(msg);
                             }
                         });
-
-
-
                     }
                 }).treeview('collapseAll');
 
                 $('#product_list').delegate('.paginate a', 'click', function () {
-
-                    
                     event.preventDefault();
                     var a = $(this);
                     var url = a.attr("href");
@@ -313,25 +294,19 @@
                                 $('#product_list').html(msg);
                             }
                         });
-
                     }
-
                 });
 
-                $('.update').on('click', function () {
-                    var buttom = $(this);
-        //            buttom.disable();
-
+                $('#myModal').delegate('.update', 'click', function () {
                     event.preventDefault();
                     var data = {};
-
-                    data['id'] = $('.form-group').find('input[data-name="product_id"]').val();
-                    data['name'] = $('.form-group').find('input[data-name="name"]').val();
-                    data['description'] = $('.form-group').find('input[data-name="description"]').val();
-                    data['content'] = $('.form-group').find('input[data-name="content"]').val();
-                    data['photo'] = $('.form-group').find('input[data-name="photo"]').val();
-                    data['price'] = $('.form-group').find('input[data-name="price"]').val();
-                    data['category_name'] = $('.form-group').find('select[data-name="category_name"]').val();
+                    data['id'] = $('#myModal').find('.form-group').find('input[data-name="product_id"]').val();
+                    data['name'] =  $('#myModal').find('.form-group').find('input[data-name="name"]').val();
+                    data['description'] =  $('#myModal').find('.form-group').find('input[data-name="description"]').val();
+                    data['content'] =  $('#myModal').find('.form-group').find('input[data-name="content"]').val();
+                    data['photo'] =  $('#myModal').find('.form-group').find('input[data-name="photo"]').val();
+                    data['price'] =  $('#myModal').find('.form-group').find('input[data-name="price"]').val();
+                    data['category_name'] =  $('#myModal').find('.form-group').find('select[data-name="category_name"]').val();
 
                     $.ajax({
                         type: "POST",
@@ -341,31 +316,24 @@
                         },
                         data: data,
                         success: function (msg) {
-//                    buttom.enable();
-
-                            $('.addProductCategory').hide();
+                            $('#myModal').find('.close').click();
+                           /* $('.addProductCategory').hide();*/
                             var currentTr = $('#product_list').find('.option[value="' + data.id + '"]').parents('tr').eq(0);
-
                             currentTr.after(msg);
-
-
                             currentTr.remove();
-
                         }
                     });
 
                 });
 
-                $('.create').on('click', function(){
+                $('#myModal').delegate('.create', 'click', function (){
                     event.preventDefault();
-
                     var selected1 = {};
-                    var inputs = $('.addProductCategory').find('[data-name]');
+                    var inputs = $('#myModal').find('.addProductCategory').find('[data-name]');
 
                     inputs.each(function() {
                         selected1[$(this).attr('data-name')] = $(this).val();
                     });
-
                     if(selected1.name.length == 0){
                         $('[data-name="name"]').focus();
                         return false;
@@ -390,7 +358,7 @@
                                 }
                             });
 
-                            $('.addCategoryProduct').click();
+                            $('#myModal').find('.close').click();
                         }
                     });
                 });
@@ -398,15 +366,18 @@
             });
 
             $('#product_list').delegate('.editCategoryButton', 'click', function () {
-            $('.form-group ').find('.productId').val('');
+
+                $('#myModal').find('.modal-body').html($('.addProductCategory'));
+                $('#myModal').find('.create').hide();
+                $('#myModal').find('.update').show();
+                $('#myModal').find('.form-group ').find('.productId').val('');
             event.preventDefault();
             var id = $(this).parents('tr').eq(0).find('.option').val();
-            var inputs = $('.addProductCategory').find('[data-name]');
+            var inputs =  $('#myModal').find('.addProductCategory').find('[data-name]');
             inputs.each(function () {
                 if ($(this).attr('data-name') != 'category_name') {
                     $(this).val('');
                 }
-
             });
             $.ajax({
                 type: "POST",
@@ -418,36 +389,39 @@
                     productId: id
                 },
                 success: function (msg) {
-                    $('.form-group').find('select[data-name="category_name"]').find("option[selected='selected']").attr('selected', false);
-                    $('.form-group').find('.product_id').val(msg.product.id);
-                    $('.form-group').find('select[data-name="category_name"]').val(msg.product.category_id);
-                    $('.form-group').find('input[data-name="product_id"]').val(msg.product.id);
-                    $('.form-group').find('input[data-name="name"]').val(msg.product.product_name);
-                    $('.form-group').find('input[data-name="description"]').val(msg.product.product_description);
-                    $('.form-group').find('input[data-name="content"]').val(msg.product.content);
-                    $('.form-group').find('input[data-name="photo"]').val(msg.product.product_image);
-                    $('.form-group').find('input[data-name="price"]').val(msg.product.product_price);
-                    $('.addProductCategory').show();
-                    $('#product_form').find('input.create').hide();
-                    $('#product_form').find('input.update').show();
-                    $('#product_form').find('input[type="text"]').eq(0).focus();
+                    $('#myModal').find('.form-group').find('select[data-name="category_name"]').find("option[selected='selected']").attr('selected', false);
+                    $('#myModal').find('.form-group').find('.product_id').val(msg.product.id);
+                    $('#myModal').find('.form-group').find('select[data-name="category_name"]').val(msg.product.category_id);
+                    $('#myModal').find('.form-group').find('input[data-name="product_id"]').val(msg.product.id);
+                    $('#myModal').find('.form-group').find('input[data-name="name"]').val(msg.product.product_name);
+                    $('#myModal').find('.form-group').find('input[data-name="description"]').val(msg.product.product_description);
+                    $('#myModal').find('.form-group').find('input[data-name="content"]').val(msg.product.content);
+                    $('#myModal').find('.form-group').find('input[data-name="photo"]').val(msg.product.product_image);
+                    $('#myModal').find('.form-group').find('input[data-name="price"]').val(msg.product.product_price);
+                    $('#myModal').find('.addProductCategory').show();
+                    $('#myModal').find('#product_form').find('input.create').hide();
+                    $('#myModal').find('#product_form').find('input.update').show();
+                    $('#myModal').find('#product_form').find('input[type="text"]').eq(0).focus();
                 }
             });
-
         });
 
             $('.table').delegate('.addCategoryProduct', 'click', function(){
+                $('#myModal').find('.create').show();
+                $('#myModal').find('.update').hide();
 
-                $('.addProductCategory').toggle();
+
+                $('#myModal').find('.modal-body').html($('.addProductCategory'));
+                
+//                $('.addProductCategory').toggle();
+
                 $('#product_form').find('input.update').hide();
                 $('#product_form').find('input.create').show();
-
                 var inputs = $('.addProductCategory').find('[data-name]');
                 var categoryId = $('.table').find('.companyIdClass').val();
                 var categoryTitle = $('.table').find('.companyTitleClass').val();
-                  $('.product-editor').find('input[data-name="category_id"]').val(categoryId);
-                    $('.product-editor').find('input[data-name="category_name"]').val(categoryTitle);
-
+                $('.product-editor').find('input[data-name="category_id"]').val(categoryId);
+                $('.product-editor').find('input[data-name="category_name"]').val(categoryTitle);
                 inputs.each(function() {
                     if( $(this).attr('data-name') != 'category_name'){
                         $(this).val('');
@@ -484,6 +458,7 @@
 
 
             });
+
             $('#product_list').delegate('.deleteCategoryButton', 'click', function () {
                 event.preventDefault();
                 var tr = $(this).parents('tr');
@@ -503,7 +478,6 @@
                     }
                 });
             });
-
 
         </script>
 
