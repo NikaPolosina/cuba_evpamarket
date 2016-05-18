@@ -82,7 +82,8 @@ class ProductsController extends Controller{
         $id = $request->input('productId');
         $product = Product::find($id)->toArray();
         $productCategory = Product::find($id)->getCategory;
-        return response()->json([ 'product'         => $product]);
+
+        return response()->json([ 'product'         => $product, 'productCategory' => $productCategory]);
     }
 
     public function update($id, Request $request){

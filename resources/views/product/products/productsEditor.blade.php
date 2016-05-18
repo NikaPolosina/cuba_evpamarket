@@ -148,7 +148,7 @@
                                                     {!! Form::label('category_name', 'Категория: ', ['class' => 'col-sm-3 control-label']) !!}
                                                         <select   name="category_name"  data-name="category_name">
                                                             @if(count($myCategories))
-
+                                                                <option  value="">Выбирите категорию</option>
                                                             @foreach($myCategories as $value)
                                                                     <option  value="{{$value['id']}}">{{$value['title']}}</option>
                                                                 @endforeach
@@ -156,6 +156,12 @@
                                                         </select>
                                                     <span class="modalSpan" ></span>
                                                 </div>
+
+                                                    <div class="msgDenger alert alert-danger" style="display: none;">
+                                                        <strong>Внимание!</strong> Выбирите катигорию.
+                                                    </div>
+
+
                                                 <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
                                                     {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
                                                     {!! Form::text('product_name', null, ['class' => 'form-control', 'data-name' =>'name']) !!}
@@ -408,10 +414,6 @@
                     var inputs = $('#myModal').find('.addProductCategory').find('[data-name]');
                      var img = $('.files');
 
-
-
-
-
                     inputs.each(function() {
                         selected1[$(this).attr('data-name')] = $(this).val();
                     });
@@ -420,6 +422,14 @@
                         return false;
                     }
 
+
+                    if(selected1.category_name.length == 0){
+                        $('#myModal').find('.msgDenger').show();
+                        return false;
+                    }else{
+                        $('#myModal').find('.msgDenger').hide();
+                    }
+                    
                     $.ajax({
                         type: "POST",
                         url: "/products-category",
@@ -440,13 +450,6 @@
                             });
 
                             $('#myModal').modal('hide');
-
-
-
-
-
-
-
 
                         }
                     });
@@ -470,7 +473,7 @@
                     $(this).val('');
                 }
             });
-
+                $('#myModal').find('.modalSpan').text('');
 
             $.ajax({
                 type: "POST",
@@ -482,8 +485,15 @@
                     productId: id
                 },
                 success: function (msg) {
+                    console.log(msg.productCategory.title);
+
+
+
+                    $('#myModal').find('select[name="category_name"]').hide();
+                    $('#myModal').find('.modalSpan').text(msg.productCategory.title).show();
 
                     $('#myModal').find('.form-group').find('select[data-name="category_name"]').find("option[selected='selected']").attr('selected', false);
+
                     $('#myModal').find('.form-group').find('.product_id').val(msg.product.id);
                     $('#myModal').find('.form-group').find('select[data-name="category_name"]').val(msg.product.category_id);
                     $('#myModal').find('.form-group').find('input[data-name="product_id"]').val(msg.product.id);
@@ -503,12 +513,9 @@
             $('.table').delegate('.add-new-product', 'click', function(){
 
                 $('#myModal').modal('show');
-
                 $('#myModal').find('.modal-body').html($('.addProductCategory'));
                 $('#myModal').find('.create').show();
                 $('#myModal').find('.update').hide();
-
-
                 $('#myModal').find('.modal-body').html($('.addProductCategory'));
 
                 var inputs = $('#myModal').find('.addProductCategory').find('[data-name]');
@@ -524,11 +531,9 @@
 
                 var categoryId = $('.table').find('.companyIdClass').val();
                 var categoryTitle = $('.table').find('.companyTitleClass').val();
-
                 var modalSelect = $('#myModal').find('select[data-name="category_name"]');
                 var modalSpan = $('#myModal').find('.modalSpan');
                 if(categoryId.length && modalSelect.find('option[value="'+categoryId+'"]').length){
-                    console.log(modalSelect);
 
                         modalSelect.val(categoryId);
                         modalSelect.hide();
