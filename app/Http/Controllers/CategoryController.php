@@ -135,7 +135,7 @@ class CategoryController extends Controller{
             if($parentId !=0){
                 do{
                     if($i == 4){
-                        dd($parentId);
+
                     }
                     $current = Category::find($parentId)->toArray();
 

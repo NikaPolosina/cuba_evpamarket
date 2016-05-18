@@ -98,7 +98,7 @@
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content col-md-10 col-sm-offset-1">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <button type="button" class="close myClose" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="myModalLabel">Добавление товара</h4>
                             </div>
                             <div class="modal-body">
@@ -130,7 +130,7 @@
                                     'category' => false
                                      ))
                 </div>
-
+<div style="display: none;">
                 <div class="product-editor">
                     <div class="col-sm-12">
                         <div class="row">
@@ -154,6 +154,7 @@
                                                                 @endforeach
                                                             @endif
                                                         </select>
+                                                    <span class="modalSpan" ></span>
                                                 </div>
                                                 <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
                                                     {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
@@ -260,6 +261,7 @@
 
                     </div>
                 </div>
+</div>
 
 
             </div>
@@ -272,12 +274,14 @@
 
             $(document).ready(function(){
 
+                $('#myModal').modal({show:false});
+
                 $('#custom-checkable').treeview({
                     data: data,
                     showCheckbox: true,
                     enableLinks: true,
                     onNodeChecked: function (event, node) {
-                        $('.addProductCategory').hide();//ertyuiosdfghkwertyuierty
+                       /* $('.addProductCategory').hide();//ertyuiosdfghkwertyuierty*/
                         categories = [];
                         $('#product_list').html('');
                         var list = $('#custom-checkable').treeview('getChecked');
@@ -435,19 +439,29 @@
                                 }
                             });
 
-                            $('#myModal').find('.close').click();
+                            $('#myModal').modal('hide');
+
+
+
+
+
+
+
+
                         }
                     });
                 });
 
             });
 
-            $('#product_list').delegate('.editCategoryButton', 'click', function () {
-
+            $('#product_list').delegate('.chang-product', 'click', function () {
+                
+                $('#myModal').modal('show');
                 $('#myModal').find('.modal-body').html($('.addProductCategory'));
                 $('#myModal').find('.create').hide();
                 $('#myModal').find('.update').show();
                 $('#myModal').find('.form-group ').find('.productId').val('');
+
             event.preventDefault();
             var id = $(this).parents('tr').eq(0).find('.option').val();
             var inputs =  $('#myModal').find('.addProductCategory').find('[data-name]');
@@ -456,6 +470,8 @@
                     $(this).val('');
                 }
             });
+
+
             $.ajax({
                 type: "POST",
                 url: "/products/edit-categoty",
@@ -466,6 +482,7 @@
                     productId: id
                 },
                 success: function (msg) {
+
                     $('#myModal').find('.form-group').find('select[data-name="category_name"]').find("option[selected='selected']").attr('selected', false);
                     $('#myModal').find('.form-group').find('.product_id').val(msg.product.id);
                     $('#myModal').find('.form-group').find('select[data-name="category_name"]').val(msg.product.category_id);
@@ -483,29 +500,43 @@
             });
         });
 
-            $('.table').delegate('.addCategoryProduct', 'click', function(){
+            $('.table').delegate('.add-new-product', 'click', function(){
+
+                $('#myModal').modal('show');
+
+                $('#myModal').find('.modal-body').html($('.addProductCategory'));
                 $('#myModal').find('.create').show();
                 $('#myModal').find('.update').hide();
 
 
                 $('#myModal').find('.modal-body').html($('.addProductCategory'));
 
-//                $('.addProductCategory').toggle();
-
-                $('#product_form').find('input.update').hide();
-                $('#product_form').find('input.create').show();
-                var inputs = $('.addProductCategory').find('[data-name]');
-                var categoryId = $('.table').find('.companyIdClass').val();
-                var categoryTitle = $('.table').find('.companyTitleClass').val();
-                $('.product-editor').find('input[data-name="category_id"]').val(categoryId);
-                $('.product-editor').find('input[data-name="category_name"]').val(categoryTitle);
+                var inputs = $('#myModal').find('.addProductCategory').find('[data-name]');
                 inputs.each(function() {
                     if( $(this).attr('data-name') != 'category_name'){
                         $(this).val('');
                     }
                 });
 
-                $('select[data-name="category_name"]').val(currentCategory);
+                $('#product_form').find('input.update').hide();
+                $('#product_form').find('input.create').show();
+                var inputs = $('.addProductCategory').find('[data-name]');
+
+                var categoryId = $('.table').find('.companyIdClass').val();
+                var categoryTitle = $('.table').find('.companyTitleClass').val();
+
+                var modalSelect = $('#myModal').find('select[data-name="category_name"]');
+                var modalSpan = $('#myModal').find('.modalSpan');
+                if(categoryId.length && modalSelect.find('option[value="'+categoryId+'"]').length){
+                    console.log(modalSelect);
+
+                        modalSelect.val(categoryId);
+                        modalSelect.hide();
+                    modalSpan.html(categoryTitle).show();
+                }else{
+                    modalSelect.show();
+                    modalSpan.html('').hide();
+                }
 
             });
 
