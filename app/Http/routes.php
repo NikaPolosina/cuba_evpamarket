@@ -62,6 +62,8 @@ Route::get('/homeSimpleUser', function(){
     return view('homeSimpleUser');
 });
 
+Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);
+
 
 
 

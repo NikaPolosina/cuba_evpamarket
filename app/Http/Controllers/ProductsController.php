@@ -83,6 +83,10 @@ class ProductsController extends Controller{
         $product = Product::find($id)->toArray();
         $productCategory = Product::find($id)->getCategory;
 
+        if(!strlen($product['product_image'])){
+            $product['product_image'] = json_encode(['']);
+        }
+
         return response()->json([ 'product'         => $product, 'productCategory' => $productCategory]);
     }
 
@@ -195,7 +199,8 @@ class ProductsController extends Controller{
             return '';
         }
     }
-        public function attachCategoryToCompany(Request $request){
+
+    public function attachCategoryToCompany(Request $request){
             $companyId = Company::find($request['companyId']);
 
             if (!empty($request['categories'])){
