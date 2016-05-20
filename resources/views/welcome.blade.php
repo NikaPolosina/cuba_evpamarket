@@ -112,12 +112,18 @@
                                     <div class="col-sm-10">
                                         <hr>
                                         <h3>Товары</h3>
-
-                                                <?php foreach($productAll as $v){?>
+                                                <?php foreach($productAll as $v){
+                                                if(strlen($v->product_image)){
+                                                    $img = json_decode($v->product_image);
+                                                    $img = '/img/custom/files/thumbnail/'.$img[0]->name;
+                                                }?>
                                                     <div class="col-md-2 carentFindProduct">
                                                         <div class="" style="border: solid 1px grey; margin: 3px;">
                                                             <a href="/single-product/{{$v->id}}">{{$v->product_name}}</a>
                                                         </div>
+                                                        <?php if($img){?>
+                                                        <img src="<?=$img?>">
+                                                        <?php } ?>
                                                     </div>
                                                 <?php } ?>
                                     </div>
