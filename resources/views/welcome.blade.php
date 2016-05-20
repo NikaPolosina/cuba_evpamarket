@@ -97,7 +97,7 @@
 
                                     <div class="col-sm-10">
 
-                                        <h3>Компании</h3>
+                                        <h3 style="">Компании</h3>
                                         <?php foreach($companyAll as $valueCompanw){?>
                                         <div class="col-md-2 carentFindCompany">
                                             <div class="" style="border: solid 1px grey; margin: 3px;">
@@ -113,17 +113,39 @@
                                         <hr>
                                         <h3>Товары</h3>
                                                 <?php foreach($productAll as $v){
+
                                                 if(strlen($v->product_image)){
+
+
                                                     $img = json_decode($v->product_image);
-                                                    $img = '/img/custom/files/thumbnail/'.$img[0]->name;
-                                                }?>
-                                                    <div class="col-md-2 carentFindProduct">
-                                                        <div class="" style="border: solid 1px grey; margin: 3px;">
-                                                            <a href="/single-product/{{$v->id}}">{{$v->product_name}}</a>
+                                                    if($img){
+                                                        $img = '/img/custom/files/thumbnail/'.$img[0]->name;
+                                                        if(!is_file(public_path().$img)) unset($img);
+                                                    }
+                                                }else{
+                                                    $img = '/img/custom/files/thumbnail/plase.jpg';
+                                                }
+                                        ?>
+                                                    <div class="col-md-3 img-thumbnail carentFindProduct" style="font-size: 20px; text-align: center; margin: 3px; min-height: 230px;">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div class="img-thumbnail" style="margin: 3px; ">
+                                                                    <a style="margin: 20px;" href="/single-product/{{$v->id}}">{{$v->product_name}}</a>
+                                                                </div>
+                                                                <div class="col-sm-6" {{--style="width: 100px; height: 200px"--}}>
+                                                                    <?php if(isset($img)){?>
+                                                                    <img class="img-thumbnail" style="display: block; width: 100%;" src="<?=$img?>">
+                                                                    <?php } ?>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <p style="font-size: 14px;">{{$v->content}}</p>
+                                                                </div>
+
+
+
+                                                            </div>
                                                         </div>
-                                                        <?php if($img){?>
-                                                        <img src="<?=$img?>">
-                                                        <?php } ?>
                                                     </div>
                                                 <?php } ?>
                                     </div>

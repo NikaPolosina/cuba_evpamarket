@@ -238,17 +238,17 @@
                                                             <span class="fileupload-process"></span>
                                                         </div>
                                                         <!-- The global progress state -->
-                                                        <div class="col-lg-5 fileupload-progress fade">
+                                                      {{--  <div class="col-lg-5 fileupload-progress fade">
                                                             <!-- The global progress bar -->
                                                             <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
                                                                 <div class="progress-bar progress-bar-success" style="width:0%;"></div>
                                                             </div>
                                                             <!-- The extended global progress state -->
                                                             <div class="progress-extended">&nbsp;</div>
-                                                        </div>
+                                                        </div>--}}
                                                     </div>
                                                     <!-- The table listing the files available for upload/download -->
-                                                    <table role="presentation" class="table table-striped">
+                                                    <table style=" width: 50%;" role="presentation" class="table table-striped">
                                                         <tbody class="files"></tbody>
                                                     </table>
                                                 </form>
@@ -265,46 +265,49 @@
                                                 <a class="play-pause"></a>
                                                 <ol class="indicator"></ol>
                                             </div>
-                                            <!-- The template to display files available for upload -->
-                                            <script id="template-upload" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload fade">
-        <td>
-            <span class="preview"></span>
-        </td>
-        <td>
-            <p class="name">{%=file.name%}</p>
-            <strong class="error text-danger"></strong>
-        </td>
-        <td>
-            <p class="size">Processing...</p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-        </td>
-        <td>
-            {% if (!i && !o.options.autoUpload) { %}
-                <button class="btn btn-primary start" disabled>
-                    <i class="glyphicon glyphicon-upload"></i>
-                    <span>Start</span>
-                </button>
-            {% } %}
-            {% if (!i) { %}
-                <button class="btn btn-warning cancel">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
-{% } %}
 
+                                            <style>
 
+                                                .form-control{
+                                                    width: 75%;
+                                                }
+                                            </style>
 
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-upload fade">
+            <td>
+                <span class="preview"></span>
+            </td>
+            <td>
+                <p class="name">{%=file.name%}</p>
+                <strong class="error text-danger"></strong>
+            </td>
+            <td>
+                <p class="size">Processing...</p>
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+            </td>
+            <td>
+                {% if (!i && !o.options.autoUpload) { %}
+                    <button class="btn btn-primary start" disabled>
+                        <i class="glyphicon glyphicon-upload"></i>
+                        <span>Start</span>
+                    </button>
+                {% } %}
+                {% if (!i) { %}
+                    <button class="btn btn-warning cancel">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>Cancel</span>
+                    </button>
+                {% } %}
+            </td>
+        </tr>
+    {% } %}
+</script>
 
-
-
-                                </script>
-                                            <!-- The template to display files available for download -->
-                                            <script id="template-download" type="text/x-tmpl">
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
         <td>
@@ -478,6 +481,8 @@
 
                 $('.table').delegate('.add-new-product', 'click', function(){
                     images = [''];
+                    $('#fileupload table tbody tr.template-upload').remove();
+                    $('#fileupload table tbody tr.template-download').remove();
 
                     $('#myModal').modal('show');
                     $('#myModal').find('.modal-body').html($('.addProductCategory'));
@@ -507,7 +512,7 @@
                     }
 
 
-                    $('#fileupload table tbody tr.template-download').remove();
+
                     $('#fileupload').addClass('fileupload-processing');
                     $.ajax({
                         url:$('#fileupload').fileupload('option', 'url'),
@@ -535,6 +540,9 @@
 
                 $('#product_list').delegate('.chang-product', 'click', function(){
                     images = [];
+                    $('#fileupload table tbody tr.template-upload').remove();
+                    $('#fileupload table tbody tr.template-download').remove();
+
                     $('#myModal').modal('show');
                     $('#myModal').find('.modal-body').html($('.addProductCategory'));
                     $('#myModal').find('.create').hide();
@@ -589,7 +597,6 @@
 
                             }
 
-                            $('#fileupload table tbody tr.template-download').remove();
                             $('#fileupload').addClass('fileupload-processing');
                             $.ajax({
                                 url:$('#fileupload').fileupload('option', 'url'),
