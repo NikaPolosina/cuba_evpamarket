@@ -218,20 +218,20 @@
                                                             <!-- The fileinput-button span is used to style the file input field as button -->
                                                 <span class="btn btn-success fileinput-button">
                                                     <i class="glyphicon glyphicon-plus"></i>
-                                                    <span>Add files...</span>
+                                                    <span>Добавить файл...</span>
                                                     <input type="file" name="files[]" multiple>
                                                 </span>
                                                             <button type="submit" class="btn btn-primary start">
                                                                 <i class="glyphicon glyphicon-upload"></i>
-                                                                <span>Start upload</span>
+                                                                <span>Начать загрузку</span>
                                                             </button>
                                                             <button type="reset" class="btn btn-warning cancel">
                                                                 <i class="glyphicon glyphicon-ban-circle"></i>
-                                                                <span>Cancel upload</span>
+                                                                <span>Отменить загрузку</span>
                                                             </button>
                                                             <button type="button" class="btn btn-danger delete">
                                                                 <i class="glyphicon glyphicon-trash"></i>
-                                                                <span>Delete</span>
+                                                                <span>Удалить</span>
                                                             </button>
                                                             <input type="checkbox" class="toggle">
                                                             <!-- The global file processing state -->
@@ -292,13 +292,13 @@
                 {% if (!i && !o.options.autoUpload) { %}
                     <button class="btn btn-primary start" disabled>
                         <i class="glyphicon glyphicon-upload"></i>
-                        <span>Start</span>
+                        <span>Загрузить</span>
                     </button>
                 {% } %}
                 {% if (!i) { %}
                     <button class="btn btn-warning cancel">
                         <i class="glyphicon glyphicon-ban-circle"></i>
-                        <span>Cancel</span>
+                        <span>Отменить</span>
                     </button>
                 {% } %}
             </td>
@@ -336,13 +336,13 @@
             {% if (file.deleteUrl) { %}
                 <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                     <i class="glyphicon glyphicon-trash"></i>
-                    <span>Delete</span>
+                    <span>Удалить</span>
                 </button>
                 <input type="checkbox" name="delete" value="1" class="toggle">
             {% } else { %}
                 <button class="btn btn-warning cancel">
                     <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel</span>
+                    <span>Отменить</span>
                 </button>
             {% } %}
         </td>

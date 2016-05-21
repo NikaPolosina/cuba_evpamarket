@@ -30,30 +30,16 @@ class CompanyController extends Controller
      *
      * @return Response
      */
-    public function index()
-    {
-
+    public function index(){
         $company = Company::paginate(15);
-
         return view('company.index', compact('company'));
     }
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
+    
     public function create()
     {
         return view('company.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
     public function store(Request $request)
     {
         $company =  $this->createCompany($request->except('_token'));
@@ -73,13 +59,6 @@ class CompanyController extends Controller
         return Company::create($company);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     *
-     * @return Response
-     */
     public function revers($currentArray){
 
         foreach ($currentArray as $value) {
@@ -128,13 +107,6 @@ class CompanyController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     *
-     * @return Response
-     */
     public function edit($id)
     {
         $company = Company::findOrFail($id);
