@@ -244,8 +244,16 @@
                 }).done(function(result){
                     var preview = '<img width="300" height="300" src="/img/system/place_holder.png">';
                     if(result.files.length){
-                        defaultObj = result
-                        preview = '<img src="'+result.files[0]['thumbnailUrl']+'">';
+                        defaultObj = result;
+                        console.log(result.files[0]);
+
+
+
+                        preview = '<a ' +
+                            'href="'+result.files[0]["url"]+'" ' +
+                            'title="'+result.files[0]["name"]+'" download="'+result.files[0]["name"]+'" data-gallery="">' +
+                            '<img src="'+result.files[0]["thumbnailUrl"]+'">' +
+                            '</a>';
                     }
                     $('.files').html(preview);
                 });
