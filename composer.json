@@ -9,14 +9,17 @@
         "laravel/framework": "5.2.*",
         "zizaco/entrust": "5.2.x-dev",
         "appzcoder/crud-generator": "^1.0",
-        "laravelcollective/html": "^5.2"
+        "laravelcollective/html": "^5.2",
+        "Doctrine/dbal": "^2.5"
     },
+
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
         "symfony/css-selector": "2.8.*|3.0.*",
-        "symfony/dom-crawler": "2.8.*|3.0.*"
+        "symfony/dom-crawler": "2.8.*|3.0.*",
+        "nicolaslopezj/searchable": "1.*"
     },
     "autoload": {
         "classmap": [

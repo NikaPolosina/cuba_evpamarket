@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>Laravel CRUD App</title>
 	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.5/flatly/bootstrap.min.css" rel="stylesheet">
@@ -12,6 +13,11 @@
 			padding-top: 70px;
 		}
 	</style>
+	<!-- Scripts -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-treeview.js"></script>
+
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -24,7 +30,7 @@
 	                <span class="icon-bar"></span>
 	                <span class="icon-bar"></span>
 	            </button>
-	            <a class="navbar-brand" href="#">CRUD App</a>
+	            <a class="navbar-brand" href="#">Cuba</a>
 	        </div>
 
 			<div class="collapse navbar-collapse" id="navbar-collapse-1">
@@ -34,7 +40,7 @@
 						<li><a href="{{ url('/auth/register') }}">Register</a></li>
 					@else
 						<li><a href="#">{{ Auth::user()->name }}</a></li>
-						<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+						<li><a href="{{ url('/auth/logout') }}">Выход</a></li>
 					@endif
 				</ul>
 			</div>
@@ -49,12 +55,10 @@
 	<hr/>
 
 	<div class="container">
-	    &copy; {{ date('Y') }}. Created by <a href="http://www.appzcoder.com">AppzCoder</a>
+	    &copy; {{ date('Y') }}.  <a href="http://www.cuba.evpamarket.com/">Cuba</a>
 	    <br/>
 	</div>
 
-	<!-- Scripts -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 </body>
 </html>
