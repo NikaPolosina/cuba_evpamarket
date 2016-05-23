@@ -13,7 +13,7 @@
             foreach ($img as $v){
 
                 if($img){
-                    $img = '/img/custom/files/thumbnail/'.$v->name;
+                    $img = '/img/custom/files/'.$v->name;
                     if(!is_file(public_path().$img)) unset($img);
                 }else{
                     unset($img);
@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                <td> <img class="img-thumbnail" style="display: block;" src="<?=$img?>"> </td><td>{{ $singleProduct['product_name'] }}</td><td> {{ $singleProduct['product_description'] }} </td><td> {{ $singleProduct['product_price'] }} </td>
+                <td> <img class="img-thumbnail" style="display: block; width: 200px;" src="<?=$img?>"> </td><td>{{ $singleProduct['product_name'] }}</td><td> {{ $singleProduct['product_description'] }} </td><td> {{ $singleProduct['product_price'] }} </td>
                 </tr>
                 </tbody>
             </table>

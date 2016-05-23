@@ -18,18 +18,28 @@
                             <div class="table">
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead>
-                                    <tr>
-                                        <th>№</th><th>Имя магазина</th><th>Описание</th><th>Logo</th><th>Действие</th>
+                                    <tr bgcolor="#FBFBEF">
+                                        <th>№</th><th>Logo</th><th>Имя магазина</th><th>Описание</th><th>Детальное описание</th><th>Действие</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {{-- */$x=0;/* --}}
                                     @foreach($curentUser->getCompanies as $item)
+
+                                        <?php  if(!empty($item->company_logo )&& file_exists(public_path().'/img/custom/companies/thumbnail/'.$item->company_logo)) {
+                                            $logo = '/img/custom/companies/thumbnail/'.$item->company_logo;
+                                        }else{
+
+                                            $logo = '/img/custom/files/thumbnail/plase.jpg';
+                                        } ?>
+
+
                                         {{-- */$x++;/* --}}
                                         <tr>
                                             <td>{{ $x }}</td>
-                                            <td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td><td>{{ $item->company_logo }}</td>
-                                            <td>
+                                            <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="<?=$logo?>"></td><td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td><td width="200">{!!$item->company_content!!}</td>
+
+                                            <td width="165">
                                                 <a href="{{ url('company/' . $item->id . '/edit') }}">
                                                     <button type="submit" class="btn btn-primary btn-xs">Редактировать</button>
                                                 </a> /

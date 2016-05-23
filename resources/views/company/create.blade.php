@@ -36,12 +36,12 @@
                         <div class="col-lg-7">
                                 <span class="btn btn-success fileinput-button">
                                     <i class="glyphicon glyphicon-plus"></i>
-                                    <span>Add files...</span>
+                                    <span>Добавить файл...</span>
                                     <input type="file" name="files[]">
                                 </span>
                             <button type="button" class="btn btn-danger delete">
                                 <i class="glyphicon glyphicon-trash"></i>
-                                <span>Delete</span>
+                                <span>Удалить</span>
                             </button>
                         </div>
 

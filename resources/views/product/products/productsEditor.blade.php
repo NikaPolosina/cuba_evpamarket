@@ -37,7 +37,7 @@
                         $('#custom-checkable1').treeview({
                             data:data,
                             showCheckbox:true,
-                            enableLinks:true,
+                            enableLinks:false,
                             onNodeChecked:function(event, node){
                                 a.show();
                                 ul.append('<li><input checked="checked" type="checkbox" value="' + node.id + '"/>' + node.text + '</li>');
@@ -52,6 +52,7 @@
                         }).treeview('collapseAll');
                     });
                     $('.addCategoryCompany').on('click', function(){
+                        event.preventDefault();
                         var inputs     = ul.find("input:checked");
                         var categories = [];
                         inputs.each(function(){
@@ -818,7 +819,7 @@
                 $('#custom-checkable').treeview({
                     data:data,
                     showCheckbox:true,
-                    enableLinks:true,
+                    enableLinks:false,
                     onNodeChecked:function(event, node){
                         /* $('.addProductCategory').hide();//ertyuiosdfghkwertyuierty*/
                         categories = [];

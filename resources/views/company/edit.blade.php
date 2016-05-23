@@ -36,12 +36,12 @@
                         <div class="col-lg-7">
                                         <span class="btn btn-success fileinput-button">
                                             <i class="glyphicon glyphicon-plus"></i>
-                                            <span>Add files...</span>
+                                            <span>Загрузить файл...</span>
                                             <input type="file" name="files[]">
                                         </span>
                             <button type="button" class="btn btn-danger delete">
                                 <i class="glyphicon glyphicon-trash"></i>
-                                <span>Delete</span>
+                                <span>Удалить</span>
                             </button>
                         </div>
 
@@ -90,7 +90,7 @@
 
 
     <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-3">
+        <div class="col-sm-offset-3 col-sm-1">
             {!! Form::submit('Обновить', ['class' => 'btn btn-primary form-control']) !!}
         </div>
     </div>
