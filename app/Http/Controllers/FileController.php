@@ -35,6 +35,7 @@ class FileController extends Controller{
     public $image_objects  = array();
 
     public function index(Request $request){
+        //dd($_FILES);
         $options = NULL;
 
         $this->response = array();
