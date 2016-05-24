@@ -35,14 +35,14 @@
                         var data = <?=$categories?>
 
                         $('#custom-checkable1').treeview({
-                            data:data,
-                            showCheckbox:true,
-                            enableLinks:false,
-                            onNodeChecked:function(event, node){
+                            data            : data,
+                            showCheckbox    : true,
+                            enableLinks     : false,
+                            onNodeChecked   : function(event, node){
                                 a.show();
                                 ul.append('<li><input checked="checked" type="checkbox" value="' + node.id + '"/>' + node.text + '</li>');
                             },
-                            onNodeUnchecked:function(event, node){
+                            onNodeUnchecked : function(event, node){
                                 ul.find('input[value="' + node.id + '"]').parent().remove();
                                 if(ul.find('input').length < 1){
                                     a.hide();
@@ -59,16 +59,16 @@
                             categories.push($(this).val());
                         });
                         $.ajax({
-                            type:"POST",
-                            url:"/attach-category-to-company",
-                            headers:{
-                                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                            type    : "POST",
+                            url     : "/attach-category-to-company",
+                            headers : {
+                                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                             },
-                            data:{
-                                companyId:'<?=$company->id?>',
-                                categories:categories
+                            data    : {
+                                companyId  : '<?=$company->id?>',
+                                categories : categories
                             },
-                            success:function(msg){
+                            success : function(msg){
                                 location.reload();
                                 $('.allCategoryBlock').hide();
                             }
@@ -186,14 +186,11 @@
                                         {!! Form::close() !!}
 
 
-
                                     </div>
 
                                 </div>
 
                             </div>
-
-
 
 
                         </div>
@@ -205,18 +202,17 @@
         </div>
 
 
-
-
         <div class="row">
 
 
-            <div class="col-sm-8 col-sm-offset-2" >
+            <div class="col-sm-8 col-sm-offset-2">
 
                 <div class="mod modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                             </div>
                             <div class="modal-body">
@@ -275,21 +271,18 @@
                                         </div>
 
 
-
-
                                         <div class="row">
                                             <div class="col-sm-4 col-sm-offset-4">
-                        <span class="btn btn-success fileinput-button">
-                            <i class="glyphicon glyphicon-plus"></i>
-                            <span>Add files...</span>
-                            <input type="file" name="files[]" multiple>
-                        </span>
-
+                                                <span class="btn btn-success fileinput-button">
+                                                    <i class="glyphicon glyphicon-plus"></i>
+                                                    <span>Add files...</span>
+                                                    <input type="file" name="files[]" multiple>
+                                                </span>
                                             </div>
 
                                             <div class="col-sm-12">
                                                 <table>
-                                                    <tbody  class="files"></tbody>
+                                                    <tbody class="files"></tbody>
                                                 </table>
                                             </div>
 
@@ -304,7 +297,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-primary submit_modal_form">Save changes</button>
                             </div>
                         </div>
                     </div>
@@ -313,10 +306,6 @@
 
             </div>
         </div>
-        <span class="open btn btn-success">Open</span>
-
-
-
 
 
         <div>
@@ -336,7 +325,6 @@
                     <a class="play-pause"></a>
                     <ol class="indicator"></ol>
                 </div>
-
 
 
                 <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
@@ -369,205 +357,269 @@
             </div>
 
 
-
-
-
             <script>
 
-                var nededPath = 'companies/';
-                var imageObj=[];
+                var nededPath  = 'companies/<?=$company->id;?>';
+                var imageObj   = [];
                 var nededFiles = [];
                 var defaultObj = [];
-                var deleteObj = [];
+                var deleteObj  = [];
                 var form;
 
                 $(function(){
-
-
                     $('#fileupload').fileupload({
-                        url : '{{route('file_uploader')}}',
-                        previewMaxWidth: 300,
-                        previewMaxHeight: 300,
-                        filesContainer: $('.files'),
-                        uploadTemplateId: null,
-                        downloadTemplateId: null,
-                        uploadTemplate: function (o) {
-                            var rows = $();
-                            $.each(o.files, function (index, file) {
-                                var row = $('<tr class="template-upload fade">' +
-                                                '<td>' +
-                                                    '<div>' +
-                                                        (!index ? '<button class="cancel">Cancel</button>' : '') +
-                                                    '</div>' +
-                                                    '<span class="preview"></span></td>' +
-                                                    '<div class="error"></div>' +
-                                                '</td>' +
-                                            '</tr>');
-                                row.find('.name').text(file.name);
-                                row.find('.size').text(o.formatFileSize(file.size));
-                                if (file.error) {
-                                    row.find('.error').text(file.error);
-                                }
-                                rows = rows.add(row);
-                            });
-                            return rows;
+                        url                : '{{route('file_uploader')}}',
+                        previewMaxWidth    : 300,
+                        previewMaxHeight   : 300,
+                        filesContainer     : $('.files'),
+                        uploadTemplateId   : null,
+                        downloadTemplateId : null,
+                        uploadTemplate     : function(o){
                         },
-                        downloadTemplate: function (o) {
-                            var rows = $();
-                            $.each(o.files, function (index, file) {
-                                var row = $('<tr class="template-download fade">' +
-                                        '<td><span class="preview"></span></td>' +
-                                        '<td><p class="name"></p>' +
-                                        (file.error ? '<div class="error"></div>' : '') +
-                                        '</td>' +
-                                        '<td><span class="size"></span></td>' +
-                                        '<td><button class="delete">Delete</button></td>' +
-                                        '</tr>');
-                                row.find('.size').text(o.formatFileSize(file.size));
-                                if (file.error) {
-                                    row.find('.name').text(file.name);
-                                    row.find('.error').text(file.error);
-                                } else {
-                                    row.find('.name').append($('<a></a>').text(file.name));
-                                    if (file.thumbnailUrl) {
-                                        row.find('.preview').append(
-                                                $('<a></a>').append(
-                                                        $('<img>').prop('src', file.thumbnailUrl)
-                                                )
-                                        );
-                                    }
-                                    row.find('a')
-                                    .attr('data-gallery', '')
-                                    .prop('href', file.url);
-                                    row.find('button.delete')
-                                    .attr('data-type', file.delete_type)
-                                    .attr('data-url', file.delete_url);
-                                }
-                                rows = rows.add(row);
-                            });
-                            return rows;
+                        downloadTemplate   : function(o){
                         }
-
                     })
-                    .on('fileuploadprocessalways', function (e, data) {
-console.log(data);
-return false;
-
-
-                        /*var preview = '<img width="300" height="300" src="/img/system/place_holder.png">';
-                        if(data.files[0]['preview']){
-                            preview = data.files[0]['preview'];
-*/
-                    })
-                    .on('fileuploadprocessalways', function (e, data) {
+                    .on('fileuploadprocessalways', function(e, data){
                         imageObj.push(data.files[0]);
                         var index = imageObj.length - 1;
-                        var row = $('<tr class="template-upload">' +
+                        var row   = $('<tr class="template-upload">' +
                                 '<td>' +
                                 '<div>' +
-                                '<button class="cancel" data-id="'+index+'">Cancel</button>' +
+                                '<button class="cancel" data-id="' + index + '">Cancel</button>' +
+                                '<input type="radio"  name="default_img" class="default_img" data-id="' + index + '">Set as default' +
                                 '</div>' +
                                 '<span class="preview"></span></td>' +
                                 '<div class="error"></div>' +
                                 '</td>' +
                                 '</tr>');
                         row.find('.preview').append(data.files[0].preview);
-                        if (data.files[0].error) {
+                        if(data.files[0].error){
                             row.find('.error').text(data.files[0].error);
-
                         }
-
                         $('.files').append(row);
-
                         if(!form){
-                            form = data;
+                            form       = data;
                             form.files = [];
                         }
-
-                        /*
-                            var preview = '<img width="300" height="300" src="/img/system/place_holder.png">';
-                            if(data.files[0]['preview']){
-                                preview = data.files[0]['preview'];
-                            }
-
-                            if(defaultObj){
-                                deleteObj = defaultObj;
-                                defaultObj = null;
-                            }
-                        */
                     })
-                    .on('fileuploadadd', function(e, data){
-                    })
-                    .on('fileuploadsubmit', function(e, data){
-                        data.formData = {path : nededPath};
-                    })
-                    .on('fileuploaddone', function(e, data){
-                        $('.my_form').submit();
-                    })
-                    .on('fileuploadfail', function(e, data){
-                        $('.my_form').submit();
-                    });
-
+                    .on('fileuploadadd', function(e, data){})
+                    .on('fileuploadsubmit', function(e, data){data.formData = {path : nededPath};})
+                    .on('fileuploaddone', function(e, data){})
+                    .on('fileuploadfail', function(e, data){});
                 });
 
                 $(document).ready(function(){
-
-                    $('.open').on('click', function(){
+                    $('#product_list').delegate('.open', 'click', function(){
+                        imageObj   = [];
+                        nededFiles = [];
+                        defaultObj = [];
+                        deleteObj  = [];
+                        form = null;
                         $('.files').html('');
 
-                        $('.mod').modal();
+                        var categoryId    = $('.table').find('.companyIdClass').val();
+                        var categoryTitle = $('.table').find('.companyTitleClass').val();
+                        var modalSelect   = $('.mod').find('select[data-name="category_name"]');
+                        var modalSpan     = $('.mod').find('.modalSpan');
 
-                        $.ajax({
-                            url      : $('#fileupload').fileupload('option', 'url'),
-                            dataType : 'json',
-                            context  : $('#fileupload')[0],
-                            data     : {
-                                image : nededFiles,
-                                path  : nededPath
-                            },
-                        }).done(function(result){
-                            imageObj = [];
-                            defaultObj = [];
-                            deleteObj = [];
+                        if(categoryId.length && modalSelect.find('option[value="' + categoryId + '"]').length){
+                            modalSelect.val(categoryId);
+                            modalSelect.hide();
+                            modalSpan.html(categoryTitle).show();
+                        }else{
+                            modalSelect.show();
+                            modalSpan.html('').hide();
+                        }
+
+                        
+                        if($(this).hasClass('edit')){
+                            var id     = $(this).parents('tr').eq(0).find('.option').val();
+
+                            $.ajax({
+                                type    : "POST",
+                                url     : "/products/edit-categoty",
+                                headers : {
+                                    'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                                },
+                                data    : {productId : id},
+                                success : function(msg){
+
+                                    $('.mod').find('select[name="category_name"]').hide();
+                                    $('.mod').find('.modalSpan').text(msg.productCategory.title).show();
+                                    $('.mod').find('.form-group').find('select[data-name="category_name"]').find("option[selected='selected']").attr('selected', false);
+                                    $('.mod').find('.form-group').find('.product_id').val(msg.product.id);
+                                    $('.mod').find('.form-group').find('select[data-name="category_name"]').val(msg.product.category_id);
+                                    $('.mod').find('.form-group').find('input[data-name="product_id"]').val(msg.product.id);
+                                    $('.mod').find('.form-group').find('input[data-name="name"]').val(msg.product.product_name);
+                                    $('.mod').find('.form-group').find('input[data-name="description"]').val(msg.product.product_description);
+                                    $('.mod').find('.form-group').find('input[data-name="content"]').val(msg.product.content);
+                                    $('.mod').find('.form-group').find('input[data-name="photo"]').val(msg.product.product_image);
+                                    $('.mod').find('.form-group').find('input[data-name="price"]').val(msg.product.product_price);
+                                    $('.mod').find('.addProductCategory').show();
+                                    $('.mod').find('#product_form').find('input.create').hide();
+                                    $('.mod').find('#product_form').find('input.update').show();
+                                    $('.mod').find('#product_form').find('input[type="text"]').eq(0).focus();
 
 
-                            if(result.files.length){
-                                result.files.forEach(function(value){
+                                    nededPath  = 'companies/<?=$company->id;?>'+'/products/'+msg.product.id+'/';
 
-                                    defaultObj.push(value);
-                                    var index = defaultObj.length - 1;
-                                    var row = $('<tr class="template-upload">' +
-                                            '<td>' +
-                                            '<div>' +
-                                            '<button class="delete" data-id="'+index+'">DELETE</button>' +
-                                            '</div>' +
-                                            '<span class="preview"></span></td>' +
-                                            '<div class="error"></div>' +
-                                            '</td>' +
-                                            '</tr>');
-                                    row.find('.preview').append('<img src="'+value.thumbnailUrl+'">');
+                                    $.ajax({
+                                        url      : $('#fileupload').fileupload('option', 'url'),
+                                        dataType : 'json',
+                                        context  : $('#fileupload')[0],
+                                        data     : {
+                                            image : nededFiles,
+                                            path  : nededPath
+                                        }
+                                    }).done(function(result){
+                                        console.log(result);
 
-                                    $('.files').append(row);
+                                        imageObj   = [];
+                                        defaultObj = [];
+                                        deleteObj  = [];
+                                        if(result.files.length){
+                                            result.files.forEach(function(value){
+                                                defaultObj.push(value);
+                                                var index = defaultObj.length - 1;
+                                                var row   = $('<tr class="template-upload">' +
+                                                        '<td>' +
+                                                        '<div>' +
+                                                        '<button class="delete" data-id="' + index + '">DELETE</button>' +
+                                                        '</div>' +
+                                                        '<span class="preview"></span></td>' +
+                                                        '<div class="error"></div>' +
+                                                        '</td>' +
+                                                        '</tr>');
+                                                row.find('.preview').append('<img src="' + value.thumbnailUrl + '">');
+                                                $('.files').append(row);
+                                            });
+                                        }
+                                    });
 
-                                });
+                                    $('.mod').modal();
+
+                                }
+                            });
+
+                            
+
+                        }else{
+                            $('.mod').modal();
+                        }
+
+                    });
+                    
+                    
+                    $('.submit_modal_form').on('click', function(){
+                        
+
+                        var modForm = $('.mod').find('form');
+                        if(modForm.length){
+
+                            var data = {};
+                            var inputs    = $('.mod').find('[data-name]');
+                            inputs.each(function(){
+                                data[$(this).attr('data-name')] = $(this).val();
+                            });
+
+
+                            var path = '/products-category';
+                            var update = false;
+                            if(data.product_id.length > 0){
+                                path = '/products/ajax-update';
+                                update = true;
                             }
 
+                            $.ajax({
+                                type    : "POST",
+                                url     : path,
+                                headers : {
+                                    'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                                },
+                                data    : {
+                                    company_id : '<?=$company->id?>',
+                                    product    : data
+                                },
+                                success : function(data){
+                                    var tr = $(data);
+                                    var id = tr.find('.option').val();
 
-                        });
+                                    if(update){
+                                        var old = $('.tBody').find('.option[value="'+id+'"]').parents('tr').eq(0);
+                                        old.after(tr);
+                                        old.remove();
+                                    }else{
+                                        $('.tBody').append(tr);
+                                        inputs.each(function(){
+                                            if($(this).attr('data-name') != 'category_name'){
+                                                $(this).val('');
+                                            }
+                                        });
+                                    }
+
+
+                                    if(id.length > 0){
+                                        if(deleteObj.length > 0){
+                                            nededPath  = 'companies/<?=$company->id;?>'+'/products/'+tr.find('.option').val()+'/';
+                                            deleteObj.forEach(function(value){
+                                                $.ajax({
+                                                    url    : value['deleteUrl'],
+                                                    method : 'delete',
+                                                    data   : {path : nededPath}
+                                                });
+                                            });
+                                            deleteObj = [];
+                                        }
+
+                                        if(form && imageObj.length>0){
+                                            imageObj.forEach(function(value){
+                                                if(value)
+                                                    form.files.push(value);
+                                            });
+                                            nededPath  = 'companies/<?=$company->id;?>'+'/products/'+tr.find('.option').val()+'/';
+                                            form.submit();
+                                            imageObj = [];
+                                        }
+
+                                    }
+                                    $('.mod').modal('hide');
+                                }
+                            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            
+                        }
                     });
+
+
+
 
                     $('#fileupload').on('submit', function(){
                         if(deleteObj.length){
                             deleteObj.forEach(function(value){
                                 $.ajax({
-                                    url      : value['deleteUrl'],
-                                    method:'delete',
-                                    data:{path: nededPath}
+                                    url    : value['deleteUrl'],
+                                    method : 'delete',
+                                    data   : {path : nededPath}
                                 });
                             });
                             deleteObj = [];
                         }
-
                         if(imageObj.length){
                             imageObj.forEach(function(value){
                                 form.files.push(value);
@@ -576,7 +628,6 @@ return false;
                             event.preventDefault();
                             imageObj = [];
                         }
-
                         if(!deleteObj.length && !imageObj.length){
                             console.log('time to save');
                         }
@@ -584,75 +635,33 @@ return false;
                         event.preventDefault();
                     });
 
-                    $('.files').delegate('.cancel','click', function(){
-                        imageObj.splice($(this).attr('data-id'), 1);
+                    $('.files').delegate('.cancel', 'click', function(){
+                        imageObj[$(this).attr('data-id')] = null;
                     });
 
-                    $('.files').delegate('.delete','click', function(){
+                    $('.files').delegate('.delete', 'click', function(){
                         var index = $(this).attr('data-id');
                         deleteObj.push(defaultObj[index]);
                         $(this).parents('tr').eq(0).remove();
                         event.preventDefault();
                     });
-
                 });
             </script>
 
 
-
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         <script>
             var categories      = [];
             var currentCategory = null;
             var data            = <?=$category?>;
-            var images = [];
+            var images          = [];
             $(document).ready(function(){
-
-
                 $('.table').delegate('.add-new-product', 'click', function(){
                     images = [''];
                     $('#fileupload table tbody tr.template-upload').remove();
                     $('#fileupload table tbody tr.template-download').remove();
-
                     $('#myModal').modal('show');
                     $('#myModal').find('.modal-body').html($('.addProductCategory'));
                     $('#myModal').find('.create').show();
@@ -679,21 +688,12 @@ return false;
                         modalSelect.show();
                         modalSpan.html('').hide();
                     }
-
-
-
-
-
                 });
-
-
-
 
                 $('#product_list').delegate('.chang-product', 'click', function(){
                     images = [];
                     $('#fileupload table tbody tr.template-upload').remove();
                     $('#fileupload table tbody tr.template-download').remove();
-
                     $('#myModal').modal('show');
                     $('#myModal').find('.modal-body').html($('.addProductCategory'));
                     $('#myModal').find('.create').hide();
@@ -708,16 +708,17 @@ return false;
                         }
                     });
                     $('#myModal').find('.modalSpan').text('');
+
                     $.ajax({
-                        type:"POST",
-                        url:"/products/edit-categoty",
-                        headers:{
-                            'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                        type    : "POST",
+                        url     : "/products/edit-categoty",
+                        headers : {
+                            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                         },
-                        data:{
-                            productId:id
+                        data    : {
+                            productId : id
                         },
-                        success:function(msg){
+                        success : function(msg){
                             console.log(msg.productCategory.title);
                             $('#myModal').find('select[name="category_name"]').hide();
                             $('#myModal').find('.modalSpan').text(msg.productCategory.title).show();
@@ -734,46 +735,33 @@ return false;
                             $('#myModal').find('#product_form').find('input.create').hide();
                             $('#myModal').find('#product_form').find('input.update').show();
                             $('#myModal').find('#product_form').find('input[type="text"]').eq(0).focus();
-
-
                             image = JSON.parse(msg.product.product_image);
-
                             if(image[0].name){
                                 images = image;
-                                image = [];
-                                images.forEach(function(item, i, images) {
+                                image  = [];
+                                images.forEach(function(item, i, images){
                                     image.push(item['name']);
                                 });
-
-
                             }
-
                             $('#fileupload').addClass('fileupload-processing');
                             $.ajax({
-                                url:$('#fileupload').fileupload('option', 'url'),
-                                dataType:'json',
-                                context:$('#fileupload')[0],
-                                data:{
-                                    image : image,
-                                    'path': ''
+                                url      : $('#fileupload').fileupload('option', 'url'),
+                                dataType : 'json',
+                                context  : $('#fileupload')[0],
+                                data     : {
+                                    image  : image,
+                                    'path' : ''
                                 },
                             }).always(function(){
                                 $(this).removeClass('fileupload-processing');
                             }).done(function(result){
 
                                 //                        console.log(result);
-                                $(this).fileupload('option', 'done')
-                                .call(this, $.Event('done'), {result:result});
-
+                                $(this).fileupload('option', 'done').call(this, $.Event('done'), {result : result});
                             });
-
                         }
                     });
                 });
-
-
-
-
 
                 $('#myModal').delegate('.update', 'click', function(){
                     event.preventDefault();
@@ -781,7 +769,6 @@ return false;
                     if(images.length){
                         rec = JSON.stringify(images);
                     }
-
                     var data              = {};
                     data['id']            = $('#myModal').find('.form-group').find('input[data-name="product_id"]').val();
                     data['name']          = $('#myModal').find('.form-group').find('input[data-name="name"]').val();
@@ -791,15 +778,15 @@ return false;
                     data['photo']         = rec;
                     data['price']         = $('#myModal').find('.form-group').find('input[data-name="price"]').val();
                     data['category_name'] = $('#myModal').find('.form-group').find('select[data-name="category_name"]').val();
-                    images = [];
+                    images                = [];
                     $.ajax({
-                        type:"POST",
-                        url:"/products/ajax-update",
-                        headers:{
-                            'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                        type    : "POST",
+                        url     : "/products/ajax-update",
+                        headers : {
+                            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                         },
-                        data:data,
-                        success:function(msg){
+                        data    : data,
+                        success : function(msg){
                             $('#myModal').find('.close').click();
                             /* $('.addProductCategory').hide();*/
                             var currentTr = $('#product_list').find('.option[value="' + data.id + '"]').parents('tr').eq(0);
@@ -815,8 +802,6 @@ return false;
                     if(images.length){
                         rec = JSON.stringify(images);
                     }
-
-
                     event.preventDefault();
                     var selected1 = {};
                     var inputs    = $('#myModal').find('.addProductCategory').find('[data-name]');
@@ -825,7 +810,6 @@ return false;
                         selected1[$(this).attr('data-name')] = $(this).val();
                     });
                     console.log(selected1);
-
                     if(selected1.name.length == 0){
                         $('[data-name="name"]').focus();
                         return false;
@@ -836,24 +820,19 @@ return false;
                     }else{
                         $('#myModal').find('.msgDenger').hide();
                     }
-
-
                     selected1['photo'] = rec;
-
                     console.log(selected1);
-
-
                     $.ajax({
-                        type:"POST",
-                        url:"/products-category",
-                        headers:{
-                            'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                        type    : "POST",
+                        url     : "/products-category",
+                        headers : {
+                            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                         },
-                        data:{
-                            company_id:'<?=$company->id?>',
-                            product:selected1
+                        data    : {
+                            company_id : '<?=$company->id?>',
+                            product    : selected1
                         },
-                        success:function(data){
+                        success : function(data){
                             $('.tBody').append(data);
                             inputs.each(function(){
                                 if($(this).attr('data-name') != 'category_name'){
@@ -865,17 +844,13 @@ return false;
                     });
                 });
 
+                $('#myModal').modal({show : false});
 
-
-
-
-
-                $('#myModal').modal({show:false});
                 $('#custom-checkable').treeview({
-                    data:data,
-                    showCheckbox:true,
-                    enableLinks:false,
-                    onNodeChecked:function(event, node){
+                    data            : data,
+                    showCheckbox    : true,
+                    enableLinks     : false,
+                    onNodeChecked   : function(event, node){
                         /* $('.addProductCategory').hide();//ertyuiosdfghkwertyuierty*/
                         categories = [];
                         $('#product_list').html('');
@@ -884,7 +859,7 @@ return false;
                             var tree = $('#custom-checkable').treeview(true);
                             list.forEach(function(element){
                                 if(node.href != element.href){
-                                    tree.uncheckNode(element, {silent:true});
+                                    tree.uncheckNode(element, {silent : true});
                                 }
                             });
                         }
@@ -905,41 +880,42 @@ return false;
                             }while(childrens.length > 0);
                         }
                         $.ajax({
-                            type:"POST",
-                            url:"/get-product-list",
-                            headers:{
-                                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                            type    : "POST",
+                            url     : "/get-product-list",
+                            headers : {
+                                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                             },
-                            data:{
-                                companyId:'<?=$company->id?>',
-                                categoryId:categories
+                            data    : {
+                                companyId  : '<?=$company->id?>',
+                                categoryId : categories
                             },
-                            success:function(msg){
+                            success : function(msg){
                                 $('#product_list').html(msg);
                             }
                         });
                     },
-                    onNodeUnchecked:function(event, node){
+                    onNodeUnchecked : function(event, node){
                         $('.product_category').val('')
                         $('#product_list').html('');
                         categories      = [];
                         currentCategory = null;
                         $.ajax({
-                            type:"POST",
-                            url:"/get-product-list",
-                            headers:{
-                                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                            type    : "POST",
+                            url     : "/get-product-list",
+                            headers : {
+                                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                             },
-                            data:{
-                                companyId:'<?=$company->id?>',
-                                categoryId:categories
+                            data    : {
+                                companyId  : '<?=$company->id?>',
+                                categoryId : categories
                             },
-                            success:function(msg){
+                            success : function(msg){
                                 $('#product_list').html(msg);
                             }
                         });
                     }
                 }).treeview('collapseAll');
+
                 $('#product_list').delegate('.paginate a', 'click', function(){
                     event.preventDefault();
                     var a   = $(this);
@@ -947,26 +923,22 @@ return false;
                     var id  = url.substring(url.lastIndexOf('=') + 1)
                     if(id.length){
                         $.ajax({
-                            type:"POST",
-                            url:"/get-product-list?page=" + id,
-                            headers:{
-                                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                            type    : "POST",
+                            url     : "/get-product-list?page=" + id,
+                            headers : {
+                                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                             },
-                            data:{
-                                companyId:'<?=$company->id?>',
-                                categoryId:categories
+                            data    : {
+                                companyId  : '<?=$company->id?>',
+                                categoryId : categories
                             },
-                            success:function(msg){
+                            success : function(msg){
                                 $('#product_list').html(msg);
                             }
                         });
                     }
                 });
-
             });
-
-
-
 
             $('.table').delegate('#destroycheck', 'click', function(){
                 event.preventDefault();
@@ -976,36 +948,37 @@ return false;
                     selected.push($(this).val());
                 });
                 $.ajax({
-                    type:"POST",
-                    url:"/products/destroy-check",
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                    type    : "POST",
+                    url     : "/products/destroy-check",
+                    headers : {
+                        'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                     },
-                    data:{
-                        id:'<?=$company?>',
-                        checkId:selected
+                    data    : {
+                        id      : '<?=$company?>',
+                        checkId : selected
                     },
-                    success:function(msg){
+                    success : function(msg){
                         inputs.each(function(){
                             $(this).parents('tr').eq(0).remove();
                         });
                     }
                 });
             });
+
             $('#product_list').delegate('.deleteCategoryButton', 'click', function(){
                 event.preventDefault();
                 var tr        = $(this).parents('tr');
                 var productId = tr.find('input[name="option"]').val();
                 $.ajax({
-                    type:"POST",
-                    url:"/destroy",
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                    type    : "POST",
+                    url     : "/destroy",
+                    headers : {
+                        'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                     },
-                    data:{
-                        id:productId
+                    data    : {
+                        id : productId
                     },
-                    success:function(msg){
+                    success : function(msg){
                         tr.remove();
                     }
                 });

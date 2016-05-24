@@ -58,9 +58,9 @@
     </tbody>
 </table>
 
-<button type="button" class="add-new-product btn btn-primary pull-left btn-sm">
-    +
-</button>
+{{--<button type="button" class="add-new-product btn btn-primary pull-left btn-sm">+</button>--}}
+<span class="open btn btn-success">Open</span>
+
 <a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">x</a>
 
 <div class="paginate">

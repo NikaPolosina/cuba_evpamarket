@@ -186,15 +186,16 @@ class ProductsController extends Controller{
 
     public function productAjaxUpdate(Request $request){
         $data = $request->all();
-        if($request->input('id')){
-            $product = Product::findOrFail($request->input('id'));
+        if($request->input('product')['product_id']){
+            $product = Product::findOrFail($request->input('product')['product_id']);
+
             $result = $product->update(array(
-                'product_name'        => $data['name'],
-                'product_description' => $data['description'],
-                'content'               => $data['content'],
-                'product_image'       => $data['photo'],
-                'product_price'       => $data['price'],
-                'category_id'       => $data['category_name'],
+                'product_name'        => $request->input('product')['name'],
+                'product_description' => $request->input('product')['description'],
+                'content'               => $request->input('product')['content'],
+                'product_image'       => $request->input('product')['photo'],
+                'product_price'       => $request->input('product')['price'],
+                'category_id'       => $request->input('product')['category_name'],
             ));
             if($result){
                 return view('product.products.singleProductTr')->with([ 'item' => $product ]);
