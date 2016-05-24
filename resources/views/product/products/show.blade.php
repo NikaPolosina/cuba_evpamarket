@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <h1>Товар</h1>
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">

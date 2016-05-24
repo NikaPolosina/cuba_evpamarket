@@ -68,9 +68,11 @@ class ProductsController extends Controller{
         return response()->json([ 'success' => false ]);
     }
 
-    public function show($id){
-        $product = Product::findOrFail($id);
-        return view('product.products.show', compact('product'));
+    public function show(Request $request){
+        $product = Product::findOrFail($request['id']);
+        return response()->json([ 'product' => $product]);
+
+
     }
 
     public function edit(Request $request, $id){
@@ -141,6 +143,7 @@ class ProductsController extends Controller{
     }
 
     public function singleProduct(Request $request, $id){
+
         $singleProduct = Product::find($id)->toArray();
         return view('product.products.singleProductInfo')->with('singleProduct', $singleProduct);
     }

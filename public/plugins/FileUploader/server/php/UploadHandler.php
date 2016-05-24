@@ -43,12 +43,12 @@ class UploadHandler
     function __construct($options = null, $initialize = true, $error_messages = null) {
         $this->response = array();
 
-//        echo '<pre>';
-//        var_dump(dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/');
-//        var_dump('/var/www/public/img/uploader/');
-//        var_dump($_SERVER['HTTP_ORIGIN'].'/public/img/uploader/');
-//        echo '</pre>';
-//        die('Surprise, you are here !!!');
+/*        echo '<pre>';
+        var_dump(dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/');
+        var_dump('/var/www/public/img/uploader/');
+        var_dump($_SERVER['HTTP_ORIGIN'].'/public/img/uploader/');
+        echo '</pre>';
+        die('Surprise, you are here !!!');*/
 
         $this->options = array(
             'script_url' => $this->get_full_url().'/'.$this->basename($this->get_server_var('SCRIPT_NAME')),

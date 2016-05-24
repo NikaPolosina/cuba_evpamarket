@@ -25,6 +25,8 @@ Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
 Route::get('/register-c', 'Auth\AuthController@registerC');
 Route::get('/register-company', 'Auth\AuthController@registerCompany');
 Route::post('/register_company', 'Auth\AuthController@registerCompany');
+Route::any('/show-company/{id}', 'CompanyController@show');
+
 
 /*----------------ProductController--------------------*/
 Route::get('/', 'ProductsController@getProductAll');
@@ -39,10 +41,16 @@ Route::post('/destroy', 'ProductsController@destroy');
 Route::get('/single-product/{id}', 'ProductsController@singleProduct');
 Route::post('/products/ajax-update', ['as'=>'product-ajax-update', 'uses'=>'ProductsController@productAjaxUpdate']);
 Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 'uses'=>'ProductsController@attachCategoryToCompany']);
+Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 'uses'=>'ProductsController@attachCategoryToCompany']);
+
+Route::any('/products/show/', 'ProductsController@show');
 
 
 Route::get('/file', function () {
  return view('file');
+});
+Route::get('/a', function () {
+    return view('a');
 });
 
 Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
@@ -63,6 +71,7 @@ Route::get('/homeSimpleUser', function(){
 });
 
 Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);
+
 
 
 

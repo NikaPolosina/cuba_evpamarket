@@ -429,6 +429,7 @@
                         filesContainer: $('.files'),
                         uploadTemplateId: null,
                         downloadTemplateId: null,
+
                         uploadTemplate: function (o) {
                             var rows = $();
                             $.each(o.files, function (index, file) {
@@ -485,8 +486,13 @@
                             });
                             return rows;
                         }
+
                     })
                     .on('fileuploadprocessalways', function (e, data) {
+console.log(data);
+return false;
+
+
                         /*var preview = '<img width="300" height="300" src="/img/system/place_holder.png">';
                         if(data.files[0]['preview']){
                             preview = data.files[0]['preview'];

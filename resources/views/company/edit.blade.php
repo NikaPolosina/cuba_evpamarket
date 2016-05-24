@@ -91,7 +91,7 @@
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-1">
-            {!! Form::submit('Обновить', ['class' => 'btn btn-primary form-control']) !!}
+            {!! Form::submit('Сохранить', ['class' => 'btn btn-primary form-control']) !!}
         </div>
     </div>
     {!! Form::close() !!}

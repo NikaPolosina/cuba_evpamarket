@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <h1>Products <a href="{{ url('products/create') }}" class="btn btn-primary pull-right btn-sm">Add New Product</a></h1>
     <div class="table">
         <table class="table table-bordered table-striped table-hover">

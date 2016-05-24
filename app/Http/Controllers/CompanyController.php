@@ -81,7 +81,13 @@ class CompanyController extends Controller
 
     public function show($id){
 
-        $this->category = Category::all()->toArray();
+
+
+
+        $company = Company::findOrFail($id);
+
+
+       /* $this->category = Category::all()->toArray();
 
         foreach ($this->category as $value) {
             $value['text'] = $value['title'];
@@ -100,10 +106,11 @@ class CompanyController extends Controller
                     unset($this->nCategory[$v['id']]);
                 }
             }
-        }
-        $company = Company::findOrFail($id);
+        }*/
 
-        return view('company.show')->with(['category' => json_encode($this->nCategory[0]), 'company'=>$company]);
+
+        //return view('company.show')->with(['category' => json_encode($this->nCategory[0]), 'company'=>$company]);
+        return view('company.show')->with('company',  $company);
 
     }
 

@@ -14,6 +14,7 @@
 <noscript><link rel="stylesheet" href="/plugins/FileUploader/css/jquery.fileupload-noscript.css"></noscript>
 <noscript><link rel="stylesheet" href="/plugins/FileUploader/css/jquery.fileupload-ui-noscript.css"></noscript>
 
+
 <!-- The template to display files available for upload -->
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
@@ -132,7 +133,7 @@
     <form id="fileupload" action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data">
         <!-- Redirect browsers with JavaScript disabled to the origin page -->
         <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
-        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+        <!-- The fileupload-buttonbar contains buttons to add/delete files and done/cancel the upload -->
         <div class="row fileupload-buttonbar">
             <div class="col-lg-7">
                 <!-- The fileinput-button span is used to style the file input field as button -->
@@ -183,3 +184,15 @@
     <ol class="indicator"></ol>
 </div>
 
+<script>
+    var fileName = "";
+    $('#fileupload').bind('fileuploadadd', function (e, data) {
+        
+        $.each(data.files, function (index, file) {
+            fileName = file.name;
+        });
+        console.log(fileName);
+    });
+
+    console.log(fileName);
+</script>
