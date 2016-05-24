@@ -102,6 +102,15 @@
                                         <div class="col-md-2 carentFindCompany">
                                             <div class="" style="border: solid 1px grey; margin: 3px;">
                                                 <a class="">{{$valueCompanw->company_name}}</a>
+
+                                                <?php  if(!empty($valueCompanw->company_logo)&& file_exists(public_path().'/img/custom/companies/thumbnail/'.$valueCompanw->company_logo)) {
+                                                    $logo = '/img/custom/companies/thumbnail/'.$valueCompanw->company_logo;
+                                                }else{
+
+                                                    $logo = '/img/custom/files/thumbnail/plase.jpg';
+                                                } ?>
+
+                                                <img class="img-thumbnail" style="display: block; width: 100%;" src="<?=$logo?>">
                                             </div>
                                         </div>
                                         <?php }?>
@@ -115,15 +124,18 @@
                                                 <?php foreach($productAll as $v){
 
                                                 if(strlen($v->product_image)){
-
-
                                                     $img = json_decode($v->product_image);
-                                                    if($img){
-                                                        $img = '/img/custom/files/thumbnail/'.$img[0]->name;
+
+                                                    if(file_exists(public_path().'/img/custom/files/'.$img[0]->name)){
+                                                        $img = '/img/custom/files/'.$img[0]->name;
                                                         if(!is_file(public_path().$img)) unset($img);
+                                                    }else{
+                                                        $img = '/img/custom/files/thumbnail/plase.jpg';
+
                                                     }
                                                 }else{
                                                     $img = '/img/custom/files/thumbnail/plase.jpg';
+
                                                 }
                                         ?>
                                                     <div class="col-md-3 img-thumbnail carentFindProduct" style="font-size: 20px; text-align: center; margin: 3px; min-height: 230px;">
