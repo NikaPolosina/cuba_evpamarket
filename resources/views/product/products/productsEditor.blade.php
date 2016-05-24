@@ -90,7 +90,7 @@
 
 
             {{-----------------------------------------------------------}}
-                <!-- Modal -->
+            <!-- Modal -->
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content col-md-10 col-sm-offset-1">
@@ -112,7 +112,7 @@
                         </div>
                     </div>
                 </div>
-            {{-----------------------------------------------------------------}}
+                {{-----------------------------------------------------------------}}
 
 
                 <div class="table" id="product_list">
@@ -210,7 +210,7 @@
         <div class="row">
 
 
-            <div class="col-sm-8 col-sm-offset-2" style="border: solid">
+            <div class="col-sm-8 col-sm-offset-2" >
 
                 <div class="mod modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                     <div class="modal-dialog modal-lg">
@@ -221,6 +221,84 @@
                             </div>
                             <div class="modal-body">
 
+                                <div class="row">
+                                    <div class="col-sm-10 col-sm-offset-1" style="border: solid">
+
+
+                                        {!! Form::open(['class' => 'form-horizontal my_form', 'id'=> 'fileupload']) !!}
+                                        <div style="display: none" class="form-group {{ $errors->has('id') ? 'has-error' : ''}}">
+                                            {!! Form::label('product_id', 'Id: ', ['class' => 'control-label']) !!}
+                                            {!! Form::text('product_id', NULL, ['class' => 'form-control', 'data-name' =>'product_id']) !!}
+                                        </div>
+
+                                        <div class="form-group {{ $errors->has('category_name') ? 'has-error' : ''}}">
+                                            {!! Form::label('category_name', 'Категория: ', ['class' => 'col-sm-3 control-label']) !!}
+                                            <select name="category_name" data-name="category_name">
+                                                @if(count($myCategories))
+                                                    <option value="">Выбирите категорию</option>
+                                                    @foreach($myCategories as $value)
+                                                        <option value="{{$value['id']}}">{{$value['title']}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <span class="modalSpan"></span>
+                                        </div>
+
+                                        <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
+                                            {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
+                                            {!! Form::text('product_name', NULL, ['class' => 'form-control', 'data-name' =>'name']) !!}
+                                        </div>
+
+                                        <div class="form-group {{ $errors->has('product_description') ? 'has-error' : ''}}">
+                                            {!! Form::label('product_description', 'Краткое описание: ', ['class' => 'col-sm-3 control-label']) !!}
+                                            {!! Form::text('product_description', NULL, ['class' => 'form-control', 'required' => 'required', 'data-name' =>'description']) !!}
+                                        </div>
+
+                                        <div class="form-group {{ $errors->has('content') ? 'has-error' : ''}}">
+                                            {!! Form::label('content', 'Полное описание: ', ['class' => 'col-sm-3 control-label']) !!}
+                                            {!! Form::text('content', NULL, ['class' => 'form-control', 'data-name' =>'content']) !!}
+                                        </div>
+
+                                        {!! Form::hidden('product_image', NULL, ['class' => 'form-control', 'data-name' =>'photo']) !!}
+
+                                        <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
+                                            {!! Form::label('product_price', 'Цена: ', ['class' => 'col-sm-3 control-label']) !!}
+
+                                            {!! Form::number('product_price', NULL, ['class' => 'form-control', 'data-name' =>'price']) !!}
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-3 col-sm-3">
+
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-sm-4 col-sm-offset-4">
+                        <span class="btn btn-success fileinput-button">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Add files...</span>
+                            <input type="file" name="files[]" multiple>
+                        </span>
+
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <table>
+                                                    <tbody  class="files"></tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+
+                                        {!! Form::close() !!}
+
+                                    </div>
+                                </div>
 
 
                             </div>
@@ -235,130 +313,10 @@
 
             </div>
         </div>
+        <span class="open btn btn-success">Open</span>
 
 
 
-
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1" style="border: solid">
-
-
-                {!! Form::open(['class' => 'form-horizontal ', 'id'=> 'fileupload']) !!}
-                <div style="display: none" class="form-group {{ $errors->has('id') ? 'has-error' : ''}}">
-                    {!! Form::label('product_id', 'Id: ', ['class' => 'control-label']) !!}
-                    {!! Form::text('product_id', NULL, ['class' => 'form-control', 'data-name' =>'product_id']) !!}
-                </div>
-
-                <div class="form-group {{ $errors->has('category_name') ? 'has-error' : ''}}">
-                    {!! Form::label('category_name', 'Категория: ', ['class' => 'col-sm-3 control-label']) !!}
-                    <select name="category_name" data-name="category_name">
-                        @if(count($myCategories))
-                            <option value="">Выбирите категорию</option>
-                            @foreach($myCategories as $value)
-                                <option value="{{$value['id']}}">{{$value['title']}}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                    <span class="modalSpan"></span>
-                </div>
-
-                <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
-                    {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
-                    {!! Form::text('product_name', NULL, ['class' => 'form-control', 'data-name' =>'name']) !!}
-                </div>
-
-                <div class="form-group {{ $errors->has('product_description') ? 'has-error' : ''}}">
-                    {!! Form::label('product_description', 'Краткое описание: ', ['class' => 'col-sm-3 control-label']) !!}
-                    {!! Form::text('product_description', NULL, ['class' => 'form-control', 'required' => 'required', 'data-name' =>'description']) !!}
-                </div>
-
-                <div class="form-group {{ $errors->has('content') ? 'has-error' : ''}}">
-                    {!! Form::label('content', 'Полное описание: ', ['class' => 'col-sm-3 control-label']) !!}
-                    {!! Form::text('content', NULL, ['class' => 'form-control', 'data-name' =>'content']) !!}
-                </div>
-
-                {!! Form::hidden('product_image', NULL, ['class' => 'form-control', 'data-name' =>'photo']) !!}
-
-                <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
-                    {!! Form::label('product_price', 'Цена: ', ['class' => 'col-sm-3 control-label']) !!}
-
-                    {!! Form::number('product_price', NULL, ['class' => 'form-control', 'data-name' =>'price']) !!}
-
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-3">
-
-                    </div>
-                </div>
-
-
-
-
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4">
-                        <span class="btn btn-success fileinput-button">
-                            <i class="glyphicon glyphicon-plus"></i>
-                            <span>Add files...</span>
-                            <input type="file" name="files[]" multiple>
-                        </span>
-
-                        <span class="open btn btn-success">Open</span>
-
-                    </div>
-
-                    <div class="col-sm-12">
-                        <table>
-                            <tbody  class="files"></tbody>
-                        </table>
-                    </div>
-
-                </div>
-
-
-                {!! Form::close() !!}
-
-            </div>
-        </div>
-
-
-
-
-
-        <script>
-            $(document).ready(function(){
-
-                $('.open').on('click', function(){
-//                    $('.mod').modal();
-
-
-                    $.ajax({
-                        url      : $('#fileupload').fileupload('option', 'url'),
-                        dataType : 'json',
-                        context  : $('#fileupload')[0],
-                        data     : {
-                            image : nededFiles,
-                            path  : nededPath
-                        },
-                    }).done(function(result){
-                        var preview = '<div class="col-sm-6"><img width="300" height="300" src="/img/system/place_holder.png"></div>';
-                        if(result.files.length){
-                            defaultObj = result;
-
-                            preview = '<div class="col-sm-6">' +
-                                    '<a ' +
-                                    'href="'+result.files[0]["url"]+'" ' +
-                                    'title="'+result.files[0]["name"]+'" download="'+result.files[0]["name"]+'" data-gallery="">' +
-                                    '<img src="'+result.files[0]["thumbnailUrl"]+'">' +
-                                    '</a>' +
-                                    '</div>';
-                        }
-                        $('.files').html(preview);
-                    });
-                });
-
-            });
-        </script>
 
 
         <div>
@@ -410,14 +368,18 @@
                 <script src="/plugins/file_uploader/js/jquery.fileupload-ui.js"></script>
             </div>
 
-            <!-- Plugin init and setup-->
+
+
+
+
             <script>
 
                 var nededPath = 'companies/';
-                var imageObj;
-                var nededFiles = ['<?=$company->company_logo?>'];
-                var defaultObj;
-                var deleteObj;
+                var imageObj=[];
+                var nededFiles = [];
+                var defaultObj = [];
+                var deleteObj = [];
+                var form;
 
                 $(function(){
 
@@ -429,7 +391,6 @@
                         filesContainer: $('.files'),
                         uploadTemplateId: null,
                         downloadTemplateId: null,
-
                         uploadTemplate: function (o) {
                             var rows = $();
                             $.each(o.files, function (index, file) {
@@ -496,55 +457,143 @@ return false;
                         /*var preview = '<img width="300" height="300" src="/img/system/place_holder.png">';
                         if(data.files[0]['preview']){
                             preview = data.files[0]['preview'];
+*/
+                    })
+                    .on('fileuploadprocessalways', function (e, data) {
+                        imageObj.push(data.files[0]);
+                        var index = imageObj.length - 1;
+                        var row = $('<tr class="template-upload">' +
+                                '<td>' +
+                                '<div>' +
+                                '<button class="cancel" data-id="'+index+'">Cancel</button>' +
+                                '</div>' +
+                                '<span class="preview"></span></td>' +
+                                '<div class="error"></div>' +
+                                '</td>' +
+                                '</tr>');
+                        row.find('.preview').append(data.files[0].preview);
+                        if (data.files[0].error) {
+                            row.find('.error').text(data.files[0].error);
+
                         }
-                        $('.files').html(preview);
-                        if(defaultObj){
-                            deleteObj = defaultObj;
-                            defaultObj = null;
-                        }*/
+
+                        $('.files').append(row);
+
+                        if(!form){
+                            form = data;
+                            form.files = [];
+                        }
+
+                        /*
+                            var preview = '<img width="300" height="300" src="/img/system/place_holder.png">';
+                            if(data.files[0]['preview']){
+                                preview = data.files[0]['preview'];
+                            }
+
+                            if(defaultObj){
+                                deleteObj = defaultObj;
+                                defaultObj = null;
+                            }
+                        */
                     })
                     .on('fileuploadadd', function(e, data){
-                        imageObj = data;
                     })
                     .on('fileuploadsubmit', function(e, data){
                         data.formData = {path : nededPath};
                     })
                     .on('fileuploaddone', function(e, data){
-                        if(data.result.files[0]['name']){
-                            $('#company_logo').val(data.result.files[0]['name']);
-                        }
-                        $('.company_form').submit();
+                        $('.my_form').submit();
                     })
                     .on('fileuploadfail', function(e, data){
-                        $('.company_form').submit();
+                        $('.my_form').submit();
                     });
 
-                    $('.delete').on('click', function(){
-                        var preview = '<img width="300" height="300" src="/img/system/place_holder.png">';
-                        $('#company_logo').val('');
-                        $('.files').html(preview);
-                        imageObj = null;
-                        if(defaultObj){
-                            deleteObj = defaultObj;
-                            defaultObj = null;
-                        }
+                });
+
+                $(document).ready(function(){
+
+                    $('.open').on('click', function(){
+                        $('.files').html('');
+
+                        $('.mod').modal();
+
+                        $.ajax({
+                            url      : $('#fileupload').fileupload('option', 'url'),
+                            dataType : 'json',
+                            context  : $('#fileupload')[0],
+                            data     : {
+                                image : nededFiles,
+                                path  : nededPath
+                            },
+                        }).done(function(result){
+                            imageObj = [];
+                            defaultObj = [];
+                            deleteObj = [];
+
+
+                            if(result.files.length){
+                                result.files.forEach(function(value){
+
+                                    defaultObj.push(value);
+                                    var index = defaultObj.length - 1;
+                                    var row = $('<tr class="template-upload">' +
+                                            '<td>' +
+                                            '<div>' +
+                                            '<button class="delete" data-id="'+index+'">DELETE</button>' +
+                                            '</div>' +
+                                            '<span class="preview"></span></td>' +
+                                            '<div class="error"></div>' +
+                                            '</td>' +
+                                            '</tr>');
+                                    row.find('.preview').append('<img src="'+value.thumbnailUrl+'">');
+
+                                    $('.files').append(row);
+
+                                });
+                            }
+
+
+                        });
                     });
 
-                    $('.company_form').on('submit', function(){
-                        if(deleteObj){
-                            $.ajax({
-                                url      : deleteObj.files[0]['deleteUrl'],
-                                method:'delete',
-                                data:{path: nededPath}
+                    $('#fileupload').on('submit', function(){
+                        if(deleteObj.length){
+                            deleteObj.forEach(function(value){
+                                $.ajax({
+                                    url      : value['deleteUrl'],
+                                    method:'delete',
+                                    data:{path: nededPath}
+                                });
                             });
+                            deleteObj = [];
                         }
-                        if(imageObj){
-                            imageObj.submit();
-                            imageObj = null;
+
+                        if(imageObj.length){
+                            imageObj.forEach(function(value){
+                                form.files.push(value);
+                            });
+                            form.submit();
                             event.preventDefault();
+                            imageObj = [];
                         }
+
+                        if(!deleteObj.length && !imageObj.length){
+                            console.log('time to save');
+                        }
+                        return false;
+                        event.preventDefault();
                     });
 
+                    $('.files').delegate('.cancel','click', function(){
+                        imageObj.splice($(this).attr('data-id'), 1);
+                    });
+
+                    $('.files').delegate('.delete','click', function(){
+                        var index = $(this).attr('data-id');
+                        deleteObj.push(defaultObj[index]);
+                        $(this).parents('tr').eq(0).remove();
+                        event.preventDefault();
+                    });
 
                 });
             </script>
@@ -714,7 +763,7 @@ return false;
 
                                 //                        console.log(result);
                                 $(this).fileupload('option', 'done')
-                                        .call(this, $.Event('done'), {result:result});
+                                .call(this, $.Event('done'), {result:result});
 
                             });
 
@@ -738,7 +787,7 @@ return false;
                     data['name']          = $('#myModal').find('.form-group').find('input[data-name="name"]').val();
                     data['description']   = $('#myModal').find('.form-group').find('input[data-name="description"]').val();
                     data['content']       = $('#myModal').find('.form-group').find('input[data-name="content"]').val();
-//                    data['photo']         = $('#myModal').find('.form-group').find('input[data-name="photo"]').val();
+                    //                    data['photo']         = $('#myModal').find('.form-group').find('input[data-name="photo"]').val();
                     data['photo']         = rec;
                     data['price']         = $('#myModal').find('.form-group').find('input[data-name="price"]').val();
                     data['category_name'] = $('#myModal').find('.form-group').find('select[data-name="category_name"]').val();
@@ -790,7 +839,7 @@ return false;
 
 
                     selected1['photo'] = rec;
-                    
+
                     console.log(selected1);
 
 
