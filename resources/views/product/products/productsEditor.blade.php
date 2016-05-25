@@ -213,12 +213,21 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                <h4 class="modal-title" id="myModalLabel">Форма редактирования продуктов</h4>
                             </div>
                             <div class="modal-body">
 
-                                <div class="row">
-                                    <div class="col-sm-10 col-sm-offset-1" style="border: solid">
+                                <div class="row" adasd>
+                                    <style>
+                                        .my_form label{
+                                            text-align: left;
+                                        }
+
+                                        .form-horizontal .control-label{
+                                            text-align: left !important;
+                                        }
+                                    </style>
+                                    <div class="col-sm-10 col-sm-offset-1">
 
 
                                         {!! Form::open(['class' => 'form-horizontal my_form', 'id'=> 'fileupload']) !!}
@@ -887,6 +896,9 @@
                     showCheckbox    : true,
                     enableLinks     : false,
                     onNodeChecked   : function(event, node){
+
+                        $('#custom-checkable').treeview('selectNode', node.nodeId);
+
                         /* $('.addProductCategory').hide();//ertyuiosdfghkwertyuierty*/
                         categories = [];
                         $('#product_list').html('');
@@ -931,6 +943,9 @@
                         });
                     },
                     onNodeUnchecked : function(event, node){
+
+                        $('#custom-checkable').treeview('unselectNode', node.nodeId);
+
                         $('.product_category').val('')
                         $('#product_list').html('');
                         categories      = [];
@@ -949,18 +964,16 @@
                                 $('#product_list').html(msg);
                             }
                         });
+                    },
+                    onNodeSelected: function(event, node){
+                        $('#custom-checkable').treeview('checkNode', node.nodeId);
+                    },
+                    onNodeUnselected: function(event, node){
+                        $('#custom-checkable').treeview('uncheckNode', node.nodeId);
                     }
                 }).treeview('collapseAll');
-                 /* onNodeSelected: function(event, node){
-                 //                        $('#custom-checkable').treeview(true).checkNode(node.id);
 
-                 }*/
 
-             /*   $('#custom-checkabl').treeview('enableNode', function(){
-                    console.log('asda');
-                    return false;
-                    
-                });*/
 
                 $('#product_list').delegate('.paginate a', 'click', function(){
                     event.preventDefault();
