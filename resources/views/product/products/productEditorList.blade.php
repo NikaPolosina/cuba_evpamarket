@@ -1,10 +1,24 @@
+        <?php
+        if(isset($company)){
+        if(isset($company) && !count($company->getCategoryCompany) || !count($company->getProducts)){
+                if(!count($company->getCategoryCompany)){
+                    $hide = true;
+                    echo '<h1>У Вас нет пока категорий. Добавте </h1>';
+                }else{
+                    echo '<h1>У Вас нет пока продуктоов. Добавте продукты</h1>';
+                }
+        }
+        }   
 
-<table class="table table-bordered table-striped table-hover">
+        ?>
+<table class="table table-bordered table-striped table-hover" style="display: <?=(isset($hide))? 'none':'' ?>;" >
     <thead>
     <tr>
         <th colspan="7">
             <?php
-                if($category){
+
+            if($category){
+
                     $mainCategory = array_shift($category);
                     echo $mainCategory[0]['title'];
                     $categoryID = $mainCategory[0]['id'];
@@ -39,8 +53,10 @@
             </th>
         </tr>
     <?php } ?>
-
-
+    <div class="button_holder" style="display: <?=(isset($hide))? 'none':'block' ?>;">
+        <span class="open btn btn-success btn-sm">Добавить продукт</span>
+        <a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">Удалить продукт</a>
+    </div>
 
     <th></th><th>Товар</th><th>Описание товара</th><th>Описание расширеное</th><th>Цена</th><th>Действие</th>
     </tr>
@@ -58,12 +74,12 @@
     </tbody>
 </table>
 
-{{--<button type="button" class="add-new-product btn btn-primary pull-left btn-sm">+</button>--}}
-<span class="open btn btn-success btn-sm">Добавить продукт</span>
+        <div class="button_holder" style="display: <?=(isset($hide))? 'none':'block' ?>;">
+            <span class="open btn btn-success btn-sm">Добавить продукт</span>
+            <a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">Удалить продукт</a>
+        </div>
 
-<a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">Удалить продукт</a>
-
-<div class="paginate">
+        <div class="paginate">
     <?php echo $products->render(); ?>
 </div>
 
@@ -81,16 +97,16 @@
         </div>
         <div class="col-sm-7">
             <span style="font-size: 17px;">Краткое описание:</span>
-            <div style=" margin: 3px 0 0 0;">
+            <div class="description_modal_product">
 
                 <p class="product_description"></p>
             </div>
             <span style="font-size: 17px;">Детальное описание:</span>
-            <div style=" margin: 3px 0 0 0;">
+            <div class="content_modal_product">
 
-                <p class="product_content "></p>
+                <p class="product_content"></p>
             </div>
-            <div style=" float: right; margin: 3px 0 0 0;">
+        <div class="price_modal_product">
                 <p style="float: right;">Цена:  <span class="product_price"></span>
                 </p>
             </div>
@@ -141,7 +157,6 @@ $('.tBody').delegate('.product_modal_show', 'click', function(){
     var parent = $(this).parents('tr');
     var id = parent.find('.option').val();
 
-    $('#modalProduct').modal('show');
     $('#modalProduct').find('.modal-body').html($('.product_info').show());
 
     $.ajax({
@@ -153,7 +168,6 @@ $('.tBody').delegate('.product_modal_show', 'click', function(){
         data:{id : id},
         success:function(msg){
 
-
             $('.product_info').find('p.name').text(msg.product.product_name);
             $('.product_info').find('p.product_description').text(msg.product.product_description);
             $('.product_info').find('img.img_product').attr('src', msg.product.product_image);
@@ -161,15 +175,36 @@ $('.tBody').delegate('.product_modal_show', 'click', function(){
             $('.product_info').find('span.product_price').text(msg.product.product_price);
             $('.product_info').find('img.img_product').attr('src', msg.img);
 
+            $('#modalProduct').modal('show');
+
+
         }
     });
 
 
 });
 
-
-
 </script>
+        <style>
+
+            .description_modal_product{
+                 margin: 3px 0 0 0;
+                border: solid 1px #CECDCD;
+                border-radius: 4px;
+            }
+            .content_modal_product{
+                 margin: 3px 0 0 0;
+                border: solid 1px #CECDCD;
+                border-radius: 4px;
+                min-height: 140px;
+            }
+            .price_modal_product{
+                float: right;
+                margin: 3px 0 0 0;
+                border: solid 1px #CECDCD;
+                border-radius: 4px;
+            }
+        </style>
 
 
 

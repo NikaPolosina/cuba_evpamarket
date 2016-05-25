@@ -182,6 +182,7 @@ class ProductsController extends Controller{
 
     public function getProductList(Request $request, CategoryController $category){
 
+
         $companyId = $request->input('companyId');
         $categoriId = $request->input('categoryId');
         $company = Company::find($companyId);

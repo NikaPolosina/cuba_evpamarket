@@ -270,7 +270,7 @@
 
                                         <div class="form-group">
                                             <div class="col-sm-offset-3 col-sm-3">
-
+{{--Картинка--}}
                                             </div>
                                         </div>
 
@@ -951,6 +951,16 @@
                         });
                     }
                 }).treeview('collapseAll');
+                 /* onNodeSelected: function(event, node){
+                 //                        $('#custom-checkable').treeview(true).checkNode(node.id);
+
+                 }*/
+
+             /*   $('#custom-checkabl').treeview('enableNode', function(){
+                    console.log('asda');
+                    return false;
+                    
+                });*/
 
                 $('#product_list').delegate('.paginate a', 'click', function(){
                     event.preventDefault();
