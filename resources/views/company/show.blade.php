@@ -33,19 +33,20 @@
         <div class="col-sm-12 ">
 
             <h1>Все продукты магазина</h1>
+
             @foreach ($company->getProducts as $item)
                 <?php
-                if(strlen($item->product_image)){
-                    $img = json_decode($item->product_image);
 
-                    if(file_exists(public_path().'/img/custom/files/'.$img[0]->name)){
-                        $img = '/img/custom/files/'.$img[0]->name;
+                $directory = public_path().'/img/custom/companies/'. $company['id'].'/products/'.$item['id'];
+                $directoryMy = '/img/custom/companies/'.$company['id'].'/products/'.$item['id'].'/';
 
-                    }else{
-                        $img = '/img/custom/files/thumbnail/plase.jpg';
+                if(is_dir($directory)){
+                    $files = scandir ($directory);
+                    $img = $directoryMy . $files[2];// because [0] = "." [1] = ".."
 
-                    }
                 }else{
+
+
                     $img = '/img/custom/files/thumbnail/plase.jpg';
 
                 }

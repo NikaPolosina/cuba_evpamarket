@@ -151,7 +151,7 @@
                                         </div>
 
                                         <div class="msgDenger alert alert-danger" style="display: none;">
-                                            <strong>Внимание!</strong> Выбирите катигорию.
+                                            <strong>Внимание!</strong> Категория товара не выбрана. Выбирите катигорию.
                                         </div>
 
 
@@ -240,6 +240,10 @@
                                             <span class="modalSpan"></span>
                                         </div>
 
+                                        <div class="msgDenger alert alert-danger" style="display: none;">
+                                            <strong>Внимание!</strong> Категория товара не выбрана. Выбирите катигорию.
+                                        </div>
+
                                         <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
                                             {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
                                             {!! Form::text('product_name', NULL, ['class' => 'form-control', 'data-name' =>'name']) !!}
@@ -275,7 +279,7 @@
                                             <div class="col-sm-4 col-sm-offset-4">
                                                 <span class="btn btn-success fileinput-button">
                                                     <i class="glyphicon glyphicon-plus"></i>
-                                                    <span>Add files...</span>
+                                                    <span>Добавить файл..</span>
                                                     <input type="file" name="files[]" multiple>
                                                 </span>
                                             </div>
@@ -296,8 +300,8 @@
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary submit_modal_form">Save changes</button>
+                                <button type="button" class="btn btn-primary submit_modal_form">Сохранить изменения</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
                             </div>
                         </div>
                     </div>
@@ -357,6 +361,10 @@
             </div>
 
 
+
+
+
+
             <script>
 
                 var nededPath  = 'companies/<?=$company->id;?>';
@@ -410,6 +418,17 @@
 
                 $(document).ready(function(){
                     $('#product_list').delegate('.open', 'click', function(){
+
+                        $('.mod').find('.form-group').find('input[data-name="product_id"]').val('');
+                        $('.mod').find('.form-group').find('.product_id').val('');
+                        $('.mod').find('.form-group').find('select[data-name="category_name"]').val('');
+                        $('.mod').find('.form-group').find('input[data-name="name"]').val('');
+                        $('.mod').find('.form-group').find('input[data-name="description"]').val('');
+                        $('.mod').find('.form-group').find('input[data-name="content"]').val('');
+                        $('.mod').find('.form-group').find('input[data-name="photo"]').val('');
+                        $('.mod').find('.form-group').find('input[data-name="price"]').val('');
+
+
                         imageObj   = [];
                         nededFiles = [];
                         defaultObj = [];
@@ -521,6 +540,23 @@
                             inputs.each(function(){
                                 data[$(this).attr('data-name')] = $(this).val();
                             });
+
+
+                            if(data.name.length == 0){
+                                $('[data-name="name"]').focus();
+                                return false;
+                            }
+
+                              if(data.description.length == 0){
+                                    $('[data-name="description"]').focus();
+                                    return false;
+                                }
+                            if(data.category_name.length == 0){
+                                $('.mod').find('.msgDenger').show();
+                                return false;
+                            }else{
+                                $('.mod').find('.msgDenger').hide();
+                            }
 
 
                             var path = '/products-category';

@@ -6,18 +6,26 @@
         <h1>Товар</h1>
         <div class="table-responsive">
             <?php
-                $img = json_decode($singleProduct['product_image'] );
-                if(!empty($img)){
-                    foreach ($img as $v){
-                        if(is_file(public_path().'/img/custom/files/'.$v->name)){
-                            $img = '/img/custom/files/'.$v->name;
-                        }else{
-                            $img = '/img/custom/files/thumbnail/plase.jpg';
-                        }
-                    }
-                }else{
-                    $img = '/img/custom/files/thumbnail/plase.jpg';
-                }
+
+
+            $idProduct = $singleProduct['id'];
+
+
+            $directory = public_path().'/img/custom/companies/'.$companyId.'/products/'.$idProduct;
+            $directoryMy = '/img/custom/companies/'.$companyId.'/products/'.$idProduct.'/';
+
+            if(is_dir($directory)){
+                $files = scandir ($directory);
+                $img = $directoryMy . $files[2];// because [0] = "." [1] = ".."
+
+            }else{
+
+
+                $img = '/img/custom/files/thumbnail/plase.jpg';
+
+            }
+
+
            ?>
 
             <table class="table table-bordered table-striped table-hover">

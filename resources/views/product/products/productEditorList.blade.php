@@ -59,9 +59,9 @@
 </table>
 
 {{--<button type="button" class="add-new-product btn btn-primary pull-left btn-sm">+</button>--}}
-<span class="open btn btn-success">Open</span>
+<span class="open btn btn-success btn-sm">Добавить продукт</span>
 
-<a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">x</a>
+<a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">Удалить продукт</a>
 
 <div class="paginate">
     <?php echo $products->render(); ?>
@@ -127,9 +127,16 @@
 
 <script>
 
-$('.tBody').find('.product_modal_show').on('click', function(){
-    event.preventDefault();
 
+
+
+  /*  $('.files').find('.tBody').delegate('.product_modal_show', 'click', function(){
+
+   *//* });*/
+
+
+$('.tBody').delegate('.product_modal_show', 'click', function(){
+    event.preventDefault();
 
     var parent = $(this).parents('tr');
     var id = parent.find('.option').val();
@@ -146,14 +153,13 @@ $('.tBody').find('.product_modal_show').on('click', function(){
         data:{id : id},
         success:function(msg){
 
+
             $('.product_info').find('p.name').text(msg.product.product_name);
             $('.product_info').find('p.product_description').text(msg.product.product_description);
             $('.product_info').find('img.img_product').attr('src', msg.product.product_image);
             $('.product_info').find('p.product_content').text(msg.product.content);
             $('.product_info').find('span.product_price').text(msg.product.product_price);
-
-
-
+            $('.product_info').find('img.img_product').attr('src', msg.img);
 
         }
     });

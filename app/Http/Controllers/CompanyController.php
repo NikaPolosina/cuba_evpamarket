@@ -86,7 +86,6 @@ class CompanyController extends Controller
 
         $company = Company::findOrFail($id);
 
-
        /* $this->category = Category::all()->toArray();
 
         foreach ($this->category as $value) {

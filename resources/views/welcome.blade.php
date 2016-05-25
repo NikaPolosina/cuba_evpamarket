@@ -126,19 +126,18 @@
                                         <h3>Товары</h3>
 
                                                 <?php foreach($productAll as $v){
+                                            $idProduct = $v['id'];
+                                            $idCompany = $v->getCompany[0]['id'];
+                                            $directory = public_path().'/img/custom/companies/'.$idCompany.'/products/'.$idProduct;
+                                            $directoryMy = '/img/custom/companies/'.$idCompany.'/products/'.$idProduct.'/';
+
+                                                if(is_dir($directory)){
+                                                    $files = scandir ($directory);
+                                                    $img = $directoryMy . $files[2];// because [0] = "." [1] = ".."
 
 
-                                                if(strlen($v->product_image)){
-                                                    $img = json_decode($v->product_image);
-
-                                                    if(file_exists(public_path().'/img/custom/files/'.$img[0]->name)){
-                                                        $img = '/img/custom/files/'.$img[0]->name;
-
-                                                    }else{
-                                                        $img = '/img/custom/files/thumbnail/plase.jpg';
-
-                                                    }
                                                 }else{
+
                                                     $img = '/img/custom/files/thumbnail/plase.jpg';
 
                                                 }

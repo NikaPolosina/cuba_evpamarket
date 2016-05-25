@@ -70,7 +70,18 @@ class ProductsController extends Controller{
 
     public function show(Request $request){
         $product = Product::findOrFail($request['id']);
-        return response()->json([ 'product' => $product]);
+        $id =  $product->getCompany['0']['id'];
+        $directory = public_path().'/img/custom/companies/'.$id.'/products/'.$request['id'];
+        $directoryMy = '/img/custom/companies/'.$id.'/products/'.$request['id'].'/';
+        if(is_dir($directory)){
+            $files = scandir ($directory);
+            $firstFile = $directoryMy . $files[2];// because [0] = "." [1] = ".."
+
+        }else{
+            $firstFile = '/img/custom/files/thumbnail/plase.jpg';
+        }
+
+        return response()->json([ 'product' => $product, 'img' => $firstFile]);
 
 
     }
@@ -81,6 +92,9 @@ class ProductsController extends Controller{
     }
 
     public function editCategory(Request $request){
+
+
+
         $id = $request->input('productId');
         $product = Product::find($id)->toArray();
         $productCategory = Product::find($id)->getCategory;
@@ -144,8 +158,11 @@ class ProductsController extends Controller{
 
     public function singleProduct(Request $request, $id){
 
+
         $singleProduct = Product::find($id)->toArray();
-        return view('product.products.singleProductInfo')->with('singleProduct', $singleProduct);
+        $companyId = Product::find($id)->getCompany[0]['id'];
+
+        return view('product.products.singleProductInfo')->with('singleProduct', $singleProduct)->with('companyId', $companyId);
     }
 
     public function productEditor(CategoryController $category, $id){
