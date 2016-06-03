@@ -41,16 +41,15 @@ class HomeController extends Controller{
 
         }
 
-
         if(Auth::check()){
             $curentUser = Auth::user();
             $userInfo = $curentUser->getUserInformation;
             $companies = $curentUser->getCompanies;
         }
+
         if(Auth::user()->hasRole('company_owner')){
             return view('home')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
         }
-
 
         return view('homeSimpleUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
 

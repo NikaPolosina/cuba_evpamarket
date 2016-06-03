@@ -17,6 +17,7 @@ use App\Http\Controllers\ProductsController;
 use App\User;
 /*use Illuminate\Database\Query\Builder;*/
 use PhpParser\Builder;
+use App\Models\Role;
 
 
 class CompanyController extends Controller
@@ -45,8 +46,12 @@ class CompanyController extends Controller
         $company =  $this->createCompany($request->except('_token'));
         if($company){
             $curentUser = Auth::user();
-            $curentUser->getCompanies()->save($company);
+            if($curentUser->hasRole('simple_user')){
+                $curentUser->detachRoles($curentUser->roles);
+                $curentUser->attachRole(Role::findOrFail(1));
+            }
 
+            $curentUser->getCompanies()->save($company);
         }
 
         //Session::flash('flash_message', 'Company added!');

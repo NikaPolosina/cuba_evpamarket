@@ -41,8 +41,8 @@ class AuthController extends Controller{
             'surname' => 'required|max:255',
             'date_birth' => 'required',
             'gender' => 'required|boolean',
-            'region' => 'max:255',
-            'city' => 'max:255',
+            'region' => 'required|max:255',
+            'city' => 'required|max:255',
             'street' => 'max:255',
             'address' => 'max:255',
         ]);
@@ -57,15 +57,14 @@ class AuthController extends Controller{
 
         $role = Role::findOrFail(2);
 
-        if(isset($data['company'])){
-            $role = Role::findOrFail(1);
-        }
 
         $user->attachRole($role);
         return $user;
     }
 
     public function registerCompany(Request $request, CompanyController $company){
+        die('Surprise, you are here1 !!!');
+
 
             $user = Auth::user();
 
@@ -89,7 +88,6 @@ class AuthController extends Controller{
     }
 
     public function registerAditional(Request $request){
-
 
 
         $v = $this->myValidator($request->all());
@@ -119,7 +117,7 @@ class AuthController extends Controller{
     }
 
     public function registerC(){
-        return view('auth.register')->withCompany(true);
+        return view('auth.register')/*->withCompany(true)*/;
     }
 
 

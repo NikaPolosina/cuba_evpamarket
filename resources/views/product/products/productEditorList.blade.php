@@ -8,7 +8,7 @@
                     echo '<h1>У Вас нет пока продуктоов. Добавте продукты</h1>';
                 }
         }
-        }   
+        }
 
         ?>
 <table class="table table-bordered table-striped table-hover" style="display: <?=(isset($hide))? 'none':'' ?>;" >
