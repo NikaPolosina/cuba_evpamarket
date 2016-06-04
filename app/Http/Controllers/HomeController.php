@@ -34,12 +34,27 @@ class HomeController extends Controller{
      */
     public function index(User $user, UserCompany $userCompany, Company $company, $id = NULL){
 
+
         if(!Auth::user()->getUserInformation){
             $region = Region::all();
-//            $city = City::all();
             return view('auth.register_aditional')->with('region', $region);
 
         }
+
+                        if(Auth::check()){
+                            $curentUser = Auth::user();
+                            $userInfo = $curentUser->getUserInformation;
+                            $companies = $curentUser->getCompanies;
+                        }
+
+                        if(Auth::user()->hasRole('company_owner')){
+                            return view('homeOwnerUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
+                        }
+
+        return view('homeSimpleUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
+
+    }
+    public function registerOwner(User $user, UserCompany $userCompany, Company $company, $id = NULL){
 
         if(Auth::check()){
             $curentUser = Auth::user();
@@ -47,11 +62,8 @@ class HomeController extends Controller{
             $companies = $curentUser->getCompanies;
         }
 
-        if(Auth::user()->hasRole('company_owner')){
-            return view('home')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
-        }
+        return view('homeOwnerUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
 
-        return view('homeSimpleUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
 
     }
 }

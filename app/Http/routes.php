@@ -23,8 +23,8 @@ Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
 
 /*----------------CompanyController--------------------*/
 Route::get('/register-c', 'Auth\AuthController@registerC');
-Route::get('/register-company', 'Auth\AuthController@registerCompany');
-Route::post('/register_company', 'Auth\AuthController@registerCompany');
+/*Route::get('/register-company', 'Auth\AuthController@registerCompany');
+Route::post('/register_company', 'Auth\AuthController@registerCompany');*/
 Route::any('/show-company/{id}', 'CompanyController@show');
 
 
@@ -69,6 +69,8 @@ Route::get('/test', function(){
 Route::get('/homeSimpleUser', function(){
     return view('homeSimpleUser');
 });
+Route::get('/homeOwnerUser', ['as'=>'homeOwnerUser', 'uses'=>'HomeController@registerOwner'] );
+
 
 Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);
 

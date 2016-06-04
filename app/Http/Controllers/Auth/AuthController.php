@@ -22,6 +22,7 @@ use App\City;
 
 class AuthController extends Controller{
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+
     protected $redirectTo = '/home';
 
     public function __construct(){
@@ -62,7 +63,7 @@ class AuthController extends Controller{
         return $user;
     }
 
-    public function registerCompany(Request $request, CompanyController $company){
+/*    public function registerCompany(Request $request, CompanyController $company){
         die('Surprise, you are here1 !!!');
 
 
@@ -85,35 +86,31 @@ class AuthController extends Controller{
 
 
 
-    }
+    }*/
 
     public function registerAditional(Request $request){
-
-
-        $v = $this->myValidator($request->all());
-
-        if($v->fails()){
-            return redirect()->back()->withInput()->withErrors($v);
-        }
-
-        if(Auth::user()){
-           $userinfo =  UserInformation::create([
-                'name' => $request->input('name'),
-                'surname' => $request->input('surname'),
-                'date_birth' => $request->input('date_birth'),
-                'gender' => $request->input('gender'),
-                'region_id' => $request->input('region'),
-                'city_id' => $request->input('city'),
-                'street' => $request->input('street'),
-                'address' => $request->input('address'),
-                'country'=> 'Росия',
-            ]);
-
-            Auth::user()->getUserInformation()->save($userinfo);
-            return redirect('home');
-
-
-        }
+        $userinfo =  Auth::user()->getUserInformation;
+       if(!Auth::user()->getUserInformation){
+           $v = $this->myValidator($request->all());
+           if($v->fails()){
+               return redirect()->back()->withInput()->withErrors($v);
+           }
+           if(Auth::user()){
+               $userinfo = UserInformation::create([
+                   'name'       => $request->input('name'),
+                   'surname'    => $request->input('surname'),
+                   'date_birth' => $request->input('date_birth'),
+                   'gender'     => $request->input('gender'),
+                   'region_id'  => $request->input('region'),
+                   'city_id'    => $request->input('city'),
+                   'street'     => $request->input('street'),
+                   'address'    => $request->input('address'),
+                   'country'    => 'Росия',
+               ]);
+               Auth::user()->getUserInformation()->save($userinfo);
+           }
+       }
+        return view('auth/askForShop')->with('userInfo', $userinfo);
     }
 
     public function registerC(){
