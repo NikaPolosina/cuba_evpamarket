@@ -56,9 +56,6 @@
             </div>
 
 
-
-
-
     <div class="form-group {{ $errors->has('company_content') ? 'has-error' : ''}}">
                 {!! Form::label('company_content', 'Описание: ', ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
@@ -272,6 +269,7 @@
     <script>
         tinymce.init({
             selector: "textarea",theme: "modern",width: 680,height: 300,
+            language: 'ru',
             plugins: [
                 "advlist autolink link image lists charmap print preview hr anchor pagebreak",
                 "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
