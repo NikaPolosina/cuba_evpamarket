@@ -136,15 +136,19 @@
 
                                                     $files = scandir ($directory);
 
-
-                                                    if(is_dir(public_path().'/img/custom/companies/'.$idCompany.'/products/'.$idProduct.'/'.$files[2])){
-                                                        $fileMy = $files[3];
+                                                    if(count($files)>2){
+                                                        if(is_dir(public_path().'/img/custom/companies/'.$idCompany.'/products/'.$idProduct.'/'.$files[2])){
+                                                            $fileMy = $files[3];
+                                                        }else{
+                                                            $fileMy = $files[2];
+                                                        }
+                                                        $img = $directoryMy . $fileMy;// because [0] = "." [1] = ".."
                                                     }else{
-                                                        $fileMy = $files[2];
+                                                        $img = '/img/custom/files/thumbnail/plase.jpg';
                                                     }
 
 
-                                                    $img = $directoryMy . $fileMy;// because [0] = "." [1] = ".."
+
 
 
                                                 }else{

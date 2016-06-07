@@ -11,7 +11,47 @@
         }
 
         ?>
-<table class="table table-bordered table-striped table-hover" style="display: <?=(isset($hide))? 'none':'' ?>;" >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <table class="table table-bordered table-striped table-hover" style="display: <?=(isset($hide))? 'none':'' ?>;" >
     <thead>
     <tr>
         <th colspan="7">
@@ -94,6 +134,10 @@
             <div style=" margin: 3px 0 0 0;">
                 <img class="img_product img-thumbnail" src="" alt=""/>
             </div>
+
+            <div class="gal">
+
+            </div>
         </div>
         <div class="col-sm-7">
             <span style="font-size: 17px;">Краткое описание:</span>
@@ -152,6 +196,7 @@
 
 
 $('.tBody').delegate('.product_modal_show', 'click', function(){
+    nededPath = '';
     event.preventDefault();
 
     var parent = $(this).parents('tr');
@@ -178,6 +223,35 @@ $('.tBody').delegate('.product_modal_show', 'click', function(){
             $('#modalProduct').modal('show');
 
 
+
+            if(msg.mainPath.length > 0){
+                nededPath = msg.mainPath;
+
+                $.ajax({
+                    url      : $('#fileupload').fileupload('option', 'url'),
+                    dataType : 'json',
+                    context  : $('#fileupload')[0],
+                    data     : {
+                        image : [],
+                        path  : nededPath
+                    }
+                }).done(function(result){
+                    $('.product_info').find('.gal').html('');
+                    if(result.files.length){
+                        result.files.forEach(function(value){
+                            var row   = $('<img class="galItem" height="50px" src="'+value.thumbnailUrl+'">');
+                            $('.product_info').find('.gal').append(row);
+                        });
+                    }
+
+                    $('.galItem').on('click', function(){
+                        $('.product_info').find('img.img_product').attr('src', $(this).attr('src'));
+                    });
+
+                });
+            }
+
+
         }
     });
 
@@ -186,6 +260,10 @@ $('.tBody').delegate('.product_modal_show', 'click', function(){
 
 </script>
         <style>
+
+            .galItem:hover{
+                cursor: pointer;
+            }
 
             .description_modal_product{
                  margin: 3px 0 0 0;

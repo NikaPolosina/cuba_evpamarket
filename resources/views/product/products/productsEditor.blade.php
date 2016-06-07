@@ -376,12 +376,7 @@
 
             <script>
 
-                var nededPath  = 'companies/<?=$company->id;?>';
-                var imageObj   = [];
-                var nededFiles = [];
-                var defaultObj = [];
-                var deleteObj  = [];
-                var form;
+                var nededPath, productId, mainImg;
 
                 $(function(){
                     $('#fileupload').fileupload({
@@ -391,41 +386,52 @@
                         filesContainer     : $('.files'),
                         uploadTemplateId   : null,
                         downloadTemplateId : null,
-                        uploadTemplate     : function(o){
-                        },
-                        downloadTemplate   : function(o){
-                        }
+                        uploadTemplate     : null,
+                        downloadTemplate   : null,
+                        autoUpload         : true,
                     })
                     .on('fileuploadprocessalways', function(e, data){
-                        imageObj.push(data.files[0]);
-                        var index = imageObj.length - 1;
-                        var row   = $('<tr class="template-upload">' +
-                                '<td>' +
-                                '<div>' +
-                                '<button class="cancel" data-id="' + index + '">Отменить</button>' +
-                                '</div>' +
-                                '<span class="preview"></span></td>' +
-                                '<div class="error"></div>' +
-                                '</td>' +
-                                '</tr>');
-                        row.find('.preview').append(data.files[0].preview);
-                        if(data.files[0].error){
-                            row.find('.error').text(data.files[0].error);
-                        }
-                        $('.files').append(row);
-                        if(!form){
-                            form       = data;
-                            form.files = [];
-                        }
                     })
                     .on('fileuploadadd', function(e, data){})
                     .on('fileuploadsubmit', function(e, data){data.formData = {path : nededPath};})
-                    .on('fileuploaddone', function(e, data){})
+                    .on('fileuploaddone', function(e, data){
+
+                            var row   = $('<tr class="template-upload">' +
+                                    '<td>' +
+                                    '<div>' +
+                                    '<button class="btn btn-danger delete" data-type="DELETE" data-url="'+data.result.files[0]["deleteUrl"]+'&path='+nededPath+'"> Delete </button>' +
+                                    '<div>Главная <input class="product_image" name="qe" type="radio" value="'+data.result.files[0].name+'"></div>' +
+                                    '</div>' +
+                                    '<span class="preview"></span></td>' +
+                                    '<div class="error"></div>' +
+                                    '</td>' +
+                                    '</tr>');
+                            row.find('.preview').append(data.files[0].preview);
+                            $('.files').append(row);
+
+                    })
+                    .on('fileuploaddestroy', function (e, data) {
+
+                        if(productId){
+                            if(confirm('Delete ?')){
+                                $(data.context.context).parents('tr').eq(0).remove();
+                            }else{
+                                return false;
+                            }
+                        }else{
+                            $(data.context.context).parents('tr').eq(0).remove();
+                        }
+
+                    })
                     .on('fileuploadfail', function(e, data){});
                 });
 
+
                 $(document).ready(function(){
                     $('#product_list').delegate('.open', 'click', function(){
+                        nededPath = 'temp/'+Date.now()+'/';
+                        productId = false;
+                        mainImg = '';
 
                         $('.mod').find('.form-group').find('input[data-name="product_id"]').val('');
                         $('.mod').find('.form-group').find('.product_id').val('');
@@ -437,11 +443,6 @@
                         $('.mod').find('.form-group').find('input[data-name="price"]').val('');
 
 
-                        imageObj   = [];
-                        nededFiles = [];
-                        defaultObj = [];
-                        deleteObj  = [];
-                        form = null;
                         $('.files').html('');
 
                         var categoryId    = $('.table').find('.companyIdClass').val();
@@ -461,7 +462,7 @@
                         
                         if($(this).hasClass('edit')){
                             var id     = $(this).parents('tr').eq(0).find('.option').val();
-
+                            
                             $.ajax({
                                 type    : "POST",
                                 url     : "/products/edit-categoty",
@@ -470,6 +471,8 @@
                                 },
                                 data    : {productId : id},
                                 success : function(msg){
+
+                                    mainImg = msg.product.product_image;
 
                                     $('.mod').find('select[name="category_name"]').hide();
                                     $('.mod').find('.modalSpan').text(msg.productCategory.title).show();
@@ -487,7 +490,7 @@
                                     $('.mod').find('#product_form').find('input.update').show();
                                     $('.mod').find('#product_form').find('input[type="text"]').eq(0).focus();
 
-
+                                    productId = msg.product.id;
                                     nededPath  = 'companies/<?=$company->id;?>'+'/products/'+msg.product.id+'/';
 
                                     $.ajax({
@@ -495,32 +498,33 @@
                                         dataType : 'json',
                                         context  : $('#fileupload')[0],
                                         data     : {
-                                            image : nededFiles,
+                                            image : [],
                                             path  : nededPath
                                         }
                                     }).done(function(result){
-                                        console.log(result);
 
-                                        imageObj   = [];
-                                        defaultObj = [];
-                                        deleteObj  = [];
                                         if(result.files.length){
                                             result.files.forEach(function(value){
-                                                defaultObj.push(value);
-                                                var index = defaultObj.length - 1;
+
+
+
                                                 var row   = $('<tr class="template-upload">' +
                                                         '<td>' +
                                                         '<div>' +
-                                                        '<button class="delete" data-id="' + index + '">DELETE</button>' +
+                                                        '<button class="btn btn-danger delete ask" data-type="DELETE" data-url="'+value["deleteUrl"]+'&path='+nededPath+'"> Delete </button>' +
+                                                        '<div>Главная <input '+((value.name  == mainImg)?'checked':'' )+' class="product_image" name="qe" type="radio" value="'+value.name+'"></div>' +
                                                         '</div>' +
                                                         '<span class="preview"></span></td>' +
                                                         '<div class="error"></div>' +
                                                         '</td>' +
                                                         '</tr>');
-                                                row.find('.preview').append('<img src="' + value.thumbnailUrl + '">');
+                                                row.find('.preview').append('<img src="'+value.thumbnailUrl+'">');
                                                 $('.files').append(row);
+
                                             });
                                         }
+
+
                                     });
 
                                     $('.mod').modal();
@@ -528,28 +532,27 @@
                                 }
                             });
 
-                            
-
                         }else{
                             $('.mod').modal();
                         }
 
                     });
-                    
-                    
-                    $('.submit_modal_form').on('click', function(){
-                        
 
+
+                    $('body').delegate('.product_image', 'change', function(){
+                        $('.mod').find('form').find('input[name="product_image"]').val($(this).val());
+                    });
+
+
+                    $('.submit_modal_form').on('click', function(){
                         var modForm = $('.mod').find('form');
                         if(modForm.length){
-
                             var data = {};
                             var inputs    = $('.mod').find('[data-name]');
                             inputs.each(function(){
                                 data[$(this).attr('data-name')] = $(this).val();
                             });
-
-
+                            
                             if(data.name.length == 0){
                                 $('[data-name="name"]').focus();
                                 return false;
@@ -568,11 +571,18 @@
 
 
                             var path = '/products-category';
+
                             var update = false;
                             if(data.product_id.length > 0){
                                 path = '/products/ajax-update';
                                 update = true;
                             }
+
+
+                            if(!productId)
+                                data.filesPath = nededPath;
+
+
 
                             $.ajax({
                                 type    : "POST",
@@ -585,6 +595,7 @@
                                     product    : data
                                 },
                                 success : function(data){
+
                                     var tr = $(data);
                                     var id = tr.find('.option').val();
 
@@ -602,93 +613,21 @@
                                     }
 
 
-                                    if(id.length > 0){
-                                        if(deleteObj.length > 0){
-                                            nededPath  = 'companies/<?=$company->id;?>'+'/products/'+tr.find('.option').val()+'/';
-                                            deleteObj.forEach(function(value){
-                                                $.ajax({
-                                                    url    : value['deleteUrl'],
-                                                    method : 'delete',
-                                                    data   : {path : nededPath}
-                                                });
-                                            });
-                                            deleteObj = [];
-                                        }
-
-                                        if(form && imageObj.length>0){
-                                            imageObj.forEach(function(value){
-                                                if(value)
-                                                    form.files.push(value);
-                                            });
-                                            nededPath  = 'companies/<?=$company->id;?>'+'/products/'+tr.find('.option').val()+'/';
-                                            form.submit();
-                                            imageObj = [];
-                                        }
-
-                                    }
                                     $('.mod').modal('hide');
                                 }
                             });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            
                         }
                     });
 
-                    /*-----------------------------------------Работа с файлами----------------------------------*/
-
-                    $('#fileupload').on('submit', function(){
-                        if(deleteObj.length){
-                            deleteObj.forEach(function(value){
-                                $.ajax({
-                                    url    : value['deleteUrl'],
-                                    method : 'delete',
-                                    data   : {path : nededPath}
-                                });
-                            });
-                            deleteObj = [];
-                        }
-                        if(imageObj.length){
-                            imageObj.forEach(function(value){
-                                form.files.push(value);
-                            });
-                            form.submit();
-                            event.preventDefault();
-                            imageObj = [];
-                        }
-                        if(!deleteObj.length && !imageObj.length){
-                            console.log('time to save');
-                        }
-                        return false;
-                        event.preventDefault();
-                    });
-
-                    $('.files').delegate('.cancel', 'click', function(){
-                        imageObj[$(this).attr('data-id')] = null;
-                    });
-
-                    $('.files').delegate('.delete', 'click', function(){
-                        var index = $(this).attr('data-id');
-                        deleteObj.push(defaultObj[index]);
-                        $(this).parents('tr').eq(0).remove();
-                        event.preventDefault();
-                    });
                 });
+
+
+
+
+
+
+
             </script>
 
 
@@ -701,6 +640,7 @@
             var data            = <?=$category?>;
             var images          = [];
             $(document).ready(function(){
+
                 $('.table').delegate('.add-new-product', 'click', function(){
                     images = [''];
                     $('#fileupload table tbody tr.template-upload').remove();
@@ -864,7 +804,9 @@
                         $('#myModal').find('.msgDenger').hide();
                     }
                     selected1['photo'] = rec;
+
                     console.log(selected1);
+
                     $.ajax({
                         type    : "POST",
                         url     : "/products-category",
@@ -970,8 +912,6 @@
                         $('#custom-checkable').treeview('uncheckNode', node.nodeId);
                     }
                 }).treeview('collapseAll');
-
-
 
                 $('#product_list').delegate('.paginate a', 'click', function(){
                     event.preventDefault();
