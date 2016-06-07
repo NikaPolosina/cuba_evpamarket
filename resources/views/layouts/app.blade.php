@@ -61,9 +61,11 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Cuba
+
+                <a class="navbar-brand" style="padding: 0px;" href="{{ url('/') }}">
+                    <img class="logo" src="/img/system/logo.png" style="width: 50px;">
                 </a>
+
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -111,6 +113,24 @@
     </nav>
 
 
+    <style>
+
+        .logo {
+
+            animation: turn 5s infinite;
+        }
+
+        @-webkit-keyframes turn {
+            to {
+                -webkit-transform: rotateY(360deg);
+            }
+        }
+        @keyframes turn {
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+    </style>
     @yield('content')
 
 </body>

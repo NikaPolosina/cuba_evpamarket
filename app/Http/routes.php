@@ -10,11 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-/*
-Route::get('/', function () {
- return view('welcome');
-});*/
-
 
 Route::auth();
 Route::any('/find', [ 'as' => 'find', 'uses' => 'ProductsController@findProduct' ]);
@@ -23,12 +18,16 @@ Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
 
 /*----------------CompanyController--------------------*/
 Route::get('/register-c', 'Auth\AuthController@registerC');
-/*Route::get('/register-company', 'Auth\AuthController@registerCompany');
-Route::post('/register_company', 'Auth\AuthController@registerCompany');*/
 Route::any('/show-company/{id}', 'CompanyController@show');
-
+Route::group(['middleware' => ['web']], function () {
+    Route::resource('company', 'CompanyController');
+});
 
 /*----------------ProductController--------------------*/
+Route::group(['middleware' => ['web']], function () {
+    Route::resource('products', 'ProductsController');
+    Route::get('/products/create/{company_id}', 'ProductsController@create');
+});
 Route::get('/', 'ProductsController@getProductAll');
 Route::any('/get-product-list', 'ProductsController@getProductList');
 Route::any('/products/destroy-check', 'ProductsController@destroyCheck');
@@ -49,19 +48,8 @@ Route::any('/products/show/', 'ProductsController@show');
 Route::get('/file', function () {
  return view('file');
 });
-Route::get('/a', function () {
-    return view('a');
-});
 
 Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
-
-Route::group(['middleware' => ['web']], function () {
-	Route::resource('company', 'CompanyController');
-});
-Route::group(['middleware' => ['web']], function () {
-	Route::resource('products', 'ProductsController');
-    Route::get('/products/create/{company_id}', 'ProductsController@create');
-});
 
 Route::get('/test', function(){
     return view('auth.register_aditional');
@@ -70,8 +58,6 @@ Route::get('/homeSimpleUser', function(){
     return view('homeSimpleUser');
 });
 Route::get('/homeOwnerUser', ['as'=>'homeOwnerUser', 'uses'=>'HomeController@registerOwner'] );
-
-
 Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);
 
 

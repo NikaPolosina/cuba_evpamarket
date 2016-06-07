@@ -402,8 +402,7 @@
                         var row   = $('<tr class="template-upload">' +
                                 '<td>' +
                                 '<div>' +
-                                '<button class="cancel" data-id="' + index + '">Cancel</button>' +
-                                '<input type="radio"  name="default_img" class="default_img" data-id="' + index + '">Set as default' +
+                                '<button class="cancel" data-id="' + index + '">Отменить</button>' +
                                 '</div>' +
                                 '<span class="preview"></span></td>' +
                                 '<div class="error"></div>' +
@@ -651,8 +650,7 @@
                         }
                     });
 
-
-
+                    /*-----------------------------------------Работа с файлами----------------------------------*/
 
                     $('#fileupload').on('submit', function(){
                         if(deleteObj.length){
@@ -696,8 +694,8 @@
 
         </div>
 
-
         <script>
+            /*---------------------Работа с катигориями-----------------------*/
             var categories      = [];
             var currentCategory = null;
             var data            = <?=$category?>;

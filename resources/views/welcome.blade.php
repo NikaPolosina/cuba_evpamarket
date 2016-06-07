@@ -97,7 +97,7 @@
 
                                     <div class="col-sm-10">
 
-                                        <h3 style="">Магазины</h3>
+                                        <div><h3 style="">Магазины</h3></div>
 
 
                                         <?php foreach($companyAll as $valueCompanw){?>
@@ -118,12 +118,13 @@
                                         </div>
                                         <?php }?>
                                     </div>
-
+                                    <div class="col-sm-10">
+                                        <hr>
+                                        <div><h3>Товары</h3></div>
+                                    </div>
 
 
                                     <div class="col-sm-10 masonry">
-                                        <hr>
-                                        <h3>Товары</h3>
 
                                                 <?php foreach($productAll as $v){
                                             $idProduct = $v['id'];
@@ -132,8 +133,18 @@
                                             $directoryMy = '/img/custom/companies/'.$idCompany.'/products/'.$idProduct.'/';
 
                                                 if(is_dir($directory)){
+
                                                     $files = scandir ($directory);
-                                                    $img = $directoryMy . $files[2];// because [0] = "." [1] = ".."
+
+
+                                                    if(is_dir(public_path().'/img/custom/companies/'.$idCompany.'/products/'.$idProduct.'/'.$files[2])){
+                                                        $fileMy = $files[3];
+                                                    }else{
+                                                        $fileMy = $files[2];
+                                                    }
+
+
+                                                    $img = $directoryMy . $fileMy;// because [0] = "." [1] = ".."
 
 
                                                 }else{
@@ -141,6 +152,8 @@
                                                     $img = '/img/custom/files/thumbnail/plase.jpg';
 
                                                 }
+
+
                                         ?>
 
                                         <div class="carentFindProduct">
