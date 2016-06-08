@@ -83,14 +83,22 @@ class ProductsController extends Controller{
 
         $directory = public_path().'/img/custom/companies/'.$id.'/products/'.$request['id'];
 
-        if(File::exists($directory.'/'.$product->product_image)){
+        if(!empty($product->product_image) && File::exists($directory.'/'.$product->product_image)){
             $firstFile = '/img/custom/companies/'.$id.'/products/'.$request['id'].'/thumbnail/'.$product->product_image;
         }else{
             $directoryMy = '/img/custom/companies/'.$id.'/products/'.$request['id'].'/';
+
             if(is_dir($directory)){
                 $files = scandir($directory);
                 $firstFile = $directoryMy.$files[2];// because [0] = "." [1] = ".."
 
+                if(is_dir(public_path().$firstFile)){
+                    if(isset($files[3]))
+                        $firstFile = $directoryMy.$files[3];
+                    else
+                        $firstFile = '/img/custom/files/thumbnail/plase.jpg';
+
+                }
             }else{
                 $firstFile = '/img/custom/files/thumbnail/plase.jpg';
             }

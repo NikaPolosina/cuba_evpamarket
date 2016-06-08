@@ -13,44 +13,6 @@
         ?>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <table class="table table-bordered table-striped table-hover" style="display: <?=(isset($hide))? 'none':'' ?>;" >
     <thead>
     <tr>
@@ -198,11 +160,18 @@
 $('.tBody').delegate('.product_modal_show', 'click', function(){
     nededPath = '';
     event.preventDefault();
+    $('.product_info').find('p.name').text('');
+    $('.product_info').find('p.product_description').text('');
+    $('.product_info').find('p.product_content').text('');
+    $('.product_info').find('span.product_price').text('');
+    $('.product_info').find('img.img_product').attr('src', '');
+    $('.product_info').find('.gal').html('');
+
 
     var parent = $(this).parents('tr');
     var id = parent.find('.option').val();
 
-    $('#modalProduct').find('.modal-body').html($('.product_info').show());
+
 
     $.ajax({
         type:"POST",
@@ -213,14 +182,19 @@ $('.tBody').delegate('.product_modal_show', 'click', function(){
         data:{id : id},
         success:function(msg){
 
+
+            
+
             $('.product_info').find('p.name').text(msg.product.product_name);
             $('.product_info').find('p.product_description').text(msg.product.product_description);
-            $('.product_info').find('img.img_product').attr('src', msg.product.product_image);
+            /*$('.product_info').find('img.img_product').attr('src', msg.product.product_image);*/
             $('.product_info').find('p.product_content').text(msg.product.content);
             $('.product_info').find('span.product_price').text(msg.product.product_price);
             $('.product_info').find('img.img_product').attr('src', msg.img);
-
+            
+            $('#modalProduct').find('.modal-body').html($('.product_info').show());
             $('#modalProduct').modal('show');
+
 
 
 

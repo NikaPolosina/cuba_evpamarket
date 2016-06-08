@@ -339,6 +339,14 @@
                     <ol class="indicator"></ol>
                 </div>
 
+                <!--
+
+                <a href="https://jquery-file-upload.appspot.com/image%2Fjpeg/1201873945/555.jpg" title="555.jpg" download="555.jpg" data-gallery="">
+                    <img src="https://jquery-file-upload.appspot.com/image%2Fjpeg/1201873945/555.jpg.80x80.jpg">
+                </a>
+
+                -->
+
 
                 <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
                 <link rel="stylesheet" href="/plugins/file_uploader/css/jquery.fileupload.css">
@@ -399,7 +407,7 @@
                             var row   = $('<tr class="template-upload">' +
                                     '<td>' +
                                     '<div>' +
-                                    '<button class="btn btn-danger delete" data-type="DELETE" data-url="'+data.result.files[0]["deleteUrl"]+'&path='+nededPath+'"> Delete </button>' +
+                                    '<button class="btn btn-danger delete" data-type="DELETE" data-url="'+data.result.files[0]["deleteUrl"]+'&path='+nededPath+'"> Удалить </button>' +
                                     '<div>Главная <input class="product_image" name="qe" type="radio" value="'+data.result.files[0].name+'"></div>' +
                                     '</div>' +
                                     '<span class="preview"></span></td>' +
@@ -413,7 +421,7 @@
                     .on('fileuploaddestroy', function (e, data) {
 
                         if(productId){
-                            if(confirm('Delete ?')){
+                            if(confirm('Вы уверены чт хотите удалить картинку ? Если Вы это сделаете, то она навсегда удалится с вашего альбома.')){
                                 $(data.context.context).parents('tr').eq(0).remove();
                             }else{
                                 return false;
@@ -511,7 +519,7 @@
                                                 var row   = $('<tr class="template-upload">' +
                                                         '<td>' +
                                                         '<div>' +
-                                                        '<button class="btn btn-danger delete ask" data-type="DELETE" data-url="'+value["deleteUrl"]+'&path='+nededPath+'"> Delete </button>' +
+                                                        '<button class="btn btn-danger delete ask" data-type="DELETE" data-url="'+value["deleteUrl"]+'&path='+nededPath+'"> Удалиь </button>' +
                                                         '<div>Главная <input '+((value.name  == mainImg)?'checked':'' )+' class="product_image" name="qe" type="radio" value="'+value.name+'"></div>' +
                                                         '</div>' +
                                                         '<span class="preview"></span></td>' +

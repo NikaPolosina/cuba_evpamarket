@@ -128,34 +128,32 @@
 
                                                 <?php foreach($productAll as $v){
                                             $idProduct = $v['id'];
+
                                             $idCompany = $v->getCompany[0]['id'];
+
                                             $directory = public_path().'/img/custom/companies/'.$idCompany.'/products/'.$idProduct;
                                             $directoryMy = '/img/custom/companies/'.$idCompany.'/products/'.$idProduct.'/';
 
-                                                if(is_dir($directory)){
+                                        if(!empty($v['product_image']) && File::exists($directory.'/'.$v['product_image'])){
 
-                                                    $files = scandir ($directory);
+                                            $firstFile = $directoryMy.$v['product_image'];
+                                        }else{
 
-                                                    if(count($files)>2){
-                                                        if(is_dir(public_path().'/img/custom/companies/'.$idCompany.'/products/'.$idProduct.'/'.$files[2])){
-                                                            $fileMy = $files[3];
-                                                        }else{
-                                                            $fileMy = $files[2];
-                                                        }
-                                                        $img = $directoryMy . $fileMy;// because [0] = "." [1] = ".."
-                                                    }else{
-                                                        $img = '/img/custom/files/thumbnail/plase.jpg';
-                                                    }
+                                            if(is_dir($directory)){
+                                                $files = scandir($directory);
+                                                $firstFile = $directoryMy.$files[2];// because [0] = "." [1] = ".."
 
-
-
-
-
-                                                }else{
-
-                                                    $img = '/img/custom/files/thumbnail/plase.jpg';
+                                                if(is_dir(public_path().$firstFile)){
+                                                    if(isset($files[3]))
+                                                        $firstFile = $directoryMy.$files[3];
+                                                    else
+                                                        $firstFile = '/img/custom/files/thumbnail/plase.jpg';
 
                                                 }
+                                            }else{
+                                                $firstFile = '/img/custom/files/thumbnail/plase.jpg';
+                                            }
+                                        }
 
 
                                         ?>
@@ -164,8 +162,8 @@
 
                                             <div class="item">
                                                 <p><h4 class="show-product">{{$v->product_name}}</h4></p>
-                                                <?php if(isset($img)){?>
-                                                <img class="img-thumbnail show-product" src="<?=$img?>">
+                                                <?php if(isset($firstFile)){?>
+                                                <img class="img-thumbnail show-product" src="<?=$firstFile?>">
                                                 <?php } ?>
                                                 <input class="input_id_product" value="{{$v->id}}" type="hidden"/>
                                                 <br>   <p style="font-size: 14px;">{{$v->content}}</p>
