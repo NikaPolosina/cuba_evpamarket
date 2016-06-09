@@ -94,8 +94,14 @@
                                     <?php
                                     }else{
                                     ?>
-
+<?php
+               if(Auth::guest()){ ?>
                                     <div class="col-sm-10">
+               <?php }else{ ?>
+                                    <div class="col-sm-12">
+              <?php }
+                                    ?>
+
 
                                         <div><h3 style="">Магазины</h3></div>
 
@@ -118,13 +124,25 @@
                                         </div>
                                         <?php }?>
                                     </div>
-                                    <div class="col-sm-10">
+                   <?php
+                   if(Auth::guest()){ ?>
+                   <div class="col-sm-10">
+                       <?php }else{ ?>
+                       <div class="col-sm-12">
+                           <?php }
+                           ?>
                                         <hr>
                                         <div><h3>Товары</h3></div>
                                     </div>
 
+                           <?php
+                           if(Auth::guest()){ ?>
+                           <div class="col-sm-10 masonry">
+                               <?php }else{ ?>
+                               <div class="col-sm-12 masonry">
+                                   <?php }
+                                   ?>
 
-                                    <div class="col-sm-10 masonry">
 
                                                 <?php foreach($productAll as $v){
                                             $idProduct = $v['id'];
