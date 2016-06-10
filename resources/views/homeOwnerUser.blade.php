@@ -6,9 +6,34 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading"><h1>Привет {{$userInfo->name}} !!!</h1></div>
+                <div class="panel-heading"><h2>Моя страница</h2></div>
+                {{------------------------------------------------------------------------------------------------}}
+                <div class="col-sm-12" style="border: solid 1px black;">
+                    <div class="col-sm-3" style="border: solid 1px red;">
+                        @foreach($menu as $menuItem)
+                                <h4>{{$menuItem['title']}}</h4>
+                            @endforeach
+                    </div>
+                    <div class="col-sm-9" style="border: solid 2px #008000;">
+                        <div class="row">
+                            <div class="col-sm-12">
+
+                                <div class="col-sm-4" style="border: solid 1px red;">
+                                    <img class="img-thumbnail" src="/img/custom/files/thumbnail/plase.jpg" alt="" style="width: 200px; height: 200px"/>
+
+                                </div>
+                                <div class="col-sm-8" style="border: solid 1px red;">
+                                    <h1>{{$userInfo->name}} {{$userInfo->surname}}</h1>
+                                    <h5>{{$userInfo->country}}</h5>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{--------------------------------------------------------------------------------------------------}}
                 <?php if(count($curentUser->getCompanies)){ ?>
                     <div class=""><h1>
                         <h1>Мои магазины <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Добавить магазин</a></h1>

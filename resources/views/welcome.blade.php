@@ -66,7 +66,7 @@
 
                                     <form method="POST" action="find" style="display: inline-block; float: right">
                                         {{ csrf_field() }}
-                                        <input name="find" type="text" placeholder="Введите текст для поиска"/>
+                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> <input name="find" type="text" placeholder="Введите текст для поиска"/>
                                         <p style="display: inline-block"><input type="submit" value="Искать">
                                     </form>
                                 </div>
