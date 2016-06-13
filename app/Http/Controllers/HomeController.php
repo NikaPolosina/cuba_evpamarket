@@ -82,7 +82,7 @@ class HomeController extends Controller{
         $menu = array(
             'my_page'       => array(
                 'title' => 'Моя страница',
-                'url'   => 'user/simple_user/home'
+                'url'   => '/home'
             ),
             'message'   => array(
                 'title' => 'Центр сообщений',
@@ -110,7 +110,7 @@ class HomeController extends Controller{
             )
         );
 
-        return view('homeSimpleUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser)->with('menu', $menu);
+        return view('user.simple_user.home')->with('userInfo', $userInfo)->with('curentUser', $curentUser)->with('simple_user_menu', $menu);
 
     }
     public function registerOwner(User $user, UserCompany $userCompany, Company $company, $id = NULL){

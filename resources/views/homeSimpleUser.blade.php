@@ -11,15 +11,18 @@
                     {{------------------------------------------------------------------------------------------------}}
                     <div class="col-sm-12" style="border: solid 1px black;">
 
+
                             <div class="col-sm-2" style="padding: 0px;">
                                 <ul class="nav nav-pills nav-stacked">
-                                    @foreach($menu as $menuItem)
+                                    @foreach($simple_user_menu as $menuItem)
                                         <li class="singleMenu"><a class="singleUtl" href="{{$menuItem['url']}}">{{$menuItem['title']}}</a></li>
                                     @endforeach
                                 </ul>
                             </div>
 
-                            <div class="col-sm-10 myPageContent">
+                        @yield('content_user')
+
+                        {{--    <div class="col-sm-10 myPageContent">
                                 <div class="row">
                                     <div class="col-sm-12 contentInfo">
 
@@ -34,7 +37,7 @@
 
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
 
                         </div>
 
@@ -72,5 +75,4 @@
          }
 
     </style>
-    {!! HTML::script('/js/user/home-simple-user.js') !!}
 @endsection

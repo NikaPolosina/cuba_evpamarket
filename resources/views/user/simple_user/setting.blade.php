@@ -1,15 +1,23 @@
+@extends('homeSimpleUser')
 
-<div class="col-sm-12">
+@section('content_user')
 
-    <ul class="nav nav-tabs">
-        @foreach($menu_setting as $item)
-            <li class="singleMenu"><a class="singleUtl settingUrl" href="{{$item['url']}}">{{$item['title']}}</a></li>
-        @endforeach
-    </ul>
-    <div class="col-sm-12 setting_body">
+    <div class="col-sm-10 myPageContent">
+        <div class="row">
+            <div class="col-sm-12 contentInfo">
 
+                    <ul class="nav nav-tabs">
+                        @foreach($menu_setting as $item)
+                            <li class="singleMenu"><a class="singleUtl settingUrl" href="{{$item['url']}}">{{$item['title']}}</a></li>
+                        @endforeach
+                    </ul>
+                    <div class="col-sm-12 setting_body">
+
+
+                    </div>
+            </div>
+        </div>
     </div>
-</div>
 
 <script>
     var url = $('.singleMenu').find('.settingUrl');
@@ -17,6 +25,7 @@
         event.preventDefault();
         var userInfo =  '<?=$userInfo?>';
         var url = $(this).attr('href');
+
 
         $.ajax({
             type: "POST",
@@ -47,3 +56,4 @@
     }
 
 </style>
+@endsection

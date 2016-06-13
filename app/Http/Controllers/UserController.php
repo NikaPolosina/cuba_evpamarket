@@ -18,20 +18,41 @@ use Illuminate\Support\Facades\DB;
 use App\UserInformation;
 
 class UserController extends Controller{
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct(){
         $this->middleware('auth');
+        $menu = array(
+            'my_page'       => array(
+                'title' => 'Моя страница',
+                'url'   => '/home'
+            ),
+            'message'   => array(
+                'title' => 'Центр сообщений',
+                'url'   => '/user/simple_user/message'
+            ),
+            'payments' => array(
+                'title' => 'Платежи',
+                'url'   => '/user/simple_user/payments'
+            ),
+            'delivery'         => array(
+                'title' => 'Доставка',
+                'url'   => '/user/simple_user/delivery'
+            ),
+            'liked'         => array(
+                'title' => 'Избранное',
+                'url'   => '/user/simple_user/liked'
+            ),
+            'basket'         => array(
+                'title' => 'Корзина',
+                'url'   => '/user/simple_user/basket'
+            ),
+            'setting'         => array(
+                'title' => 'Настройка',
+                'url'   => '/user/simple_user/setting'
+            )
+        );
+        view()->share('simple_user_menu', $menu);
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function home(){
         if(Auth::check()){
             $curentUser = Auth::user();
@@ -43,6 +64,7 @@ class UserController extends Controller{
     }
 
     public function message(){
+
         return view('user.simple_user.message');
     }
     public function payments(){
@@ -65,11 +87,11 @@ class UserController extends Controller{
         $menu_setting = array(
             'overall'       => array(
                 'title' => 'Общие настройки',
-                'url'   => 'user/simple_user/setting/overall'
+                'url'   => '/user/simple_user/setting/overall'
             ),
             'security'   => array(
                 'title' => 'Безопасность',
-                'url'   => 'user/simple_user/setting/security'
+                'url'   => '/user/simple_user/setting/security'
             )
         );
         return view('user.simple_user.setting')->with('menu_setting', $menu_setting)->with('userInfo', $userInfo);
@@ -87,6 +109,8 @@ class UserController extends Controller{
     }
     public function settingOverallEdit(Request $request){
         $curentUser = Auth::user();
+        dd($request->all());
+
         $info = $curentUser->getUserInformation;
         $info->name = $request['name'];
         $info->surname = $request['surname'];

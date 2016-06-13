@@ -46,15 +46,15 @@ Route::any('/products/show/', 'ProductsController@show');
 
 /*-------------------------------------------User----------------------------------------------*/
 Route::any('/user/simple_user/home', 'UserController@home');
-Route::any('user/simple_user/message', 'UserController@message');
-Route::any('user/simple_user/payments', 'UserController@payments');
-Route::any('user/simple_user/delivery', 'UserController@delivery');
-Route::any('user/simple_user/liked', 'UserController@liked');
-Route::any('user/simple_user/basket', 'UserController@basket');
-Route::any('user/simple_user/setting', 'UserController@setting');
-Route::any('user/simple_user/setting/overall', 'UserController@settingOverall');
-Route::any('user/simple_user/setting/security', 'UserController@settingSecurity');
-Route::any('user/simple_user/setting/security/edit', 'UserController@settingOverallEdit');
+Route::any('/user/simple_user/message', 'UserController@message');
+Route::any('/user/simple_user/payments', 'UserController@payments');
+Route::any('/user/simple_user/delivery', 'UserController@delivery');
+Route::any('/user/simple_user/liked', 'UserController@liked');
+Route::any('/user/simple_user/basket', 'UserController@basket');
+Route::any('/user/simple_user/setting', 'UserController@setting');
+Route::any('/user/simple_user/setting/overall', 'UserController@settingOverall');
+Route::any('/user/simple_user/setting/security', 'UserController@settingSecurity');
+Route::any('/user/simple_user/setting/security/edit', 'UserController@settingOverallEdit');
 
 
 
