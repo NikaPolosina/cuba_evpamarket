@@ -12,8 +12,8 @@
             <div class="col-md-3">
                 <hr>
 
-                <a id="addCategory" style="border: solid 1px gainsboro; padding: 2px; text-decoration: none; " href="">Добавить категорию</a>
-                <a class="" style="border: solid 1px gainsboro; padding: 2px; text-decoration: none; " href="">Создать категорию</a>
+                <a id="addCategory" href="{{url('/category/category-setup', $company->id)}}">Добавить категорию</a>
+
 
                 <div class="allCategoryBlock" style="display: none">
                     <div style="display: none" class="selectCategory">
@@ -26,13 +26,17 @@
                     </div>
                 </div>
 
+
+
                 <script>
                     var a  = $('.allCategoryBlock').find('.selectCategory');
                     var ul = a.find('ul[data-id="select_input"]');
-                    $('#addCategory').on('click', function(){
+        /*            $('#addCategory').on('click', function(){
                         event.preventDefault();
+
+
                         $('.allCategoryBlock').toggle();
-                        var data = <?=$categories?>
+                        var data = <?php //$categories ?>
 
                         $('#custom-checkable1').treeview({
                             data            : data,
@@ -50,7 +54,9 @@
                                 console.log(node.text + ' was unchecked');
                             }
                         }).treeview('collapseAll');
-                    });
+                    });*/
+
+
                     $('.addCategoryCompany').on('click', function(){
                         event.preventDefault();
                         var inputs     = ul.find("input:checked");
@@ -643,10 +649,14 @@
 
         <script>
             /*---------------------Работа с катигориями-----------------------*/
+
+
             var categories      = [];
             var currentCategory = null;
             var data            = <?=$category?>;
             var images          = [];
+
+
             $(document).ready(function(){
 
                 $('.table').delegate('.add-new-product', 'click', function(){
@@ -838,6 +848,7 @@
                 });
 
                 $('#myModal').modal({show : false});
+
 
                 $('#custom-checkable').treeview({
                     data            : data,

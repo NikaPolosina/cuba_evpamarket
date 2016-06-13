@@ -192,7 +192,7 @@ class ProductsController extends Controller{
     }
 
     public function productEditor(CategoryController $category, $id){
-
+        
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
 

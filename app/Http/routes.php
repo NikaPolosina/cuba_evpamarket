@@ -58,6 +58,11 @@ Route::any('user/simple_user/setting/security/edit', 'UserController@settingOver
 
 
 
+Route::any('category/category-setup/{id}', 'CategoryController@categorySetup');
+
+
+
+
 
 Route::get('/file', function () {
  return view('file');

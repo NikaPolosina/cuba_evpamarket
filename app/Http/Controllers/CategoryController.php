@@ -77,10 +77,17 @@ class CategoryController extends Controller{
         }
         return $this->nCategory[0];
     }
+    public function categorySetup(CategoryController $category,  $id){
+        $company = Company::findOrFail($id);
+        $categories = $this->getAllCategoris();
+        
+        $currentCompanyCategories = $category->getCompanyCategorySorted($id);
+        $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
+        
+        
+        return view('category.category_setup')->with('categories', $categories)->with('company', $company)->with('category', json_encode($currentCompanyCategoriesSorted));
+    }
 
-    /**
-     * Build tree to parent from category id
-     * */
     public function getCompanyActiveCategory($categoriId){
         $this->category[] = Category::find($categoriId[0])->toArray();
         $parentId = $this->category[0]['parent_id'];
@@ -103,25 +110,11 @@ class CategoryController extends Controller{
         return $this->nCategory;
     }
 
-    /**
-     * Get sort categories by company id
-     *
-     * @param int $companyId
-     *
-     * @return array sorted categories
-     * */
     public function getCompanyCategorySorted($companyId){
         $company = Company::find($companyId);
         return $company->getCategoryCompany->toArray();
     }
 
-    /**
-     * Build category tree from category array
-     *
-     * @param array categories
-     *
-     * @return array sorted categories
-     * */
     public function treeBuilder(array $category){
         if(!count($category))
             return [];
