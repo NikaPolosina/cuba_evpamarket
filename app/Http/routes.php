@@ -45,7 +45,7 @@ Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 
 Route::any('/products/show/', 'ProductsController@show');
 
 /*-------------------------------------------User----------------------------------------------*/
-Route::any('/user/simple_user/home', 'UserController@home');
+
 Route::any('/user/simple_user/message', 'UserController@message');
 Route::any('/user/simple_user/payments', 'UserController@payments');
 Route::any('/user/simple_user/delivery', 'UserController@delivery');

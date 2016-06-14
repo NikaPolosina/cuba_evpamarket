@@ -15,29 +15,12 @@
                             <div class="col-sm-2" style="padding: 0px;">
                                 <ul class="nav nav-pills nav-stacked">
                                     @foreach($simple_user_menu as $menuItem)
-                                        <li class="singleMenu"><a class="singleUtl" href="{{$menuItem['url']}}">{{$menuItem['title']}}</a></li>
+                                        <li class="singleMenu"><a class="singleUtl" href="{{$menuItem['url']}}">{{$menuItem['title']}}<span class="{{$menuItem['span']}}" style="float: right"></span></a></li>
                                     @endforeach
                                 </ul>
                             </div>
 
                         @yield('content_user')
-
-                        {{--    <div class="col-sm-10 myPageContent">
-                                <div class="row">
-                                    <div class="col-sm-12 contentInfo">
-
-                                        <div class="col-sm-3" style="border: solid 1px red;">
-                                            <img class="img-thumbnail" src="/img/custom/files/thumbnail/plase.jpg" alt="" style="width: 200px; height: 200px"/>
-
-                                        </div>
-                                        <div class="col-sm-9" style="border: solid 1px red;">
-                                            <h1>{{$userInfo->name}} {{$userInfo->surname}}</h1>
-                                            <h5>{{$userInfo->country}}</h5>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>--}}
 
                         </div>
 

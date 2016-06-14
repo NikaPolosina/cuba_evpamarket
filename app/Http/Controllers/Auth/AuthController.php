@@ -105,7 +105,7 @@ class AuthController extends Controller{
                    'city_id'    => $request->input('city'),
                    'street'     => $request->input('street'),
                    'address'    => $request->input('address'),
-                   'country'    => 'Росия',
+                   'country'    => 'Росcия',
                ]);
                Auth::user()->getUserInformation()->save($userinfo);
            }

@@ -16,6 +16,7 @@ use App\City;
 use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use App\UserInformation;
+use App\Http\Controllers\FileController;
 
 class HomeController extends Controller{
     /**
@@ -32,7 +33,7 @@ class HomeController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user, UserCompany $userCompany, Company $company, $id = NULL){
+    public function index(User $user, UserCompany $userCompany, Company $company, FileController $file, Request $request, $id = NULL ){
 
 
         if(!Auth::user()->getUserInformation){
@@ -75,42 +76,48 @@ class HomeController extends Controller{
                             )
                             );
 
-
                             return view('homeOwnerUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser)->with('menu', $menu);
                         }
 
         $menu = array(
             'my_page'       => array(
                 'title' => 'Моя страница',
-                'url'   => '/home'
+                'url'   => '/home',
+                'span' => 'glyphicon glyphicon-user'
             ),
             'message'   => array(
                 'title' => 'Центр сообщений',
-                'url'   => 'user/simple_user/message'
+                'url'   => '/user/simple_user/message',
+                'span' => 'glyphicon glyphicon-envelope'
             ),
             'payments' => array(
                 'title' => 'Платежи',
-                'url'   => 'user/simple_user/payments'
+                'url'   => '/user/simple_user/payments',
+                'span' => 'glyphicon glyphicon-usd'
             ),
             'delivery'         => array(
                 'title' => 'Доставка',
-                'url'   => 'user/simple_user/delivery'
+                'url'   => '/user/simple_user/delivery',
+                'span' => 'glyphicon glyphicon-send'
             ),
             'liked'         => array(
                 'title' => 'Избранное',
-                'url'   => 'user/simple_user/liked'
+                'url'   => '/user/simple_user/liked',
+                'span' => 'glyphicon glyphicon-heart'
             ),
             'basket'         => array(
                 'title' => 'Корзина',
-                'url'   => 'user/simple_user/basket'
+                'url'   => '/user/simple_user/basket',
+                'span' => 'glyphicon glyphicon-trash'
             ),
             'setting'         => array(
                 'title' => 'Настройка',
-                'url'   => 'user/simple_user/setting'
+                'url'   => '/user/simple_user/setting',
+                'span' => 'glyphicon glyphicon-cog'
             )
         );
 
-        return view('user.simple_user.home')->with('userInfo', $userInfo)->with('curentUser', $curentUser)->with('simple_user_menu', $menu);
+        return view('user.simple_user.home')->with('userInfo', $userInfo)->with('user', $curentUser)->with('simple_user_menu', $menu);
 
     }
     public function registerOwner(User $user, UserCompany $userCompany, Company $company, $id = NULL){
