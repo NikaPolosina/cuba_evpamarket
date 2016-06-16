@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\Company;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -15,9 +14,9 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use App\Http\Controllers\ProductsController;
 use App\User;
-/*use Illuminate\Database\Query\Builder;*/
 use PhpParser\Builder;
 use App\Models\Role;
+
 
 
 class CompanyController extends Controller
@@ -26,11 +25,6 @@ class CompanyController extends Controller
     public $category = array();
     public $nCategory = array();
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
     public function index(){
         $company = Company::paginate(15);
         return view('company.index', compact('company'));
@@ -125,13 +119,6 @@ class CompanyController extends Controller
         return view('company.edit', compact('company'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     *
-     * @return Response
-     */
     public function update($id, Request $request)
     {
         $this->validate($request, ['company_name' => 'required', 'company_description' => 'required', ]);
@@ -143,13 +130,6 @@ class CompanyController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     *
-     * @return Response
-     */
     public function destroy($id)
     {
         Company::destroy($id);
@@ -164,6 +144,14 @@ class CompanyController extends Controller
             array('user_id' => $user->id, 'company_id' => $company->id)
         );
     }
+
+    public function getCompanyAll(){
+        $companyAll = Company::all();
+        return ([
+            'companyAll' => $companyAll
+        ]);
+    }
+
 
 
 

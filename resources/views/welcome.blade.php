@@ -7,20 +7,14 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
             <div class="panel-body">
-                @if(isset($data))
-                    <input type="text" value="Найдено записей - {{count($data)}}"/>
-                    <div class="search_product">
-                        @foreach($data as $value)
-                            <div class="col-md-2">
-                                <div class="carentFindProduct" style="border: solid 1px grey; margin: 3px;">Искомая строка -{{$value->product_name}}</div>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
-                <div class="col-sm-12" ><h3 style="">Магазины</h3></div>
+
+                @include('slide')
+
+                <div class="col-sm-12" ><h3>Магазины</h3></div>
+
                     <div class="col-sm-12" >
                         @foreach($companyAll as $valueCompanw)
-                            <div class="col-md-2 carentFindCompany">
+                            <div class="col-md-3 carentFindCompany">
                                 <div class="shop_show" style="border: solid 1px grey; margin: 3px;">
                                     <a class="">{{$valueCompanw->company_name}}</a>
                                     <input id="input_id" value="{{$valueCompanw->id}}" type="hidden"/>
@@ -36,7 +30,7 @@
                             </div>
                         @endforeach
                     </div>
-                <hr>
+                <hr/>
                 <div class="col-sm-12"><h3>Товары</h3></div>
                     <div class="col-sm-12">
                         <?php foreach($productAll as $v){
@@ -57,11 +51,11 @@
                                             $firstFile = '/img/custom/files/thumbnail/plase.jpg';
                                     }
                                 }else{
-                                            $firstFile = '/img/custom/files/thumbnail/plase.jpg';
-                                    }
+                                    $firstFile = '/img/custom/files/thumbnail/plase.jpg';
+                                }
                             }
                         ?>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="carentFindProduct">
                                     <div class="item">
                                         <p><h4 class="show-product">{{$v->product_name}}</h4></p>
@@ -86,6 +80,13 @@
 
 
         <style>
+            body{
+                background:#edeae2 url(../images/cardboard.jpg) repeat top left;
+                color:#000;
+                font-family: 'PT Sans Narrow', 'Arial Narrow', Arial, sans-serif;
+                font-size:13px;
+                min-height:800px;
+            }
             .show-product {
                 cursor: pointer;
             }

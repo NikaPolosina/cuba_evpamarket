@@ -12,6 +12,7 @@
 */
 
 Route::auth();
+Route::get('/', 'IndexController@Index');
 Route::any('/find', [ 'as' => 'find', 'uses' => 'ProductsController@findProduct' ]);
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index' ]);
 Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
@@ -28,7 +29,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('products', 'ProductsController');
     Route::get('/products/create/{company_id}', 'ProductsController@create');
 });
-Route::get('/', 'ProductsController@getProductAll');
 Route::any('/get-product-list', 'ProductsController@getProductList');
 Route::any('/products/destroy-check', 'ProductsController@destroyCheck');
 Route::any('/products/create-by-category', 'ProductsController@createByCategory');
@@ -61,12 +61,6 @@ Route::any('/user/simple_user/setting/security/edit', 'UserController@settingOve
 Route::any('category/category-setup/{id}', 'CategoryController@categorySetup');
 
 
-
-
-
-Route::get('/file', function () {
- return view('file');
-});
 
 Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
 

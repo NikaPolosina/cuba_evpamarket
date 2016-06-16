@@ -31,10 +31,6 @@ class ProductsController extends Controller{
         return redirect()->intended('home');
     }
 
-    /*  public function createByCategory(Request $request){
-          $companyId = $request['companyId'];
-          $categoryId = $request['categoryId'];
-      }*/
     public function store(Request $request){
         $this->validate($request, [ 'product_description' => 'required', ]);
         $newProduct = new Product([
@@ -164,23 +160,30 @@ class ProductsController extends Controller{
         return false;
     }
 
-    public function findProduct(Request $request){
+    public function findProduct(Request $request,Company $company){
+
         if($request->input('find')){
             $time = time();
             $res = Product::search($request->input('find'))->get();
-            return view('welcome')->with([
+
+            return view('find')->with([
                 'data'   => $res,
                 'time'   => $time,
                 'search' => $request->input('find')
             ]);
         }
+
+
+
         return view('welcome');
     }
 
-    public function getProductAll(Request $request){
+    public function getProductAll(){
         $productAll = Product::all();
-        $companyAll = Company::all();
-        return view('welcome')->with([ 'productAll' => $productAll ])->with([ 'companyAll' => $companyAll ]);
+        return ([
+            'productAll' => $productAll
+        ]);
+
     }
 
     public function singleProduct(Request $request, $id){
