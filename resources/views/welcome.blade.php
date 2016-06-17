@@ -7,7 +7,7 @@
 
 <div class="row">
     <div class="col-md-2" style="border: solid 1px red;">
-        ahgfhsghfg
+        Список категорий
     </div>
     <div class="col-md-8 ">
         <div class="panel panel-default">
@@ -18,15 +18,15 @@
 
 
                 <div class="category_pallet ">
-    
+
                     <div class="galleryCategoryMenu col-sm-12">
                         <ul style="text-align: center;">
-                            <li class="portraits"><a href="/gallery-portraits">ГИГИЕНА<span></span></a></li>
+                            <li class="portraits"><a href="/care">ГИГИЕНА<span></span></a></li>
                             <li class="sports"><a href="/sports">СПОРТ<span></span></a></li>
                             <li class="weddings"><a href="/weddings">К СВАДЬБЕ<span></span></a></li>
                             <li class="celebrations"><a href="/celebrations">ПОДАРКИ<span></span></a></li>
                             <li class="animals"><a href="/animals">ЖИВОТНЫЕ<span></span></a></li>
-                            <li class="personal"><a href="/personal">РАЗВЛЕЧЕНИЯ<span></span></a></li>
+                            <li class="personal"><a href="/entertainment">РАЗВЛЕЧЕНИЯ<span></span></a></li>
                         </ul>
                     </div>
 
@@ -96,7 +96,7 @@
         </div>
 
     <div class="col-md-2" style="border: solid 1px red;">
-        ahgfhsghfg
+       Новости о акциях
     </div>
 </div>
 {!! HTML::script('/js/welcome.js') !!}

@@ -42,10 +42,10 @@
 
 
     <div class="wrapper">
-        <div id="cn-slideshow" class="cn-slideshow">
+        <div id="cn-slideshow" class="cn-slideshow" style="width:100%;">
             <div class="cn-images">
                 @foreach($slide_img as $img)
-                    <img src="images/large/{{$img}}" alt="image01" title="Картинка" data-thumb="images/thumbs/{{$img}}" style="display:block;"/>
+                    <img src="images/large/{{$img}}" alt="image01" title="Картинка" data-thumb="images/thumbs/{{$img}}" style="display:block; width:100%"/>
                 @endforeach
             </div><!-- cn-images -->
         </div><!-- cn-slideshow -->

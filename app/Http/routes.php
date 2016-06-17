@@ -56,6 +56,15 @@ Route::any('/user/simple_user/setting/overall', 'UserController@settingOverall')
 Route::any('/user/simple_user/setting/security', 'UserController@settingSecurity');
 Route::any('/user/simple_user/setting/security/edit', 'UserController@settingOverallEdit');
 
+/*-------------------------------------------Category----------------------------------------------*/
+Route::get('/care', ['as' => 'care', 'uses' => 'CategoryController@care']);
+Route::get('/sports', ['as' => 'sports', 'uses' => 'CategoryController@sports']);
+Route::get('/weddings', ['as' => 'weddings', 'uses' => 'CategoryController@weddings']);
+Route::get('/celebrations', ['as' => 'celebrations', 'uses' => 'CategoryController@celebrations']);
+Route::get('/animals', ['as' => 'animals', 'uses' => 'CategoryController@animals']);
+Route::get('/entertainment', ['as' => 'entertainment', 'uses' => 'CategoryController@entertainment']);
+
+
 
 
 Route::any('category/category-setup/{id}', 'CategoryController@categorySetup');
