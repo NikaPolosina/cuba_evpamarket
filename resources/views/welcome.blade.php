@@ -3,12 +3,34 @@
 @extends('layouts.app')
 
 @section('content')
+    <link rel="stylesheet" type="text/css" href="css/welcome.css" />
+
 <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-2" style="border: solid 1px red;">
+        ahgfhsghfg
+    </div>
+    <div class="col-md-8 ">
         <div class="panel panel-default">
             <div class="panel-body">
 
                 @include('slide')
+
+
+
+                <div class="category_pallet ">
+    
+                    <div class="galleryCategoryMenu col-sm-12">
+                        <ul style="text-align: center;">
+                            <li class="portraits"><a href="/gallery-portraits">ГИГИЕНА<span></span></a></li>
+                            <li class="sports"><a href="/sports">СПОРТ<span></span></a></li>
+                            <li class="weddings"><a href="/weddings">К СВАДЬБЕ<span></span></a></li>
+                            <li class="celebrations"><a href="/celebrations">ПОДАРКИ<span></span></a></li>
+                            <li class="animals"><a href="/animals">ЖИВОТНЫЕ<span></span></a></li>
+                            <li class="personal"><a href="/personal">РАЗВЛЕЧЕНИЯ<span></span></a></li>
+                        </ul>
+                    </div>
+
+                </div>
 
                 <div class="col-sm-12" ><h3>Магазины</h3></div>
 
@@ -72,112 +94,12 @@
                 </div>
             </div>
         </div>
+
+    <div class="col-md-2" style="border: solid 1px red;">
+        ahgfhsghfg
     </div>
-
-
+</div>
 {!! HTML::script('/js/welcome.js') !!}
 @endsection
 
 
-        <style>
-            body{
-                background:#edeae2 url(../images/cardboard.jpg) repeat top left;
-                color:#000;
-                font-family: 'PT Sans Narrow', 'Arial Narrow', Arial, sans-serif;
-                font-size:13px;
-                min-height:800px;
-            }
-            .show-product {
-                cursor: pointer;
-            }
-            .shop_show{
-                cursor: pointer;
-            }
-            .register_right{
-                padding-top: 0px!important;
-                text-align: left!important;
-            }
-            a:hover {
-                text-decoration: none!important; /* Отменяем подчеркивание у ссылки */
-            }
-            .masonry {
-                margin: 1.5em 0;
-                padding: 0;
-                column-gap: 1.5em; /* Общее расстояние между колонками */
-                font-size: .85em;
-                -moz-column-gap: 1.5em; /* Расстояние между колонками для Firefox */
-                -webkit-column-gap: 1.5em; /* Расстояние между колонками  для Safari, Chrome и iOS */
-            }
-
-            /* Элементы в виде плиток с содержанием */
-            .item {
-                display: inline-block;
-                background: #fff;
-                padding: 1em;
-                margin: 0 0 1.5em;
-                width: 100%;
-                box-sizing: border-box; /* Изменения алгоритма расчета ширины и высоты элемента.*/
-                -moz-box-sizing: border-box; /* Для Firefox */
-                -webkit-box-sizing: border-box; /* Для Safari, Chrome, iOS иAndroid */
-                box-shadow: 2px 2px 4px 0 #ccc; /* Внешняя тень плиток */
-            }
-
-            /* Стили картинок, видое и фреймов внутри адаптивных плиток */
-            img, iframe {
-                max-width: 100%;
-                height: auto;
-                display: block;
-            }
-
-            /* Стили ссылок внутри плиток */
-            .item a {
-                text-decoration: none;
-                color: #359CC6;
-                margin: 0 10px;
-            }
-
-            /* Стили ссылок при наведении */
-            .item a:hover {
-                color: #E88F00;
-                border-bottom: 1px dotted #9F1D35;
-            }
-
-            /* Медиа-запросы для различных размеров адаптивного макета */
-            @media only screen and (min-width: 400px) {
-                .masonry {
-                    -moz-column-count: 2;
-                    -webkit-column-count: 2;
-                    column-count: 2;
-                }
-            }
-
-            @media only screen and (min-width: 700px) {
-                .masonry {
-                    -moz-column-count: 3;
-                    -webkit-column-count: 3;
-                    column-count: 3;
-                }
-            }
-
-            @media only screen and (min-width: 900px) {
-                .masonry {
-                    -moz-column-count: 4;
-                    -webkit-column-count: 4;
-                    column-count: 4;
-                }
-            }
-
-            @media only screen and (min-width: 1100px) {
-                .masonry {
-                    -moz-column-count: 5;
-                    -webkit-column-count: 5;
-                    column-count: 5;
-                }
-            }
-
-            @media only screen and (min-width: 1280px) {
-                .wrapper {
-                    width: 1260px;
-                }
-            }
-        </style>
