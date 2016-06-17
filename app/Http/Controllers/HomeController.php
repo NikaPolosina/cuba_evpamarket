@@ -13,6 +13,7 @@ use App\User;
 use App\Company;
 use App\Region;
 use App\City;
+use App\Http\Controllers\CategoryController;
 use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use App\UserInformation;
@@ -134,11 +135,9 @@ class HomeController extends Controller{
 
     }
 
-    public function test(){
-        $curentUser = Auth::user();
-        $info = $curentUser->getUserInformation;
-        $info->name = 'asdas';
-        $info->save();
+    public function test(CategoryController $category){
+
+       return view('test')->with('category', $category->getAllCategoris());
 
     }
 }
