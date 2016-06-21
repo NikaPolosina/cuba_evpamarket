@@ -16,7 +16,7 @@ use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\File;
 
 class IndexController extends Controller{
-    public function Index(ProductsController $product, CompanyController $company){
+    public function Index(ProductsController $product, CompanyController $company, CategoryController $category){
         $productAll =  $product->getProductAll();
         $companyAll =  $company->getCompanyAll();
         $dir = 'images/large';
@@ -24,7 +24,7 @@ class IndexController extends Controller{
         $slide_img = array_diff(scandir($dir), array('..', '.'));
 
 
-        return view('welcome')->with('productAll', $productAll['productAll'])->with('companyAll', $companyAll['companyAll'])->with('slide_img', $slide_img);
+        return view('welcome')->with('productAll', $productAll['productAll'])->with('companyAll', $companyAll['companyAll'])->with('slide_img', $slide_img)->with('category', $category->getAllCategoris());
     }
 
 }

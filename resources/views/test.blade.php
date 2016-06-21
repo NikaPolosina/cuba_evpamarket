@@ -8,7 +8,7 @@
     <div class="tt" data-child="<?=$parent['id']?>" style="display: <?=$none?>">
         <?php
         foreach ($data as $value) { ?>
-        <div style="border: solid 1px yellow;" data-parent="<?=$value['id']?>"><?=$value['title']?></div> <?php
+        <div class="list" data-parent="<?=$value['id']?>"><?=$value['title']?> <div class="span_category"><span class="icon"> &#62 </span></div> </div> <?php
         }
         ?>
     </div>
@@ -17,12 +17,23 @@
     ?>
 
     <style>
-        .t{
-            outline: solid #000000 1px;
+      .t{
+           padding-right: 0px!important;
+           padding-left: 0px!important;
         }
+      .span_category{
+          float: right;
+          color: #b9b8b8;
+      }
         .tt{
-            outline: solid #ff0000 2px;
+            cursor: pointer;
         }
+       .list{
+           outline: solid 1px black;
+           padding: 3px;
+           font-size: initial;
+           background: #ededed;
+       }
 
     </style>
 
@@ -30,6 +41,8 @@
         $(document).ready(function(){
             $('[data-parent]').on('mouseover', function(){
                 var id = $(this).attr('data-parent');
+
+
 
 
                 var parentDiv = $(this).parents('.t').eq(0);
@@ -40,14 +53,20 @@
                     case '1':
                         mainParent.find('[data-index="3"]').find('[data-child]').each(function(index, value){
                             $(value).hide();
+                            console.log('eq');
+
                         });
                         mainParent.find('[data-index="2"]').find('[data-child]').each(function(index, value){
                             $(value).hide();
+
+
                         });
                         break
                     case '2':
                         mainParent.find('[data-index="3"]').find('[data-child]').each(function(index, value){
                             $(value).hide();
+
+
                         });
                         break
                 }
@@ -83,26 +102,6 @@
         </div>
     </div>
 
-    <br>
-    <br>
-    <br>
-    <br>
-
-
-    <div class="col-sm-2">
-
-        <ul class="list-unstyled">
-
-
-            <?php
-
-
-
-
-            ?>
-
-        </ul>
-    </div>
 
 @endsection
 <style>

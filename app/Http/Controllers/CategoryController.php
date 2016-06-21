@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Session;
 use App\Company;
 use Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class CategoryController extends Controller{
     public function checkCat($search, $arr){
@@ -176,5 +178,13 @@ class CategoryController extends Controller{
     }
     public function entertainment(){
         return view('category.entertainment');
+    }
+    public function findByCategory($id){
+
+        $data = Product::where('category_id', $id)->get();
+
+        return view('category.findByCategory')->with('data', $data);
+
+
     }
 }

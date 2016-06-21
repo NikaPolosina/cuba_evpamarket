@@ -68,6 +68,7 @@ Route::get('/entertainment', ['as' => 'entertainment', 'uses' => 'CategoryContro
 
 
 Route::any('category/category-setup/{id}', 'CategoryController@categorySetup');
+Route::get('/category/{id}', 'CategoryController@findByCategory');
 
 
 

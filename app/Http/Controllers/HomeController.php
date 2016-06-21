@@ -137,6 +137,7 @@ class HomeController extends Controller{
 
     public function test(CategoryController $category){
 
+
        return view('test')->with('category', $category->getAllCategoris());
 
     }

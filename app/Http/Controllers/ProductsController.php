@@ -163,12 +163,10 @@ class ProductsController extends Controller{
     public function findProduct(Request $request,Company $company){
 
         if($request->input('find')){
-            $time = time();
             $res = Product::search($request->input('find'))->get();
 
             return view('find')->with([
                 'data'   => $res,
-                'time'   => $time,
                 'search' => $request->input('find')
             ]);
         }

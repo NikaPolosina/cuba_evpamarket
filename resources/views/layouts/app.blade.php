@@ -63,7 +63,7 @@
             <div class="col-md-6 col-md-offset-3">
 
                 <div class="input-group col-sm-12">
-                    <form style=" margin: 7px 0px 0px 0px;" class="input-group" method="POST" action="find">
+                    <form style=" margin: 7px 0px 0px 0px;" class="input-group" method="POST" action="/find">
                         {{ csrf_field() }}
 
                                 <span style=" top: 0px;" class="input-group-addon  glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -101,6 +101,17 @@
     </div><!-- /.container-fluid -->
 </nav>
 {{-----------------------------------------------------------}}
+<script>
+
+    $('.input-group').on('submit', function(){
+    var input = $('.form-control');
+    if(input.val().length < 1){
+        input.focus();
+        return false;
+    }
+    });
+
+</script>
     <style>
 
         .logo {
