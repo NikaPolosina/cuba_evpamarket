@@ -6,120 +6,138 @@
     <link rel="stylesheet" type="text/css" href="css/welcome.css" />
 
 <div class="row">
-    <div class="col-md-2" style="position: relative;    padding-right: 0px;     ">
+
+    <div class="col-md-2" style="  padding-right: 0px;  ">
         <div class="category_title"><span>Категории товаров</span></div>
+
+
+        <div class="ara" style="position: absolute; background: #fcfcee;      box-shadow: 3px 3px 7px 0 rgba(200, 200, 200, .5); cursor: pointer;   z-index: 1000;     margin: 0 15px 0 15px; ">
+
+            <img class="aaaaaaaa" style="display: none" src="/img/4.png"/>
+
+        </div>
+
         {{----------------------------------------------------------------------------}}
 
-        <?php
-        function sho($data, $parent, $none = 'none'){?>
-        <div class="category_parent_list" data-child="<?=$parent['id']?>" style="display: <?=$none?>">
-            @foreach($data as $value)
-                <div class="list" data-parent="{{$value['id']}}"><a href="/category/{{$value['id']}}">{{$value['title']}}</a><div class="span_category"><span class="icon"> &#62 </span></div> </div>
-            @endforeach
-        </div>
-        <?php
-        }
-        ?>
+            <?php
+            function sho($data, $parent, $none = 'none'){?>
+            <div class="category_parent_list" data-child="<?=$parent['id']?>" style="display: <?=$none?>">
+                @foreach($data as $value)
+                    <div class="list" data-parent="{{$value['id']}}"><a href="/category/{{$value['id']}}">{{$value['title']}}</a></div>
+                @endforeach
+            </div>
+            <?php
+            }
+            ?>
 
-        <script>
-            $(document).ready(function(){
-                $('[data-parent]').on('mouseover', function(){
-                    var id = $(this).attr('data-parent');
-                    
-                    var parentDiv = $(this).parents('.category_list_navigation').eq(0);
-                    var mainParent = parentDiv.parent();
-                    var index = parentDiv.attr('data-index');
+            <script>
+                $(document).ready(function(){
+                    $('[data-parent]').on('mouseover', function(){
+                        var id = $(this).attr('data-parent');
 
-                    switch (index) {
-                        case '1':
-                            mainParent.find('[data-index="3"]').find('[data-child]').each(function(index, value){
-                                $(value).hide();
+                        var parentDiv = $(this).parents('.category_list_navigation').eq(0);
+                        var mainParent = parentDiv.parent();
+                        var index = parentDiv.attr('data-index');
+
+                        switch (index) {
+                            case '1':
+                                mainParent.find('[data-index="3"]').find('[data-child]').each(function(index, value){
+                                    $(value).hide();
+
+                                });
+                                mainParent.find('[data-index="2"]').find('[data-child]').each(function(index, value){
+                                    $(value).hide();
+
+
+                                });
+                                break
+                            case '2':
+                                mainParent.find('[data-index="3"]').find('[data-child]').each(function(index, value){
+                                    $(value).hide();
+
+
+                                });
+                                break
+                        }
+
+                        $('[data-child='+id+']').show();
+
+
+                        var getLeftPos = function (elems){
+
+
+                            var leftPos = 0;
+
+                            $.each(elems, function (i, val) {
+                                leftPos =+ $(this).width();
 
                             });
-                            mainParent.find('[data-index="2"]').find('[data-child]').each(function(index, value){
-                                $(value).hide();
+
+                            return leftPos;
+                        };
+
+                        var uls = $(this).parents('.category_list_navigation').eq(0).prev('.category_list_navigation');
+                        var next = $(this).parents('.category_list_navigation').eq(0).next('.category_list_navigation');
 
 
-                            });
-                            break
-                        case '2':
-                            mainParent.find('[data-index="3"]').find('[data-child]').each(function(index, value){
-                                $(value).hide();
+
+                        var leftPos = getLeftPos(uls) + $(this).parents('.category_list_navigation').eq(0).width();
 
 
-                            });
-                            break
-                    }
-
-                    $('[data-child='+id+']').show();
-
-
-                    var getLeftPos = function (elems){
-
-
-                        var leftPos = 0;
-
-                        $.each(elems, function (i, val) {
-                            leftPos =+ $(this).width();
-
+                        next.css({
+                            'position' : 'absolute',
+                            'left' :  leftPos + 'px'
                         });
 
-                        return leftPos;
-                    };
 
-                    var uls = $(this).parents('.category_list_navigation').eq(0).prev('.category_list_navigation');
-                    var next = $(this).parents('.category_list_navigation').eq(0).next('.category_list_navigation');
+                    });
+                    $('.menu_holder').on('mouseover', function(){
+                       var width =  $('.category_parent_list').width();
+                       var height = $('.category_parent_list').height();
+                        $('.ara').css({
+                            'width' : width *3 +'px',
+                            'height' :  height
+                        });
+                        $('.aaaaaaaa').show();
 
-
-
-                    var leftPos = getLeftPos(uls) + $(this).parents('.category_list_navigation').eq(0).width();
-
-
-                    next.css({
-                        'position' : 'absolute',
-                        'left' :  leftPos + 'px'
                     });
 
 
+
+
                 });
-            /*    $('.menu_holder').on('mouseout', function(){
-                    $('[data-index="2"]').hide();
-                    $('[data-index="3"]').hide();
-
-                });*/
 
 
 
 
-            });
+            </script>
+
+            <div style="     padding-right: 0px; " class="col-md-12">
+                <div style="     margin-right: 0px; margin-left: 0px; " class="row menu_holder">
+
+
+                            <div style="position: relative;" class="col-md-12 category_list_navigation" data-index="1"><?php sho($category, array('id'=>'', 'title'=>'No'), 'block'); ?></div>
+                            <div style="position: relative;" class="col-md-12 category_list_navigation" data-index="2">
+                                <?php
+                                foreach ($category as $value) {
+                                    sho($value['nodes'], $value);
+                                }
+                                ?>
+                            </div>
+                            <div style="position: relative; " class="col-md-12 category_list_navigation" data-index="3">
+                                <?php
+                                foreach ($category as $parent) {
+                                    foreach ($parent['nodes'] as $value) {
+                                        sho($value['nodes'], $value);
+                                    }
+                                }
+                                ?>
+                            </div>
 
 
 
-
-        </script>
-
-        <div class="col-md-12">
-            <div class="row menu_holder">
-                <div class="col-md-12 category_list_navigation" data-index="1"><?php sho($category, array('id'=>'', 'title'=>'No'), 'block'); ?></div>
-                <div class="col-md-12 category_list_navigation" data-index="2">
-                    <?php
-                    foreach ($category as $value) {
-                        sho($value['nodes'], $value);
-                    }
-                    ?>
-                </div>
-                <div class="col-md-12 category_list_navigation" data-index="3">
-                    <?php
-                    foreach ($category as $parent) {
-                        foreach ($parent['nodes'] as $value) {
-                            sho($value['nodes'], $value);
-                        }
-                    }
-                    ?>
-                </div>
             </div>
         </div>
-
 
         {{----------------------------------------------------------------------------}}
     </div>
@@ -130,21 +148,22 @@
                 @include('slide')
 
 
-
                 <div class="category_pallet ">
 
                     <div class="galleryCategoryMenu col-sm-12">
                         <ul style="text-align: center;">
-                            <li class="portraits"><a href="/care">ОДЕЖДА И ОБУВЬ<span></span></a></li>
-                            <li class="sports"><a href="/sports">СПОРТ<span></span></a></li>
-                            <li class="weddings"><a href="/weddings">КОМПЬЮТЕРЫ<span></span></a></li>
-                            <li class="celebrations"><a href="/celebrations">АВТОТОВАРЫ<span></span></a></li>
-                            <li class="animals"><a href="/animals">ЖИВОТНЫЕ<span></span></a></li>
-                            <li class="personal"><a href="/entertainment">ЗООТОВАРЫ<span></span></a></li>
-                            <li class="personal"><a href="/entertainment">ЕДА<span></span></a></li>
-                            <li class="personal"><a href="/entertainment">БЫТОВАЯ ТЕХНИКА<span></span></a></li>
-                            <li class="personal"><a href="/entertainment">ТЕЛЕФОНИ<span></span></a></li>
-                            <li class="personal"><a href="/entertainment">ДЕТСКИЙ МИР<span></span></a></li>
+                            @foreach($vip_category as $v)
+                            <li class="portraits">
+                                <div class="col-sm-12" style="padding-right: 0px; padding-left: 0px;">
+                                    <a  href="/category/{{$v->id}}">
+                                        <p class="col-sm-7">{{$v->title}}</p>
+                                        <img class="col-sm-5" style=" float: right;padding: 0px; margin: 0px;" src="img/category_icon/{{$v->icon}}.png" alt=""/>
+                                    </a>
+
+
+                                </div>
+                            </li>
+                            @endforeach
                         </ul>
                     </div>
 

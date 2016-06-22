@@ -161,24 +161,6 @@ class CategoryController extends Controller{
         return $this->nCategory[0];
     }
 
-    public function care(){
-        return view('category.care');
-    }
-    public function sports(){
-        return view('category.sports');
-    }
-    public function weddings(){
-        return view('category.weddings');
-    }
-    public function celebrations(){
-        return view('category.celebrations');
-    }
-    public function animals(){
-        return view('category.animals');
-    }
-    public function entertainment(){
-        return view('category.entertainment');
-    }
     public function findByCategory($id){
 
         $data = Product::where('category_id', $id)->get();

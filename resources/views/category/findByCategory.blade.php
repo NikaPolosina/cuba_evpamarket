@@ -11,7 +11,9 @@
                 {{--<input type="text" value="Найдено записей - {{count($data)}}"/>--}}
 
 
-                @if(isset($data))
+
+            @if(isset($data) && count($data)>= 1)
+                    <h3>Товары по данной категории.</h3>
                 @foreach($data as $value)
                 <div class="col-sm-4" style="    border: solid 1px #bbb7b7;">
                     <div class="product-box">
@@ -59,7 +61,11 @@
                     </div>
                 </div>
                 @endforeach
-                @endif
+
+            @else
+                  <h3>В данной категрии пока ещё нет товаров.</h3>
+            @endif
+
 
 
             </div>

@@ -20,11 +20,15 @@ class IndexController extends Controller{
         $productAll =  $product->getProductAll();
         $companyAll =  $company->getCompanyAll();
         $dir = 'images/large';
-
+        $vip_category = Category::where('vip', 1)->get();
         $slide_img = array_diff(scandir($dir), array('..', '.'));
 
 
-        return view('welcome')->with('productAll', $productAll['productAll'])->with('companyAll', $companyAll['companyAll'])->with('slide_img', $slide_img)->with('category', $category->getAllCategoris());
+        return view('welcome')->with('productAll', $productAll['productAll'])
+            ->with('companyAll', $companyAll['companyAll'])
+            ->with('slide_img', $slide_img)
+            ->with('category', $category->getAllCategoris())
+            ->with('vip_category', $vip_category);
     }
 
 }
