@@ -36,24 +36,27 @@ body{
 
 }
 .list{
-    font-family: Arial, Helvetica, FreeSans, "Liberation Sans", "Nimbus Sans L", sans-serif;
     padding: 6px 6px 6px 0;
     font-size: initial;
     background: #fcfcee;
     white-space: nowrap;
     line-height: 18px;
-    color: #3e77aa;
     display: block;
-    padding-left: 14px;
+    padding-left: 20px;
     border: 1px solid #ededed;
 }
 .list a{
+
+    color: #3e77aa;
     display: block;
-    color: #000;
     text-decoration: none;
     background: url("../img/system/next.png") no-repeat 100% center;
 }
-
+.list a:hover{
+    display: block;
+    color: red;
+    text-decoration: none;
+}
 
 .show-product {
     cursor: pointer;
