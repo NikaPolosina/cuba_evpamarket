@@ -13,12 +13,13 @@ use App\Company;
 use Auth;
 use Illuminate\Support\Facades\DB;
 
-
 class CategoryController extends Controller{
+
     public function checkCat($search, $arr){
         foreach($arr as $value){
-            if($search == $value['id'])
+            if($search == $value['id']){
                 return false;
+            }
         }
         return true;
     }
@@ -50,14 +51,16 @@ class CategoryController extends Controller{
         $this->category = array();
         foreach($company->getProducts as $value){
             $parentId = $value->getCategory->toArray()['parent_id'];
-            if(!$this->checkCat($value->getCategory->toArray()['id'], $this->category))
+            if(!$this->checkCat($value->getCategory->toArray()['id'], $this->category)){
                 continue;
+            }
             $this->category[] = $value->getCategory->toArray();
             do{
                 $current = Category::find($parentId)->toArray();
                 $parentId = $current['parent_id'];
-                if(!$this->checkCat($current['id'], $this->category))
+                if(!$this->checkCat($current['id'], $this->category)){
                     break;
+                }
                 $this->category[] = $current;
             }while($parentId != 0);
         }
@@ -79,14 +82,14 @@ class CategoryController extends Controller{
         }
         return $this->nCategory[0];
     }
-    public function categorySetup(CategoryController $category,  $id){
+
+    public function categorySetup(CategoryController $category, $id){
         $company = Company::findOrFail($id);
         $categories = $this->getAllCategoris();
-        
+
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
-        
-        
+
         return view('category.category_setup')->with('categories', $categories)->with('company', $company)->with('category', json_encode($currentCompanyCategoriesSorted));
     }
 
@@ -118,29 +121,31 @@ class CategoryController extends Controller{
     }
 
     public function treeBuilder(array $category){
-        if(!count($category))
-            return [];
+        if(!count($category)){
+            return [ ];
+        }
         $this->category = array();
-        $i=0;
+        $i = 0;
         foreach($category as $value){
             $parentId = $value['parent_id'];
-            if(!$this->checkCat($value['id'], $this->category))
+            if(!$this->checkCat($value['id'], $this->category)){
                 continue;
+            }
             $this->category[] = $value;
-            if($parentId !=0){
+            if($parentId != 0){
                 do{
                     if($i == 4){
-
                     }
                     $current = Category::find($parentId)->toArray();
 
                     $parentId = $current['parent_id'];
-                    if(!$this->checkCat($current['id'], $this->category))
+                    if(!$this->checkCat($current['id'], $this->category)){
                         break;
+                    }
                     $this->category[] = $current;
                 }while($parentId != 0);
             }
-        $i++;
+            $i++;
         }
         foreach($this->category as $value){
             $value['text'] = $value['title'];
@@ -166,7 +171,38 @@ class CategoryController extends Controller{
         $data = Product::where('category_id', $id)->get();
 
         return view('category.findByCategory')->with('data', $data);
+    }
 
+    public function attachCategoriesToCompany(Request $request, CategoryController $category){
+        $this->validate($request, [
+            'company'    => 'required',
+            'categories' => 'required',
 
+        ]);
+        $company = Company::find($request->input('company'));
+        $myCategories = $company->getCategoryCompany()->lists('id')->toArray();
+        $newCategories = $request->input('categories');
+
+        $company->getCategoryCompany()->detach($myCategories);
+        $company->getCategoryCompany()->attach(array_unique(array_merge($myCategories, $newCategories)));
+
+        $currentCompanyCategories = $category->getCompanyCategorySorted($request->input('company'));
+        $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
+
+        return response()->json([ 'categories' => $currentCompanyCategoriesSorted ], 200);
+    }
+
+    public function detachCategoriesToCompany(Request $request, CategoryController $category){
+        $this->validate($request, [
+            'company'    => 'required',
+            'categories' => 'required',
+        ]);
+        
+        $company = Company::find($request->input('company'));
+        $company->getCategoryCompany()->detach($request->input('categories'));
+        $currentCompanyCategories = $category->getCompanyCategorySorted($request->input('company'));
+        $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
+
+        return response()->json([ 'categories' => $currentCompanyCategoriesSorted ], 200);
     }
 }

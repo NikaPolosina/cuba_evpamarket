@@ -2,156 +2,206 @@
 
 @section('content')
 
-<div class="col-sm-10 col-md-offset-1" style="border: solid 1px red">
+    <div class="col-sm-10 col-md-offset-1" style="border: solid 1px red">
 
-    <div class="company_tile_category">
-        <h2 style="text-align: center">redactor categorii magazina</h2>
-        <h2>Магазин {{$company->company_name}}</h2>
-        <hr/>
-    </div>
+        <div class="company_tile_category">
+            <h2 style="text-align: center">redactor categorii magazina</h2>
+            <h2>Магазин {{$company->company_name}}</h2>
+            <hr/>
+        </div>
 
-    <div class="col-sm-10 col-md-offset-1" >
+        <div class="col-sm-10 col-md-offset-1">
 
-        <div class="col-sm-6">
-            <div class="category_system">
-                <h4>Все категории</h4>
-                <div id="custom-checkable1" class="">
-
+            <div class="progress" style="display: none;">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                    <span class="sr-only">45% Complete</span>
                 </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="category_system">
+                    <h4>Все категории</h4>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success add_categories">Добавить выбранные</button>
+                    </div>
+                    <div id="custom-checkable"></div>
+                </div>
+            </div>
+
+
+            <div class="col-sm-6">
+                <div class="category_user">
+                    <h4>Kатегории magazina</h4>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger remove_categories">Удалить выбранные</button>
+                    </div>
+                    <div id="custom-checkable1" class="">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-12">
+            <hr/>
+            <div class="footer_button" style="float: right;">
+                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-default">Cansel</button>
             </div>
         </div>
 
 
-        <div class="col-sm-6">
-            <div class="category_user">
-                <h4>Kатегории magazina</h4>
-                <div id="custom-checkable" class="">
-
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div class="col-sm-12">
-        <hr/>
-        <div class="footer_button" style="float: right;">
-            <button type="button" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-default">Cansel</button>
-        </div>
     </div>
 
+    <script>
 
-</div>
-
-<script>
 
         var data = <?=json_encode($categories) ?> ;
+        $(document).ready(function(){
+            var addButton    = $('.add_categories');
+            var removeButton = $('.remove_categories');
+            var progress     = $('.progress');
 
-                    $('#custom-checkable1').treeview({
-                        data            : data,
-                        showCheckbox    : true,
-                        enableLinks     : false,
-                        onNodeChecked   : function(event, node){
-                            a.show();
-                            ul.append('<li><input checked="checked" type="checkbox" value="' + node.id + '"/>' + node.text + '</li>');
+            $('#custom-checkable').treeview({
+                data            : data,
+                showCheckbox    : true,
+                enableLinks     : false,
+                onNodeChecked   : function(event, node){
+                    if(node['nodes'].length > 0){
+                        node['nodes'].forEach(function(currentNode, key){
+                            $('#custom-checkable').treeview('checkNode', currentNode['nodeId']);
+                        });
+                    }
+                },
+                onNodeUnchecked : function(event, node){
+                    if(node['nodes'].length > 0){
+                        node['nodes'].forEach(function(currentNode, key){
+                            $('#custom-checkable').treeview('uncheckNode', currentNode['nodeId']);
+                        });
+                    }
+                }
+            }).treeview('collapseAll');
+
+            addButton.on('click', function(){
+                if($('#custom-checkable').treeview('getChecked').length > 0){
+                    addButton.attr('disabled', true);
+                    removeButton.attr('disabled', true);
+                    progress.show();
+                    var categories = [];
+                    $('#custom-checkable').treeview('getChecked').forEach(function(currentNode, key){
+                        categories.push(currentNode['id']);
+                    });
+                    $.ajax({
+                        type    : "POST",
+                        url     : '{{route('attach_categories')}}',
+                        headers : {
+                            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                         },
-                        onNodeUnchecked : function(event, node){
-                            ul.find('input[value="' + node.id + '"]').parent().remove();
-                            if(ul.find('input').length < 1){
-                                a.hide();
+                        data    : {
+                            company    : '{{$company->id}}',
+                            categories : categories
+                        },
+                        success : function(response){
+                            $('#custom-checkable').treeview('getChecked').forEach(function(currentNode, key){
+                                $('#custom-checkable').treeview('uncheckNode', currentNode['nodeId']);
+                            });
+                            $('#custom-checkable').treeview('collapseAll', {silent : true});
+                            var data = {};
+                            if(response.categories.length > 0){
+                                data = response.categories;
                             }
-                            console.log(node.text + ' was unchecked');
-                        }
-                    }).treeview('collapseAll');
-
-
-
-
-var data = <?=$category?>;
-
-        $('#custom-checkable').treeview({
-            data            : data,
-            showCheckbox    : true,
-            enableLinks     : false,
-            onNodeChecked   : function(event, node){
-
-                $('#custom-checkable').treeview('selectNode', node.nodeId);
-
-                /* $('.addProductCategory').hide();//ertyuiosdfghkwertyuierty*/
-                categories = [];
-                $('#product_list').html('');
-                var list = $('#custom-checkable').treeview('getChecked');
-                if(list.length > 1){
-                    var tree = $('#custom-checkable').treeview(true);
-                    list.forEach(function(element){
-                        if(node.href != element.href){
-                            tree.uncheckNode(element, {silent : true});
+                            buildTree(data);
+                            addButton.attr('disabled', false);
+                            removeButton.attr('disabled', false);
+                            progress.hide();
+                        },
+                        error   : function(){
+                            alert('System error');
+                            addButton.attr('disabled', false);
+                            removeButton.attr('disabled', false);
+                            progress.hide();
                         }
                     });
                 }
-                currentCategory = node['id'];
-                categories.push(node['id']);
-                if(node['nodes'].length > 0){
-                    var childrens = node['nodes'];
-                    do{
-                        childrens.forEach(function(currentNode, key){
+            });
+
+            removeButton.on('click', function(){
+
+                if($('#custom-checkable1').treeview('getChecked').length > 0){
+
+                    if(!confirm('Все товары в выбранных категория будут удалены. ')){
+                        return false;
+                    }
+                    addButton.attr('disabled', true);
+                    removeButton.attr('disabled', true);
+                    progress.show();
+                    if($('#custom-checkable1').treeview('getChecked').length > 0){
+                        var categories = [];
+                        $('#custom-checkable1').treeview('getChecked').forEach(function(currentNode, key){
                             categories.push(currentNode['id']);
-                            if(currentNode['nodes'].length > 0){
-                                currentNode['nodes'].forEach(function(nNode, k){
-                                    childrens.push(nNode);
-                                });
-                            }
-                            childrens.splice(key, 1);
                         });
-                    }while(childrens.length > 0);
+                        $.ajax({
+                            type    : "POST",
+                            url     : '{{route('remove_categories')}}',
+                            headers : {
+                                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data    : {
+                                company    : '{{$company->id}}',
+                                categories : categories
+                            },
+                            success : function(response){
+                                $('#custom-checkable1').treeview('getChecked').forEach(function(currentNode, key){
+                                    $('#custom-checkable').treeview('uncheckNode', currentNode['nodeId']);
+                                });
+                                $('#custom-checkable1').treeview('collapseAll', {silent : true});
+                                var data = {};
+                                if(response.categories.length > 0){
+                                    data = response.categories;
+                                }
+                                buildTree(data);
+                                addButton.attr('disabled', false);
+                                removeButton.attr('disabled', false);
+                                progress.hide();
+                            },
+                            error   : function(){
+                                alert('Системная ошибка');
+                                addButton.attr('disabled', false);
+                                removeButton.attr('disabled', false);
+                                progress.hide();
+                            }
+                        });
+                    }
                 }
-                $.ajax({
-                    type    : "POST",
-                    url     : "/get-product-list",
-                    headers : {
-                        'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data    : {
-                        companyId  : '<?=$company->id?>',
-                        categoryId : categories
-                    },
-                    success : function(msg){
-                        $('#product_list').html(msg);
+
+            });
+            buildTree(<?=$category?>);
+        });
+
+
+        function buildTree(data){
+            $('#custom-checkable1').treeview({
+                data            : data,
+                showCheckbox    : true,
+                enableLinks     : false,
+                onNodeChecked   : function(event, node){
+                    if(node['nodes'].length > 0){
+                            node['nodes'].forEach(function(currentNode, key){
+                                $('#custom-checkable1').treeview('checkNode', currentNode['nodeId']);
+                            });
                     }
-                });
-            },
-            onNodeUnchecked : function(event, node){
-
-                $('#custom-checkable').treeview('unselectNode', node.nodeId);
-
-                $('.product_category').val('')
-                $('#product_list').html('');
-                categories      = [];
-                currentCategory = null;
-                $.ajax({
-                    type    : "POST",
-                    url     : "/get-product-list",
-                    headers : {
-                        'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data    : {
-                        companyId  : '<?=$company->id?>',
-                        categoryId : categories
-                    },
-                    success : function(msg){
-                        $('#product_list').html(msg);
+                },
+                onNodeUnchecked : function(event, node){
+                    if(node['nodes'].length > 0){
+                            node['nodes'].forEach(function(currentNode, key){
+                                $('#custom-checkable1').treeview('uncheckNode', currentNode['nodeId']);
+                            });
                     }
-                });
-            },
-            onNodeSelected: function(event, node){
-                $('#custom-checkable').treeview('checkNode', node.nodeId);
-            },
-            onNodeUnselected: function(event, node){
-                $('#custom-checkable').treeview('uncheckNode', node.nodeId);
-            }
-        }).treeview('collapseAll');
+                }
+            }).treeview('collapseAll');
+        }
 
 
-</script>
+    </script>
 
 @endsection

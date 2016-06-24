@@ -77,6 +77,8 @@ Route::get('/homeOwnerUser', ['as'=>'homeOwnerUser', 'uses'=>'HomeController@reg
 Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);
 
 
+Route::post('/category/edit-categoty', ['as' => 'attach_categories', 'uses'=>'CategoryController@attachCategoriesToCompany']);
+Route::post('/category/remove-categoty', ['as' => 'remove_categories', 'uses'=>'CategoryController@detachCategoriesToCompany']);
 
 
 
