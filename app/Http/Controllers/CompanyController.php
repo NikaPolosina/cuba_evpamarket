@@ -29,7 +29,7 @@ class CompanyController extends Controller
         $company = Company::paginate(15);
         return view('company.index', compact('company'));
     }
-    
+
     public function create()
     {
         return view('company.create');
@@ -37,6 +37,7 @@ class CompanyController extends Controller
 
     public function store(Request $request)
     {
+
         $company =  $this->createCompany($request->except('_token'));
         if($company){
             $curentUser = Auth::user();

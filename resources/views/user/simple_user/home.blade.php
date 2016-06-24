@@ -7,11 +7,11 @@
     <div class="row">
         <div class="col-sm-12 contentInfo">
 
-            <div class="col-sm-4 img" style="border: solid 1px red;">
+            <div class="col-sm-4 img" style="/*border: solid 1px red;*/">
 
 
             </div>
-            <div class="col-sm-8" style="border: solid 1px red;">
+            <div class="col-sm-8" style="/*border: solid 1px red;*/">
                 <h1>{{$userInfo->name}} {{$userInfo->surname}}</h1>
                 <h5>{{$userInfo->country}}</h5>
             </div>

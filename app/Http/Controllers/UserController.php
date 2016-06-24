@@ -79,6 +79,7 @@ class UserController extends Controller{
     }
     public function setting(){
         if(Auth::check()){
+
             $curentUser = Auth::user();
             $userInfo = $curentUser->getUserInformation;
         }
@@ -92,8 +93,11 @@ class UserController extends Controller{
         return view('user.simple_user.setting.settingSecurity');
     }
     public function settingOverallEdit(Request $request){
+
+
+
         $curentUser = Auth::user();
-        dd($request->all());
+
 
         $info = $curentUser->getUserInformation;
         $info->name = $request['name'];

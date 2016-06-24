@@ -32,29 +32,29 @@
                     var a  = $('.allCategoryBlock').find('.selectCategory');
                     var ul = a.find('ul[data-id="select_input"]');
         /*            $('#addCategory').on('click', function(){
-                        event.preventDefault();
+                     event.preventDefault();
 
 
-                        $('.allCategoryBlock').toggle();
-                        var data = <?php //$categories ?>
+                     $('.allCategoryBlock').toggle();
+                     var data = <?php //$categories ?>
 
-                        $('#custom-checkable1').treeview({
-                            data            : data,
-                            showCheckbox    : true,
-                            enableLinks     : false,
-                            onNodeChecked   : function(event, node){
-                                a.show();
-                                ul.append('<li><input checked="checked" type="checkbox" value="' + node.id + '"/>' + node.text + '</li>');
-                            },
-                            onNodeUnchecked : function(event, node){
-                                ul.find('input[value="' + node.id + '"]').parent().remove();
-                                if(ul.find('input').length < 1){
-                                    a.hide();
-                                }
-                                console.log(node.text + ' was unchecked');
-                            }
-                        }).treeview('collapseAll');
-                    });*/
+                     $('#custom-checkable1').treeview({
+                     data            : data,
+                     showCheckbox    : true,
+                     enableLinks     : false,
+                     onNodeChecked   : function(event, node){
+                     a.show();
+                     ul.append('<li><input checked="checked" type="checkbox" value="' + node.id + '"/>' + node.text + '</li>');
+                     },
+                     onNodeUnchecked : function(event, node){
+                     ul.find('input[value="' + node.id + '"]').parent().remove();
+                     if(ul.find('input').length < 1){
+                     a.hide();
+                     }
+                     console.log(node.text + ' was unchecked');
+                     }
+                     }).treeview('collapseAll');
+                     });*/
 
 
                     $('.addCategoryCompany').on('click', function(){

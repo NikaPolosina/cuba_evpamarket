@@ -40,15 +40,18 @@ class HomeController extends Controller{
         if(!Auth::user()->getUserInformation){
             $region = Region::all();
             return view('auth.register_aditional')->with('region', $region);
-
         }
-                        if(Auth::check()){
-                            $curentUser = Auth::user();
-                            $userInfo = $curentUser->getUserInformation;
-                            $companies = $curentUser->getCompanies;
-                        }
 
-                        if(Auth::user()->hasRole('company_owner')){
+        if(Auth::check()){
+            $curentUser = Auth::user();
+            $userInfo = $curentUser->getUserInformation;
+            $companies = $curentUser->getCompanies;
+        }
+
+
+        if(Auth::user()->hasRole('company_owner')){
+
+
 
                             $menu = array(
                                 'my_page'       => array(
@@ -122,15 +125,19 @@ class HomeController extends Controller{
 
     }
     public function registerOwner(User $user, UserCompany $userCompany, Company $company, $id = NULL){
-        die('Surprise, you are here !!!');
+
+
+
 
         if(Auth::check()){
             $curentUser = Auth::user();
             $userInfo = $curentUser->getUserInformation;
             $companies = $curentUser->getCompanies;
         }
+            $menu =[];
 
-        return view('homeOwnerUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
+
+        return view('homeOwnerUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser)->with('menu', $menu);
 
 
     }
