@@ -43,45 +43,9 @@
                         @endforeach
                     </div>
                     <hr/>
-                    <div class="col-sm-12"><h3>Товары</h3></div>
-                    <div class="col-sm-12">
-                        <?php foreach($productAll as $v){
-                        $idProduct = $v['id'];
-                        $idCompany = $v->getCompany[0]['id'];
-                        $directory = public_path() . '/img/custom/companies/' . $idCompany . '/products/' . $idProduct;
-                        $directoryMy = '/img/custom/companies/' . $idCompany . '/products/' . $idProduct . '/';
-                        if(!empty($v['product_image']) && File::exists($directory . '/' . $v['product_image'])){
-                            $firstFile = $directoryMy . $v['product_image'];
-                        }else{
-                            if(is_dir($directory)){
-                                $files = scandir($directory);
-                                $firstFile = $directoryMy . $files[2];// because [0] = "." [1] = ".."
-                                if(is_dir(public_path() . $firstFile)){
-                                    if(isset($files[3]))
-                                        $firstFile = $directoryMy . $files[3];else
-                                        $firstFile = '/img/custom/files/thumbnail/plase.jpg';
-                                }
-                            }else{
-                                $firstFile = '/img/custom/files/thumbnail/plase.jpg';
-                            }
-                        }
-                        ?>
-                        <div class="col-md-3">
-                            <div class="carentFindProduct">
-                                <div class="item">
-                                    <p><h4 class="show-product">{{$v->product_name}}</h4></p>
-                                    @if(isset($firstFile))
-                                        <img class="img-thumbnail show-product" src="{{$firstFile}}">
-                                    @endif
-                                    <input class="input_id_product" value="{{$v->id}}" type="hidden"/>
-                                    <br>
 
-                                    <p style="font-size: 14px;">{{$v->content}}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <?php } ?>
-                    </div>
+                    @include('product.products.showAllProduct', ['productAll', $productAll])
+
                 </div>
             </div>
         </div>

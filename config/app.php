@@ -216,6 +216,7 @@ return [
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Form'      => Collective\Html\FormFacade::class,
         'HTML'      => Collective\Html\HtmlFacade::class,
+        'Str'      => Illuminate\Support\Str::class,
     ],
 
 ];

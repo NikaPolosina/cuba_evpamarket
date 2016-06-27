@@ -102,7 +102,7 @@ function sho($data, $parent, $none = 'none'){?>
 
     }
     .im img{
-        height: 100%;
+        /*height: 100%;*/
     }
 </style>
 
