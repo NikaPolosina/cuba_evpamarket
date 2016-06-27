@@ -1,6 +1,8 @@
 @extends('...layouts.app')
 
 @section('content')
+    @include('layouts.header_menu')
+
 
     <div class="col-sm-10 col-md-offset-1" style="border: solid 1px red">
 

@@ -1,6 +1,8 @@
 @extends('...layouts.app')
 
 @section('content')
+    @include('layouts.header_menu')
+
 
     <div style="border: solid 2px darkgrey; padding: 10px;">
         <div class="table-responsive">

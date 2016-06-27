@@ -2,6 +2,8 @@
 
 @section('content')
 
+    @include('layouts.header_menu')
+
     <h1>Company <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Add New Company</a></h1>
     <div class="table">
         <table class="table table-bordered table-striped table-hover">

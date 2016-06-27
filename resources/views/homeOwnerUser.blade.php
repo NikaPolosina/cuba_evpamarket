@@ -2,9 +2,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('layouts.header_menu')
 
 
-<div class="container">
+
+    <div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">

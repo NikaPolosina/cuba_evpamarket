@@ -1,7 +1,9 @@
 @extends('...layouts.app')
 
 @section('content')
-<?php
+    @include('layouts.header_menu')
+
+    <?php
 
 
        if(file_exists(public_path().'/img/custom/companies/'. $company->company_logo) && !empty($company->company_logo)){

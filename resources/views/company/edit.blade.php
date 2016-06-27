@@ -1,6 +1,8 @@
 @extends('...layouts.app')
 
 @section('content')
+    @include('layouts.header_menu')
+
 
     <h1>Редактировать магазин</h1>
     <hr/>

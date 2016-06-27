@@ -2,6 +2,8 @@
 
 @section('content')
 
+    @include('layouts.header_menu')
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">

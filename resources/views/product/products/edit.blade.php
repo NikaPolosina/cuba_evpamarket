@@ -2,6 +2,8 @@
 
 @section('content')
 
+    @include('layouts.header_menu')
+
     <h1>Добавление продукта</h1>
     <hr/>
 

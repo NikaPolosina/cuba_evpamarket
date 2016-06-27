@@ -35,6 +35,12 @@ body{
     cursor: pointer;
 
 }
+
+
+
+
+
+
 .list{
     padding: 6px 6px 6px 0;
     font-size: initial;
@@ -45,18 +51,36 @@ body{
     padding-left: 20px;
     border: 1px solid #ededed;
 }
-.list a{
 
+.list_with_child a{
     color: #3e77aa;
     display: block;
     text-decoration: none;
     background: url("../img/system/next.png") no-repeat 100% center;
 }
+
+.list_non_child a{
+    color: #3e77aa;
+    display: block;
+    text-decoration: none;
+}
+
 .list a:hover{
     display: block;
     color: red;
     text-decoration: none;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 .show-product {
     cursor: pointer;

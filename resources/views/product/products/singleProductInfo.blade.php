@@ -2,6 +2,8 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('layouts.header_menu')
+
     <!-- blueimp Gallery styles -->
     <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
     <!-- blueimp Gallery script -->
@@ -30,13 +32,17 @@
 
             $directory = public_path().'/img/custom/companies/'.$companyId.'/products/'.$idProduct;
             $directoryMy = '/img/custom/companies/'.$companyId.'/products/'.$idProduct.'/';
-            $allFile = array_diff(scandir($directory), array('.', '..'));
-            $singleFile = array();
-            foreach($allFile as $value){
+
+
+            if(is_dir($directory)){
+                $allFile = array_diff(scandir($directory), array('.', '..'));
+                $singleFile = array();
+                foreach($allFile as $value){
                     if(file_exists($directory.'/'.$value) && !is_dir($directory.'/'.$value)){
                         $singleFile[] = $directoryMy.$value;
                     }
                 }
+            }
 
             if(!empty($singleProduct['product_image']) && File::exists($directory.'/'.$singleProduct['product_image'])){
 
@@ -72,19 +78,15 @@
                     <td style="width: 550px;"> <img class="img-thumbnail" style="display: block; width: 200px; float: left;" src="<?=$firstFile?>">
 
 
-                       <?php  foreach($singleFile as $val){
-                            $all = explode("/", $val);
-                            $single = array_pop($all);
-
-
-                        ?>
-                        <a href="<?=$val?>" title="<?=$single?>" download="<?=$single?>" data-gallery=""><img class="img-thumbnail" style="display: block; width: 100px; float: right" src="<?=$val?>"></a>
-                        {{--<a href="https://jquery-file-upload.appspot.com/image%2Fjpeg/2191423661/0-big.jpg" title="0-big.jpg" download="0-big.jpg" data-gallery=""><img src="https://jquery-file-upload.appspot.com/image%2Fjpeg/2191423661/0-big.jpg.80x80.jpg"></a>--}}
-                        <a style="display: none" href="<?=$val?>" title="<?=$single?>" title="<?=$single?>" download="<?=$single?>" data-gallery=""><?=$single?></a>
-                        {{--<a href="https://jquery-file-upload.appspot.com/image%2Fjpeg/2191423661/0-big.jpg" title="0-big.jpg" download="0-big.jpg" data-gallery="">0-big.jpg</a>--}}
-
-
-                    <?php } ?>
+                        <?php
+                        if(isset($singleFile) && count($singleFile)){
+                            foreach($singleFile as $val){
+                                $all = explode("/", $val);
+                                $single = array_pop($all); ?>
+                            <a href="<?=$val?>" title="<?=$single?>" download="<?=$single?>" data-gallery=""><img class="img-thumbnail" style="display: block; width: 100px; float: right" src="<?=$val?>"></a>
+                            <a style="display: none" href="<?=$val?>" title="<?=$single?>" title="<?=$single?>" download="<?=$single?>" data-gallery=""><?=$single?></a>
+                        <?php }
+                        }?>
 
 
                     </td><td>{{ $singleProduct['product_name'] }}</td><td> {{ $singleProduct['product_description'] }} </td><td> {{ $singleProduct['product_price'] }} </td>
