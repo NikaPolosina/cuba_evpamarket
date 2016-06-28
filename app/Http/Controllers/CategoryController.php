@@ -171,9 +171,13 @@ class CategoryController extends Controller{
         $data = Product::where('category_id', $id)->paginate(10);
 
         $vip_category = Category::where('parent_id', $id)->get();
+       $data = IndexController::showProduct($data);
 
 
-        return view('category.findByCategory')->with('data', $data)->with('category' ,$category->getAllCategoris())->with('vip_category', $vip_category);
+        return view('category.findByCategory')
+            ->with('data', $data)
+            ->with('category' ,$category->getAllCategoris())
+            ->with('vip_category', $vip_category);
     }
 
     public function attachCategoriesToCompany(Request $request, CategoryController $category){

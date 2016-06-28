@@ -98,16 +98,11 @@ a:hover {
 
 
 /* Элементы в виде плиток с содержанием */
-.item {
-    display: inline-block;
-    background: #fff;
-    padding: 1em;
-    margin: 0 0 1.5em;
-    width: 100%;
-    box-sizing: border-box; /* Изменения алгоритма расчета ширины и высоты элемента.*/
-    -moz-box-sizing: border-box; /* Для Firefox */
-    -webkit-box-sizing: border-box; /* Для Safari, Chrome, iOS иAndroid */
-    box-shadow: 2px 2px 4px 0 #ccc; /* Внешняя тень плиток */
+
+.carentFindProduct {
+    /*max-height: 500px;*/
+    /*min-height: 500px;*/
+    height: 405px;
 }
 
 /* Стили картинок, видое и фреймов внутри адаптивных плиток */
@@ -162,6 +157,7 @@ img, iframe {
     color:#4c4c4c!important;
     font-size: 16px;
     text-align:left;
+    height: 100%;
 }
 
 
