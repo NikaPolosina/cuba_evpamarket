@@ -30,6 +30,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/products/create/{company_id}', 'ProductsController@create');
 });
 Route::any('/get-product-list', 'ProductsController@getProductList');
+Route::post('/products/cart', 'ProductsController@cart');
 Route::any('/products/destroy-check', 'ProductsController@destroyCheck');
 Route::any('/products/create-by-category', 'ProductsController@createByCategory');
 Route::any('/products-category', ['as' => 'products-category', 'uses' => 'ProductsController@storeCategory']);

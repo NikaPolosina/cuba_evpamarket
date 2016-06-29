@@ -30,11 +30,30 @@
 
             </div>
 
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right nav_li_menu">
+                <li><a style="float: left" href="">
+                        <img class="header_icon" src="/img/system/like1.png" alt=""/>
+                        <span>Желания</span>
+                    </a>
+                </li>
+                <li><a style="float: left" href="">
+                        <img class="header_icon" src="/img/system/shopping-cart.png" alt=""/>
+                        <span>Корзина</span>
+                    </a>
+                </li>
+
                 @if (Auth::guest())
-                <li><a style="float: left" href="{{ url('/register-c') }}">Регистрация</a></li>
-                <li><a href="{{ url('/login') }}">Вход</a></li>
-                   @else
+                    <li><a style="float: left" href="{{ url('/register-c') }}">
+                            <img class="header_icon" src="/img/system/clipboard-with-pencil.png" alt=""/>
+                            <span>Регистрация</span>
+                        </a>
+                    </li>
+                    <li><a href="{{ url('/login') }}">
+                            <img class="header_icon" src="/img/system/login.png" alt=""/>
+                            <span>Вход</span>
+                        </a>
+                    </li>
+               @else
                     <li><a href="{{ url('/home') }}">Домой</a></li>
                     <li class="dropdown">
                         <?php if(Auth::user()->getUserInformation){?>
@@ -50,6 +69,7 @@
                         </ul>
                     </li>
                 @endif
+
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -69,6 +89,16 @@
 </script>
 
 <style>
+
+    .nav_li_menu>li{
+        border: 1px solid #dedbdb;
+        width: 70px;
+        border-radius: 6px;
+        height: 70px;
+        text-align: center;
+        box-shadow: 2px 0 0 1px rgba(0, 0, 0, 0.38);
+        margin: 2px;
+    }
 
     .logo {
 

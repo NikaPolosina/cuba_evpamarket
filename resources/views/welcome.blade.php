@@ -16,13 +16,9 @@
 
                     @include('slide')
 
-
                     @include('layouts.category_pallet', ['vip_category', $vip_category])
 
                     @include('company.showCompany', ['companyAll', $companyAll])
-
-
-
 
                     @include('product.products.showAllProduct', ['productAll', $productAll])
                     {{$productAll->render()}}
@@ -35,7 +31,31 @@
             Новости о акциях
         </div>
     </div>
+    <script>
 
+
+
+
+        $('.panel-body').find('.item_product').find('.product_navigation').delegate('.btn-success', 'click', function(){
+            var product_id = $(this).parents('.item').find("input[data-name='product-id']").val();
+
+            $.ajax({
+                type:"POST",
+                url:"/products/cart",
+                headers:{
+                    'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                },
+                data:{id : product_id},
+                success:function(msg) {
+                        console.log('gksgkjn');
+                }
+                });
+
+
+                });
+
+
+    </script>
 @endsection
 
 

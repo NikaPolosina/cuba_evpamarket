@@ -1,15 +1,17 @@
+
 <link rel="stylesheet" type="text/css" href="/css/show_product.css" />
 
 <div class="col-sm-12"><h3>Товары</h3></div>
 
-<div class="row">
+<div class="row item_product">
 
     @foreach($productAll as $v)
 
         <div class="col-md-3 tom" style="padding-right: 2px; padding-left: 2px">
-        <div class="single_product_holder">
+            <div class="single_product_holder">
                 <div class="carentFindProduct">
                         <div class="item">
+                            <input  style="display: none" data-name="product-id" type="text" value="{{$v->id}}"/>
                             <div class="product_img">
 
                                 <a href="/single-product/{{$v->id}}">
@@ -52,7 +54,7 @@
                         </div>
                 </div>
         </div>
-    </div>
+        </div>
 
  @endforeach
 </div>

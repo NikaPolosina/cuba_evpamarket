@@ -13,6 +13,7 @@ use App\Company;
 use Auth;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Cookie;
 
 class ProductsController extends Controller{
 
@@ -321,6 +322,25 @@ class ProductsController extends Controller{
             'companyId' => $companyId,
             'category'  => $request['categories']
         ]);
+    }
+
+    public function cart(Request $request){
+
+        $cart = array();
+        if($request->cookie('cart')){
+            $cart = $request->cookie('cart');
+        }
+        array_push($cart, time());
+
+        Cookie::queue('cart', $cart);
+//        dd($request->cookie('cart'));
+
+
+        return response()->json([
+            'success' => true
+        ], 200);
+
+
     }
 }
 
