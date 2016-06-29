@@ -47,64 +47,61 @@ class ProductsController extends Controller{
         Session::flash('flash_message', 'Product added!');
         return redirect('company/'.$company->id);
     }
+
     public static function cropFile($file, $newPath, $name){
         $size = getimagesize($file);
-        $width =$size[0];
-        $height =$size[1];
-        $type =$size[2];
+        $width = $size[0];
+        $height = $size[1];
+        $type = $size[2];
 
-        if ($type == 1){
+        if($type == 1){
             $image = imagecreatefromgif($file);
-        }elseif ($type == 2){
+        }elseif($type == 2){
             $image = imagecreatefromjpeg($file);
-        }elseif ($type == 3){
+        }elseif($type == 3){
             $image = imagecreatefrompng($file);
         }else{
             $image = imagecreatefromwbmp($file);
         }
 
-        If($width/$height > 1){
-            $a = $width-$height;
+        If($width / $height > 1){
+            $a = $width - $height;
             $new_img = imagecreatetruecolor($height, $height);
-            imagecopyresampled($new_img, $image, 0, 0, $a/2, 0, $height+$a, $height, $width, $height);
+            imagecopyresampled($new_img, $image, 0, 0, $a / 2, 0, $height + $a, $height, $width, $height);
         }else{
-            $a = $height-$width;
+            $a = $height - $width;
             $new_img = imagecreatetruecolor($width, $width);
-            imagecopyresampled($new_img, $image, 0, 0, 0, $a/2, $width, $width+$a, $width, $height);
+            imagecopyresampled($new_img, $image, 0, 0, 0, $a / 2, $width, $width + $a, $width, $height);
         }
 
-        if ($type == 1){
-            if (imagegif($new_img,public_path().$newPath.$name.'.gif')){
-                imagegif($new_img,public_path().$newPath.'thumbnail/'.$name.'.gif');
+        if($type == 1){
+            if(imagegif($new_img, public_path().$newPath.$name.'.gif')){
+                imagegif($new_img, public_path().$newPath.'thumbnail/'.$name.'.gif');
                 return true;
             }
             return false;
-        }elseif ($type == 2){
-            if (imagejpeg($new_img,public_path().$newPath.$name.'.jpg')){
-                imagejpeg($new_img,public_path().$newPath.'thumbnail/'.$name.'.jpg');
+        }elseif($type == 2){
+            if(imagejpeg($new_img, public_path().$newPath.$name.'.jpg')){
+                imagejpeg($new_img, public_path().$newPath.'thumbnail/'.$name.'.jpg');
                 return true;
             }
             return false;
-        }elseif ($type == 3){
-            if (imagepng($new_img,public_path().$newPath.$name.'.png')){
-                imagepng($new_img,public_path().$newPath.'thumbnail/'.$name.'.png');
+        }elseif($type == 3){
+            if(imagepng($new_img, public_path().$newPath.$name.'.png')){
+                imagepng($new_img, public_path().$newPath.'thumbnail/'.$name.'.png');
                 return true;
             }
             return false;
         }else{
-            if (imagewbmp($new_img,public_path().$newPath.$name.'.bmp')){
-                imagewbmp($new_img,public_path().$newPath.'thumbnail/'.$name.'.bmp');
+            if(imagewbmp($new_img, public_path().$newPath.$name.'.bmp')){
+                imagewbmp($new_img, public_path().$newPath.'thumbnail/'.$name.'.bmp');
                 return true;
             }
             return false;
         }
-
-
-
     }
 
     public function storeCategory(Request $request){
-
 
         $newProduct = new Product([
             'product_name'        => $request['product']['name'],
@@ -148,11 +145,11 @@ class ProductsController extends Controller{
                 $firstFile = $directoryMy.$files[2];// because [0] = "." [1] = ".."
 
                 if(is_dir(public_path().$firstFile)){
-                    if(isset($files[3]))
+                    if(isset($files[3])){
                         $firstFile = $directoryMy.$files[3];
-                    else
+                    }else{
                         $firstFile = '/img/custom/files/thumbnail/plase.jpg';
-
+                    }
                 }
             }else{
                 $firstFile = '/img/custom/files/thumbnail/plase.jpg';
@@ -160,9 +157,9 @@ class ProductsController extends Controller{
         }
 
         return response()->json([
-            'product' => $product,
-            'img'     => $firstFile,
-            'mainPath'     => 'companies/'.$id.'/products/'.$request['id'].'/',
+            'product'  => $product,
+            'img'      => $firstFile,
+            'mainPath' => 'companies/'.$id.'/products/'.$request['id'].'/',
         ]);
     }
 
@@ -219,20 +216,14 @@ class ProductsController extends Controller{
         return false;
     }
 
-    public function findProduct(Request $request,Company $company){
+    public function findProduct(Request $request, Company $company){
 
         if($request->input('find')){
             $res = Product::search($request->input('find'))->get();
             $productAll = IndexController::showProduct($res);
 
-
-            return view('find')
-                ->with('productAll', $productAll)
-                ->with('search', $request->input('find'));
-
+            return view('find')->with('productAll', $productAll)->with('search', $request->input('find'));
         }
-
-
 
         return view('welcome');
     }
@@ -242,7 +233,6 @@ class ProductsController extends Controller{
         return ([
             'productAll' => $productAll
         ]);
-
     }
 
     public function singleProduct(Request $request, $id){
@@ -254,7 +244,7 @@ class ProductsController extends Controller{
     }
 
     public function productEditor(CategoryController $category, $id){
-        
+
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
 
@@ -330,17 +320,12 @@ class ProductsController extends Controller{
         if($request->cookie('cart')){
             $cart = $request->cookie('cart');
         }
-        array_push($cart, time());
 
-        Cookie::queue('cart', $cart);
-//        dd($request->cookie('cart'));
-
+        array_push($cart, $request->input('id'));
 
         return response()->json([
             'success' => true
-        ], 200);
-
-
+        ], 200)->withCookie(cookie('cart', array_unique($cart)));
     }
 }
 
