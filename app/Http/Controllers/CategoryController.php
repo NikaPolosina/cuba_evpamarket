@@ -168,7 +168,7 @@ class CategoryController extends Controller{
 
     public function findByCategory($id, CategoryController $category){
 
-        $data = Product::where('category_id', $id)->paginate(10);
+        $data = Product::where('category_id', $id)->paginate(12);
 
         $vip_category = Category::where('parent_id', $id)->get();
        $data = IndexController::showProduct($data);

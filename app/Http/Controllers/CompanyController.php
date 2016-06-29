@@ -79,37 +79,23 @@ class CompanyController extends Controller
 
     }
 
-    public function show($id){
-
-
-
+    public function show($id, CategoryController $category){
 
         $company = Company::findOrFail($id);
-
-       /* $this->category = Category::all()->toArray();
-
-        foreach ($this->category as $value) {
-            $value['text'] = $value['title'];
-            $value['href'] = $value['id'];
-            $value['nodes'] = array();
-
-            $this->nCategory[$value['parent_id']][] = $value;
+        if(file_exists(public_path().'/img/custom/companies/'. $company->company_logo) && !empty($company->company_logo)){
+            $img = '/img/custom/companies/'. $company->company_logo;
+        }else{
+            $img = '/img/custom/files/thumbnail/plase.jpg';
         }
-        ksort($this->nCategory);
-        $this->nCategory = array_reverse($this->nCategory, true);
-
-        foreach ($this->nCategory as $key => $value) {
-            foreach ($value as $k => $v) {
-                if(array_key_exists($v['id'], $this->nCategory)){
-                    $this->nCategory[$key][$k]['nodes'] = $this->nCategory[$v['id']];
-                    unset($this->nCategory[$v['id']]);
-                }
-            }
-        }*/
+        $res = $company->getProducts;
+        $productAll = IndexController::showProduct($res);
 
 
-        //return view('company.show')->with(['category' => json_encode($this->nCategory[0]), 'company'=>$company]);
-        return view('company.show')->with('company',  $company);
+        return view('company.show')
+            ->with('company',  $company)
+            ->with('img',  $img)
+            ->with('category', $category->getAllCategoris())
+            ->with('productAll',  $productAll);
 
     }
 

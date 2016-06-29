@@ -8,7 +8,6 @@
 
     <div class="row">
 
-
         @include('layouts.category_menu', $category)
 
         <div class="col-md-8 ">
@@ -24,7 +23,9 @@
 
 
 
+
                     @include('product.products.showAllProduct', ['productAll', $productAll])
+                    {{$productAll->render()}}
 
                 </div>
             </div>
@@ -34,8 +35,6 @@
             Новости о акциях
         </div>
     </div>
-
-    {!! HTML::script('/js/welcome.js') !!}
 
 @endsection
 

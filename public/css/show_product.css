@@ -13,9 +13,10 @@
 }
 .carentFindProduct:hover .product_description{
     display: block;
-}   .carentFindProduct:hover  .product_content{
+}
+.carentFindProduct:hover  .product_content{
         display: block;
-    }
+}
 
 .carentFindProduct:hover .item{
     height: auto;
@@ -50,7 +51,7 @@
     float: right;
 
 }
-.portfolioActiv{
+.activ{
     z-index: 9999999999;
     position: relative;
     transition: all 0.4s ease-out;

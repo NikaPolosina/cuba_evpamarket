@@ -1,12 +1,14 @@
 <div class="category_pallet ">
 
-    <div class="galleryCategoryMenu col-sm-12">
-        <ul style="text-align: center;">
+    <div class="galleryCategoryMenu col-sm-12" style="text-align: center; display: block">
+
+        <ul style="text-align: left; ">
+
             @foreach($vip_category as $v)
 
 
 
-                        <li class="portraits">
+                        <li class="portraits" style="">
                             <div class="col-sm-12" style="padding-right: 0px; padding-left: 0px; height: 100%;">
                             <a href="/category/{{$v->id}}">
 
@@ -23,7 +25,13 @@
 
 
             @endforeach
+
         </ul>
+
     </div>
 
 </div>
+<style>
+
+
+</style>

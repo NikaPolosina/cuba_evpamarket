@@ -1,18 +1,19 @@
 <link rel="stylesheet" type="text/css" href="/css/show_product.css" />
+
 <div class="col-sm-12"><h3>Товары</h3></div>
 
 <div class="row">
 
-    <?php foreach($productAll as $v){
+    @foreach($productAll as $v)
 
-    ?>
-
-    <div class="col-md-3 tom" style="padding-right: 2px; padding-left: 2px">
+        <div class="col-md-3 tom" style="padding-right: 2px; padding-left: 2px">
         <div class="single_product_holder">
                 <div class="carentFindProduct">
                         <div class="item">
                             <div class="product_img">
+
                                 <a href="/single-product/{{$v->id}}">
+
                                     @if(isset($v->firstFile))
                                         <img class="img-thumbnail show-product" src="{{$v->firstFile}}">
                                     @endif
@@ -53,21 +54,16 @@
         </div>
     </div>
 
-    <?php } ?>
+ @endforeach
 </div>
 <script>
-
     var carentFindProduct = $('.carentFindProduct');
-
     carentFindProduct.on({
-
         mouseenter : function() {
-            $(this).addClass('portfolioActiv');
+            $(this).addClass('activ');
         },
-
         mouseleave : function() {
-            $(this).removeClass('portfolioActiv');
-
+            $(this).removeClass('activ');
         }
     });
 </script>
