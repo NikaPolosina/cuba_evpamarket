@@ -47,8 +47,7 @@ class IndexController extends Controller{
     }
 
 
-    public function Index(ProductsController $product, CompanyController $company, CategoryController $category){
-
+    public function Index(ProductsController $product, CompanyController $company, CategoryController $category, Request $request){
 
         $productAll = Product::paginate(8);
 

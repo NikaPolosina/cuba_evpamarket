@@ -13,11 +13,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+   {{-- <script src="//code.jquery.com/jquery-1.10.2.js"></script>--}}
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="/plugins/chosen_v1.5.1/chosen.jquery.js"></script>
 
-    <script src="/plugins/jquery-cookie-master/src/jquery.cookie.js"></script>
+    {{--<script src="/plugins/jquery-cookie-master/src/jquery.cookie.js"></script>--}}
 
 
                     <!-- Fonts -->

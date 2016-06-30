@@ -1,4 +1,8 @@
 
+.nav_li_menu>li a{
+  float: left!important;
+}
+
 .header_icon{
     margin: auto;
 }

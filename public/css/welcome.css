@@ -7,6 +7,11 @@ body{
     min-height:800px;
 }
 
+.modal-footer button>img.img_button_icon{
+    margin-right: 5px;
+    display: inline-block;
+}
+
 .category_title{
     box-shadow: 3px 3px 7px 0 rgba(105, 206, 95, .5), inset 0 -1px 0 0 #3a9731;
     background: #4bbe3f;

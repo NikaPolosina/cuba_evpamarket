@@ -313,8 +313,19 @@ class ProductsController extends Controller{
             'category'  => $request['categories']
         ]);
     }
+public function showCart(Request $request){
+    if($request->cookie('cart')){
+        $cart = $request->cookie('cart');
+        dd($cart);
+    }
 
+
+    return response()->json([
+        'success' => true
+    ], 200)->withCookie(cookie('cart', []));
+}
     public function cart(Request $request){
+
 
         $cart = array();
         if($request->cookie('cart')){

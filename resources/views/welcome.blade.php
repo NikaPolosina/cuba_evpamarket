@@ -31,6 +31,8 @@
             Новости о акциях
         </div>
     </div>
+
+
     <script>
 
 
@@ -38,7 +40,11 @@
 
         $('.panel-body').find('.item_product').find('.product_navigation').delegate('.btn-success', 'click', function(){
             var product_id = $(this).parents('.item').find("input[data-name='product-id']").val();
+            var product_img = $(this).parents('.item').find('.product_img').find('img').attr('src');
+            var product_name = $(this).parents('.item').find('.product_name').find('a').text();
 
+
+            
             $.ajax({
                 type:"POST",
                 url:"/products/cart",
@@ -47,7 +53,9 @@
                 },
                 data:{id : product_id},
                 success:function(msg) {
-                        console.log('gksgkjn');
+                    $('#modal_add_product_cart').modal('show');
+
+                        console.log(msg);
                 }
                 });
 

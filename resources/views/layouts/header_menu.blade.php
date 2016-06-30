@@ -31,19 +31,19 @@
             </div>
 
             <ul class="nav navbar-nav navbar-right nav_li_menu">
-                <li><a style="float: left" href="">
+                <li><a href="">
                         <img class="header_icon" src="/img/system/like1.png" alt=""/>
                         <span>Желания</span>
                     </a>
                 </li>
-                <li><a style="float: left" href="">
+                <li><a  href="">
                         <img class="header_icon" src="/img/system/shopping-cart.png" alt=""/>
                         <span>Корзина</span>
                     </a>
                 </li>
 
                 @if (Auth::guest())
-                    <li><a style="float: left" href="{{ url('/register-c') }}">
+                    <li><a  href="{{ url('/register-c') }}">
                             <img class="header_icon" src="/img/system/clipboard-with-pencil.png" alt=""/>
                             <span>Регистрация</span>
                         </a>
@@ -90,15 +90,6 @@
 
 <style>
 
-    .nav_li_menu>li{
-        border: 1px solid #dedbdb;
-        width: 70px;
-        border-radius: 6px;
-        height: 70px;
-        text-align: center;
-        box-shadow: 2px 0 0 1px rgba(0, 0, 0, 0.38);
-        margin: 2px;
-    }
 
     .logo {
 
