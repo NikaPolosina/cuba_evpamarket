@@ -13,7 +13,6 @@
 
 Route::auth();
 Route::get('/', 'IndexController@Index');
-Route::get('/finds', [ 'as' => 'finds', 'uses' => 'ProductsController@showCart' ]);
 Route::any('/find', [ 'as' => 'find', 'uses' => 'ProductsController@findProduct' ]);
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index' ]);
 Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
@@ -31,6 +30,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/products/create/{company_id}', 'ProductsController@create');
 });
 Route::any('/get-product-list', 'ProductsController@getProductList');
+Route::any('/cart', 'CartController@index');
 Route::post('/products/cart', 'ProductsController@cart');
 Route::any('/products/destroy-check', 'ProductsController@destroyCheck');
 Route::any('/products/create-by-category', 'ProductsController@createByCategory');

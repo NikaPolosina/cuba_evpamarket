@@ -32,12 +32,12 @@
 
             <ul class="nav navbar-nav navbar-right nav_li_menu">
                 <li><a href="">
-                        <img class="header_icon" src="/img/system/like1.png" alt=""/>
+                        <img class="header_icon" src="/img/system/like1.png" alt=""/><div class="count_product_cart" > <span class="like_count">3</span></div>
                         <span>Желания</span>
                     </a>
                 </li>
-                <li><a  href="">
-                        <img class="header_icon" src="/img/system/shopping-cart.png" alt=""/>
+                <li><a  style="position: relative;" href="/cart">
+                        <img class="header_icon" src="/img/system/shopping-cart.png" alt=""/> <div class="count_product_cart" > <span class="cart_count"> {{$product_cnt}}</span></div>
                         <span>Корзина</span>
                     </a>
                 </li>
@@ -89,8 +89,22 @@
 </script>
 
 <style>
+    .count_product_cart{
+        position: absolute;
+        top: 30px;
+        background-color: red;
+        border: solid 2px white;
+        width:20px;
+        height: 20px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 18px;
+    }
+.count_product_cart span{
+    color: white;
 
 
+}
     .logo {
 
         animation: turn 5s infinite;

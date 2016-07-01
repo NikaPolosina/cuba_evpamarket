@@ -97,9 +97,6 @@
                 <img class="img_product img-thumbnail" src="" alt=""/>
             </div>
 
-            <div class="gal">
-
-            </div>
         </div>
         <div class="col-sm-7">
             <span style="font-size: 17px;">Краткое описание:</span>
@@ -107,11 +104,7 @@
 
                 <p class="product_description"></p>
             </div>
-            <span style="font-size: 17px;">Детальное описание:</span>
-            <div class="content_modal_product">
 
-                <p class="product_content"></p>
-            </div>
         <div class="price_modal_product">
                 <p style="float: right;">Цена:  <span class="product_price"></span>
                 </p>

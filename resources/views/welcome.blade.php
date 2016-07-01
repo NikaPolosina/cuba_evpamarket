@@ -6,7 +6,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/welcome.css"/>
 
-    <div class="row">
+    <div class="row row_row">
 
         @include('layouts.category_menu', $category)
 
@@ -36,15 +36,23 @@
     <script>
 
 
-
-
         $('.panel-body').find('.item_product').find('.product_navigation').delegate('.btn-success', 'click', function(){
-            var product_id = $(this).parents('.item').find("input[data-name='product-id']").val();
-            var product_img = $(this).parents('.item').find('.product_img').find('img').attr('src');
-            var product_name = $(this).parents('.item').find('.product_name').find('a').text();
+            var holder = $(this).parents('.carentFindProduct').eq(0);
+            var parent = $(this).parents('.item');
+            var product_id = parent.find("input[data-name='product-id']").val();
+            var product_img = parent.find('.product_img').find('img').attr('src');
+            var product_name = parent.find('.product_name').find('a').text();
+            var product_price = parent.find('.product_price').find('span.price').text();
+            var product_description = parent.find('.product_description').find('p').text();
+            var body_modal_add_cart = $('#modal_add_product_cart');
+
+            body_modal_add_cart.find('img.img_product').attr('src', '');
+            body_modal_add_cart.find('p.product_price').text('');
+            body_modal_add_cart.find('p.product_description').text('');
+            body_modal_add_cart.find('p.name').text('');
+            body_modal_add_cart.find('.modal-title').find('span').text('');
 
 
-            
             $.ajax({
                 type:"POST",
                 url:"/products/cart",
@@ -53,9 +61,17 @@
                 },
                 data:{id : product_id},
                 success:function(msg) {
-                    $('#modal_add_product_cart').modal('show');
 
-                        console.log(msg);
+
+                    $('.row_row').siblings('.navbar-default').find('.nav_li_menu').find('span.cart_count').text(msg.product_cnt);
+                    body_modal_add_cart.find('p.product_description').text(product_description).show();
+                    body_modal_add_cart.find('.modal-title').find('span').text(msg.product_cnt);
+                    body_modal_add_cart.find('img.img_product').attr('src', product_img);
+                    body_modal_add_cart.find('p.product_price').text(product_price);
+                    body_modal_add_cart.find('p.name').text(product_name);
+                    $('#modal_add_product_cart').modal('show');
+                    holder.removeClass('activ');
+
                 }
                 });
 

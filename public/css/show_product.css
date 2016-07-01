@@ -13,16 +13,11 @@
 .product_img a img{
     max-height: 100%;
 }
-.carentFindProduct:hover .product_description{
-    display: block;
-}
-.carentFindProduct:hover  .product_content{
-        display: block;
-}
+
 
 .carentFindProduct:hover .item{
-    height: auto;
-    overflow: auto;
+    /*height: auto;*/
+    /*overflow: auto;*/
 }
 
 .item {
@@ -58,6 +53,20 @@
     position: relative;
     transition: all 0.4s ease-out;
     transform: scale(1.1);
+}
+
+.activ .item{
+    height: auto;
+    overflow: auto;
+}
+
+
+.activ .product_description{
+    display: block;
+}
+
+.activ  .product_content{
+    display: block;
 }
 
 .shop_name{

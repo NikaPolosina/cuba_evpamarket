@@ -19,6 +19,10 @@ class ProductsController extends Controller{
 
     public $paginCnt = 5;
 
+    public function __construct(Request $request){
+        view()->share('product_cnt', count($request->cookie('cart')));
+    }
+
     public function index(){
         $products = Product::paginate($this->paginCnt);
         return view('product.products.index', compact('products'));
@@ -313,17 +317,7 @@ class ProductsController extends Controller{
             'category'  => $request['categories']
         ]);
     }
-public function showCart(Request $request){
-    if($request->cookie('cart')){
-        $cart = $request->cookie('cart');
-        dd($cart);
-    }
 
-
-    return response()->json([
-        'success' => true
-    ], 200)->withCookie(cookie('cart', []));
-}
     public function cart(Request $request){
 
 
@@ -335,7 +329,8 @@ public function showCart(Request $request){
         array_push($cart, $request->input('id'));
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'product_cnt'=> count(array_unique($cart))
         ], 200)->withCookie(cookie('cart', array_unique($cart)));
     }
 }

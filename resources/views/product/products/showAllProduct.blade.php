@@ -4,6 +4,10 @@
 <div class="col-sm-12"><h3>Товары</h3></div>
 
 
+
+
+
+
 {{-----------------------------------------------------------}}
 <!-- Modal -->
 <div style="z-index: 100000000000000" class="modal fade" id="modal_add_product_cart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -12,14 +16,61 @@
             <div class="modal-header">
                 <button type="button" class="close myClose" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel"><img style="display: inline-block;" src="/img/system/check-mark.png" alt=""/> Товар был добавлен в корзину. Товаров в Вашей корзине: </h4>
+                <h4 class="modal-title" id="myModalLabel"><img style="display: inline-block;" src="/img/system/check-mark.png" alt=""/> Товар был добавлен в корзину. Товаров в Вашей корзине: <span style="color:blue"></span> </h4>
             </div>
             <div class="modal-body">
+                <div class="product_info_add_cart">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-sm-3">
+
+                                <div style="max-width: 100%;">
+                                    <img class="img_product img-thumbnail" src="" alt=""/>
+                                </div>
+
+                                <div class="gal">
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-9">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td width="35%"><span style="font-size: 20px; font-weight: bolder;">Товар:</span></td>
+                                        <td width="65%" valign="top"><p  class="name" style=" font-size: 20px;"></p></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="35%"><span style="font-size: 20px; font-weight: bolder;">Краткое описание:</span></td>
+                                        <td width="65%" valign="top"><p style="font-size: 20px;" class="product_description"></p></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width="35%" valign="top"><span style="font-size: 20px; font-weight: bolder;">Цена:</span></td>
+                                        <td width="65%" valign="top"><p style="    background: #fff3b5;
+                                                                    border-radius: 4px;
+                                                                    display: inline-block;
+                                                                    padding: 7px 7px 5px;
+                                                                    vertical-align: middle;
+                                                                    margin-bottom: 5px;
+                                                                    white-space: nowrap;
+                                                                    border: 1px solid transparent;
+                                                                    font-size: 1.38462em;font-size: 20px;
+                                                        }" class="product_price"></p></td>
+                                    </tr>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
 
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style = "text-align: center">
                 <button type="button" class="btn btn-success" data-dismiss="modal"><img class="img_button_icon"src="/img/system/back-arrow.png" alt=""/>Продолжить покупки</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal"><img class="img_button_icon" src="/img/system/shopping-cart-button.png" alt=""/> Перейти в корзину</button>
+                <a  href="/cart"><button type="button" class="btn btn-danger" ><img class="img_button_icon" src="/img/system/shopping-cart-button.png" alt=""/> Перейти в корзину</button></a>
             </div>
         </div>
     </div>
