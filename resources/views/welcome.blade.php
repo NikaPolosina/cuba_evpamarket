@@ -4,7 +4,7 @@
 
     @include('layouts.header_menu')
 
-    <link rel="stylesheet" type="text/css" href="css/welcome.css"/>
+
 
     <div class="row row_row">
 

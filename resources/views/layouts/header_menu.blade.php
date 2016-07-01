@@ -37,7 +37,7 @@
                     </a>
                 </li>
                 <li><a  style="position: relative;" href="/cart">
-                        <img class="header_icon" src="/img/system/shopping-cart.png" alt=""/> <div class="count_product_cart" > <span class="cart_count"> {{$product_cnt}}</span></div>
+                        <img class="header_icon" src="/img/system/shopping-cart.png" alt=""/> <div class="count_product_cart" > <span class="cart_count"> @if(isset($product_cnt)){{$product_cnt}}@endif</span></div>
                         <span>Корзина</span>
                     </a>
                 </li>

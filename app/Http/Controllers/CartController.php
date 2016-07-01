@@ -18,16 +18,16 @@ class CartController extends Controller{
     public function index(Request $request){
         if($request->cookie('cart')){
             $cart = $request->cookie('cart');
-            $data = [];
+
             foreach($cart as $val){
-                $product = Product::find($val)->toArray();
-                $data[] = $product;
+                $product = Product::find($val)->get();
+                $a = IndexController::showProduct($product);
             }
         }
 
 
 
-        return view('product.products.cart')->with('data', $data);
+        return view('product.products.cart')->with('product', $a);
     }
 
 
