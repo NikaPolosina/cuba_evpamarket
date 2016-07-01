@@ -15,19 +15,30 @@ use Auth;
 
 class CartController extends Controller{
 
-    public function index(Request $request){
-        if($request->cookie('cart')){
-            $cart = $request->cookie('cart');
+    public function __construct(Request $request){
+        view()->share('product_cnt', count($request->cookie('cart')));
+    }
 
-            foreach($cart as $val){
-                $product = Product::find($val)->get();
-                $a = IndexController::showProduct($product);
-            }
+    public function index(Request $request){
+        $product = '';
+
+        if($request->cookie('cart')){
+            $product = Product::whereIn('id', $request->cookie('cart'))->get();
+            $product = IndexController::showProduct($product);
         }
 
 
+        return view('product.products.cart')->with('product', $product);
+    }
 
-        return view('product.products.cart')->with('product', $a);
+    public function destroy(Request $request){
+        $id = $request['id'];
+        if($request->cookie('cart')){
+            $cart = $request->cookie('cart');
+            unset($cart[  array_search($request['id'], $cart) ] );
+            return response()->json(['success'=>true,  'product_cnt'=> count(array_unique($cart)) ])->withCookie('cart', $cart);
+        }
+        return response()->json(['success'=>true]);
     }
 
 

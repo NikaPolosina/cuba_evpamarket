@@ -37,6 +37,7 @@
 
 
         $('.panel-body').find('.item_product').find('.product_navigation').delegate('.btn-success', 'click', function(){
+            $('.btn-success').attr('disabled', true);
             var holder = $(this).parents('.carentFindProduct').eq(0);
             var parent = $(this).parents('.item');
             var product_id = parent.find("input[data-name='product-id']").val();
@@ -71,6 +72,7 @@
                     body_modal_add_cart.find('p.name').text(product_name);
                     $('#modal_add_product_cart').modal('show');
                     holder.removeClass('activ');
+                    $('.btn-success').attr('disabled', false);
 
                 }
                 });
