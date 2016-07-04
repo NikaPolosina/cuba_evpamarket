@@ -2,10 +2,11 @@
     @section('content')
     @include('layouts.header_menu')
     <div class="row">
+        {!! HTML::script('/js/caunt_product.js') !!}
 
         @if(!$product == '' )
 
-        @forelse($product as $val)
+        @foreach($product as $val)
             <div class="col-sm-9 col-sm-offset-1 product_item_cart">
 
                 <div class="col-sm-3">
@@ -73,10 +74,12 @@
                 </div>
 
             </div>
-
             @endforeach
+            <div class="col-sm-9 col-sm-offset-1 product_item_cart cart_empty" style="display: none">
+                <h1>Ваша корзина пуста. Вернитесь к сайту что бы добавить товары в корзину.</h1>
+            </div>
             @else
-                <div class="col-sm-9 col-sm-offset-1 product_item_cart">
+                <div class="col-sm-9 col-sm-offset-1 product_item_cart cart_empty">
                     <h1>Ваша корзина пуста. Вернитесь к сайту что бы добавить товары в корзину.</h1>
                 </div>
             @endif
@@ -88,6 +91,9 @@
         $('.button_delete').on('click', function(){
             var id = $(this).siblings('input').val();
             var currentBlock = $(this).parents('.product_item_cart').eq(0);
+            var button = $(this);
+
+
 
 
             $.ajax({
@@ -100,6 +106,12 @@
                     id: id
                 },
                 success: function(msg){
+                    if(msg.product_cnt == 0){
+                        button.parents('.product_item_cart').parents('.row').eq(0).find('.cart_empty').show();
+
+                    }
+
+
                     $('.cart_count').text(msg.product_cnt);
                     currentBlock.remove();
                 }
@@ -108,49 +120,7 @@
             
         });
 
-            
 
-
-
-        $(function () {
-            var action;
-            $(".number-spinner button").mousedown(function () {
-                btn = $(this);
-                input = btn.closest('.number-spinner').find('input');
-                btn.closest('.number-spinner').find('button').prop("disabled", false);
-                var price = $(this).parents('.product_item_cart').find('span.product_price_one').text();
-                var price_all = $(this).parents('.product_item_cart').find('span.all_product_price');
-
-                if (btn.attr('data-dir') == 'up') {
-
-                    action = setInterval(function () {
-                        if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {
-                            input.val(parseInt(input.val()) + 1);
-                            price_all.text(parseInt(parseInt(input.val()) * price));
-                        } else {
-                            btn.prop("disabled", true);
-                            clearInterval(action);
-                        }
-                    }, 60);
-
-
-
-                    
-                } else {
-                    action = setInterval(function () {
-                        if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {
-                            input.val(parseInt(input.val()) - 1);
-                            price_all.text(parseInt(parseInt(input.val()) * price));
-                        } else {
-                            btn.prop("disabled", true);
-                            clearInterval(action);
-                        }
-                    }, 50);
-                }
-            }).mouseup(function () {
-                clearInterval(action);
-            });
-        });
     </script>
 
     <style>

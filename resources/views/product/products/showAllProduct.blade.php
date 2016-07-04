@@ -1,10 +1,12 @@
 
 <link rel="stylesheet" type="text/css" href="/css/show_product.css" />
-
-<div class="col-sm-12"><h3>Товары</h3></div>
-
+{!! HTML::script('/js/caunt_product.js') !!}
 
 
+<div class="col-sm-12">
+    <h3>Товары</h3>
+    <hr/>
+</div>
 
 
 
@@ -43,6 +45,41 @@
                                         <td width="35%"><span style="font-size: 20px; font-weight: bolder;">Краткое описание:</span></td>
                                         <td width="65%" valign="top"><p style="font-size: 20px;" class="product_description"></p></td>
                                     </tr>
+
+
+
+                                    <tr>
+                                        <td width="35%"><span class="option_table">Количество:</span></td>
+                                        <td width="65%" valign="top">
+
+                                            {{-------------------------------Количество товара----------------------------------}}
+                                            <div class="my_b">
+                                                <div class="input-group number-spinner">
+                                            <span class="input-group-btn data-dwn">
+                                                <button class="btn btn-default btn-info left_b" data-dir="dwn">
+                                                    <span class="glyphicon glyphicon-minus"></span>
+                                                </button>
+                                            </span>
+
+                                                    <input type="text" class="form-control text-center my_b" value="1" min="1" max="40" readonly>
+
+                                            <span class="input-group-btn data-up">
+                                                <button class="btn btn-default btn-info right_b" data-dir="up">
+                                                    <span style="width: 2px;" class="glyphicon glyphicon-plus"></span>
+                                                </button>
+                                            </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="">
+                                                <p>В наличии: 40 шт.</p>
+                                            </div>
+                                            {{-----------------------------------------------------------------------------------}}
+
+                                        </td>
+                                    </tr>
+
+
 
                                     <tr>
                                         <td width="35%" valign="top"><span style="font-size: 20px; font-weight: bolder;">Цена:</span></td>
