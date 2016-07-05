@@ -33,13 +33,13 @@
             <ul class="nav navbar-nav navbar-right nav_li_menu">
                 @if(!Auth::guest())
                 <li><a href="/like">
-                        <img class="header_icon" src="/img/system/like1.png" alt=""/><div style="display: none" class="count_product_cart" > <span class="like_count">3</span></div>
+                        <img class="header_icon" src="/img/system/like1.png" alt=""/><div class="count_product_like count_product_cart_css" > <span class="like_count"> @if(isset($product_cnt_like)){{$product_cnt_like}}@endif</span></div>
                         <span>Желания</span>
                     </a>
                 </li>
                 @endif
                 <li><a  style="position: relative;" href="/cart">
-                        <img class="header_icon" src="/img/system/shopping-cart.png" alt=""/> <div class="count_product_cart" > <span class="cart_count"> @if(isset($product_cnt)){{$product_cnt}}@endif</span></div>
+                        <img class="header_icon" src="/img/system/shopping-cart.png" alt=""/> <div class="count_product_cart count_product_cart_css" > <span class="cart_count"> @if(isset($product_cnt)){{$product_cnt}}@endif</span></div>
                         <span>Корзина</span>
                     </a>
                 </li>
@@ -99,7 +99,7 @@
 </script>
 
 <style>
-    .count_product_cart{
+    .count_product_cart_css{
         position: absolute;
         top: 30px;
         background-color: red;
@@ -110,7 +110,7 @@
         text-align: center;
         line-height: 18px;
     }
-.count_product_cart span{
+.count_product_cart_css span{
     color: white;
 
 

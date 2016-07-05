@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Http\Requests;
+use Illuminate\Http\Request;
+
 use App\Http\Controllers\Controller;
 use App\Product;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
 use App\Company;
@@ -21,8 +22,7 @@ class ProductsController extends Controller{
     public $paginCnt = 5;
 
     public function __construct(Request $request){
-        
-        view()->share('product_cnt', CartController::getProductCount($request));
+
     }
 
     public function index(){

@@ -15,7 +15,6 @@ use Auth;
 class CartController extends Controller{
 
     public function __construct(Request $request){
-        view()->share('product_cnt', self::getProductCount($request));
     }
     /**
      * Show cart

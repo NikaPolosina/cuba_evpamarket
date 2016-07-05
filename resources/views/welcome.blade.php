@@ -112,6 +112,13 @@
                 data:{id : product_id},
                 success:function(msg) {
                     var product = msg.product;
+                    console.log($('.row_row').siblings('.navbar-default').find('.nav_li_menu').find('span.like_count'));
+                    console.log(msg.product_cnt);
+
+
+
+                    $('.row_row').siblings('.navbar-default').find('.nav_li_menu').find('span.like_count').text(msg.product_cnt);
+
 
                     body_modal_add_cart.find('.modal-title').find('span').text(msg.product_cnt);
                     holder.removeClass('activ');
