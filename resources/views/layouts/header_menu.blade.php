@@ -31,7 +31,7 @@
             </div>
 
             <ul class="nav navbar-nav navbar-right nav_li_menu">
-                <li><a href="">
+                <li><a href="/like">
                         <img class="header_icon" src="/img/system/like1.png" alt=""/><div style="display: none" class="count_product_cart" > <span class="like_count">3</span></div>
                         <span>Желания</span>
                     </a>

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserCompanyTable extends Migration
+class CreateUserProductTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,14 @@ class CreateUserCompanyTable extends Migration
      */
     public function up()
     {
-        Schema::create('company_user', function (Blueprint $table) {
-            $table->integer('company_id')->unsigned();
+        Schema::create('user_product', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
-            $table->foreign('company_id')
-                ->references('id')->on('companies')
-                ->onDelete('cascade');
+            $table->integer('product_id')->unsigned();
             $table->foreign('user_id')
                 ->references('id')->on('users')
+                ->onDelete('cascade');
+            $table->foreign('product_id')
+                ->references('id')->on('products')
                 ->onDelete('cascade');
 
 
@@ -33,6 +33,6 @@ class CreateUserCompanyTable extends Migration
      */
     public function down()
     {
-        Schema::drop('company_user');
+        Schema::drop('user_product');
     }
 }

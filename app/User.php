@@ -35,6 +35,9 @@ class User extends Authenticatable
     public function getCompanies(){
         return $this->belongsToMany('App\Company');
     }
+    public function getProduct(){
+        return $this->belongsToMany('App\Product');
+    }
 
 
     public function getUserInformation(){

@@ -87,4 +87,6 @@ Route::post('/category/remove-categoty', ['as' => 'remove_categories', 'uses'=>'
 Route::any('/cart', 'CartController@index');
 Route::any('/cart/destroy-product', 'CartController@destroy');
 
+/*-------------------------------------------Like----------------------------------------------*/
 
+Route::any('/like', 'LikeController@index');
