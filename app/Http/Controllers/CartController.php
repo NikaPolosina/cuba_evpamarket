@@ -44,13 +44,35 @@ class CartController extends Controller{
 
     public function destroy(Request $request){
         $id = $request['id'];
+        $cart = array();
+        $cnt = 0;
+
         if($request->cookie('cart')){
             $cart = $request->cookie('cart');
-            unset($cart[array_search($request['id'], $cart)]);
+
+            $currentCompany = Product::find($request->input('id'))->getCompany()->first();
+            $currentCompanyId = $currentCompany->id;
+
+            if(array_key_exists($currentCompanyId, $cart)){
+                unset($cart[$currentCompanyId]['products'][$request->input('id')]);
+            }
+
+            foreach($cart as $company){
+                foreach($company['products'] as $product){
+                    $cnt += $product['cnt'];
+                }
+            }
+
+            $total = CartController::getProductCount($request);
+
             return response()->json([
-                'success'     => true,
-                'product_cnt' => count(array_unique($cart))
-            ])->withCookie('cart', $cart);
+                'success'       => true,
+                'product_cnt'   => $cnt,
+                'product'       => Product::find($request->input('id')),
+                'total_in_shop' => $total
+            ], 200)->withCookie(cookie('cart', $cart));
+
+            
         }
         return response()->json([ 'success' => true ]);
     }

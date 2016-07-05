@@ -348,10 +348,7 @@ class ProductsController extends Controller{
             }
         }
 
-        $total = 0;
-        foreach($cart[$currentCompanyId]['products'] as $key => $product){
-            $total += Product::find($key)->product_price * $product['cnt'];
-        }
+        $total = CartController::getProductCount($request);
 
         return response()->json([
             'success'       => true,
@@ -385,10 +382,7 @@ class ProductsController extends Controller{
             }
         }
 
-        $total = 0;
-        foreach($cart[$currentCompanyId]['products'] as $key => $product){
-            $total += Product::find($key)->product_price * $product['cnt'];
-        }
+        $total = CartController::getProductCount($request);
 
         return response()->json([
             'success'       => true,
