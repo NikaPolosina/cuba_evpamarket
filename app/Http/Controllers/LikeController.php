@@ -67,9 +67,10 @@ class LikeController extends Controller{
 
     public static function getProductCount(Request $request){
         $cnt = 0;
-        $curentUser = Auth::user();
-        $cnt = count($curentUser->getProduct);
-
+        if (Auth::check()){
+            $curentUser = Auth::user();
+            $cnt = count($curentUser->getProduct);
+        }
         return $cnt;
     }
 
