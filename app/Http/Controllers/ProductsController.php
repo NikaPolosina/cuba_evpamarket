@@ -14,13 +14,15 @@ use Auth;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cookie;
+use App\Http\Controllers\CartController;
 
 class ProductsController extends Controller{
 
     public $paginCnt = 5;
 
     public function __construct(Request $request){
-        view()->share('product_cnt', count($request->cookie('cart')));
+        
+        view()->share('product_cnt', CartController::getProductCount($request));
     }
 
     public function index(){
@@ -319,19 +321,81 @@ class ProductsController extends Controller{
     }
 
     public function cart(Request $request){
-
-
         $cart = array();
+        $cnt = 0;
+
         if($request->cookie('cart')){
             $cart = $request->cookie('cart');
         }
 
-        array_push($cart, $request->input('id'));
+        $currentCompany = Product::find($request->input('id'))->getCompany()->first();
+        $currentCompanyId = $currentCompany->id;
+
+        if(array_key_exists($currentCompanyId, $cart)){
+            if(array_key_exists($request->input('id'), $cart[$currentCompanyId]['products'])){
+                $cart[$currentCompanyId]['products'][$request->input('id')]['cnt']++;
+            }else{
+                $cart[$currentCompanyId]['products'][$request->input('id')]['cnt'] = 1;
+            }
+        }else{
+            $cart[$currentCompanyId] = array();
+            $cart[$currentCompanyId]['products'][$request->input('id')]['cnt'] = 1;
+        }
+
+        foreach($cart as $company){
+            foreach($company['products'] as $product){
+                $cnt += $product['cnt'];
+            }
+        }
+
+        $total = 0;
+        foreach($cart[$currentCompanyId]['products'] as $key => $product){
+            $total += Product::find($key)->product_price * $product['cnt'];
+        }
 
         return response()->json([
-            'success' => true,
-            'product_cnt'=> count(array_unique($cart))
-        ], 200)->withCookie(cookie('cart', array_unique($cart)));
+            'success'       => true,
+            'product_cnt'   => $cnt,
+            'product'       => Product::find($request->input('id')),
+            'total_in_shop' => $total
+        ], 200)->withCookie(cookie('cart', $cart));
+    }
+
+    public function cartAddCnt(Request $request){
+
+        $cart = array();
+        $cnt = 0;
+
+        if($request->cookie('cart')){
+            $cart = $request->cookie('cart');
+        }
+
+        $currentCompany = Product::find($request->input('id'))->getCompany()->first();
+        $currentCompanyId = $currentCompany->id;
+
+        if(array_key_exists($currentCompanyId, $cart)){
+            if(array_key_exists($request->input('id'), $cart[$currentCompanyId]['products'])){
+                $cart[$currentCompanyId]['products'][$request->input('id')]['cnt'] = $cart[$currentCompanyId]['products'][$request->input('id')]['cnt'] + $request->input('cnt') - 1;
+            }
+        }
+
+        foreach($cart as $company){
+            foreach($company['products'] as $product){
+                $cnt += $product['cnt'];
+            }
+        }
+
+        $total = 0;
+        foreach($cart[$currentCompanyId]['products'] as $key => $product){
+            $total += Product::find($key)->product_price * $product['cnt'];
+        }
+
+        return response()->json([
+            'success'       => true,
+            'product_cnt'   => $cnt,
+            'product'       => Product::find($request->input('id')),
+            'total_in_shop' => $total
+        ], 200)->withCookie(cookie('cart', $cart));
     }
 }
 

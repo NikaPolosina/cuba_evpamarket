@@ -64,21 +64,55 @@
                 success:function(msg) {
 
 
+                    var product = msg.product;
                     $('.row_row').siblings('.navbar-default').find('.nav_li_menu').find('span.cart_count').text(msg.product_cnt);
-                    body_modal_add_cart.find('p.product_description').text(product_description).show();
+                    body_modal_add_cart.find('p.product_description').text(msg.product.product_description).show();
                     body_modal_add_cart.find('.modal-title').find('span').text(msg.product_cnt);
                     body_modal_add_cart.find('img.img_product').attr('src', product_img);
-                    body_modal_add_cart.find('p.product_price').text(product_price);
-                    body_modal_add_cart.find('p.name').text(product_name);
+                    body_modal_add_cart.find('span.all_product_price').text(msg.product.product_price);
+                    body_modal_add_cart.find('span.product_price_one').html(msg.product.product_price);
+
+
+                    body_modal_add_cart.find('span.total_in_shop').html(msg.total_in_shop);
+                    body_modal_add_cart.find('span.total_in_shop_one').html(msg.total_in_shop);
+                    body_modal_add_cart.find('input.product_id').val(msg.product.id);
+
+                    $('#modal_add_product_cart').find('input.my_b').val(1)
+
+                    body_modal_add_cart.find('p.name').text(msg.product.product_name);
                     $('#modal_add_product_cart').modal('show');
                     holder.removeClass('activ');
                     $('.btn-success').attr('disabled', false);
 
+                    
                 }
                 });
 
 
                 });
+
+
+                $('#modal_add_product_cart').on('hide.bs.modal', function (e) {
+                    var cnt = $('#modal_add_product_cart').find('input.my_b').val();
+                    var pId = $('#modal_add_product_cart').find('input.product_id').val();
+                    if(cnt.length > 0 && cnt > 1){
+                        $.ajax({
+                            type:"POST",
+                            url:"/products/cart-update-cnt",
+                            headers:{
+                                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                            },
+                            data:{
+                                cnt : cnt,
+                                id: pId
+                            },
+                            success:function(msg) {
+                                var product = msg.product;
+                                $('.row_row').siblings('.navbar-default').find('.nav_li_menu').find('span.cart_count').text(msg.product_cnt);
+                            }
+                        });
+                    }
+                })
 
 
     </script>
