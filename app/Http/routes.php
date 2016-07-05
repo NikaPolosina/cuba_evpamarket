@@ -10,27 +10,32 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('/test', ['uses'=>'HomeController@test']);
 
-Route::auth();
+/*-------------------------------------------Index----------------------------------------------*/
 Route::get('/', 'IndexController@Index');
-Route::any('/find', [ 'as' => 'find', 'uses' => 'ProductsController@findProduct' ]);
-Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index' ]);
+
+/*-------------------------------------------Auth----------------------------------------------*/
+Route::auth();
+Route::get('/register-c', 'Auth\AuthController@registerC');
 Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
 
-/*----------------CompanyController--------------------*/
-Route::get('/register-c', 'Auth\AuthController@registerC');
+/*-------------------------------------------Location----------------------------------------------*/
+Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
+
+/*---------------------------------CompanyController------------------------------------*/
 Route::any('/show-company/{id}', 'CompanyController@show');
 Route::group(['middleware' => ['web']], function () {
     Route::resource('company', 'CompanyController');
 });
 
-/*----------------ProductController--------------------*/
+/*------------------------------------------ProductController---------------------------------------------*/
 Route::group(['middleware' => ['web']], function () {
     Route::resource('products', 'ProductsController');
     Route::get('/products/create/{company_id}', 'ProductsController@create');
 });
 Route::any('/get-product-list', 'ProductsController@getProductList');
-
+Route::any('/products/show/', 'ProductsController@show');
 Route::any('/products/destroy-check', 'ProductsController@destroyCheck');
 Route::any('/products/create-by-category', 'ProductsController@createByCategory');
 Route::any('/products-category', ['as' => 'products-category', 'uses' => 'ProductsController@storeCategory']);
@@ -41,12 +46,8 @@ Route::post('/destroy', 'ProductsController@destroy');
 Route::get('/single-product/{id}', 'ProductsController@singleProduct');
 Route::post('/products/ajax-update', ['as'=>'product-ajax-update', 'uses'=>'ProductsController@productAjaxUpdate']);
 Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 'uses'=>'ProductsController@attachCategoryToCompany']);
-Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 'uses'=>'ProductsController@attachCategoryToCompany']);
-
-Route::any('/products/show/', 'ProductsController@show');
 
 /*-------------------------------------------User----------------------------------------------*/
-
 Route::any('/user/simple_user/message', 'UserController@message');
 Route::any('/user/simple_user/payments', 'UserController@payments');
 Route::any('/user/simple_user/delivery', 'UserController@delivery');
@@ -58,38 +59,31 @@ Route::any('/user/simple_user/setting/security', 'UserController@settingSecurity
 Route::any('/user/simple_user/setting/security/edit', 'UserController@settingOverallEdit');
 
 /*-------------------------------------------Category----------------------------------------------*/
-
-
-
-
-
 Route::any('category/category-setup/{id}', 'CategoryController@categorySetup');
-Route::get('/category/{id}', 'CategoryController@findByCategory');
+Route::post('/category/edit-categoty', ['as' => 'attach_categories', 'uses'=>'CategoryController@attachCategoriesToCompany']);
+Route::post('/category/remove-categoty', ['as' => 'remove_categories', 'uses'=>'CategoryController@detachCategoriesToCompany']);
 
-
-
-Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
-
-Route::get('/test', ['uses'=>'HomeController@test']);
+/*-------------------------------------------Home--------------------------------------------*/
 Route::get('/homeSimpleUser', function(){
     return view('homeSimpleUser');
 });
 Route::get('/homeOwnerUser', ['as'=>'homeOwnerUser', 'uses'=>'HomeController@registerOwner'] );
+Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index' ]);
+
+/*-------------------------------------------File--Uploader--------------------------------------------*/
 Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);
 
-
-Route::post('/category/edit-categoty', ['as' => 'attach_categories', 'uses'=>'CategoryController@attachCategoriesToCompany']);
-Route::post('/category/remove-categoty', ['as' => 'remove_categories', 'uses'=>'CategoryController@detachCategoriesToCompany']);
-
 /*-------------------------------------------Cart----------------------------------------------*/
-
 Route::any('/cart', 'CartController@index');
 Route::any('/cart/destroy-product', 'CartController@destroy');
 Route::post('/products/cart', 'CartController@cart');
 Route::post('/products/cart-update-cnt', 'CartController@cartAddCnt');
 
 /*-------------------------------------------Like----------------------------------------------*/
-
 Route::any('/like', 'LikeController@index');
 Route::post('/products/like', 'LikeController@like');
 Route::any('/like/destroy-product', 'LikeController@destroy');
+
+/*-------------------------------------------Find----------------------------------------------*/
+Route::any('/find', [ 'as' => 'find', 'uses' => 'FindController@findProduct' ]);
+Route::get('/find/category/{id}', 'FindController@findByCategory');

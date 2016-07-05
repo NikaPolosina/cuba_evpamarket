@@ -166,20 +166,6 @@ class CategoryController extends Controller{
         return $this->nCategory[0];
     }
 
-    public function findByCategory($id, CategoryController $category){
-
-        $data = Product::where('category_id', $id)->paginate(12);
-
-        $vip_category = Category::where('parent_id', $id)->get();
-       $data = IndexController::showProduct($data);
-
-
-        return view('category.findByCategory')
-            ->with('data', $data)
-            ->with('category' ,$category->getAllCategoris())
-            ->with('vip_category', $vip_category);
-    }
-
     public function attachCategoriesToCompany(Request $request, CategoryController $category){
         $this->validate($request, [
             'company'    => 'required',

@@ -142,10 +142,9 @@ class HomeController extends Controller{
 
     }
 
-    public function test(CategoryController $category){
+    public function test(){
 
-
-       return view('test')->with('category', $category->getAllCategoris());
+       return view('test');
 
     }
 }

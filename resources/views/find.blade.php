@@ -1,18 +1,14 @@
 @extends('layouts.app')
-
 @section('content')
-
     @include('layouts.header_menu')
 
-    <link rel="stylesheet" type="text/css" href="css/welcome.css"/>
+    {{--<link rel="stylesheet" type="text/css" href="css/welcome.css"/>--}}
 
-    <div class="row">
+    <div class="row  row_row">
 
+        @include('layouts.category_menu', $category)
 
-        {{--@include('layouts.category_menu', $category)--}}
-        <div class="col-md-2"></div>
-
-        <div class="col-md-9 ">
+        <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-body">
 
@@ -25,8 +21,7 @@
 
     </div>
 
-    {!! HTML::script('/js/welcome.js') !!}
-
+    {!! HTML::script('/js/like_and_cart_add.js') !!}
 @endsection
 
 

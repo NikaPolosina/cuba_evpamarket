@@ -222,18 +222,6 @@ class ProductsController extends Controller{
         return false;
     }
 
-    public function findProduct(Request $request, Company $company){
-
-        if($request->input('find')){
-            $res = Product::search($request->input('find'))->get();
-            $productAll = IndexController::showProduct($res);
-
-            return view('find')->with('productAll', $productAll)->with('search', $request->input('find'));
-        }
-
-        return view('welcome');
-    }
-
     public function getProductAll(){
         $productAll = Product::all();
         return ([
