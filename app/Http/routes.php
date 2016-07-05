@@ -31,7 +31,6 @@ Route::group(['middleware' => ['web']], function () {
 });
 Route::any('/get-product-list', 'ProductsController@getProductList');
 
-Route::post('/products/cart', 'ProductsController@cart');
 Route::any('/products/destroy-check', 'ProductsController@destroyCheck');
 Route::any('/products/create-by-category', 'ProductsController@createByCategory');
 Route::any('/products-category', ['as' => 'products-category', 'uses' => 'ProductsController@storeCategory']);
@@ -86,7 +85,11 @@ Route::post('/category/remove-categoty', ['as' => 'remove_categories', 'uses'=>'
 
 Route::any('/cart', 'CartController@index');
 Route::any('/cart/destroy-product', 'CartController@destroy');
+Route::post('/products/cart', 'CartController@cart');
+Route::post('/products/cart-update-cnt', 'CartController@cartAddCnt');
 
 /*-------------------------------------------Like----------------------------------------------*/
 
 Route::any('/like', 'LikeController@index');
+Route::post('/products/like', 'LikeController@like');
+Route::any('/like/destroy-product', 'LikeController@destroy');

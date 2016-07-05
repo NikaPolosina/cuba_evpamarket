@@ -21,18 +21,49 @@ class LikeController extends Controller{
     }
 
     public function index(Request $request){
-        $product = '';
-
-        $curentUser = User::find(108);
-        dd($curentUser->getProduct);
+        $product = [];
+        $curentUser = Auth::user();
         $product = $curentUser->getProduct;
-
-
         $product = IndexController::showProduct($product);
+
+
 
         return view('product.products.like')->with('product', $product);
     }
 
+    public function like(Request $request){
+    $curentUser = Auth::user();
+
+
+
+  if($curentUser->getProduct()->where('product_id', $request['id'])->count() <= 0){
+      $curentUser->getProduct()->attach($request['id']);
+  }
+
+
+    $cnt = count($curentUser->getProduct);
+
+    return response()->json([
+        'success'       => true,
+        'product_cnt'   => $cnt,
+        'product'       => Product::find($request->input('id')),
+
+    ], 200);
+}
+
+    public function destroy(Request $request){
+        $curentUser = Auth::user();
+        $curentUser->getProduct()->detach($request['id']);
+        $cnt = count($curentUser->getProduct);
+
+        return response()->json([
+            'success'       => true,
+            'product_cnt'   => $cnt,
+            'product'       => Product::find($request->input('id')),
+
+        ], 200);
+
+    }
 
 
 }

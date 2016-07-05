@@ -31,11 +31,13 @@
             </div>
 
             <ul class="nav navbar-nav navbar-right nav_li_menu">
+                @if(!Auth::guest())
                 <li><a href="/like">
                         <img class="header_icon" src="/img/system/like1.png" alt=""/><div style="display: none" class="count_product_cart" > <span class="like_count">3</span></div>
                         <span>Желания</span>
                     </a>
                 </li>
+                @endif
                 <li><a  style="position: relative;" href="/cart">
                         <img class="header_icon" src="/img/system/shopping-cart.png" alt=""/> <div class="count_product_cart" > <span class="cart_count"> @if(isset($product_cnt)){{$product_cnt}}@endif</span></div>
                         <span>Корзина</span>
@@ -54,11 +56,19 @@
                         </a>
                     </li>
                @else
-                    <li><a href="{{ url('/home') }}">Домой</a></li>
+
+                        <li><a href="{{ url('/home') }}">
+                                <img class="header_icon" src="/img/system/home.png" alt=""/>
+                                <span>Домой</span>
+                            </a>
+                        </li>
+
+
                     <li class="dropdown">
                         <?php if(Auth::user()->getUserInformation){?>
 
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <img class="header_icon" src="/img/system/exit.png" alt=""/>
                             {{ Auth::user()->getUserInformation->name }}
                             <span class="caret"></span>
                         </a>

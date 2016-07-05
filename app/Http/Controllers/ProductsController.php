@@ -14,13 +14,15 @@ use Auth;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cookie;
+use App\Http\Controllers\CartController;
 
 class ProductsController extends Controller{
 
     public $paginCnt = 5;
 
     public function __construct(Request $request){
-        view()->share('product_cnt', count($request->cookie('cart')));
+        
+        view()->share('product_cnt', CartController::getProductCount($request));
     }
 
     public function index(){
@@ -318,21 +320,6 @@ class ProductsController extends Controller{
         ]);
     }
 
-    public function cart(Request $request){
-
-
-        $cart = array();
-        if($request->cookie('cart')){
-            $cart = $request->cookie('cart');
-        }
-
-        array_push($cart, $request->input('id'));
-
-        return response()->json([
-            'success' => true,
-            'product_cnt'=> count(array_unique($cart))
-        ], 200)->withCookie(cookie('cart', array_unique($cart)));
-    }
 }
 
 

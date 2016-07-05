@@ -2,12 +2,14 @@
 @section('content')
 
     @include('layouts.header_menu')
+    <link rel="stylesheet" type="text/css" href="../css/show_cart_like.css"/>
+
 
     <div class="row">
 
-        @if(!$product == '' )
+        @if(count($product) > 0 )
             @foreach($product as $val)
-                <div class="col-sm-9 col-sm-offset-1 product_item_cart">
+                <div class="col-sm-9 col-sm-offset-1 product_item_like product_item_p">
 
                     <div class="col-sm-3">
                         <div style="max-width: 100%;">
@@ -47,14 +49,52 @@
 
                 </div>
             @endforeach
-            <div class="col-sm-9 col-sm-offset-1 product_item_cart cart_empty" style="display: none">
+            <div class="col-sm-9 col-sm-offset-1 product_item_like like_empty product_item_p" style="display: none">
                 <h1>В избранных нет ни одного товара. Вернитесь к сайту, что бы добавить товар в избранное.</h1>
             </div>
         @else
-            <div class="col-sm-9 col-sm-offset-1 product_item_cart cart_empty">
+            <div class="col-sm-9 col-sm-offset-1 product_item_like like_empty product_item_p">
                 <h1>В избранных нет ни одного товара. Вернитесь к сайту, что бы добавить товар в избранное.</h1>
             </div>
         @endif
     </div>
+
+
+    <script>
+
+        $('.button_delete').on('click', function(){
+            var id = $(this).siblings('input').val();
+            var currentBlock = $(this).parents('.product_item_like').eq(0);
+            var button = $(this);
+
+
+
+            $.ajax({
+                type: "POST",
+                url: "/like/destroy-product",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    id: id
+                },
+                success: function(msg){
+                    if(msg.product_cnt == 0){
+                        button.parents('.product_item_like').parents('.row').eq(0).find('.like_empty').show();
+
+                    }
+
+                    $('.cart_count').text(msg.product_cnt);
+                    currentBlock.remove();
+                }
+            });
+
+
+        });
+
+
+    </script>
+
+
 
 @endsection

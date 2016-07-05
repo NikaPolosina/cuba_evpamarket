@@ -17,6 +17,13 @@ use Illuminate\Support\Facades\File;
 
 class IndexController extends Controller{
 
+    /**
+     * Get products image
+     *
+     * @param object $arr
+     *
+     * @return array
+     * */
     public static function showProduct($arr){
 
         foreach($arr as $v){
