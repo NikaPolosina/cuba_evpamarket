@@ -87,3 +87,6 @@ Route::any('/like/destroy-product', 'LikeController@destroy');
 /*-------------------------------------------Find----------------------------------------------*/
 Route::any('/find', [ 'as' => 'find', 'uses' => 'FindController@findProduct' ]);
 Route::get('/find/category/{id}', 'FindController@findByCategory');
+
+/*-------------------------------------------Admin----------------------------------------------*/
+Route::get('/admin', ['as' => 'admin', 'uses'=>'AdminController@index']);
