@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('layouts.header_menu')
 
     <div class="container">
     <div class="row">
