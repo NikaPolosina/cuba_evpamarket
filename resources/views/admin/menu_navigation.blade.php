@@ -23,25 +23,46 @@
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="/admin/user_man" class="nav-link ">
+                        <a href="/admin/user-man" class="nav-link ">
                             <i class="icon-user"></i>
                             <span class="title">Мужчины</span>
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="/admin/user_women" class="nav-link ">
+                        <a href="/admin/user-women" class="nav-link ">
                             <i class="icon-user-female"></i>
                             <span class="title">Женщины</span>
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="/admin/user_blocked" class="nav-link ">
+                        <a href="/admin/user-blocked" class="nav-link ">
                             <i class="icon-user-following"></i>
                             <span class="title">Заблокированные</span>
                         </a>
                     </li>
                 </ul>
             </li>
+
+            <li class="nav-item  ">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-bar-chart"></i>
+                    <span class="title">Магазины</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="/admin/shop-all" class="nav-link ">
+                            <span class="title">Все магазины</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="/admin/shop-block" class="nav-link ">
+                            <span class="title">Заблокированные</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             <li class="nav-item  ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-settings"></i>
@@ -50,17 +71,18 @@
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item  ">
-                        <a href="page_cookie_consent_1.html" class="nav-link ">
+                        <a href="" class="nav-link ">
                             <span class="title">настройка 1</span>
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="page_cookie_consent_2.html" class="nav-link ">
+                        <a href="" class="nav-link ">
                             <span class="title">настройка 2</span>
                         </a>
                     </li>
                 </ul>
             </li>
+
 
         </ul>
         <!-- END SIDEBAR MENU -->

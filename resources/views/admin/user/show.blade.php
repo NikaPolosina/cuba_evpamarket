@@ -1,4 +1,4 @@
-@extends('admin.header_footer_layout')
+@extends('..admin.header_footer_layout')
 @section('content')
 <div class="page-container">
 
