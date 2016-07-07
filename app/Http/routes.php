@@ -91,6 +91,10 @@ Route::get('/find/category/{id}', 'FindController@findByCategory');
 /*-------------------------------------------Admin----------------------------------------------*/
 Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function (){
     Route::get('/', ['as' => 'admin', 'uses'=>'AdminController@index']);
+    Route::get('/user', ['as' => 'admin', 'uses'=>'AdminController@allUser']);
+    Route::get('/user_man', ['as' => 'admin', 'uses'=>'AdminController@userMan']);
+    Route::get('/user_women', ['as' => 'admin', 'uses'=>'AdminController@userWomen']);
+    Route::get('/user_blocked', ['as' => 'admin', 'uses'=>'AdminController@userBlocked']);
 });
 
 
