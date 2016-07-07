@@ -8,18 +8,18 @@
         <!-- BEGIN CONTENT BODY -->
         <div class="page-content">
             <!-- END THEME PANEL -->
-            <h3 class="page-title"> Домой
-                <small>домой</small>
+            <h3 class="page-title"> Пользователи
+                <small></small>
             </h3>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
                         <i class="icon-home"></i>
-                        <a href="/admin">Домой</a>
+                        <a href="/admin/user">пользователи</a>
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li>
-                        <span>Домой</span>
+                        <span>пользователи</span>
                     </li>
                 </ul>
 
