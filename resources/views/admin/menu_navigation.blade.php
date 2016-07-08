@@ -62,7 +62,13 @@
                     </li>
                 </ul>
             </li>
-
+            <li class="nav-item  ">
+                <a href="/admin/category" class="nav-link nav-toggle">
+                    <i class="icon-diamond"></i>
+                    <span class="title">Категории</span>
+                    <span class="arrow"></span>
+                </a>
+            </li>
             <li class="nav-item  ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-settings"></i>
@@ -82,7 +88,6 @@
                     </li>
                 </ul>
             </li>
-
 
         </ul>
         <!-- END SIDEBAR MENU -->

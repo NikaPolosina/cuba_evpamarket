@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Http\Requests;
 use App\User;
 use App\UserInformation;
@@ -36,9 +37,11 @@ class AdminController extends Controller{
         return view('admin.company.show')->with('shop', $shop);
     }
     public function shopBlocked(){
-        die('Surprise, you are here !!!');
-
-        $shop = Company::all();
+        $shop = Company::where('block', 1)->get();
         return view('admin.company.show')->with('shop', $shop);
+    }
+    public function category(){
+        $category = Category::all();
+        return view('admin.category.show')->with('category', $category);
     }
 }

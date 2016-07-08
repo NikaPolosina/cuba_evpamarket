@@ -33,16 +33,15 @@
                                 </label>
                             </th>
                             <th> # </th>
-                            <th> Имя </th
-                            <th> Описание </th>
-                            <th> Арес </th>
-                            <th> Статус </th>
+                            <th> id </th>
+                            <th> parent_id </th>
+                            <th> Название </th>
                             <th> Действия </th>
                         </tr>
                         </thead>
                         <tbody>
                         {{-- */$x=0;/* --}}
-                        @foreach($shop as $item)
+                        @foreach($category as $item)
                             {{-- */$x++;/* --}}
                             <tr class="odd gradeX">
                                 <td>
@@ -53,13 +52,10 @@
                                 </td>
                                 <td> {{ $x }} </td>
 
-                                <td> {{$item->company_name}}</td>
+                                <td> {{$item->id}}</td>
 
-                                <td class="center"> {{$item->company_description}} </td>
-                                <td class="center"> {{$item->company_address}} </td>
-                                <td>
-                                    <span class="label label-sm label-success"> подтв. </span>
-                                </td>
+                                <td class="center"> {{$item->parent_id}} </td>
+                                <td class="center"> {{$item->title}} </td>
                                 <td>
                                     <div class="btn-group">
                                         <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Действия

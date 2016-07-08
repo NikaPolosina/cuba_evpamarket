@@ -97,6 +97,7 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::get('/user-blocked', ['as' => 'admin', 'uses'=>'AdminController@userBlocked']);
     Route::get('/shop-all', ['as' => 'admin', 'uses'=>'AdminController@shopAll']);
     Route::get('/shop-block', ['as' => 'admin', 'uses'=>'AdminController@shopBlocked']);
+    Route::get('/category', ['as' => 'admin', 'uses'=>'AdminController@category']);
 });
 
 
