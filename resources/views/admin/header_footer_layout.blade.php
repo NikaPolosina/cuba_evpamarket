@@ -60,7 +60,7 @@
         <div class="page-top">
             <!-- BEGIN HEADER SEARCH BOX -->
             <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
-            <form class="search-form search-form-expanded" action="page_general_search_3.html" method="GET">
+            <form class="search-form search-form-expanded" action="" method="GET">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Поиск..." name="query">
                         <span class="input-group-btn">
@@ -87,7 +87,7 @@
                             <li class="external">
                                 <h3>У вас
                                     <span class="bold">7 Новых</span>Соб.</h3>
-                                <a href="app_inbox.html">смотреть все</a>
+                                <a href="">смотреть все</a>
                             </li>
                             <li>
                                 <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
@@ -130,41 +130,34 @@
                     </li>
 
                     <li class="dropdown dropdown-user">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <img alt="" class="img-circle" src="../assets/layouts/layout2/img/avatar3_small.jpg" />
                             <span class="username username-hide-on-mobile"> Admin </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             <li>
-                                <a href="page_user_profile_1.html">
+                                <a href="">
                                     <i class="icon-user"></i>Мой профиль </a>
                             </li>
                             <li>
-                                <a href="app_calendar.html">
+                                <a href="">
                                     <i class="icon-calendar"></i> Мой календарь</a>
                             </li>
                             <li>
-                                <a href="app_inbox.html">
+                                <a href="">
                                     <i class="icon-envelope-open"></i> Мои собщения
                                     <span class="badge badge-danger"> 3 </span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="page_user_login_1.html">
+                                <a href="{{ url('/logout') }}">
                                     <i class="icon-key"></i> Выйти </a>
                             </li>
                         </ul>
                     </li>
-                    <!-- END USER LOGIN DROPDOWN -->
-                    <!-- BEGIN QUICK SIDEBAR TOGGLER -->
-                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                    <li class="dropdown dropdown-extended quick-sidebar-toggler">
-                        <span class="sr-only">Toggle Quick Sidebar</span>
-                        <i class="icon-logout"></i>
-                    </li>
-                    <!-- END QUICK SIDEBAR TOGGLER -->
+
                 </ul>
             </div>
             <!-- END TOP NAVIGATION MENU -->
