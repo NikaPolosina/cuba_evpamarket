@@ -1,34 +1,6 @@
 @extends('..admin.header_footer_layout')
 @section('content')
-    <div class="page-container">
 
-        @include('/admin/menu_navigation')
-
-        <div class="page-content-wrapper">
-            <!-- BEGIN CONTENT BODY -->
-            <div class="page-content">
-                <!-- END THEME PANEL -->
-                <h3 class="page-title"> Магазины
-                    <small></small>
-                </h3>
-                <div class="page-bar">
-                    <ul class="page-breadcrumb">
-                        <li>
-                            <i class="icon-home"></i>
-                            <a href="/admin/shop-all">магазины</a>
-                            <i class="fa fa-angle-right"></i>
-                        </li>
-                        <li>
-                            <span>магазины</span>
-                        </li>
-                    </ul>
-
-                </div>
-
-                <div class="clearfix"></div>
-
-
-                <!-- END PAGE HEADER-->
                 <div class="row">
                     <div class="col-md-6">
                         <!-- BEGIN SAMPLE TABLE PORTLET-->
@@ -83,18 +55,6 @@
                     </div>
 
                 </div>
-
-
-
-
-            </div>
-            <!-- END CONTENT BODY -->
-        </div>
-
-        <a href="javascript:;" class="page-quick-sidebar-toggler">
-            <i class="icon-login"></i>
-        </a>
-    </div>
 
 
 @endsection

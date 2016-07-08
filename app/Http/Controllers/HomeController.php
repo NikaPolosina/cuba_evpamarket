@@ -36,6 +36,10 @@ class HomeController extends Controller{
      */
     public function index(User $user, UserCompany $userCompany, Company $company, FileController $file, Request $request, $id = NULL ){
 
+        if(Auth::user()->hasRole('admin')){
+            return redirect()->intended('admin');
+        }
+
 
         if(!Auth::user()->getUserInformation){
             $region = Region::all();

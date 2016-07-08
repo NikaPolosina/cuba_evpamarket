@@ -1,100 +1,103 @@
+
 @extends('..admin.header_footer_layout')
+
 @section('content')
-<div class="page-container">
-
-    @include('/admin/menu_navigation')
-
-    <div class="page-content-wrapper">
-        <!-- BEGIN CONTENT BODY -->
-        <div class="page-content">
-            <!-- END THEME PANEL -->
-            <h3 class="page-title"> Пользователи
-                <small></small>
-            </h3>
-            <div class="page-bar">
-                <ul class="page-breadcrumb">
-                    <li>
-                        <i class="icon-home"></i>
-                        <a href="/admin/user">пользователи</a>
-                        <i class="fa fa-angle-right"></i>
-                    </li>
-                    <li>
-                        <span>пользователи</span>
-                    </li>
-                </ul>
-
-            </div>
-
-            <div class="clearfix"></div>
 
 
-            <!-- END PAGE HEADER-->
             <div class="row">
-                <div class="col-md-6">
-                    <!-- BEGIN SAMPLE TABLE PORTLET-->
+                <div class="col-md-12">
+                    <!-- BEGIN EXAMPLE TABLE PORTLET-->
                     <div class="portlet light ">
                         <div class="portlet-title">
-                            <div class="caption">
-                                <i class="icon-social-dribbble font-green"></i>
-                                <span class="caption-subject font-green bold uppercase">Список пользователей</span>
+                            <div class="caption font-dark">
+                                <i class="icon-settings font-dark"></i>
+                                <span class="caption-subject bold uppercase"> Список Пользователей</span>
                             </div>
                             <div class="actions">
-                                <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                                    <i class="icon-wrench"></i>
-                                </a>
-                                <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                                    <i class="icon-trash"></i>
-                                </a>
+                                <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                    <label class="btn btn-transparent dark btn-outline btn-circle btn-sm active">
+                                        <input type="radio" name="options" class="toggle" id="option1">Действия</label>
+                                    <label class="btn btn-transparent dark btn-outline btn-circle btn-sm">
+                                        <input type="radio" name="options" class="toggle" id="option2">Настройки</label>
+                                </div>
                             </div>
                         </div>
                         <div class="portlet-body">
-                            <div class="table-scrollable">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th> # </th>
-                                        <th> Имя </th>
-                                        <th> Фамилия </th>
-                                        <th> Дата рождения </th>
-                                        <th> Статус </th>
-                                    </tr>
-                                    </thead>
 
-                                    <tbody>
-                                    {{-- */$x=0;/* --}}
-                                    @foreach($user as $item)
-                                        {{-- */$x++;/* --}}
-                                        <tr>
-                                            <td> {{ $x }} </td>
-                                            <td> {{$item->name}} </td>
-                                            <td> {{$item->surname}}</td>
-                                            <td> {{$item->date_birth}} </td>
-                                            <td>
-                                                <span class="label label-sm label-success"> Подтвержденный </span>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                            <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                            <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" />
+                                            <span></span>
+                                        </label>
+                                    </th>
+                                    <th> # </th>
+                                    <th> Имя </th>
+                                    <th> Email </th>
+                                    <th> Статус </th>
+                                    <th> Дата рождения </th>
+                                    <th> Действия </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{-- */$x=0;/* --}}
+                                @foreach($user as $item)
+                                    {{-- */$x++;/* --}}
+                                <tr class="odd gradeX">
+                                    <td>
+                                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                            <input type="checkbox" class="checkboxes" value="1" />
+                                            <span></span>
+                                        </label>
+                                    </td>
+                                    <td> {{ $x }} </td>
+                                    <td> {{$item->getUserInformation->name}}</td>
+                                    <td>
+                                        <a href="mailto:shuxer@gmail.com"> {{$item->email}} </a>
+                                    </td>
+                                    <td>
+                                        <span class="label label-sm label-success"> подтв. </span>
+                                    </td>
+                                    <td class="center"> {{$item->getUserInformation->date_birth}} </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Действия
+                                                <i class="fa fa-angle-down"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="icon-docs"></i> Профиль </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="icon-tag"></i> Коментарий </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="icon-user"></i> Заблокировать </a>
+                                                </li>
+                                                <li class="divider"> </li>
+                                                <li>
+                                                    <a href="javascript:;">
+                                                        <i class="icon-flag"></i> Коментариев
+                                                        <span class="badge badge-success">4</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <!-- END SAMPLE TABLE PORTLET-->
+                    <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
-
             </div>
-
-
-
-
-        </div>
-        <!-- END CONTENT BODY -->
-    </div>
-
-    <a href="javascript:;" class="page-quick-sidebar-toggler">
-        <i class="icon-login"></i>
-    </a>
-</div>
 
 
 @endsection

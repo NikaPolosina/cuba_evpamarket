@@ -16,6 +16,10 @@
     <link href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
     <link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    {{----}}
+    <link href="../assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+    {{----}}
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <link href="../assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
@@ -169,8 +173,39 @@
     </div>
     <!-- END HEADER INNER -->
 </div>
+<div class="page-container">
 
-@yield('content')
+    @include('/admin/menu_navigation')
+
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- END THEME PANEL -->
+            <h3 class="page-title"> Пользователи
+                <small></small>
+            </h3>
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <i class="icon-home"></i>
+                        <a href="/admin/user">пользователи</a>
+                        <i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <span>пользователи</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="clearfix"></div>
+
+                @yield('content')
+
+            <a href="javascript:;" class="page-quick-sidebar-toggler">
+                <i class="icon-login"></i>
+            </a>
+        </div>
 
 
 <div class="page-footer">
@@ -192,6 +227,11 @@
 <script src="../assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+{{----}}
+<script src="../assets/global/scripts/datatable.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+<script src="../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+{{----}}
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <script src="../assets/global/plugins/moment.min.js" type="text/javascript"></script>
@@ -227,6 +267,9 @@
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN THEME GLOBAL SCRIPTS -->
 <script src="../assets/global/scripts/app.min.js" type="text/javascript"></script>
+{{----}}
+<script src="../assets/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
+{{----}}
 <!-- END THEME GLOBAL SCRIPTS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="../assets/pages/scripts/dashboard.min.js" type="text/javascript"></script>

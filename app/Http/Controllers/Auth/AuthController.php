@@ -58,7 +58,6 @@ class AuthController extends Controller{
 
         $role = Role::findOrFail(2);
 
-
         $user->attachRole($role);
         return $user;
     }

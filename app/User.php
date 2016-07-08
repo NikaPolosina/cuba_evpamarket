@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $table = 'users';
-    protected $fillable = [ 'email', 'phone', 'password', ];
+    protected $fillable = [ 'email', 'phone', 'password', 'active', 'block'];
 
     public function getUserInfo(){
         return $this->select('email', 'phone')->get();

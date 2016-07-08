@@ -9,31 +9,26 @@ use App\Company;
 
 class AdminController extends Controller{
     public function index(){
-        return view('admin.index');
+        return view('admin.home');
     }
 
     public function allUser(){
-
-
-        $user = UserInformation::all();
-       /* $user = User::all();*/
-
+        $user = User::all();
         return view('admin.user.show')->with('user', $user);
     }
 
-    public function userMan(){
-        $user = UserInformation::where('gender', '=', 1)->get();
+    public function userMan(User $user){
+        $user = User::whereIn('id', UserInformation::where('gender', '1')->lists('user_id'))->get();
         return view('admin.user.show')->with('user', $user);
     }
 
     public function userWomen(){
-        $user = UserInformation::where('gender', '=', 0)->get();
+        $user = User::whereIn('id', UserInformation::where('gender', '0')->lists('user_id'))->get();
         return view('admin.user.show')->with('user', $user);
     }
 
     public function userBlocked(){
-        die('Surprise, you are here !!!');
-        $user = UserInformation::where('blocked', '=', 1)->get();
+        $user = User::where('block', 1)->get();
         return view('admin.user.show')->with('user', $user);
     }
     public function shopAll(){
