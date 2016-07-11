@@ -2,7 +2,7 @@
 @extends('..admin.header_footer_layout')
 
 @section('content')
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
             <div class="row">
                 <div class="col-md-12">
@@ -52,14 +52,22 @@
                                             <span></span>
                                         </label>
                                     </td>
-                                    <td> {{ $x }} </td>
+                                    <td data-attr="{{$item->id}}"> {{ $x }}</td>
                                     <td> {{$item->getUserInformation->name}}</td>
                                     <td>
                                         <a href="mailto:shuxer@gmail.com"> {{$item->email}} </a>
                                     </td>
-                                    <td>
-                                        <span class="label label-sm label-success"> подтв. </span>
-                                    </td>
+
+                                    @if($item->block == 1)
+                                        <td>
+                                            <span class="label label-sm label-danger"> забл. </span>
+                                        </td>
+
+                                     @else
+                                        <td>
+                                            <span class="label label-sm label-success"> подтв. </span>
+                                        </td>
+                                    @endif
                                     <td class="center"> {{$item->getUserInformation->date_birth}} </td>
                                     <td>
                                         <div class="btn-group">
@@ -75,10 +83,17 @@
                                                     <a href="javascript:;">
                                                         <i class="icon-tag"></i> Коментарий </a>
                                                 </li>
-                                                <li>
+                                                @if($item->block == 1)
+                                                <li class="block">
                                                     <a href="javascript:;">
-                                                        <i class="icon-user"></i> Заблокировать </a>
+                                                        <i class="icon-user"></i> Разблокировать </a>
                                                 </li>
+                                                @else
+                                                    <li class="block">
+                                                        <a href="javascript:;">
+                                                            <i class="icon-user"></i> Заблокировать </a>
+                                                    </li>
+                                                @endif
                                                 <li class="divider"> </li>
                                                 <li>
                                                     <a href="javascript:;">
@@ -99,5 +114,40 @@
                 </div>
             </div>
 
+            <script>
 
+                $('li.block').on('click', function(){
+                    var a = $(this).parents('.gradeX').find('li.block').find('a');
+                    var label = $(this).parents('.gradeX').find('span.label');
+                    var id = $(this).parents('.gradeX').find('td[data-attr]').attr('data-attr');
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/admin/user-block",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            id: id
+                        },
+                        success: function (msg) {
+                            if(msg.block == 1){
+                                label.removeClass('label-success')
+                                label.addClass('label-danger')
+                                label.text('забл.');
+                                a.text('Разблокировать');
+                            }else{
+                                label.removeClass('label-danger')
+                                label.addClass('label-success')
+                                label.text('подтв.');
+                                a.text('Заблокировать');
+                            }
+                        }
+                    });
+                    
+
+                });
+
+
+            </script>
 @endsection

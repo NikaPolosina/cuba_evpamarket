@@ -63,12 +63,25 @@
                 </ul>
             </li>
             <li class="nav-item  ">
-                <a href="/admin/category" class="nav-link nav-toggle">
+                <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-diamond"></i>
                     <span class="title">Категории</span>
                     <span class="arrow"></span>
                 </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="/admin/category" class="nav-link ">
+                            <span class="title">Все категории</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="/admin/category-add" class="nav-link ">
+                            <span class="title">Добавить категорию</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
+
             <li class="nav-item  ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-settings"></i>
