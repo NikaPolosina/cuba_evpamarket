@@ -35,8 +35,8 @@ class CompanyController extends Controller
         return view('company.create');
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+
 
         $company =  $this->createCompany($request->except('_token'));
         if($company){

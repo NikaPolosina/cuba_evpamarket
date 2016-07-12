@@ -54,38 +54,10 @@ class HomeController extends Controller{
 
 
         if(Auth::user()->hasRole('company_owner')){
-
-
-
-                            $menu = array(
-                                'my_page'       => array(
-                                    'title' => 'Моя страница',
-                                    'url'   => ''
-                                ),
-                                'my_shop'    => array(
-                                    'title' => 'Мои магазины',
-                                    'url'   => ''
-                                ),
-                                'message'   => array(
-                                    'title' => 'Центр сообщений',
-                                    'url'   => ''
-                                ),
-                                'payments' => array(
-                                    'title' => 'Платежи',
-                                    'url'   => ''
-                                ),
-                                'delivery'         => array(
-                                    'title' => 'Доставка ',
-                                    'url'   => ''
-                                ),
-                                'setting'         => array(
-                                'title' => 'Настройка',
-                                'url'   => ''
-                            )
-                            );
-
-                            return view('homeOwnerUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser)->with('menu', $menu);
-                        }
+            return view('homeOwnerUser')
+                ->with('userInfo', $userInfo)
+                ->with('curentUser', $curentUser);
+        }
 
         $menu = array(
             'my_page'       => array(

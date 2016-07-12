@@ -7,7 +7,7 @@
     <div class="col-sm-10 col-md-offset-1" style="border: solid 1px red">
 
         <div class="company_tile_category">
-            <h2 style="text-align: center">redactor categorii magazina</h2>
+            <h2 style="text-align: center">Редактор категорий магазина</h2>
             <h2>Магазин {{$company->company_name}}</h2>
             <hr/>
         </div>
@@ -33,7 +33,7 @@
 
             <div class="col-sm-6">
                 <div class="category_user">
-                    <h4>Kатегории magazina</h4>
+                    <h4>Kатегории магазина</h4>
                     <div class="btn-group">
                         <button type="button" class="btn btn-danger remove_categories">Удалить выбранные</button>
                     </div>
@@ -47,8 +47,8 @@
         <div class="col-sm-12">
             <hr/>
             <div class="footer_button" style="float: right;">
-                <button type="button" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-default">Cansel</button>
+                <button type="button" class="btn btn-primary">Сохранить</button>
+                <button type="button" class="btn btn-default">Отменить</button>
             </div>
         </div>
 

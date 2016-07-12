@@ -20,7 +20,7 @@
                     <form style=" margin: 7px 0px 0px 0px;" class="input-group" method="POST" action="/find">
                         {{ csrf_field() }}
 
-                                <span style=" top: 0px;" class="input-group-addon  glyphicon glyphicon-search" aria-hidden="true"></span>
+                                <span style=" top: 0px!important; display:table-cell;" class="input-group-addon  glyphicon glyphicon-search" aria-hidden="true"></span>
                                  <input class="form-control" name="find" type="text" placeholder="Введите текст для поиска"/>
                                   <span class="input-group-btn">
                                     <button class="btn btn-default" type="submit">Поиск</button>
@@ -100,18 +100,18 @@
 
 <style>
     .count_product_cart_css{
-        position: absolute;
-        top: 30px;
-        background-color: red;
-        border: solid 2px white;
-        width:20px;
-        height: 20px;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 18px;
+        position: absolute!important;
+        top: 30px!important;
+        background-color: red!important;
+        border: solid 2px white!important;
+        width:20px!important;
+        height: 20px!important;
+        border-radius: 50%!important;
+        text-align: center!important;
+        line-height: 18px!important;
     }
 .count_product_cart_css span{
-    color: white;
+    color: white!important;
 
 
 }

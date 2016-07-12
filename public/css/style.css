@@ -4,7 +4,7 @@
 }
 
 .header_icon{
-    margin: auto;
+    margin: auto!important;
 }
 .cn-slideshow{
     width: 820px;
@@ -162,7 +162,7 @@ a.cn-nav-next{
     margin: 0px;
     -moz-border-radius: 0px;
     -webkit-border-radius: 0px;
-    border-radius: 0px; 
+    border-radius: 0px;
     -webkit-transition: all 0.2s ease-out;
 	-moz-transition: all 0.2s ease-out;
 	-o-transition: all 0.2s ease-out;
@@ -187,5 +187,5 @@ a.cn-nav-next{
     margin: -45px 0 0 -45px;
     -moz-border-radius: 45px;
     -webkit-border-radius: 45px;
-    border-radius: 45px; 
+    border-radius: 45px;
 }

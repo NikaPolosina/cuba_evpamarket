@@ -1,101 +1,414 @@
-
 @extends('layouts.app')
-
 @section('content')
     @include('layouts.header_menu')
 
 
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="../assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <link href="../assets/layouts/layout2/css/layout.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="../assets/layouts/layout2/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME LAYOUT STYLES -->
+
 
     <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h2>Моя страница</h2></div>
-                {{------------------------------------------------------------------------------------------------}}
-                <div class="col-sm-12" style="border: solid 1px black;">
-                    <div class="col-sm-3" style="border: solid 1px red;">
-                        @foreach($menu as $menuItem)
-                                <h4>{{$menuItem['title']}}</h4>
-                            @endforeach
+        <div class="row">
+{{setlocale(LC_ALL, 'de_RU')}}
+
+    <div class="profile">
+        <div class="tabbable-line tabbable-full-width">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#tab_1_1" data-toggle="tab"> Мой профиль </a>
+                </li>
+                <li>
+                    <a href="#tab_1_3" data-toggle="tab"> Настройки аккаунта </a>
+                </li>
+                <li>
+                    <a href="#tab_1_6" data-toggle="tab"> Помощь </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1_1">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <ul class="list-unstyled profile-nav">
+                                <li>
+                                    <img src="../assets/pages/media/profile/people19.png" class="img-responsive pic-bordered" alt="" />
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> Магазины
+                                        <span> {{count($curentUser->getCompanies)}} </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> Сообщения
+                                        <span> 0 </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> Платежи
+                                        <span> 0 </span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> Доставка </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-8 profile-info">
+                                    <h1 class="font-green sbold uppercase">{{$userInfo->name}} {{$userInfo->surname}}</h1>
+
+                                    <p>
+                                        <a href="javascript:;"> www.mywebsite.com </a>
+                                    </p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <i class="fa fa-map-marker"></i> Места </li>
+                                        <li>
+                                            <i class="fa fa-calendar"></i> {{date('j  F Y ')}} </li>
+                                        <li>
+                                            <i class="fa fa-briefcase"></i> Отправка </li>
+                                        <li>
+                                            <i class="fa fa-star"></i> Отзывы </li>
+                                        <li>
+                                            <i class="fa fa-heart"></i> В избранных </li>
+                                    </ul>
+                                </div>
+                                <!--end col-md-8-->
+                                <div class="col-md-4">
+                                    <div class="portlet sale-summary">
+                                        <div class="portlet-title">
+                                            <div class="caption font-red sbold"> Продано Товаров </div>
+                                            <div class="tools">
+                                                <a class="reload" href="javascript:;"> </a>
+                                            </div>
+                                        </div>
+                                        <div class="portlet-body">
+                                            <ul class="list-unstyled">
+                                                <li>
+                                                                    <span class="sale-info"> ЗA СЕГОДНЯ
+                                                                        <i class="fa fa-img-up"></i>
+                                                                    </span>
+                                                    <span class="sale-num"> 23 </span>
+                                                </li>
+                                                <li>
+                                                                    <span class="sale-info"> ЗА НЕДЕЛЮ
+                                                                        <i class="fa fa-img-down"></i>
+                                                                    </span>
+                                                    <span class="sale-num"> 87 </span>
+                                                </li>
+                                                <li>
+                                                    <span class="sale-info"> ВСЕГО </span>
+                                                    <span class="sale-num"> 2377 </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end col-md-4-->
+                            </div>
+                            <div class="row">
+                                <div class="panel panel-default">
+
+                                    <?php
+                                    if(count($curentUser->getCompanies)){
+                                    ?>
+                                    <div class="">
+                                            <h3 class="font-green sbold uppercase">Мои магазины <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Добавить магазин</a></h3>
+                                            <div class="table">
+                                                <table class="table table-bordered table-striped table-hover">
+                                                    <thead>
+                                                    <tr bgcolor="#FBFBEF">
+                                                        <th>№</th><th>Logo</th><th>Имя магазина</th><th>Описание</th><th width="350px">Детальное описание</th><th>Действие</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {{-- */$x=0;/* --}}
+                                                    @foreach($curentUser->getCompanies as $item)
+
+                                                        <?php  if(!empty($item->company_logo )&& file_exists(public_path().'/img/custom/companies/thumbnail/'.$item->company_logo)) {
+                                                            $logo = '/img/custom/companies/thumbnail/'.$item->company_logo;
+                                                        }else{
+
+                                                            $logo = '/img/custom/files/thumbnail/plase.jpg';
+                                                        } ?>
+
+
+                                                        {{-- */$x++;/* --}}
+                                                        <tr>
+                                                            <td>{{ $x }}</td>
+                                                            <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="<?=$logo?>"></td><td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td><td width="200">{!!$item->company_content!!}</td>
+
+                                                            <td width="165">
+                                                                <a href="{{ url('company/' . $item->id . '/edit') }}">
+                                                                    <button type="submit" class="btn btn-primary btn-xs">Редактировать</button>
+                                                                </a> /
+                                                                {!! Form::open([
+                                                                'method'=>'DELETE',
+                                                                'url' => ['company', $item->id],
+                                                                'style' => 'display:inline'
+                                                                ]) !!}
+                                                                {!! Form::submit('Удалить', ['class' => 'btn btn-danger btn-xs']) !!}
+                                                                {!! Form::close() !!}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                                {{--<div class="pagination"> {!! $company->render() !!} </div>--}}
+                                            </div>
+                                        </h1></div>
+                                    <?php
+                                    }else{ ?>
+                                    <div><h3>У вас пока нет ни одного магазина. Воспользуйтесь кнопкой "создать" для того что бы создать магазин.</h3></div>
+                                    <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm btn green">Создать магазин</a>
+
+                                    <?php }
+                                    ?>
+
+                                </div>
+                            </div>
+
+                            <!--end row-->
+
+                        </div>
                     </div>
-                    <div class="col-sm-9" style="border: solid 2px #008000;">
-                        <div class="row">
-                            <div class="col-sm-12">
-
-                                <div class="col-sm-4" style="border: solid 1px red;">
-                                    <img class="img-thumbnail" src="/img/custom/files/thumbnail/plase.jpg" alt="" style="width: 200px; height: 200px"/>
-
+                </div>
+                <!--tab_1_2-->
+                <div class="tab-pane" id="tab_1_3">
+                    <div class="row profile-account">
+                        <div class="col-md-3">
+                            <ul class="ver-inline-menu tabbable margin-bottom-10">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#tab_1-1">
+                                        <i class="fa fa-cog"></i> Персональная информация </a>
+                                    <span class="after"> </span>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#tab_2-2">
+                                        <i class="fa fa-picture-o"></i> Сменить Аватар </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#tab_3-3">
+                                        <i class="fa fa-lock"></i> Сменить Пароль </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#tab_4-4">
+                                        <i class="fa fa-eye"></i> Приватность</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="tab-content">
+                                <div id="tab_1-1" class="tab-pane active">
+                                    <form role="form" action="#">
+                                        <div class="form-group">
+                                            <label class="control-label">Имя</label>
+                                            <input type="text" placeholder="{{$userInfo->name}}" class="form-control" /> </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Фамилия</label>
+                                            <input type="text" placeholder="{{$userInfo->surname}}" class="form-control" /> </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Номер Телефона</label>
+                                            <input type="text" placeholder="{{$curentUser->phone}}" class="form-control" /> </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Email</label>
+                                            <input type="text" placeholder="{{$curentUser->email}}" class="form-control" /> </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Обо мне</label>
+                                            <textarea class="form-control" rows="3" placeholder="Информация которую я написал."></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Веб. сайт</label>
+                                            <input type="text" placeholder="http://www.mywebsite.com" class="form-control" /> </div>
+                                        <div class="margiv-top-10">
+                                            <a href="javascript:;" class="btn green"> Сохранить изменения</a>
+                                            <a href="javascript:;" class="btn default"> Отменить </a>
+                                        </div>
+                                    </form>
                                 </div>
-                                <div class="col-sm-8" style="border: solid 1px red;">
-                                    <h1>{{$userInfo->name}} {{$userInfo->surname}}</h1>
-                                    <h5>{{$userInfo->country}}</h5>
-                                </div>
 
+                                <div id="tab_2-2" class="tab-pane">
+                                    <p> Для загрузки аватара нажмите кнопку "Загрузить фото".
+                                    </p>
+                                    <form action="#" role="form">
+                                        <div class="form-group">
+                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                    <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> </div>
+                                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+                                                <div>
+                                                                    <span class="btn default btn-file">
+                                                                        <span class="fileinput-new"> Выбрать фото </span>
+                                                                        <span class="fileinput-exists"> Изменить </span>
+                                                                        <input type="file" name="..."> </span>
+                                                    <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Отменить </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="margin-top-10">
+                                            <a href="javascript:;" class="btn green"> Сохранить </a>
+                                        </div>
+                                    </form>
+                                </div>
+                                <script>
+                                    var src = $('div.fileinput-new').find('img').attr('src');
+
+
+                                    console.log(src);
+
+
+
+                                </script>
+
+
+                                <div id="tab_3-3" class="tab-pane">
+                                    <form action="#">
+                                        <div class="form-group">
+                                            <label class="control-label">Старый Пароль</label>
+                                            <input type="password" class="form-control" /> </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Новый Пароль</label>
+                                            <input type="password" class="form-control" /> </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Повторите Новый пароль</label>
+                                            <input type="password" class="form-control" /> </div>
+                                        <div class="margin-top-10">
+                                            <a href="javascript:;" class="btn green"> Изменить Пароль </a>
+                                            <a href="javascript:;" class="btn default"> Отменить </a>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="tab_4-4" class="tab-pane">
+                                    <form action="#">
+                                        <table class="table table-bordered table-striped">
+                                            <tr>
+                                                <td> Возможность отправлять мне собщения от других пользователей. </td>
+                                                <td>
+                                                    <div class="mt-radio-inline">
+                                                        <label class="mt-radio">
+                                                            <input type="radio" name="optionsRadios31" value="option1" /> Да
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="mt-radio">
+                                                            <input type="radio" name="optionsRadios31" value="option2" checked/> Нет
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td> Возможность просматривать мой профиль другими пользователями. </td>
+                                                <td>
+                                                    <div class="mt-radio-inline">
+                                                        <label class="mt-radio">
+                                                            <input type="radio" name="optionsRadios41" value="option1" /> Да
+                                                            <span></span>
+                                                        </label>
+                                                        <label class="mt-radio">
+                                                            <input type="radio" name="optionsRadios41" value="option2" checked/> Нет
+                                                            <span></span>
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <!--end profile-settings-->
+                                        <div class="margin-top-10">
+                                            <a href="javascript:;" class="btn green"> Сохранить изменения </a>
+                                            <a href="javascript:;" class="btn default"> Отменить </a>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
+                        <!--end col-md-9-->
                     </div>
                 </div>
-                {{--------------------------------------------------------------------------------------------------}}
-                <?php if(count($curentUser->getCompanies)){ ?>
-                    <div class=""><h1>
-                        <h1>Мои магазины <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Добавить магазин</a></h1>
-                        <div class="table">
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead>
-                                <tr bgcolor="#FBFBEF">
-                                    <th>№</th><th>Logo</th><th>Имя магазина</th><th>Описание</th><th width="350px">Детальное описание</th><th>Действие</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {{-- */$x=0;/* --}}
-                                @foreach($curentUser->getCompanies as $item)
-
-                                    <?php  if(!empty($item->company_logo )&& file_exists(public_path().'/img/custom/companies/thumbnail/'.$item->company_logo)) {
-                                        $logo = '/img/custom/companies/thumbnail/'.$item->company_logo;
-                                    }else{
-
-                                        $logo = '/img/custom/files/thumbnail/plase.jpg';
-                                    } ?>
-
-
-                                    {{-- */$x++;/* --}}
-                                    <tr>
-                                        <td>{{ $x }}</td>
-                                        <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="<?=$logo?>"></td><td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td><td width="200">{!!$item->company_content!!}</td>
-
-                                        <td width="165">
-                                            <a href="{{ url('company/' . $item->id . '/edit') }}">
-                                                <button type="submit" class="btn btn-primary btn-xs">Редактировать</button>
-                                            </a> /
-                                            {!! Form::open([
-                                            'method'=>'DELETE',
-                                            'url' => ['company', $item->id],
-                                            'style' => 'display:inline'
-                                            ]) !!}
-                                            {!! Form::submit('Удалить', ['class' => 'btn btn-danger btn-xs']) !!}
-                                            {!! Form::close() !!}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                    </tbody>
-                            </table>
-                                {{--<div class="pagination"> {!! $company->render() !!} </div>--}}
+                <!--end tab-pane-->
+                <div class="tab-pane" id="tab_1_6">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <ul class="ver-inline-menu tabbable margin-bottom-10">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#tab_1">
+                                        <i class="fa fa-briefcase"></i> Основные вопросы </a>
+                                    <span class="after"> </span>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#tab_2">
+                                        <i class="fa fa-group"></i> Отношения </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#tab_3">
+                                        <i class="fa fa-leaf"></i> Сервис </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#tab_1">
+                                        <i class="fa fa-info-circle"></i> Лицензия </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#tab_2">
+                                        <i class="fa fa-tint"></i> Платежные правила </a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#tab_3">
+                                        <i class="fa fa-plus"></i> Задать вопрос </a>
+                                </li>
+                            </ul>
                         </div>
-                    </h1></div>
-       <?php
-            }else{ ?>
-                    <div><h1>У вас пока нет ни одного магазина. Воспользуйтесь кнопкой "создать" для того что бы создать магазин.</h1></div>
-                <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Создать</a>
 
-
-            <?php }
-                ?>
-
-                <div class="panel-body">
-                    Добро пожаловать. Вы залогинены!
+                    </div>
                 </div>
+                <!--end tab-pane-->
             </div>
         </div>
+    </div>
+    </div>
+
+    {{------------------------------------------------------------------------------------------------------------------------------}}
+
+
+
+    <script src="../assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="../assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="../assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="../assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="../assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js" type="text/javascript"></script>
+
+
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="../assets/global/scripts/app.min.js" type="text/javascript"></script>
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <script src="../assets/layouts/layout2/scripts/layout.min.js" type="text/javascript"></script>
+    <script src="../assets/layouts/layout2/scripts/demo.min.js" type="text/javascript"></script>
+    <script src="../assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+
+
+
     </div>
 </div>
 @endsection
