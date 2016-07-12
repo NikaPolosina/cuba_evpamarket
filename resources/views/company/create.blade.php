@@ -30,7 +30,7 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('company_logo', 'Логотип: ', ['class' => 'col-sm-3 control-label']) !!}
+                {!! Form::label('company_logo', 'Logo: ', ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
 
                     <div class="row fileupload-buttonbar">
@@ -38,7 +38,7 @@
                         <div class="col-lg-7">
                                 <span class="btn btn-success fileinput-button">
                                     <i class="glyphicon glyphicon-plus"></i>
-                                    <span>Выбрать файл...</span>
+                                    <span>Добавить файл...</span>
                                     <input type="file" name="files[]">
                                 </span>
                             <button type="button" class="btn btn-danger delete">
@@ -80,7 +80,13 @@
                     {!! $errors->first('company_contact_info', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-
+            <div class="form-group {{ $errors->has('company_additional_info') ? 'has-error' : ''}}">
+                {!! Form::label('company_additional_info', 'Дополнительная информация: ', ['class' => 'col-sm-3 control-label']) !!}
+                <div class="col-sm-6">
+                    {!! Form::text('company_additional_info', null, ['class' => 'form-control']) !!}
+                    {!! $errors->first('company_additional_info', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
 
 
     <div class="form-group">
