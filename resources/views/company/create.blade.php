@@ -34,13 +34,13 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('company_logo', 'Logo: ', ['class' => 'col-sm-2 control-label']) !!}
+                {!! Form::label('company_logo', 'Логотип: ', ['class' => 'col-sm-2 control-label']) !!}
                 <div class="col-sm-4">
                     <div class="row fileupload-buttonbar">
                         <div class="col-lg-7">
                                 <span class="btn btn-success fileinput-button">
                                     <i class="glyphicon glyphicon-plus"></i>
-                                    <span>Добавить файл...</span>
+                                    <span>Выбрать файл...</span>
                                     <input type="file" name="files[]">
                                 </span>
                             <button type="button" class="btn btn-danger delete">
