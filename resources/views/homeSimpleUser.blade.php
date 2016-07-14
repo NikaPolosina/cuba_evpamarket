@@ -77,7 +77,7 @@
                                                 <li>
                                                     <i class="fa fa-calendar"></i> {{date('j  F Y ')}} </li>
                                                 <li>
-                                                    <i class="fa fa-heart"></i> В избранных </li>
+                                                    <a href="/like"> <i class="fa fa-heart"></i> В избранных </li></a>
                                             </ul>
                                         </div>
                                         <!--end col-md-8-->
@@ -147,7 +147,7 @@
                                                                 <span class="fileinput-new"> Выбрать фото </span>
                                                                 <span class="fileinput-exists"> Изменить </span>
                                                                 <input type="file" name="..."> </span>
-                                                                <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Отменить </a>
+                                                                <a style="text-decoration: none" href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Отменить </a>
                                                         </div>
                                                     </div>
                                                 </div>

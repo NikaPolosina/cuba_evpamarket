@@ -62,6 +62,14 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="/cart"> Корзина
+                                        <span> @if(isset($product_cnt)){{$product_cnt}}@endif </span></a>
+                                </li>
+                                <li>
+                                    <a href="/like"> Избранное
+                                        <span> @if(isset($product_cnt_like)){{$product_cnt_like}}@endif</span></a>
+                                </li>
+                                <li>
                                     <a href="javascript:;"> Платежи
                                         <span> 0 </span></a>
                                 </li>
