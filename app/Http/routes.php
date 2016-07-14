@@ -72,6 +72,7 @@ Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index' ]);
 
 /*-------------------------------------------File--Uploader--------------------------------------------*/
 Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);
+Route::any('/avatar-uploader', 'UserController@createAvatar');
 
 /*-------------------------------------------Cart----------------------------------------------*/
 Route::any('/cart', 'CartController@index');

@@ -14,7 +14,7 @@ class AddTocolumInUserTable extends Migration
     {
         Schema::table('user_informations', function($table) {
             $table->text('about_me')->after('address');
-            $table->string('my_site')->after('product_description');
+            $table->string('my_site')->after('about_me');
         });
     }
 
@@ -25,6 +25,9 @@ class AddTocolumInUserTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('user_informations', function($table){
+            $table->dropColumn('about_me');
+            $table->dropColumn('my_site');
+        });
     }
 }
