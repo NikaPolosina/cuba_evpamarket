@@ -77,11 +77,11 @@
                                     <a href="javascript:;"> Доставка </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:;"> Избранное
+                                    <a href="/like"> Избранное
                                     <span>@if(isset($product_cnt_like)){{$product_cnt_like}}@endif </span></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:;"> Корзина
+                                    <a href="/cart"> Корзина
                                     <span> @if(isset($product_cnt)){{$product_cnt}}@endif </span></a>
                                 </li>
                             </ul>
@@ -141,7 +141,7 @@
                                 <!--end col-md-4-->
                             </div>
                             <div class="row">
-                                <div class="panel panel-default">
+                                <div class="panel">
 
                                     <?php
                                     if(count($curentUser->getCompanies)){
@@ -194,7 +194,7 @@
                                     <?php
                                     }else{ ?>
                                     <div><h3>У вас пока нет ни одного магазина. Воспользуйтесь кнопкой "создать" для того что бы создать магазин.</h3></div>
-                                    <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm btn green">Создать магазин</a>
+                                    <a href="{{ url('company/create') }}" class="btn btn-primary pull-left btn-sm btn green">Создать магазин</a>
 
                                     <?php }
                                     ?>
