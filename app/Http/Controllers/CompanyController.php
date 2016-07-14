@@ -55,11 +55,6 @@ class CompanyController extends Controller
         $company->save();
         if($company){
             $curentUser = Auth::user();
-            if($curentUser->hasRole('simple_user')){
-                $curentUser->detachRoles($curentUser->roles);
-                $curentUser->attachRole(Role::findOrFail(1));
-            }
-
             $curentUser->getCompanies()->save($company);
         }
 

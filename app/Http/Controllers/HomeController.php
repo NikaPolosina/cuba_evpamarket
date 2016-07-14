@@ -54,9 +54,8 @@ class HomeController extends Controller{
 
 
         if(Auth::user()->hasRole('company_owner')){
-            return view('homeOwnerUser')
-                ->with('userInfo', $userInfo)
-                ->with('curentUser', $curentUser);
+            $curentUser->detachRoles($curentUser->roles);
+            $curentUser->attachRole(Role::findOrFail(2));
         }
 
         $menu = array(
@@ -97,6 +96,9 @@ class HomeController extends Controller{
             )
         );
 
+
+
+
         return view('user.simple_user.home')->with('userInfo', $userInfo)->with('user', $curentUser)->with('simple_user_menu', $menu);
 
     }
@@ -108,11 +110,15 @@ class HomeController extends Controller{
             $curentUser = Auth::user();
             $userInfo = $curentUser->getUserInformation;
             $companies = $curentUser->getCompanies;
+
+            if($curentUser->hasRole('simple_user')){
+                $curentUser->detachRoles($curentUser->roles);
+                $curentUser->attachRole(Role::findOrFail(1));
+            }
+
         }
-            $menu =[];
 
-
-        return view('homeOwnerUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser)->with('menu', $menu);
+        return view('homeOwnerUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
 
 
     }

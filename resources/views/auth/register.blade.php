@@ -75,7 +75,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-user"></i> Начать регистрацию
+                                    <i class="fa fa-btn fa-user"></i><span style="margin-left: 5px">Начать регистрацию</span>
                                 </button>
                             </div>
                         </div>

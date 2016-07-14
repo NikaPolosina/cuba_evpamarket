@@ -89,10 +89,6 @@
                                     </p>
                                     <ul class="list-inline">
                                         <li>
-                                            <i class="fa fa-map-marker"></i> Места </li>
-                                        <li>
-                                            <i class="fa fa-calendar"></i> {{date('j  F Y ')}} </li>
-                                        <li>
                                             <i class="fa fa-briefcase"></i> Отправка </li>
                                         <li>
                                             <i class="fa fa-star"></i> Отзывы </li>
