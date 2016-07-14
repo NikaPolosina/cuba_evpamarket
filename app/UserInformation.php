@@ -13,7 +13,7 @@ class UserInformation extends Authenticatable
     use SearchableTrait;
 
     protected $table = 'user_informations';
-    protected $fillable = [ 'name', 'surname','avatar', 'date_birth', 'gender', 'country', 'region_id', 'city_id', 'street', 'address'];
+    protected $fillable = [ 'name', 'surname','avatar', 'date_birth', 'gender', 'country', 'region_id', 'city_id', 'street', 'address','about_me','my_site'];
 
     public function getUser(){
         return $this->hasOne('App\User', 'id');

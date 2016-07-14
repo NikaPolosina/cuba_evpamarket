@@ -16,6 +16,8 @@ use App\City;
 use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use App\UserInformation;
+use Redirect;
+use File;
 
 
 class UserController extends Controller{
@@ -104,9 +106,41 @@ class UserController extends Controller{
         $info->surname = $request['surname'];
         $info->street = $request['street'];
         $info->address = $request['address'];
+        $info->about_me = $request['about_me'];
+        $info->my_site = $request['my_site'];
         $info->save();
+
+        return redirect('/home');
 
     }
 
+    public function createAvatar(Request $request){
+
+        $curentUser = Auth::user();
+        $name = 'avatar';
+        $path = public_path().'/img/users/' . $curentUser->id;
+
+        $file = $request['avatar'];
+        $type = exif_imagetype($file);
+
+        if ($type == IMAGETYPE_JPEG) {
+            $image = imagecreatefromjpeg($file);
+        } else if ($type == IMAGETYPE_GIF) {
+            $image = imagecreatefromgif($file);
+        } else if ($type == IMAGETYPE_PNG) {
+            $image = imagecreatefrompng($file);
+        } else {
+            return false;
+        }
+
+        File::makeDirectory($path, $mode = 0777, true, true);
+        imagepng($image, $path.'/'.$name.'.png');
+
+        $info = $curentUser->getUserInformation;
+        $info->avatar = '/img/users/'.$curentUser->id.'/'.$name.'.png';
+        $info->save();
+
+        return redirect('/home');
+    }
 
 }
