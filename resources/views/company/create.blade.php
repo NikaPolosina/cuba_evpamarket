@@ -4,41 +4,43 @@
     @include('layouts.header_menu')
 
 
-    <h1>Создать новый магазин</h1>
-    <hr/>
 
-    <form   method="POST" enctype="multipart/form-data">
+<div class="row">
+    <div class="col-sm-12">
 
+                <div class="col-sm-3 col-md-offset-2">
+                    <h3 style="font-weight: bold;color: darkblue;">Создать новый магазин</h3>
 
-    </form>
+                </div>
+</div>
 
+<div class="col-sm-12">
+    <hr>
     {!! Form::open(['url' => 'company', 'class' => 'form-horizontal company_form', 'id'=>'fileupload']) !!}
 
                 <div class="form-group {{ $errors->has('company_name') ? 'has-error' : ''}}">
-                {!! Form::label('company_name', 'Название магазина: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
+                {!! Form::label('company_name', 'Название магазина: ', ['class' => 'col-sm-2 control-label']) !!}
+                <div class="col-sm-4">
                     {!! Form::text('company_name', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('company_name', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('company_description') ? 'has-error' : ''}}">
-                {!! Form::label('company_description', 'Описание магазина: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
+                {!! Form::label('company_description', 'Описание магазина: ', ['class' => 'col-sm-2 control-label']) !!}
+                <div class="col-sm-4">
                     {!! Form::text('company_description', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('company_description', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
 
             <div class="form-group">
-                {!! Form::label('company_logo', 'Logo: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-
+                {!! Form::label('company_logo', 'Логотип: ', ['class' => 'col-sm-2 control-label']) !!}
+                <div class="col-sm-4">
                     <div class="row fileupload-buttonbar">
-
                         <div class="col-lg-7">
                                 <span class="btn btn-success fileinput-button">
                                     <i class="glyphicon glyphicon-plus"></i>
-                                    <span>Добавить файл...</span>
+                                    <span>Выбрать файл...</span>
                                     <input type="file" name="files[]">
                                 </span>
                             <button type="button" class="btn btn-danger delete">
@@ -46,67 +48,132 @@
                                 <span>Удалить</span>
                             </button>
                         </div>
-
                     </div>
-
                     <div class="files">
-                        <img width="300" height="300" src="/img/system/place_holder.png">
+                        <img width="150" height="150" src="/img/system/place_holder.png">
                     </div>
-
                 </div>
             </div>
 
             {!! Form::hidden('company_logo', null, ['class' => 'form-control', 'id'=>'company_logo']) !!}
-
-
             <div class="form-group {{ $errors->has('company_content') ? 'has-error' : ''}}">
-                {!! Form::label('company_content', 'Детальное описание: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
+                {!! Form::label('company_content', 'Детальное описание: ', ['class' => 'col-sm-2 control-label']) !!}
+                <div class="col-sm-4">
                     {!! Form::textarea('company_content', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('company_content', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-            <div class="form-group {{ $errors->has('company_address') ? 'has-error' : ''}}">
-                {!! Form::label('company_address', 'Адрес: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::text('company_address', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('company_address', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
             <div class="form-group {{ $errors->has('company_contact_info') ? 'has-error' : ''}}">
-                {!! Form::label('company_contact_info', 'Контактная информация: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
+                {!! Form::label('company_contact_info', 'Контактная информация: ', ['class' => 'col-sm-2 control-label']) !!}
+                <div class="col-sm-4">
                     {!! Form::text('company_contact_info', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('company_contact_info', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-            <div class="form-group {{ $errors->has('company_additional_info') ? 'has-error' : ''}}">
-                {!! Form::label('company_additional_info', 'Дополнительная информация: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::text('company_additional_info', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('company_additional_info', '<p class="help-block">:message</p>') !!}
+            <div class="form-group{{ $errors->has('region') ? ' has-error' : '' }}">
+                <label class="col-md-2 control-label">Регион</label>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <select class="chosen-select" name="region" id="sel1">
+                            <option value="">Выбирите регион</option>
+                            @foreach($region as $value)
+                                <option value="{{$value->id}}">{{$value->title}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+            $(document).ready(function(){
+                $(".chosen-select").chosen({no_results_text: "Oops, nothing found!"});
+
+
+                $('#sel1').on('change', function(){
+                    console.log($(this).val());
+                    if($(this).val().length){
+                        $.ajax({
+                            type: "GET",
+                            url: "/get-city-by-region/"+$(this).val(),
+                            data: '',
+                            success: function(data){
+                                $('#sel2_holder').show();
+                                var selector = $('#sel2')
+
+                                selector.html('');
+
+                                $.each(data, function(index, value) {
+
+                                    selector.append('<option value="'+value.id+'">'+value.title_cities+'</option>');
+                                });
+
+                                $('.chosen').chosen({no_results_text: "Oops, nothing found!"}).trigger("chosen:updated")
+
+
+                            }
+                        });
+                    }
+
+
+                });
+            });
+
+
+        </script>
+
+            <div style="display: none" id="sel2_holder" class="form-group{{ $errors->has('city_id') ? ' has-error' : '' }}">
+                <label class="col-md-2 control-label">Город</label>
+                <div class="col-md-4">
+                    <div>
+                        <select class="chosen"  name="city" id="sel2">
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group{{ $errors->has('street') ? ' has-error' : '' }}">
+                <label class="col-md-2 control-label">Улица</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="street" value="{{ old('street') }}">
+                    @if ($errors->has('street'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('street') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                <label class="col-md-2 control-label">Дом</label>
+                <div class="col-md-1">
+                    <input type="text" class="form-control" name="address" value="{{ old('address') }}">
+
+                    @if ($errors->has('address'))
+                        <span class="help-block">
+                                                <strong>{{ $errors->first('address') }}</strong>
+                                            </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-5 col-sm-1">
+                    {!! Form::submit('Создать', ['class' => 'btn btn-primary form-control']) !!}
+
                 </div>
             </div>
 
 
-    <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit('Создать', ['class' => 'btn btn-primary form-control']) !!}
-
-        </div>
-    </div>
-
-
     
-    {!! Form::close() !!}
+                {!! Form::close() !!}
 
-    @if ($errors->any())
-        <ul class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
+                @if ($errors->any())
+                    <ul class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
 
 
 
@@ -115,14 +182,6 @@
 
 
     <div>
-
-
-
-
-
-
-
-
 
         <!-- blueimp Gallery styles -->
         <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
@@ -172,22 +231,18 @@
 
         <!-- Plugin init and setup-->
         <script>
-
             var nededPath = 'companies/';
             var imageObj;
-
             $(function(){
-
-
                 $('#fileupload').fileupload({
                     url : '{{route('file_uploader')}}',
                     uploadTemplateId: null,
                     downloadTemplateId: null,
-                    previewMaxWidth: 300,
-                    previewMaxHeight: 300,
+                    previewMaxWidth: 150,
+                    previewMaxHeight: 150,
                 })
                 .on('fileuploadprocessalways', function (e, data) {
-                    var preview = '<img width="300" height="300" src="/img/system/place_holder.png">';
+                    var preview = '<img width="150" height="150" src="/img/system/place_holder.png">';
                     if(data.files[0]['preview']){
                         preview = data.files[0]['preview'];
                     }
@@ -210,7 +265,7 @@
                 });
                 
                 $('.delete').on('click', function(){
-                    var preview = '<img width="300" height="300" src="/img/system/place_holder.png">';
+                    var preview = '<img width="150" height="150" src="/img/system/place_holder.png">';
                     $('.files').html(preview);
                     imageObj = null;
                 });
@@ -225,16 +280,13 @@
 
             });
         </script>
-
-
-
     </div>
 
 
     <script src="/plugins/tinymce/tinymce.min.js"></script>
     <script>
         tinymce.init({
-            selector: "textarea",theme: "modern",width: 680,height: 300,
+            selector: "textarea",theme: "modern",width: 605,height: 200,
             language: 'ru',
             plugins: [
                 "advlist autolink link image lists charmap print preview hr anchor pagebreak",
@@ -253,7 +305,7 @@
         });
     </script>
 
-
-
-
+    </div>
+</div>
+</div>
 @endsection
