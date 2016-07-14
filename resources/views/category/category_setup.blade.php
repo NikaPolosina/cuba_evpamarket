@@ -9,7 +9,13 @@
         <div class="company_tile_category">
             <h2 style="text-align: center">Редактор категорий магазина</h2>
             <h2>Магазин {{$company->company_name}}</h2>
-            <hr/>
+            <div class="col-sm-12">
+                        <hr/>
+                        <div class="footer_button" style="float: right;">
+                            <!-- <button type="button" class="btn btn-primary">Перейти в магазин</button> -->
+                            <a href="http://cuba.loc/product-editor/{{$company->id}}" class="btn btn-primary">Перейти в магазин</a>
+                        </div>
+                    </div>
         </div>
 
         <div class="col-sm-10 col-md-offset-1">
@@ -44,15 +50,6 @@
             </div>
 
         </div>
-        <div class="col-sm-12">
-            <hr/>
-            <div class="footer_button" style="float: right;">
-                <button type="button" class="btn btn-primary">Сохранить</button>
-                <button type="button" class="btn btn-default">Отменить</button>
-            </div>
-        </div>
-
-
     </div>
 
     <script>
@@ -203,6 +200,12 @@
             }).treeview('collapseAll');
         }
 
+        /*var buttonRedirectMyScore = document.querySelector('.btn-primary');
+        buttonRedirectMyScore.addEventListener('click', RedirectMyScore);
+
+        function RedirectMyScore(){
+            window.location.href = "http://cuba.loc/product-editor/"+'{{$company->id}}';
+        }*/
 
     </script>
 

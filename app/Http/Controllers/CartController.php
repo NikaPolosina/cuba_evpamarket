@@ -40,7 +40,6 @@ class CartController extends Controller{
         }
 
 
-
         return view('product.products.cart')->with('companies', $companies);
     }
 
@@ -71,7 +70,7 @@ class CartController extends Controller{
             foreach($company['products'] as $product){
                 $cnt += $product['cnt'];
             }
-        }
+        } 
 
         $total = 0;
         foreach($cart[$currentCompanyId]['products'] as $key => $product){

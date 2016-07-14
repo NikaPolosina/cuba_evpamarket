@@ -104,7 +104,6 @@ class HomeController extends Controller{
 
 
 
-
         if(Auth::check()){
             $curentUser = Auth::user();
             $userInfo = $curentUser->getUserInformation;
