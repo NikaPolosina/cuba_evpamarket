@@ -16,6 +16,7 @@ use App\Http\Controllers\ProductsController;
 use App\User;
 use PhpParser\Builder;
 use App\Models\Role;
+use App\Region;
 
 
 
@@ -30,15 +31,28 @@ class CompanyController extends Controller
         return view('company.index', compact('company'));
     }
 
-    public function create()
-    {
-        return view('company.create');
+    public function create(){
+        $region = Region::all();
+        return view('company.create')->with('region', $region);
     }
 
     public function store(Request $request){
 
 
-        $company =  $this->createCompany($request->except('_token'));
+        $company = Company::create([
+            'company_name'       => $request['company_name'],
+            'company_description'    => $request['company_description'],
+            'company_logo' => $request['company_logo'],
+            'company_content'     => $request['company_content'],
+            'company_contact_info'     => $request['company_contact_info'],
+            'region_id'  => $request->input('region'),
+            'city_id'    => $request->input('city'),
+            'street'     => $request->input('street'),
+            'address'    => $request->input('address'),
+            'country'    => 'Росcия',
+        ]);
+
+        $company->save();
         if($company){
             $curentUser = Auth::user();
             if($curentUser->hasRole('simple_user')){
@@ -55,7 +69,6 @@ class CompanyController extends Controller
     }
 
     public function createCompany(array $company){
-//        $this->validate($request->input('company'), ['company_name' => 'required', 'company_description' => 'required', ]);
         return Company::create($company);
     }
 
@@ -103,14 +116,33 @@ class CompanyController extends Controller
     {
         $company = Company::findOrFail($id);
 
-        return view('company.edit', compact('company'));
+        $region = Region::all();
+
+
+        return view('company.edit', compact('company'))->with('region', $region);
     }
 
     public function update($id, Request $request)
     {
+
+
+
+
         $this->validate($request, ['company_name' => 'required', 'company_description' => 'required', ]);
         $company = Company::findOrFail($id);
-        $company->update($request->all());
+        $updateCompany =  [
+            'company_name'       => $request['company_name'],
+            'company_description'    => $request['company_description'],
+            'company_logo' => $request['company_logo'],
+            'company_content'     => $request['company_content'],
+            'company_contact_info'     => $request['company_contact_info'],
+            'region_id'  => $request->input('region'),
+            'city_id'    => $request->input('city'),
+            'street'     => $request->input('street'),
+            'address'    => $request->input('address'),
+            'country'    => 'Росcия',
+        ];
+        $company->update($updateCompany);
 
         Session::flash('flash_message', 'Company updated!');
         return redirect()->intended('home');

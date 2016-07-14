@@ -76,6 +76,14 @@
                                 <li>
                                     <a href="javascript:;"> Доставка </a>
                                 </li>
+                                <li>
+                                    <a href="javascript:;"> Избранное
+                                    <span>@if(isset($product_cnt_like)){{$product_cnt_like}}@endif </span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;"> Корзина
+                                    <span> @if(isset($product_cnt)){{$product_cnt}}@endif </span></a>
+                                </li>
                             </ul>
                         </div>
                         <div class="col-md-9">

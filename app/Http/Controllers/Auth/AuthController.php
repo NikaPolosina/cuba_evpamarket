@@ -46,7 +46,11 @@ class AuthController extends Controller{
             'city' => 'required|max:255',
             'street' => 'max:255',
             'address' => 'max:255',
-        ]);
+        ],
+        [
+            'required' => 'Поле :attribute должно быть заполнено.',
+        ]
+        );
     }
     protected function create(array $data){
 
@@ -91,9 +95,18 @@ class AuthController extends Controller{
         $userinfo =  Auth::user()->getUserInformation;
        if(!Auth::user()->getUserInformation){
            $v = $this->myValidator($request->all());
+
+            $v->setAttributeNames([
+                'name'=> 'Имя',
+                'surname'=> 'Фамилия',
+                'date_birth'=> 'Дата рождения',
+                'gender'=> 'Пол',
+            ]);
+
            if($v->fails()){
                return redirect()->back()->withInput()->withErrors($v);
            }
+
            if(Auth::user()){
                $userinfo = UserInformation::create([
                    'name'       => $request->input('name'),

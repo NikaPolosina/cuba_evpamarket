@@ -112,6 +112,13 @@
 				return false;
 				
 			});
+
+			setInterval(function( event ) {
+							
+							instance._navigate( 'next' );
+							return false;
+							
+						},10000);
 			
 		},
 		_navigate			: function( dir ) {
