@@ -8,3 +8,4 @@ Homestead.json
 /public/pgmyadmin
 /public/img/custom
 public/img/custom/*
+.idea/
