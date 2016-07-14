@@ -74,6 +74,7 @@ Route::get('/login-user', ['as' => 'login-user', 'uses' => 'HomeController@Index
 
 /*-------------------------------------------File--Uploader--------------------------------------------*/
 Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);
+Route::any('/avatar-uploader', 'UserController@createAvatar');
 
 /*-------------------------------------------Cart----------------------------------------------*/
 Route::any('/cart', 'CartController@index');

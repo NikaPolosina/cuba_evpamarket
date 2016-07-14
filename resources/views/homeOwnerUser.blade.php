@@ -49,7 +49,11 @@
                         <div class="col-md-3">
                             <ul class="list-unstyled profile-nav">
                                 <li>
-                                    <img src="../assets/pages/media/profile/people19.png" class="img-responsive pic-bordered" alt="" />
+                                    @if(!empty($userInfo->avatar))
+                                        <img src="{{$userInfo->avatar}}" alt="avatar">
+                                    @else
+                                         <img src="/img/placeholder/avatar.jpg" alt="avatar" />
+                                    @endif
                                 </li>
                                 <li>
                                     <a href="javascript:;"> Магазины
@@ -253,7 +257,8 @@
                                 <div id="tab_2-2" class="tab-pane">
                                     <p> Для загрузки аватара нажмите кнопку "Загрузить фото".
                                     </p>
-                                    <form action="#" role="form">
+                                    <form action="/avatar-uploader" role="form" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="form-group">
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                                 <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
@@ -263,14 +268,14 @@
                                                                     <span class="btn default btn-file">
                                                                         <span class="fileinput-new"> Выбрать фото </span>
                                                                         <span class="fileinput-exists"> Изменить </span>
-                                                                        <input type="file" name="..."> </span>
+                                                                        <input type="file" name="avatar"> </span>
                                                     <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Отменить </a>
                                                 </div>
                                             </div>
 
                                         </div>
                                         <div class="margin-top-10">
-                                            <a href="javascript:;" class="btn green"> Сохранить </a>
+                                           <button type="submit" class="btn green">Сохранить</button>
                                         </div>
                                     </form>
                                 </div>
