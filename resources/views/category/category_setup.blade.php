@@ -13,7 +13,7 @@
                         <hr/>
                         <div class="footer_button" style="float: right;">
                             <!-- <button type="button" class="btn btn-primary">Перейти в магазин</button> -->
-                            <a href="http://cuba.loc/product-editor/{{$company->id}}" class="btn btn-primary">Перейти в магазин</a>
+                            <a href="/product-editor/{{$company->id}}" class="btn btn-primary">Перейти в магазин</a>
                         </div>
                     </div>
         </div>
