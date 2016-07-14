@@ -81,7 +81,7 @@
                                                 <li>
                                                     <i class="fa fa-calendar"></i> {{date('j  F Y ')}} </li>
                                                 <li>
-                                                    <i class="fa fa-heart"></i> В избранных </li>
+                                                    <a href="/like"> <i class="fa fa-heart"></i> В избранных </li></a>
                                             </ul>
                                         </div>
                                         <!--end col-md-8-->
