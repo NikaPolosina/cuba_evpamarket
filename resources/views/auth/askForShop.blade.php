@@ -30,7 +30,12 @@
 
                             </div>
                             <hr/>
-                            <a href="{{ url('/home') }}" class="btn btn-default btn-sm">Зарегистрироваться как покупатель</a>
+
+                            {!! Form::open(['url' => route('set_user_role'), 'class' => 'form-horizontal company_form', 'id'=>'fileupload']) !!}
+                                {!! Form::hidden('role', 'simple_user') !!}
+                                {!! Form::submit('Зарегистрироваться как покупатель', ['class' => 'btn btn-default btn-sm']) !!}
+                            {!! Form::close() !!}
+
 
                         </div>
 
@@ -50,7 +55,10 @@
 
                                 </div>
                             <hr/>
-                            <a href="{{ url('/homeOwnerUser') }}" class="btn btn-default btn-sm">Зарегистрироваться как продавец</a>
+                            {!! Form::open(['url' => route('set_user_role'), 'class' => 'form-horizontal company_form', 'id'=>'fileupload']) !!}
+                                {!! Form::hidden('role', 'company_owner') !!}
+                                {!! Form::submit('Зарегистрироваться как продавец', ['class' => 'btn btn-default btn-sm']) !!}
+                            {!! Form::close() !!}
                         </div>
 
                     </div>

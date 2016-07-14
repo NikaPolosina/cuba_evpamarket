@@ -24,6 +24,8 @@ class HomeController extends Controller{
     }
 
     public function Index(){
+     
+
         if(Auth::user()->hasRole('admin')){
             return redirect()->intended('admin');
         }
@@ -31,36 +33,30 @@ class HomeController extends Controller{
             return redirect()->intended('homeOwnerUser');
         }
         if(Auth::user()->hasRole('simple_user')){
-            return redirect()->intended('home');
+            return redirect()->intended('homeSimpleUser');
         }
     }
 
-    public function registerSimple(User $user, UserCompany $userCompany, Company $company, FileController $file, Request $request, $id = NULL){
+    public function registerSimple(){
         if(!Auth::user()->getUserInformation){
             $region = Region::all();
             return view('auth.register_aditional')->with('region', $region);
         }
+        
         if(Auth::check()){
             $curentUser = Auth::user();
             $userInfo = $curentUser->getUserInformation;
             $companies = $curentUser->getCompanies;
         }
-        if(Auth::user()->hasRole('company_owner')){
-            $curentUser->detachRoles($curentUser->roles);
-            $curentUser->attachRole(Role::findOrFail(2));
-        }
+        
         return view('user.simple_user.home')->with('userInfo', $userInfo)->with('user', $curentUser);
     }
 
-    public function registerOwner(User $user, UserCompany $userCompany, Company $company, $id = NULL){
+    public function registerOwner(){
         if(Auth::check()){
             $curentUser = Auth::user();
             $userInfo = $curentUser->getUserInformation;
             $companies = $curentUser->getCompanies;
-            if($curentUser->hasRole('simple_user')){
-                $curentUser->detachRoles($curentUser->roles);
-                $curentUser->attachRole(Role::findOrFail(1));
-            }
         }
         return view('homeOwnerUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
     }

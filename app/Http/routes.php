@@ -64,13 +64,7 @@ Route::any('category/category-setup/{id}', 'CategoryController@categorySetup');
 Route::post('/category/edit-categoty', ['as' => 'attach_categories', 'uses'=>'CategoryController@attachCategoriesToCompany']);
 Route::post('/category/remove-categoty', ['as' => 'remove_categories', 'uses'=>'CategoryController@detachCategoriesToCompany']);
 
-/*-------------------------------------------Home--------------------------------------------*/
-Route::get('/homeSimpleUser', function(){
-    return view('homeSimpleUser');
-});
-Route::get('/homeOwnerUser', ['as'=>'homeOwnerUser', 'uses'=>'HomeController@registerOwner'] );
-Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@registerSimple' ]);
-Route::get('/login-user', ['as' => 'login-user', 'uses' => 'HomeController@Index' ]);
+
 
 /*-------------------------------------------File--Uploader--------------------------------------------*/
 Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);
@@ -108,3 +102,19 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
 });
 
 
+/*-------------------------------------------Home--------------------------------------------*/
+
+Route::get('/login-user', ['as' => 'login-user', 'uses' => 'HomeController@Index' ]);
+
+Route::group([ 'middleware' => [ 'role:simple_user'] ], function (){
+    Route::get('/homeSimpleUser', ['as' => 'homeSimpleUser', 'uses' => 'HomeController@registerSimple' ]);
+
+});
+
+Route::group([ 'middleware' => [ 'role:company_owner'] ], function (){
+    Route::get('/homeOwnerUser', ['as'=>'homeOwnerUser', 'uses'=>'HomeController@registerOwner'] );
+
+});
+
+
+Route::post('/new-user-dashboard', ['as'=>'set_user_role', 'uses'=>'UserController@setRole']);

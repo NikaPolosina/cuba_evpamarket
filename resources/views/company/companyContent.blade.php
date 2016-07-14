@@ -3,7 +3,7 @@
 @section('content')
     @include('layouts.header_menu')
 
-
+    <h3>Страница магазина</h3>
 
     {!! Form::open(['url' => '/company-content', 'class' => 'form-horizontal company_form', 'id'=>'fileupload']) !!}
         {{Form::hidden('company_id', $company_id)}}
