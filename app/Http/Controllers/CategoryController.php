@@ -71,11 +71,11 @@ class CategoryController extends Controller{
             $this->nCategory[$value['parent_id']][] = $value;
         }
         ksort($this->nCategory);
-        $this->nCategory = array_reverse($this->nCategory, true);
+        $this->nCategory = array_reverse($this->nCategory, true); 
         foreach($this->nCategory as $key => $value){
             foreach($value as $k => $v){
                 if(array_key_exists($v['id'], $this->nCategory)){
-                    $this->nCategory[$key][$k]['nodes'] = $this->nCategory[$v['id']];
+                    $this->nCategory[$key][$k]['nodes'] = $this->nCategory[$v['id']]; 
                     unset($this->nCategory[$v['id']]);
                 }
             }
