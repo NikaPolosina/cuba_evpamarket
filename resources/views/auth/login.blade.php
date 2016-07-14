@@ -54,7 +54,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i>Войти
+                                    <i class="fa fa-btn fa-sign-in"></i><span style="margin-left: 5px">Войти</span>
                                 </button>
 
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">Забыл пароль?</a>

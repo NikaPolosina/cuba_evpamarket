@@ -25,6 +25,7 @@ Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
 
 /*---------------------------------CompanyController------------------------------------*/
 Route::any('/show-company/{id}', 'CompanyController@show');
+Route::any('/company-content', ['as' => 'company-content', 'uses' => 'CompanyController@companyContent']);
 Route::group(['middleware' => ['web']], function () {
     Route::resource('company', 'CompanyController');
 });
@@ -68,7 +69,8 @@ Route::get('/homeSimpleUser', function(){
     return view('homeSimpleUser');
 });
 Route::get('/homeOwnerUser', ['as'=>'homeOwnerUser', 'uses'=>'HomeController@registerOwner'] );
-Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index' ]);
+Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@registerSimple' ]);
+Route::get('/login-user', ['as' => 'login-user', 'uses' => 'HomeController@Index' ]);
 
 /*-------------------------------------------File--Uploader--------------------------------------------*/
 Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);

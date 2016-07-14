@@ -57,7 +57,7 @@
                     </li>
                @else
 
-                        <li><a href="{{ url('/home') }}">
+                        <li><a href="{{ url('/login-user') }}">
                                 <img class="header_icon" src="/img/system/home.png" alt=""/>
                                 <span>Домой</span>
                             </a>

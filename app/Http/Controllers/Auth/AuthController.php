@@ -23,7 +23,7 @@ use App\City;
 class AuthController extends Controller{
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/login-user';
 
     public function __construct(){
 //        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);

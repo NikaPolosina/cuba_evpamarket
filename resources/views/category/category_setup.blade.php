@@ -4,7 +4,7 @@
     @include('layouts.header_menu')
 
 
-    <div class="col-sm-10 col-md-offset-1" style="border: solid 1px red">
+    <div class="col-sm-10 col-md-offset-1">
 
         <div class="company_tile_category">
             <h2 style="text-align: center">Редактор категорий магазина</h2>
@@ -12,7 +12,6 @@
             <div class="col-sm-12">
                         <hr/>
                         <div class="footer_button" style="float: right;">
-                            <!-- <button type="button" class="btn btn-primary">Перейти в магазин</button> -->
                             <a href="/product-editor/{{$company->id}}" class="btn btn-primary">Перейти в магазин</a>
                         </div>
                     </div>
@@ -49,8 +48,17 @@
                 </div>
             </div>
 
+
+
+        </div>
+
+        <div class="footer_button" style="float: right;">
+            <a href="" class="btn btn-default">Отменить изменения</a>
+            <a href="" class="btn btn-success">Сохранить изменения</a>
+
         </div>
     </div>
+
 
     <script>
 

@@ -38,12 +38,11 @@ class CompanyController extends Controller
 
     public function store(Request $request){
 
-
         $company = Company::create([
             'company_name'       => $request['company_name'],
             'company_description'    => $request['company_description'],
             'company_logo' => $request['company_logo'],
-            'company_content'     => $request['company_content'],
+           /* 'company_content'     => $request['company_content'],*/
             'company_contact_info'     => $request['company_contact_info'],
             'region_id'  => $request->input('region'),
             'city_id'    => $request->input('city'),
@@ -57,10 +56,22 @@ class CompanyController extends Controller
             $curentUser = Auth::user();
             $curentUser->getCompanies()->save($company);
         }
+        return view('company.companyContent')->with('company_id',$company['id']);
 
-        //Session::flash('flash_message', 'Company added!');
-        return redirect()->intended('home');
+       // return redirect()->intended('homeOwnerUser');
 
+    }
+    public function companyContent(Request $request){
+        $id = $request['company_id'];
+        $company = Company::find($id);
+
+
+    $company_content = [
+        'company_content'     => $request['company_content']
+    ];
+        
+        $company->update($company_content);
+        return redirect()->intended('homeOwnerUser');
     }
 
     public function createCompany(array $company){
@@ -117,12 +128,7 @@ class CompanyController extends Controller
         return view('company.edit', compact('company'))->with('region', $region);
     }
 
-    public function update($id, Request $request)
-    {
-
-
-
-
+    public function update($id, Request $request){
         $this->validate($request, ['company_name' => 'required', 'company_description' => 'required', ]);
         $company = Company::findOrFail($id);
         $updateCompany =  [
@@ -140,7 +146,7 @@ class CompanyController extends Controller
         $company->update($updateCompany);
 
         Session::flash('flash_message', 'Company updated!');
-        return redirect()->intended('home');
+        return redirect()->intended('homeOwnerUser');
 
     }
 
@@ -149,7 +155,7 @@ class CompanyController extends Controller
         Company::destroy($id);
         Session::flash('flash_message', 'Company deleted!');
 
-        return redirect()->intended('home');
+        return redirect()->intended('homeOwnerUser');
 
     }
 

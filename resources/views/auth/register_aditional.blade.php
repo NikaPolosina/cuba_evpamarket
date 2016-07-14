@@ -2,6 +2,7 @@
 
 @section('content')
     @include('layouts.header_menu')
+
     <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -69,8 +70,8 @@
                             <div class="col-md-6">
 
 
-                                <label class="checkbox-inline"><input name="gender" type="radio" value="1">Мужчина</label>
-                                <label class="checkbox-inline"><input name="gender" type="radio" value="0">Женщина</label>
+                                <label class="checkbox-inline"><input name="gender" type="radio" value="1" {{ old('gender')=="1" ? 'checked='.'"'.'checked'.'"' : '' }}>Мужчина</label>
+                                <label class="checkbox-inline"><input name="gender" type="radio" value="0" {{ old('gender')=="0" ? 'checked='.'"'.'checked'.'"' : '' }}>Женщина</label>
 
                                 @if ($errors->has('gender'))
                                     <span class="help-block">
@@ -82,19 +83,37 @@
 
 
                         {{----------------------------------------------------------------------------------------------------------------------------}}
-                        <div class="form-group{{ $errors->has('region') ? ' has-error' : '' }}">
+                        <div  class="form-group{{ $errors->has('region') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Регион</label>
                             <div class="col-md-6">
-                                <div class="form-group">
+                                <div class="form-group" style="margin: 0px">
                                     <select class="chosen-select" name="region" id="sel1">
                                         <option value="">Выбирите регион</option>
                                         @foreach($region as $value)
                                             <option value="{{$value->id}}">{{$value->title}}</option>
                                         @endforeach
                                     </select>
+
+                                    @if ($errors->has('region'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('region') }}</strong>
+                                    </span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
+
+
+                        <script>
+                            var city_id = '';
+                        </script>
+
+                        @if(old('city'))
+                                <script>
+                                    city_id = '{{old('city')}}';
+                                </script>
+                        @endif
+
 
                         <script>
                             $(document).ready(function(){
@@ -121,7 +140,11 @@
 
                                                 $('.chosen').chosen({no_results_text: "Oops, nothing found!"}).trigger("chosen:updated")
 
-
+                                                if(city_id.length > 0){
+                                                    $('.chosen').val(city_id);
+                                                     $('.chosen').trigger("chosen:updated");
+                                                    city_id = false;
+                                                }
                                             }
                                         });
                                     }
@@ -190,4 +213,25 @@
     </div>
 </div>
     {!! HTML::script('/js/registerList.js') !!}
+
+    @if(old('date_birth'))
+        <script>
+            $('document').ready(function () {
+                $('#datepicker').datepicker('setDate', '{{old("date_birth")}}');
+            });
+        </script>
+    @endif
+
+    @if(old('region'))
+        <script>
+            $('document').ready(function () {
+                $('.chosen-select').val({{old("region")}});
+                $('.chosen-select').trigger("chosen:updated");
+                $('#sel1').change();
+            });
+        </script>
+    @endif
+
+
+
 @endsection
