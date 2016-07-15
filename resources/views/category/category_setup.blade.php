@@ -61,9 +61,12 @@
 
 
     <script>
-
+        var default_company_categories = jQuery.parseJSON( '{{$default_company_categories}}' );
+        var categories = default_company_categories;
+        var index;
 
         var data = <?=json_encode($categories) ?> ;
+
         $(document).ready(function(){
             var addButton    = $('.add_categories');
             var removeButton = $('.remove_categories');
@@ -74,6 +77,8 @@
                 showCheckbox    : true,
                 enableLinks     : false,
                 onNodeChecked   : function(event, node){
+
+
                     if(node['nodes'].length > 0){
                         node['nodes'].forEach(function(currentNode, key){
                             $('#custom-checkable').treeview('checkNode', currentNode['nodeId']);
@@ -94,13 +99,14 @@
                     addButton.attr('disabled', true);
                     removeButton.attr('disabled', true);
                     progress.show();
-                    var categories = [];
-                    $('#custom-checkable').treeview('getChecked').forEach(function(currentNode, key){
+
+                    $('#custom-checkable1').treeview('getChecked').forEach(function(currentNode, key){
                         categories.push(currentNode['id']);
                     });
+
                     $.ajax({
                         type    : "POST",
-                        url     : '{{route('attach_categories')}}',
+                        url     : '{{route('attach_categories_two')}}',
                         headers : {
                             'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                         },
@@ -133,6 +139,7 @@
             });
 
             removeButton.on('click', function(){
+                // удалить из categories выбранную категорию и всех ниже
 
                 if($('#custom-checkable1').treeview('getChecked').length > 0){
 
@@ -142,14 +149,30 @@
                     addButton.attr('disabled', true);
                     removeButton.attr('disabled', true);
                     progress.show();
+
                     if($('#custom-checkable1').treeview('getChecked').length > 0){
-                        var categories = [];
                         $('#custom-checkable1').treeview('getChecked').forEach(function(currentNode, key){
-                            categories.push(currentNode['id']);
+
+                            index = categories.indexOf(parseInt(currentNode['id']));
+
+                            if(index > -1){
+                                do{
+                                    index = categories.indexOf(parseInt(currentNode['id']));
+                                if(index > -1){
+                                    categories.splice(index, 1);
+                                }
+                                }while(index > -1);
+                            }
+
+//                            categories.push(currentNode['id']);
                         });
+                        
+                        console.log(categories);
+                        
+
                         $.ajax({
                             type    : "POST",
-                            url     : '{{route('remove_categories')}}',
+                            url     : '{{route('attach_categories_two')}}',
                             headers : {
                                 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                             },
@@ -182,9 +205,9 @@
                 }
 
             });
+            
             buildTree(<?=$category?>);
         });
-
 
         function buildTree(data){
             $('#custom-checkable1').treeview({
@@ -207,13 +230,6 @@
                 }
             }).treeview('collapseAll');
         }
-
-        /*var buttonRedirectMyScore = document.querySelector('.btn-primary');
-        buttonRedirectMyScore.addEventListener('click', RedirectMyScore);
-
-        function RedirectMyScore(){
-            window.location.href = "http://cuba.loc/product-editor/"+'{{$company->id}}';
-        }*/
 
     </script>
 
