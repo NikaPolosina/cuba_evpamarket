@@ -1231,4 +1231,46 @@ class FileController extends Controller{
         $splited = preg_split('/\//', rtrim($filepath, '/ '));
         return substr(basename('X'.$splited[count($splited) - 1], $suffix), 1);
     }
+
+    public static function cropFile($file, $newPath, $width, $height, $name){
+
+        $type = exif_imagetype($file);
+
+        if ($type == IMAGETYPE_JPEG) {
+            $image = imagecreatefromjpeg($file);
+        } else if ($type == IMAGETYPE_GIF) {
+            $image = imagecreatefromgif($file);
+        } else if ($type == IMAGETYPE_PNG) {
+            $image = imagecreatefrompng($file);
+        } else {
+            return false;
+        }
+
+        $imgWidth = imagesx($image);
+        $imgHeight = imagesy($image);
+
+        if ($imgWidth / $imgHeight == 1) {
+            if ($imgHeight > $height) {
+                $propHeight = $imgWidth = min($width, $height);
+            } else {
+                $propWidth = $width;
+                $propHeight = $height;
+            }
+        } else if ($imgWidth / $imgHeight > 1) {
+            $propHeight = ($imgHeight * $width) / $imgWidth;
+            $propWidth = $width;
+        } else if ($imgWidth / $imgHeight < 1) {
+            $propWidth = ($imgWidth * $height) / $imgHeight;
+            $propHeight = $height;
+        }
+
+        $small_res = imagecreatetruecolor($width, $height);
+        imagesavealpha($small_res, true);
+        $transPng = imagecolorallocatealpha($small_res, 0, 0, 0, 127);
+        imagefill($small_res, 0, 0, $transPng);
+
+        imagecopyresampled($small_res, $image, round(($width - $propWidth) / 2), round(($height - $propHeight) / 2), 0, 0, $propWidth, $propHeight, $imgWidth, $imgHeight);
+
+        imagepng($small_res, $newPath.'/'.$name.'.png');
+    }
 }

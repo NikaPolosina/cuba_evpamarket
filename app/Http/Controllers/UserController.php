@@ -119,28 +119,19 @@ class UserController extends Controller{
         $curentUser = Auth::user();
         $name = 'avatar';
         $path = public_path().'/img/users/' . $curentUser->id;
+        $width = 300;
+        $height = 300;
 
         $file = $request['avatar'];
-        $type = exif_imagetype($file);
-
-        if ($type == IMAGETYPE_JPEG) {
-            $image = imagecreatefromjpeg($file);
-        } else if ($type == IMAGETYPE_GIF) {
-            $image = imagecreatefromgif($file);
-        } else if ($type == IMAGETYPE_PNG) {
-            $image = imagecreatefrompng($file);
-        } else {
-            return false;
-        }
 
         File::makeDirectory($path, $mode = 0777, true, true);
-        imagepng($image, $path.'/'.$name.'.png');
 
         $info = $curentUser->getUserInformation;
         $info->avatar = '/img/users/'.$curentUser->id.'/'.$name.'.png';
         $info->save();
 
+        FileController::cropFile($file,$path,$width,$height,$name);
+
         return redirect('/home');
     }
-
 }
