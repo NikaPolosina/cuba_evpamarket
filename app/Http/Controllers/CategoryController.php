@@ -174,17 +174,29 @@ class CategoryController extends Controller{
     }
 
     public function attachCategoriesToCompany(Request $request, CategoryController $category){
+        /*        $this->validate($request, [
+                    'company'    => 'required',
+                    'categories' => 'required',
+                ]);
+                $myCategories = $company->getCategoryCompany()->lists('id')->toArray();
+                $newCategories = $request->input('categories');
+
+                $company->getCategoryCompany()->detach($myCategories);
+                $company->getCategoryCompany()->attach(array_unique(array_merge($myCategories, $newCategories)));
+
+                $currentCompanyCategories = $category->getCompanyCategorySorted($request->input('company'));
+                $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
+        */
         $this->validate($request, [
             'company'    => 'required',
-            'categories' => 'required',
-
         ]);
-        $company = Company::find($request->input('company'));
-        $myCategories = $company->getCategoryCompany()->lists('id')->toArray();
-        $newCategories = $request->input('categories');
 
-        $company->getCategoryCompany()->detach($myCategories);
-        $company->getCategoryCompany()->attach(array_unique(array_merge($myCategories, $newCategories)));
+        $company = Company::find($request->input('company'));
+        $company->getCategoryCompany()->detach([]);
+
+        if(count($request->input('categories'))){
+            $company->getCategoryCompany()->attach($request->input('categories'));
+        }
 
         $currentCompanyCategories = $category->getCompanyCategorySorted($request->input('company'));
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
@@ -196,7 +208,7 @@ class CategoryController extends Controller{
     public function attachCategoriesToCompanyTwo(Request $request, CategoryController $category){
 
         $currentCompanyCategoriesSorted = array();
-        if(count($request->input('categories')) > 1){
+        if(count($request->input('categories'))){
             $categories = array_unique($request->input('categories'));
             $currentCompanyCategories = Category::whereIn('id', $categories)->get()->toArray();
             $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);

@@ -54,7 +54,7 @@
 
         <div class="footer_button" style="float: right;">
             <a href="" class="btn btn-default">Отменить изменения</a>
-            <a href="" class="btn btn-success">Сохранить изменения</a>
+            <a href="" class="btn btn-success save_changes">Сохранить изменения</a>
 
         </div>
     </div>
@@ -71,6 +71,50 @@
             var addButton    = $('.add_categories');
             var removeButton = $('.remove_categories');
             var progress     = $('.progress');
+
+
+
+            $('.save_changes').on('click', function(){
+
+                addButton.attr('disabled', true);
+                removeButton.attr('disabled', true);
+                progress.show();
+
+                $.ajax({
+                    type    : "POST",
+                    url     : '{{route('attach_categories')}}',
+                    headers : {
+                        'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data    : {
+                        company    : '{{$company->id}}',
+                        categories : categories
+                    },
+                    success : function(response){
+                        $('#custom-checkable').treeview('getChecked').forEach(function(currentNode, key){
+                            $('#custom-checkable').treeview('uncheckNode', currentNode['nodeId']);
+                        });
+                        $('#custom-checkable').treeview('collapseAll', {silent : true});
+                        var data = {};
+                        if(response.categories.length > 0){
+                            data = response.categories;
+                        }
+                        buildTree(data);
+                        addButton.attr('disabled', false);
+                        removeButton.attr('disabled', false);
+                        progress.hide();
+                    },
+                    error   : function(){
+                        alert('System error');
+                        addButton.attr('disabled', false);
+                        removeButton.attr('disabled', false);
+                        progress.hide();
+                    }
+                });
+
+                event.preventDefault();
+
+            });
 
             $('#custom-checkable').treeview({
                 data            : data,
@@ -94,13 +138,15 @@
                 }
             }).treeview('collapseAll');
 
+
+
             addButton.on('click', function(){
                 if($('#custom-checkable').treeview('getChecked').length > 0){
                     addButton.attr('disabled', true);
                     removeButton.attr('disabled', true);
                     progress.show();
 
-                    $('#custom-checkable1').treeview('getChecked').forEach(function(currentNode, key){
+                    $('#custom-checkable').treeview('getChecked').forEach(function(currentNode, key){
                         categories.push(currentNode['id']);
                     });
 
@@ -167,9 +213,6 @@
 //                            categories.push(currentNode['id']);
                         });
                         
-                        console.log(categories);
-                        
-
                         $.ajax({
                             type    : "POST",
                             url     : '{{route('attach_categories_two')}}',
