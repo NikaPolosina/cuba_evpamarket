@@ -107,16 +107,20 @@ class UserController extends Controller{
     }
 
     public function createAvatar(Request $request){
+
+
         $curentUser = Auth::user();
         $name = 'avatar';
         $path = public_path().'/img/users/' . $curentUser->id;
         $width = 300;
         $height = 300;
-        $file = $request['avatar'];
+       
         File::makeDirectory($path, $mode = 0777, true, true);
         $path = public_path() . '/img/users/' . $curentUser->id;
         $file = $request['avatar'];
         $type = exif_imagetype($file);
+
+
         if($type == IMAGETYPE_JPEG){
             $image = imagecreatefromjpeg($file);
         }else if($type == IMAGETYPE_GIF){
@@ -126,6 +130,8 @@ class UserController extends Controller{
         }else{
             return false;
         }
+
+
         File::makeDirectory($path, $mode = 0777, true, true);
         imagepng($image, $path . '/' . $name . '.png');
 
@@ -134,11 +140,13 @@ class UserController extends Controller{
         $info = $curentUser->getUserInformation;
         $info->avatar = '/img/users/' . $curentUser->id . '/' . $name . '.png';
         $info->save();
+ 
+
+        FileController::cropFile($file, $path, $width, $height, $name);
 
 
-        FileController::cropFile($file,$path,$width,$height,$name);
 
-        return redirect('/home');
+        return redirect('/login-user');
     }
 
 

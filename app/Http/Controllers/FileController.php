@@ -1234,6 +1234,7 @@ class FileController extends Controller{
 
     public static function cropFile($file, $newPath, $width, $height, $name){
 
+
         $type = exif_imagetype($file);
 
         if ($type == IMAGETYPE_JPEG) {
@@ -1246,12 +1247,15 @@ class FileController extends Controller{
             return false;
         }
 
+
         $imgWidth = imagesx($image);
         $imgHeight = imagesy($image);
 
         if ($imgWidth / $imgHeight == 1) {
             if ($imgHeight > $height) {
                 $propHeight = $imgWidth = min($width, $height);
+                dd( min($width, $height));
+               /* $propWidth =;*/
             } else {
                 $propWidth = $width;
                 $propHeight = $height;
@@ -1264,12 +1268,15 @@ class FileController extends Controller{
             $propHeight = $height;
         }
 
+
         $small_res = imagecreatetruecolor($width, $height);
         imagesavealpha($small_res, true);
         $transPng = imagecolorallocatealpha($small_res, 0, 0, 0, 127);
         imagefill($small_res, 0, 0, $transPng);
 
+
         imagecopyresampled($small_res, $image, round(($width - $propWidth) / 2), round(($height - $propHeight) / 2), 0, 0, $propWidth, $propHeight, $imgWidth, $imgHeight);
+
 
         imagepng($small_res, $newPath.'/'.$name.'.png');
     }

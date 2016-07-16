@@ -77,10 +77,10 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Выйти</a></li>
                             <li>
-                                <a href="/home/#tab_1_3"> Настройки аккаунта </a>
+                                <a href="/login-user/#tab_1_3"> Настройки аккаунта </a>
                             </li>
                             <li>
-                                <a href="/home/#tab_1_6"> Помощь </a>
+                                <a href="/login-user/#tab_1_6"> Помощь </a>
                             </li>
                         </ul>
                     </li>
