@@ -155,7 +155,7 @@
             {!! $errors->first('company_contact_info', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
-    <div class="form-group{{ $errors->has('region') ? ' has-error' : '' }}">
+    <div style="margin:15px;" class="form-group{{ $errors->has('region') ? ' has-error' : '' }}">
         <label class="col-md-2 control-label">Регион</label>
         <div class="col-md-4">
             <div class="form-group">

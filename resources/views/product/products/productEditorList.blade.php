@@ -3,7 +3,7 @@
         if(isset($company) && !count($company->getCategoryCompany) || !count($company->getProducts)){
                 if(!count($company->getCategoryCompany)){
                     $hide = true;
-                    echo '<h1>У Вас нет пока категорий. Добавте </h1>';
+                    echo '<h1>У Вас нет пока категорий. Добавьте </h1>';
                 }else{
                     echo '<h1>У Вас нет пока продуктоов. Добавте продукты</h1>';
                 }

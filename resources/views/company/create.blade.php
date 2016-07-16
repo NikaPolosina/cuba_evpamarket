@@ -56,21 +56,21 @@
             </div>
 
             {!! Form::hidden('company_logo', null, ['class' => 'form-control', 'id'=>'company_logo']) !!}
-            <div class="form-group {{ $errors->has('company_content') ? 'has-error' : ''}}">
+     {{--       <div class="form-group {{ $errors->has('company_content') ? 'has-error' : ''}}">
                 {!! Form::label('company_content', 'Детальное описание: ', ['class' => 'col-sm-2 control-label']) !!}
                 <div class="col-sm-4">
                     {!! Form::textarea('company_content', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('company_content', '<p class="help-block">:message</p>') !!}
                 </div>
-            </div>
+            </div>--}}
             <div class="form-group {{ $errors->has('company_contact_info') ? 'has-error' : ''}}">
                 {!! Form::label('company_contact_info', 'Контактная информация: ', ['class' => 'col-sm-2 control-label']) !!}
                 <div class="col-sm-4">
-                    {!! Form::text('company_contact_info', null, ['class' => 'form-control']) !!}
+                    {!! Form::textarea('company_contact_info', null, ['class' => 'form-control', 'rows' => '3']) !!}
                     {!! $errors->first('company_contact_info', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-            <div class="form-group{{ $errors->has('region') ? ' has-error' : '' }}">
+            <div  style="padding: 0px 15px 0px 15px;" class="form-group{{ $errors->has('region') ? ' has-error' : '' }}">
                 <label class="col-md-2 control-label">Регион</label>
                 <div class="col-md-4">
                     <div class="form-group">
@@ -282,7 +282,7 @@
         </script>
     </div>
 
-
+{{--
     <script src="/plugins/tinymce/tinymce.min.js"></script>
     <script>
         tinymce.init({
@@ -303,7 +303,7 @@
             filemanager_title:"Responsive Filemanager" ,
             external_plugins: { "filemanager" : "/plugins/responsive_filemanager/filemanager/plugin.min.js"}
         });
-    </script>
+    </script>--}}
 
     </div>
 </div>

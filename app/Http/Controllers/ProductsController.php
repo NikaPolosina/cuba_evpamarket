@@ -234,7 +234,56 @@ class ProductsController extends Controller{
         $singleProduct = Product::find($id)->toArray();
         $companyId = Product::find($id)->getCompany[0]['id'];
 
-        return view('product.products.singleProductInfo')->with('singleProduct', $singleProduct)->with('companyId', $companyId);
+
+
+
+
+            $idProduct = $singleProduct['id'];
+
+            $directory = public_path().'/img/custom/companies/'.$companyId.'/products/'.$idProduct;
+            $directoryMy = '/img/custom/companies/'.$companyId.'/products/'.$idProduct.'/';
+
+
+            if(is_dir($directory)){
+                $allFile = array_diff(scandir($directory), array('.', '..'));
+                $singleFile = array();
+                foreach($allFile as $value){
+                    if(file_exists($directory.'/'.$value) && !is_dir($directory.'/'.$value)){
+                        $singleFile[] = $directoryMy.$value;
+                    }
+                }
+            }
+
+            if(!empty($singleProduct['product_image']) && File::exists($directory.'/'.$singleProduct['product_image'])){
+
+                $firstFile = $directoryMy.$singleProduct['product_image'];
+            }else{
+
+                if(is_dir($directory)){
+                    $files = scandir($directory);
+                    $firstFile = $directoryMy.$files[2];// because [0] = "." [1] = ".."
+
+                    if(is_dir(public_path().$firstFile)){
+                        if(isset($files[3]))
+                            $firstFile = $directoryMy.$files[3];
+                        else
+                            $firstFile = '/img/custom/files/thumbnail/plase.jpg';
+
+                    }
+                }else{
+                    $firstFile = '/img/custom/files/thumbnail/plase.jpg';
+                }
+            }
+
+     
+        
+        
+
+        return view('product.products.singleProductInfo')
+            ->with('singleProduct', $singleProduct)
+            ->with('firstFile', $firstFile)
+            ->with('singleFile', $singleFile)
+            ->with('companyId', $companyId);
     }
 
     public function productEditor(CategoryController $category, $id){
