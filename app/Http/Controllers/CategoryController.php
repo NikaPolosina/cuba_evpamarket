@@ -71,11 +71,11 @@ class CategoryController extends Controller{
             $this->nCategory[$value['parent_id']][] = $value;
         }
         ksort($this->nCategory);
-        $this->nCategory = array_reverse($this->nCategory, true); 
+        $this->nCategory = array_reverse($this->nCategory, true);
         foreach($this->nCategory as $key => $value){
             foreach($value as $k => $v){
                 if(array_key_exists($v['id'], $this->nCategory)){
-                    $this->nCategory[$key][$k]['nodes'] = $this->nCategory[$v['id']]; 
+                    $this->nCategory[$key][$k]['nodes'] = $this->nCategory[$v['id']];
                     unset($this->nCategory[$v['id']]);
                 }
             }
@@ -90,7 +90,14 @@ class CategoryController extends Controller{
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
 
-        return view('category.category_setup')->with('categories', $categories)->with('company', $company)->with('category', json_encode($currentCompanyCategoriesSorted));
+        $company = Company::find($id);
+        
+        
+        return view('category.category_setup')
+            ->with('categories', $categories)
+            ->with('default_company_categories', json_encode($company->getCategoryCompany()->get()->lists('id')))
+            ->with('company', $company)
+            ->with('category', json_encode($currentCompanyCategoriesSorted));
     }
 
     public function getCompanyActiveCategory($categoriId){
@@ -167,20 +174,45 @@ class CategoryController extends Controller{
     }
 
     public function attachCategoriesToCompany(Request $request, CategoryController $category){
+        /*        $this->validate($request, [
+                    'company'    => 'required',
+                    'categories' => 'required',
+                ]);
+                $myCategories = $company->getCategoryCompany()->lists('id')->toArray();
+                $newCategories = $request->input('categories');
+
+                $company->getCategoryCompany()->detach($myCategories);
+                $company->getCategoryCompany()->attach(array_unique(array_merge($myCategories, $newCategories)));
+
+                $currentCompanyCategories = $category->getCompanyCategorySorted($request->input('company'));
+                $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
+        */
         $this->validate($request, [
             'company'    => 'required',
-            'categories' => 'required',
-
         ]);
-        $company = Company::find($request->input('company'));
-        $myCategories = $company->getCategoryCompany()->lists('id')->toArray();
-        $newCategories = $request->input('categories');
 
-        $company->getCategoryCompany()->detach($myCategories);
-        $company->getCategoryCompany()->attach(array_unique(array_merge($myCategories, $newCategories)));
+        $company = Company::find($request->input('company'));
+        $company->getCategoryCompany()->detach([]);
+
+        if(count($request->input('categories'))){
+            $company->getCategoryCompany()->attach($request->input('categories'));
+        }
 
         $currentCompanyCategories = $category->getCompanyCategorySorted($request->input('company'));
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
+
+        return response()->json([ 'categories' => $currentCompanyCategoriesSorted ], 200);
+    }
+
+
+    public function attachCategoriesToCompanyTwo(Request $request, CategoryController $category){
+
+        $currentCompanyCategoriesSorted = array();
+        if(count($request->input('categories'))){
+            $categories = array_unique($request->input('categories'));
+            $currentCompanyCategories = Category::whereIn('id', $categories)->get()->toArray();
+            $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
+        }
 
         return response()->json([ 'categories' => $currentCompanyCategoriesSorted ], 200);
     }
@@ -190,7 +222,7 @@ class CategoryController extends Controller{
             'company'    => 'required',
             'categories' => 'required',
         ]);
-        
+
         $company = Company::find($request->input('company'));
         $company->getCategoryCompany()->detach($request->input('categories'));
         $currentCompanyCategories = $category->getCompanyCategorySorted($request->input('company'));

@@ -62,6 +62,9 @@ Route::any('/user/simple_user/setting/security/edit', 'UserController@settingOve
 /*-------------------------------------------Category----------------------------------------------*/
 Route::any('category/category-setup/{id}', 'CategoryController@categorySetup');
 Route::post('/category/edit-categoty', ['as' => 'attach_categories', 'uses'=>'CategoryController@attachCategoriesToCompany']);
+Route::post('/category/edit-categoty_two', ['as' => 'attach_categories_two', 'uses'=>'CategoryController@attachCategoriesToCompanyTwo']);
+
+
 Route::post('/category/remove-categoty', ['as' => 'remove_categories', 'uses'=>'CategoryController@detachCategoriesToCompany']);
 
 
