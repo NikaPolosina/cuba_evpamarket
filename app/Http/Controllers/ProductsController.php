@@ -252,7 +252,10 @@ class ProductsController extends Controller{
                         $singleFile[] = $directoryMy.$value;
                     }
                 }
+            }else{
+               $singleFile[] = '/img/custom/files/thumbnail/plase.jpg';
             }
+
 
             if(!empty($singleProduct['product_image']) && File::exists($directory.'/'.$singleProduct['product_image'])){
 

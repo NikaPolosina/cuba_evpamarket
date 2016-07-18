@@ -3,9 +3,68 @@
 
 @section('content')
     @include('layouts.header_menu')
+
+    <style type="text/css" >
+      .desk{
+        width: 400px;
+        height: 300px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 10px 0 0 0;
+      } 
+      .price{
+        background:#fff3b5;
+        width: 170px;
+        height: 170px;
+        padding-top: 20px;
+      }
+      .price > span{
+        font-size: 25px;
+        display: block;
+          margin: 20px 0 30px 0;
+      }
+      .detail-tools{
+          width: 200px;
+          height: 170px;
+          background: white;
+          float: left;
+          padding: 20px 0 0 0;
+      }
+        .img_like{
+            width: 190px;
+            margin: 0 auto;
+            padding-left: 35px;
+        }
+        .cont_stars{
+            margin: 20px 0 0 0;
+        }
+        .product_stars{
+            background-image: url(/img/system/star.png);
+            background-repeat: repeat-x;
+            width: 81px;
+            height: 20px;
+            display: inline-block;
+            margin: 5px 0 0 0;
+        }
+        .num_of_rev{
+            display: block;
+            margin: 0 0 10px 0;
+        }
+
+
+
+
+    </style>
+    <link rel="stylesheet" type="text/css" href="/css/show_product.css"/>
     <link href="../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
 
-    <div class="col-sm-10 col-md-offset-1">
+
+   <div class="row row_row">
+            <div class="item_class_3">
+                <div class="item_class_4 item_1">
+                <input style="display: none" data-name="product-id" type="text" value="{{ $singleProduct['id'] }}"/>
+                <div class="carent_my_product">
+        <div class="col-sm-10 col-md-offset-1">
         <h1 style="font-size: 2.76923em; font-weight: normal; line-height: 1.2em; margin-bottom: 0.325em; letter-spacing: -0.025em;">Товар</h1>
 
     <div class="portlet box yellow">
@@ -82,8 +141,29 @@
 
 
                                     </td>
-                                    <td style="width: 500px; padding: 20px;;"> {{ $singleProduct['product_description'] }} </tdstyle>
-                                    <td> {{ $singleProduct['product_price'] }} </td>
+                                    <td style="width: 200px; padding: 20px;;"> {{ $singleProduct['product_description'] }} </td>
+                                    <td>
+                                        <div class = "product_navigation desk">
+                                            <div class="price">
+                                                <span class="desk-price">{{ $singleProduct['product_price'] }} грн.</span>
+                                                <div class="">
+                                                    <button class="btn btn-success ">В корзину</button>
+                                                </div>
+                                            </div>
+                                            <div class="detail-tools">
+                                                <div class="img_like">
+                                                    @if(!Auth::guest())
+                                                        <span class="like"></span>
+                                                    @endif
+                                                        <span>Добавить в желания</span>
+                                                </div>
+                                                <div class="cont_stars">
+                                                    <span class="product_stars"></span>
+                                                    <span class="num_of_rev">24 отзыва</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -103,8 +183,7 @@
                                     {{ $singleProduct['content'] }}
                                 </td>
                                 <td style="width: 250px;">
-
-                                {{ $singleProduct['content'] }}
+                                    {{ $singleProduct['content'] }}
                                 </td>
                             </tr>
                             </tbody>
@@ -134,14 +213,16 @@
 
         </div>
     </div>
-
-
-    </div>
+</div>
+                </div>
+            </div>
+            </div>
+        </div>
     <style>
         .tabbable-custom>.nav-tabs>li.active {
             border-top: 3px solid #32c5d2!important;
         }
     </style>
-@endsection
 
+@endsection
 

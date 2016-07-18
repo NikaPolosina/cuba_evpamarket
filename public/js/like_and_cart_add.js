@@ -1,9 +1,12 @@
 
-$('.panel-body').find('.item_product').find('.product_navigation').delegate('.btn-success', 'click', function(){
+
+
+$('#app-layout').find('.row_row').find('.item_class_4').find('.product_navigation').delegate('.btn-success', 'click', function(){
+
 
     $('.btn-success').attr('disabled', true);
-    var holder = $(this).parents('.carentFindProduct').eq(0);
-    var parent = $(this).parents('.item');
+    var holder = $(this).parents('.carent_my_product').eq(0);
+    var parent = $(this).parents('.item_1');
     var product_id = parent.find("input[data-name='product-id']").val();
     var product_img = parent.find('.product_img').find('img').attr('src');
     var product_name = parent.find('.product_name').find('a').text();
@@ -16,6 +19,7 @@ $('.panel-body').find('.item_product').find('.product_navigation').delegate('.bt
     body_modal_add_cart.find('p.product_description').text('');
     body_modal_add_cart.find('p.name').text('');
     body_modal_add_cart.find('.modal-title').find('span').text('');
+
 
 
     $.ajax({
@@ -55,10 +59,10 @@ $('.panel-body').find('.item_product').find('.product_navigation').delegate('.bt
 
 
 });
-$('.panel-body').find('.item_product').find('.product_navigation').delegate('span.like', 'click', function(){
+$('.item_class_3').find('.item_class_4').find('.product_navigation').delegate('span.like', 'click', function(){
+ 
 
-
-    var parent = $(this).parents('.item');
+    var parent = $(this).parents('.item_1');
     var product_id = parent.find("input[data-name='product-id']").val();
     var body_modal_add_cart = $('#modal_add_product_like');
     body_modal_add_cart.find('.modal-title').find('span').text('');

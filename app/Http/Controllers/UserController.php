@@ -94,6 +94,12 @@ class UserController extends Controller{
     }
 
     public function settingOverallEdit(Request $request){
+
+        $this->validate($request, [
+            'name' => 'required',
+            'surname' => 'required',
+        ]);
+
         $curentUser = Auth::user();
         $info = $curentUser->getUserInformation;
         $info->name = $request['name'];
@@ -103,7 +109,9 @@ class UserController extends Controller{
         $info->about_me = $request['about_me'];
         $info->my_site = $request['my_site'];
         $info->save();
-        return redirect('/home');
+        
+
+        return redirect('/login-user');
     }
 
     public function createAvatar(Request $request){

@@ -176,14 +176,14 @@
 {{-----------------------------------------------------------------}}
 
 
-<div class="row item_product">
+<div class="row item_product item_class_4">
 
     @foreach($productAll as $v)
 
         <div class="col-md-3 tom" style="padding-right: 2px; padding-left: 2px">
             <div class="single_product_holder">
-                <div class="carentFindProduct">
-                    <div class="item">
+                <div class="carentFindProduct carent_my_product">
+                    <div class="item item_1">
                         <input style="display: none" data-name="product-id" type="text" value="{{$v->id}}"/>
                         <div class="product_img">
 

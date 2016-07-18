@@ -45,6 +45,7 @@
 <body id="app-layout">
 
     @yield('content')
-
+    {!! HTML::script('/js/like_and_cart_add.js') !!}
 </body>
 </html>
+
