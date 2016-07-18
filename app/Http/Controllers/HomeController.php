@@ -30,6 +30,7 @@ class HomeController extends Controller{
             return redirect()->intended('admin');
         }
         if(Auth::user()->hasRole('company_owner')){
+
             return redirect()->intended('homeOwnerUser');
         }
         if(Auth::user()->hasRole('simple_user')){

@@ -57,7 +57,8 @@ Route::any('/user/simple_user/basket', 'UserController@basket');
 Route::any('/user/simple_user/setting', 'UserController@setting');
 Route::any('/user/simple_user/setting/overall', 'UserController@settingOverall');
 Route::any('/user/simple_user/setting/security', 'UserController@settingSecurity');
-Route::any('/user/simple_user/setting/security/edit', 'UserController@settingOverallEdit');
+Route::any('/user/simple_user/setting/security/edit-simple', 'UserController@settingOverallEditSimple');
+Route::post('/user/simple_user/setting/security/edit-owner', 'UserController@settingOverallEditOwner');
 
 /*-------------------------------------------Category----------------------------------------------*/
 Route::any('category/category-setup/{id}', 'CategoryController@categorySetup');

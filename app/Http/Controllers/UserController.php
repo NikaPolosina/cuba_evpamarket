@@ -93,17 +93,36 @@ class UserController extends Controller{
         return view('user.simple_user.setting.settingSecurity');
     }
 
-    public function settingOverallEdit(Request $request){
+    public function settingOverallEditSimple(Request $request){
+
         $curentUser = Auth::user();
         $info = $curentUser->getUserInformation;
         $info->name = $request['name'];
         $info->surname = $request['surname'];
+        $curentUser->email = $request['email'];
+        $info->street = $request['street'];
+        $info->address = $request['address'];
+
+        $info->save();
+        $curentUser->save();
+        return redirect('/login-user');
+    }
+    public function settingOverallEditOwner(Request $request){
+        $curentUser = Auth::user();
+        $info = $curentUser->getUserInformation;
+        $info->name = $request['name'];
+        $info->surname = $request['surname'];
+        $curentUser->email = $request['email'];
+        $curentUser->phone = $request['phone'];
         $info->street = $request['street'];
         $info->address = $request['address'];
         $info->about_me = $request['about_me'];
         $info->my_site = $request['my_site'];
+        $info->street = $request['street'];
+        $info->address = $request['address'];   
         $info->save();
-        return redirect('/home');
+        $curentUser->save();
+        return redirect('/login-user');
     }
 
     public function createAvatar(Request $request){
@@ -143,6 +162,7 @@ class UserController extends Controller{
  
 
         FileController::cropFile($file, $path, $width, $height, $name);
+
 
 
 
