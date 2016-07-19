@@ -17,6 +17,7 @@ use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use App\UserInformation;
 use App\Http\Controllers\FileController;
+use Illuminate\Support\Facades\Cookie;
 
 class HomeController extends Controller{
     public function __construct(){
@@ -24,7 +25,10 @@ class HomeController extends Controller{
     }
 
     public function Index(){
-     
+
+        Cookie::queue(
+            Cookie::forget('cart')
+        );
 
         if(Auth::user()->hasRole('admin')){
             return redirect()->intended('admin');

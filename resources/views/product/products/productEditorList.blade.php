@@ -11,8 +11,6 @@
         }
 
         ?>
-
-
             <table class="table table-bordered table-striped table-hover" style="display: <?=(isset($hide))? 'none':'' ?>;" >
     <thead>
     <tr>
@@ -139,16 +137,7 @@
 </div>
 {{-----------------------------------------------------------------}}
 
-
 <script>
-
-
-
-
-  /*  $('.files').find('.tBody').delegate('.product_modal_show', 'click', function(){
-
-   *//* });*/
-
 
 $('.tBody').delegate('.product_modal_show', 'click', function(){
     nededPath = '';
@@ -164,8 +153,6 @@ $('.tBody').delegate('.product_modal_show', 'click', function(){
     var parent = $(this).parents('tr');
     var id = parent.find('.option').val();
 
-
-
     $.ajax({
         type:"POST",
         url:"/products/show",
@@ -176,8 +163,6 @@ $('.tBody').delegate('.product_modal_show', 'click', function(){
         success:function(msg){
 
 
-            
-
             $('.product_info').find('p.name').text(msg.product.product_name);
             $('.product_info').find('p.product_description').text(msg.product.product_description);
             /*$('.product_info').find('img.img_product').attr('src', msg.product.product_image);*/
@@ -187,8 +172,6 @@ $('.tBody').delegate('.product_modal_show', 'click', function(){
             
             $('#modalProduct').find('.modal-body').html($('.product_info').show());
             $('#modalProduct').modal('show');
-
-
 
 
             if(msg.mainPath.length > 0){
@@ -221,7 +204,6 @@ $('.tBody').delegate('.product_modal_show', 'click', function(){
 
         }
     });
-
 
 });
 

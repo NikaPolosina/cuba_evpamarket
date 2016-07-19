@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Role;
 use App\Region;
 use App\City;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthController extends Controller{
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
@@ -126,6 +127,10 @@ class AuthController extends Controller{
     }
 
     public function registerC(){
+        Cookie::queue(
+            Cookie::forget('cart')
+        );
+
         return view('auth.register')/*->withCompany(true)*/;
     }
 

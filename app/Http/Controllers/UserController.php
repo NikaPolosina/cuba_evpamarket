@@ -121,7 +121,9 @@ class UserController extends Controller{
         $info->street = $request['street'];
         $info->address = $request['address'];   
         $info->save();
+
         $curentUser->save();
+        
         return redirect('/login-user');
     }
 

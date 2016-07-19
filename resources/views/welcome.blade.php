@@ -6,9 +6,9 @@
 
         @include('layouts.category_menu', $category)
 
-        <div class="col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-body">
+        <div class="col-md-8 item_class">
+            <div class="panel panel-default item_class_2">
+                <div class="panel-body item_class_3">
 
                     @include('slide')
 
@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    {!! HTML::script('/js/like_and_cart_add.js') !!}
+
 
 
 @endsection

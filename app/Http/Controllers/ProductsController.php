@@ -16,6 +16,7 @@ use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cookie;
 use App\Http\Controllers\CartController;
+use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller{
 
@@ -108,6 +109,29 @@ class ProductsController extends Controller{
     }
 
     public function storeCategory(Request $request){
+
+        $validator = Validator::make(
+            $request->input('product'),
+            array(
+                'name' => 'required|max:255|min:2',
+                'description' => 'required|min:2',
+                'price' => 'required|integer|min:1'
+            )
+        );
+
+        $validator->setAttributeNames([
+
+            'name'=> 'Имя товара',
+            'description'=> 'Описание',
+            'price'=> 'Цена',
+
+        ]);
+
+        if($validator->fails()){
+
+            return response()->json([
+                'error'  => $validator->errors() ], 200);
+        }
 
         $newProduct = new Product([
             'product_name'        => $request['product']['name'],
@@ -252,7 +276,10 @@ class ProductsController extends Controller{
                         $singleFile[] = $directoryMy.$value;
                     }
                 }
+            }else{
+               $singleFile[] = '/img/custom/files/thumbnail/plase.jpg';
             }
+
 
             if(!empty($singleProduct['product_image']) && File::exists($directory.'/'.$singleProduct['product_image'])){
 
@@ -322,6 +349,30 @@ class ProductsController extends Controller{
     }
 
     public function productAjaxUpdate(Request $request){
+
+        $validator = Validator::make(
+            $request->input('product'),
+            array(
+                'name' => 'required|max:255|min:2',
+                'description' => 'required|min:2',
+                'price' => 'required|integer|min:1'
+            )
+        );
+
+        $validator->setAttributeNames([
+
+            'name'=> 'Имя товара',
+            'description'=> 'Описание',
+            'price'=> 'Цена',
+
+        ]);
+
+        if($validator->fails()){
+            
+            return response()->json([
+                'error'  => $validator->errors() ], 200);
+        }
+
         $data = $request->all();
         if($request->input('product')['product_id']){
             $product = Product::findOrFail($request->input('product')['product_id']);

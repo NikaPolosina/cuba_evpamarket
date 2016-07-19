@@ -1253,8 +1253,8 @@ class FileController extends Controller{
 
         if ($imgWidth / $imgHeight == 1) {
             if ($imgHeight > $height) {
-                $propHeight = $imgWidth = min($width, $height);
-                $propWidth =$height;
+                $propHeight = min($width, $height);
+                $propWidth = min($width, $height);
             } else {
                 $propWidth = $width;
                 $propHeight = $height;
