@@ -41,6 +41,9 @@ class CategoryController extends Controller{
                     $nCategory[$key][$k]['nodes'] = $nCategory[$v['id']];
                     unset($nCategory[$v['id']]);
                 }
+                if(!count($nCategory[$key][$k]['nodes'])){
+                    $nCategory[$key][$k]['nodes'] = null;
+                }
             }
         }
         return $nCategory[0];
@@ -167,6 +170,9 @@ class CategoryController extends Controller{
                 if(array_key_exists($v['id'], $this->nCategory)){
                     $this->nCategory[$key][$k]['nodes'] = $this->nCategory[$v['id']];
                     unset($this->nCategory[$v['id']]);
+                }
+                if(!count($this->nCategory[$key][$k]['nodes'])){
+                    $this->nCategory[$key][$k]['nodes'] = null;
                 }
             }
         }
