@@ -508,7 +508,7 @@
                         }
                         currentCategory = node['id'];
                         categories.push(node['id']);
-                        if(node['nodes'].length > 0){
+                        if(node['nodes'] && node['nodes'].length > 0){
                             var childrens = node['nodes'];
                             do{
                                 childrens.forEach(function(currentNode, key){
