@@ -65,6 +65,7 @@
 
 
                     <li class="dropdown">
+
                         <?php if(Auth::user()->getUserInformation){?>
 
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -75,13 +76,16 @@
                         <?php  }  ?>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Выйти</a></li>
                             <li>
                                 <a href="/login-user/#tab_1_3"> Настройки аккаунта </a>
                             </li>
                             <li>
                                 <a href="/login-user/#tab_1_6"> Помощь </a>
                             </li>
+                            <li>
+                                <a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Выйти</a>
+                            </li>
+
                         </ul>
                     </li>
                 @endif
@@ -105,6 +109,10 @@
 </script>
 
 <style>
+    .nav_li_menu>li>a{
+        padding: 10px 10px;
+
+    }
     .count_product_cart_css{
         position: absolute!important;
         top: 30px!important;

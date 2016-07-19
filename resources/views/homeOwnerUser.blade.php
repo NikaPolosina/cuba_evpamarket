@@ -36,10 +36,10 @@
                 <li class="active">
                     <a href="#tab_1_1" data-toggle="tab"> Мой профиль </a>
                 </li>
-                <li>
+                <li style="display: none">
                     <a href="#tab_1_3" data-toggle="tab"> Настройки аккаунта </a>
                 </li>
-                <li>
+                <li style="display: none">
                     <a href="#tab_1_6" data-toggle="tab"> Помощь </a>
                 </li>
             </ul>
@@ -48,8 +48,9 @@
                     <div class="row">
                         <div class="col-md-3">
                             <ul class="list-unstyled profile-nav">
+
                                 <li>
-                                    @if(!empty($userInfo->avatar))
+                                    @if(!empty($userInfo->avatar) && file_exists(public_path().$userInfo->avatar))
                                         <img src="{{$userInfo->avatar}}" alt="avatar">
                                     @else
                                          <img src="/img/placeholder/avatar.jpg" alt="avatar" />
@@ -87,9 +88,11 @@
                             <div class="row">
                                 <div class="col-md-8 profile-info">
                                     <h1 class="font-green sbold uppercase">{{$userInfo->name}} {{$userInfo->surname}}</h1>
-
                                     <p>
-                                        <a href="javascript:;"> www.mywebsite.com </a>
+                                       {{$userInfo->about_me}}
+                                    </p>
+                                    <p>
+                                        <a href="javascript:;">{{$userInfo->my_site}} </a>
                                     </p>
                                     <ul class="list-inline">
                                         <li>
@@ -97,7 +100,7 @@
                                         <li>
                                             <i class="fa fa-star"></i> Отзывы </li>
                                         <li>
-                                            <i class="fa fa-heart"></i> В избранных </li>
+                                            <a href="/like">   <li> <i class="fa fa-heart"></i> В избранных </li></a>
                                     </ul>
                                 </div>
                                 <!--end col-md-8-->
@@ -224,32 +227,42 @@
                                 </li>
                             </ul>
                         </div>
+
+
                         <div class="col-md-9">
                             <div class="tab-content">
                                 <div id="tab_1-1" class="tab-pane active">
-                                    <form role="form" action="#">
+                                    <form role="form" action="/user/simple_user/setting/security/edit-owner" method="post">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                                         <div class="form-group">
                                             <label class="control-label">Имя</label>
-                                            <input type="text" placeholder="{{$userInfo->name}}" class="form-control" /> </div>
+                                            <input type="text" value="{{$userInfo->name}}" class="form-control" name="name" required /> </div>
                                         <div class="form-group">
                                             <label class="control-label">Фамилия</label>
-                                            <input type="text" placeholder="{{$userInfo->surname}}" class="form-control" /> </div>
+                                            <input type="text" value="{{$userInfo->surname}}" class="form-control"  name="surname" required /> </div>
                                         <div class="form-group">
                                             <label class="control-label">Номер Телефона</label>
-                                            <input type="text" placeholder="{{$curentUser->phone}}" class="form-control" /> </div>
+                                            <input type="text" value="{{$userInfo->getUser->phone}}" class="form-control" name="phone" required/> </div>
                                         <div class="form-group">
                                             <label class="control-label">Email</label>
-                                            <input type="text" placeholder="{{$curentUser->email}}" class="form-control" /> </div>
+                                            <input type="text" value="{{$userInfo->getUser->email}}" class="form-control" name="email" required  /> </div>
                                         <div class="form-group">
                                             <label class="control-label">Обо мне</label>
-                                            <textarea class="form-control" rows="3" placeholder="Информация которую я написал."></textarea>
+                                            <textarea  class="form-control" rows="3" name="about_me">{{$userInfo->about_me}}</textarea>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Веб. сайт</label>
-                                            <input type="text" placeholder="http://www.mywebsite.com" class="form-control" /> </div>
+                                            <input type="text" value="{{$userInfo->my_site}}" class="form-control" name="my_site" /> </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Улица</label>
+                                            <input type="text" value="{{$userInfo->street}}" class="form-control" name="street"/> </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Номер дома</label>
+                                            <input type="text" value="{{$userInfo->address}}" class="form-control" name="address"/> </div>
                                         <div class="margiv-top-10">
-                                            <a href="javascript:;" class="btn green"> Сохранить изменения</a>
-                                            <a href="javascript:;" class="btn default"> Отменить </a>
+                                            <button type="submit" class="btn green">Сохранить изменения</button>
+                                            <button type="reset" class="btn default">Отменить</button>
                                         </div>
                                     </form>
                                 </div>
@@ -262,7 +275,11 @@
                                         <div class="form-group">
                                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                                 <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                    <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> </div>
+                                                    @if(!empty($userInfo->avatar) && file_exists(public_path().$userInfo->avatar))
+                                                        <img src="{{$userInfo->avatar}}" alt="avatar">
+                                                    @else
+                                                        <img src="/img/placeholder/avatar.jpg" alt="avatar" />
+                                                    @endif </div>
                                                 <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
                                                 <div>
                                                                     <span class="btn default btn-file">

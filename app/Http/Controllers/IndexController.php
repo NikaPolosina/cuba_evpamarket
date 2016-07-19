@@ -14,6 +14,7 @@ use Auth;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Cookie;
 
 class IndexController extends Controller{
 
@@ -55,7 +56,7 @@ class IndexController extends Controller{
 
 
     public function Index(ProductsController $product, CompanyController $company, CategoryController $category, Request $request){
-
+        
         $productAll = Product::paginate(8);
 
         $companyAll = $company->getCompanyAll();

@@ -29,7 +29,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/welcome.css"/>
 
-
+    <!-- Tinymce -->
+    {{ HTML::script('/plugins/tinymce/tinymce.min.js') }}
 
     <style>
         body {
