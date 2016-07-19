@@ -1,4 +1,5 @@
 <?php
+
 function sho($data, $parent, $none = 'none'){?>
 <div class="category_parent_list" data-child="<?=$parent['id']?>" style="display: <?=$none?>">
     @foreach($data as $value)
@@ -12,7 +13,6 @@ function sho($data, $parent, $none = 'none'){?>
 ?>
 
 <link rel="stylesheet" type="text/css" href="/css/category_menu.css"/>
-
 
 
 <div class="col-md-2" style="  padding-right: 0px;">
@@ -35,10 +35,17 @@ function sho($data, $parent, $none = 'none'){?>
                         </div>
                         <div class="box">
                             <div class="category_list_navigation " data-index="2">
+
                                 <?php
+
                                 foreach($category as $value){
-                                    sho($value['nodes'], $value);
-                                } ?>
+                                    if(($value['nodes'])){
+                                        sho($value['nodes'], $value);
+                                    }
+                                }
+
+                                ?>
+
                             </div>
                         </div>
                         <div class="scroll_block scroll_down">
@@ -52,9 +59,18 @@ function sho($data, $parent, $none = 'none'){?>
                             <div class="category_list_navigation " data-index="3">
                                 <?php
                                 foreach($category as $parent){
-                                    foreach($parent['nodes'] as $value){
-                                        sho($value['nodes'], $value);
+
+
+                                    if($parent['nodes']){
+                                        foreach($parent['nodes'] as $value){
+                                            if(($value['nodes'])){
+                                                sho($value['nodes'], $value);
+                                            }
+                                        }
                                     }
+
+
+
                                 } ?>
                             </div>
                         </div>
@@ -67,6 +83,10 @@ function sho($data, $parent, $none = 'none'){?>
             </div>
 
             <span class="im"><img src=""></span>
+
+
+
+
 
         </div>
 

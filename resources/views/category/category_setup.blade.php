@@ -123,14 +123,14 @@
                 onNodeChecked   : function(event, node){
 
 
-                    if(node['nodes'].length > 0){
+                    if(node['nodes'] && node['nodes'].length > 0){
                         node['nodes'].forEach(function(currentNode, key){
                             $('#custom-checkable').treeview('checkNode', currentNode['nodeId']);
                         });
                     }
                 },
                 onNodeUnchecked : function(event, node){
-                    if(node['nodes'].length > 0){
+                    if(node['nodes'] && node['nodes'].length > 0){
                         node['nodes'].forEach(function(currentNode, key){
                             $('#custom-checkable').treeview('uncheckNode', currentNode['nodeId']);
                         });
@@ -258,14 +258,14 @@
                 showCheckbox    : true,
                 enableLinks     : false,
                 onNodeChecked   : function(event, node){
-                    if(node['nodes'].length > 0){
+                    if(node['nodes'] && node['nodes'].length > 0){
                             node['nodes'].forEach(function(currentNode, key){
                                 $('#custom-checkable1').treeview('checkNode', currentNode['nodeId']);
                             });
                     }
                 },
                 onNodeUnchecked : function(event, node){
-                    if(node['nodes'].length > 0){
+                    if(node['nodes'] && node['nodes'].length > 0){
                             node['nodes'].forEach(function(currentNode, key){
                                 $('#custom-checkable1').treeview('uncheckNode', currentNode['nodeId']);
                             });
