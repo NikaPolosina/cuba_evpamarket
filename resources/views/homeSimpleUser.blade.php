@@ -30,8 +30,17 @@
     <div class="container">
         <div class="row">
             {{setlocale(LC_ALL, 'de_RU')}}
-
             <div class="profile">
+
+                {{-- Вывод ошибок валидации формы --}}
+                {{-- @if (count($errors) > 0)
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif --}}
+
                 <div class="tabbable-line tabbable-full-width">
                     <ul class="nav nav-tabs">
                         <li class="active">
@@ -124,7 +133,7 @@
                                                     <input type="text" value="{{$userInfo->name}}" class="form-control" name="name" /> </div>
                                                 <div class="form-group">
                                                     <label class="control-label">Фамилия</label>
-                                                    <input type="text" value="{{$userInfo->surname}}" class="form-control" name="surname"/> </div>
+                                                    <input type="text" value="{{$userInfo->surname}}" class="form-control" name="surname" /> </div>
                                                 <div class="form-group">
                                                     <label class="control-label">Улица</label>
                                                     <input type="text" value="{{$userInfo->street}}" class="form-control" name="street"/> </div>

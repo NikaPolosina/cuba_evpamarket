@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use App\UserInformation;
 use Redirect;
 use File;
+use Validator;
 
 class UserController extends Controller{
     public function __construct(){
@@ -95,10 +96,15 @@ class UserController extends Controller{
 
     public function settingOverallEdit(Request $request){
 
-        $this->validate($request, [
-            'name' => 'required',
-            'surname' => 'required',
+        $v = Validator::make($request->all(), [
+            'name' => 'required|min:2',
+            'surname' => 'required|min:3',
         ]);
+
+        if ($v->fails())
+        {
+            return redirect()->back()->withErrors($v->errors());
+        }
 
         $curentUser = Auth::user();
         $info = $curentUser->getUserInformation;
@@ -109,7 +115,6 @@ class UserController extends Controller{
         $info->about_me = $request['about_me'];
         $info->my_site = $request['my_site'];
         $info->save();
-        
 
         return redirect('/login-user');
     }
