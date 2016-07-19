@@ -3,7 +3,6 @@
 @section('content')
     @include('layouts.header_menu')
 
-
     <div style="border: solid 2px darkgrey; padding: 10px;">
         <div class="table-responsive">
             <h1 style="text-align: center">{{ $company->company_name }} </h1>
@@ -12,79 +11,8 @@
 
         <div class="row">
             <div class="col-md-3">
-                <hr>
 
                 <a id="addCategory" href="{{url('/category/category-setup', $company->id)}}">Добавить категорию</a>
-
-
-                <div class="allCategoryBlock" style="display: none">
-                    <div style="display: none" class="selectCategory">
-                        <h4>Выбранные категории</h4>
-                        <ul data-id="select_input"></ul>
-                        <button type="submit" style="float: right" class="addCategoryCompany btn btn-primary btn-xs">Добавить</button>
-                    </div>
-                    <h4>Все категории</h4>
-                    <div id="custom-checkable1" class="">
-                    </div>
-                </div>
-
-
-
-                <script>
-                    var a  = $('.allCategoryBlock').find('.selectCategory');
-                    var ul = a.find('ul[data-id="select_input"]');
-        /*            $('#addCategory').on('click', function(){
-                     event.preventDefault();
-
-
-                     $('.allCategoryBlock').toggle();
-                     var data = <?php //$categories ?>
-
-                     $('#custom-checkable1').treeview({
-                     data            : data,
-                     showCheckbox    : true,
-                     enableLinks     : false,
-                     onNodeChecked   : function(event, node){
-                     a.show();
-                     ul.append('<li><input checked="checked" type="checkbox" value="' + node.id + '"/>' + node.text + '</li>');
-                     },
-                     onNodeUnchecked : function(event, node){
-                     ul.find('input[value="' + node.id + '"]').parent().remove();
-                     if(ul.find('input').length < 1){
-                     a.hide();
-                     }
-                     console.log(node.text + ' was unchecked');
-                     }
-                     }).treeview('collapseAll');
-                     });*/
-
-
-                    $('.addCategoryCompany').on('click', function(){
-                        event.preventDefault();
-                        var inputs     = ul.find("input:checked");
-                        var categories = [];
-                        inputs.each(function(){
-                            categories.push($(this).val());
-                        });
-                        $.ajax({
-                            type    : "POST",
-                            url     : "/attach-category-to-company",
-                            headers : {
-                                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data    : {
-                                companyId  : '<?=$company->id?>',
-                                categories : categories
-                            },
-                            success : function(msg){
-                                location.reload();
-                                $('.allCategoryBlock').hide();
-                            }
-                        });
-                    })
-
-                </script>
-
                 <hr>
                 <h4>Мои категории</h4>
                 <div class="allCategory form-group{{ $errors->has('product_name') ? ' has-error' : '' }}">
@@ -95,127 +23,19 @@
             </div>
 
             <div class="col-sm-9">
-
-
-            {{-----------------------------------------------------------}}
-            <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content col-md-10 col-sm-offset-1">
-                            <div class="modal-header">
-                                <button type="button" class="close myClose" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Добавление товара</h4>
-                            </div>
-                            <div class="modal-body">
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                                <button type="button" class="btn create btn-primary">Создать</button>
-                                <button type="button" class="btn update btn-primary">Обновить</button>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{-----------------------------------------------------------------}}
-
-
                 <div class="table" id="product_list">
                     @include('product.products.productEditorList', array(
                                     'products' => $company->getProducts()->paginate($paginCnt),
                                     'category' => false
                                      ))
                 </div>
-                <div style="display: none;">
-
-                    <div class="col-sm-12">
-                        <div class="row">
-
-
-                            <div style="display: block">
-                                <div class="col-sm-4">
-
-                                    <div class="addProductCategory">
-
-                                        {!! Form::open(['class' => 'form-horizontal ', 'id'=> 'product_form']) !!}
-                                        <div style="display: none" class="form-group {{ $errors->has('id') ? 'has-error' : ''}}">
-                                            {!! Form::label('product_id', 'Id: ', ['class' => 'control-label']) !!}
-                                            {!! Form::text('product_id', NULL, ['class' => 'form-control', 'data-name' =>'product_id']) !!}
-                                        </div>
-                                        <div class="form-group {{ $errors->has('category_name') ? 'has-error' : ''}}">
-                                            {!! Form::label('category_name', 'Категория: ', ['class' => 'col-sm-3 control-label']) !!}
-                                            <select name="category_name" data-name="category_name">
-                                                @if(count($myCategories))
-                                                    <option value="">Выбирите категорию</option>
-                                                    @foreach($myCategories as $value)
-                                                        <option value="{{$value['id']}}">{{$value['title']}}</option>
-                                                    @endforeach
-                                                @endif
-                                            </select>
-                                            <span class="modalSpan"></span>
-                                        </div>
-
-                                        <div class="msgDenger alert alert-danger" style="display: none;">
-                                            <strong>Внимание!</strong> Категория товара не выбрана. Выбирите катигорию.
-                                        </div>
-
-
-                                        <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
-                                            {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
-                                            {!! Form::text('product_name', NULL, ['class' => 'form-control', 'data-name' =>'name']) !!}
-                                        </div>
-                                        <div class="form-group {{ $errors->has('product_description') ? 'has-error' : ''}}">
-                                            {!! Form::label('product_description', 'Краткое описание: ', ['class' => 'col-sm-3 control-label']) !!}
-                                            {!! Form::text('product_description', NULL, ['class' => 'form-control', 'required' => 'required', 'data-name' =>'description']) !!}
-                                        </div>
-                                        <div class="form-group {{ $errors->has('content') ? 'has-error' : ''}}">
-                                            {!! Form::label('content', 'Полное описание: ', ['class' => 'col-sm-3 control-label']) !!}
-                                            {!! Form::text('content', NULL, ['class' => 'form-control', 'data-name' =>'content']) !!}
-                                        </div>
-
-                                        {!! Form::hidden('product_image', NULL, ['class' => 'form-control', 'data-name' =>'photo']) !!}
-
-                                        <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
-                                            {!! Form::label('product_price', 'Цена: ', ['class' => 'col-sm-3 control-label']) !!}
-
-                                            {!! Form::number('product_price', NULL, ['class' => 'form-control', 'data-name' =>'price']) !!}
-
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-offset-3 col-sm-3">
-
-                                            </div>
-                                        </div>
-
-
-                                        {!! Form::close() !!}
-
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-
             </div>
-
         </div>
 
 
         <div class="row">
-
-
             <div class="col-sm-8 col-sm-offset-2">
-
-                <div class="mod modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                <div id="myModal" class="mod modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -236,7 +56,6 @@
                                         }
                                     </style>
                                     <div class="col-sm-10 col-sm-offset-1">
-
 
                                         {!! Form::open(['class' => 'form-horizontal my_form', 'id'=> 'fileupload']) !!}
                                         <div style="display: none" class="form-group {{ $errors->has('id') ? 'has-error' : ''}}">
@@ -264,26 +83,39 @@
                                         <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
                                             {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
                                             {!! Form::text('product_name', NULL, ['class' => 'form-control', 'data-name' =>'name']) !!}
+
+                                            <div style="display: none" class="error" data-id="name">
+                                                <strong>Внимание!</strong> <span></span>
+                                            </div>
                                         </div>
+
 
                                         <div class="form-group {{ $errors->has('product_description') ? 'has-error' : ''}}">
                                             {!! Form::label('product_description', 'Краткое описание: ', ['class' => 'col-sm-3 control-label']) !!}
                                             {!! Form::text('product_description', NULL, ['class' => 'form-control', 'required' => 'required', 'data-name' =>'description']) !!}
+
+                                            <div style="display: none" class="error" data-id="description">
+                                                <strong>Внимание!</strong> <span></span>
+                                            </div>
                                         </div>
+
 
                                         <div class="form-group {{ $errors->has('content') ? 'has-error' : ''}}">
                                             {!! Form::label('content', 'Полное описание: ', ['class' => 'col-sm-3 control-label']) !!}
-                                            {!! Form::text('content', NULL, ['class' => 'form-control', 'data-name' =>'content']) !!}
+                                            {!! Form::textarea('content', NULL, ['class' => 'form-control tiny', 'data-name' =>'content']) !!}
                                         </div>
 
                                         {!! Form::hidden('product_image', NULL, ['class' => 'form-control', 'data-name' =>'photo']) !!}
 
                                         <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
                                             {!! Form::label('product_price', 'Цена: ', ['class' => 'col-sm-3 control-label']) !!}
+                                            {!! Form::number('product_price', NULL, ['class' => 'form-control', 'data-name' =>'price', 'min'=>0]) !!}
 
-                                            {!! Form::number('product_price', NULL, ['class' => 'form-control', 'data-name' =>'price']) !!}
-
+                                            <div style="display: none"class="error" data-id="price">
+                                                <strong>Внимание!</strong> <span></span>
+                                            </div>
                                         </div>
+
 
                                         <div class="form-group">
                                             <div class="col-sm-offset-3 col-sm-3">
@@ -393,7 +225,6 @@
             <script>
 
                 var nededPath, productId, mainImg;
-
                 $(function(){
                     $('#fileupload').fileupload({
                         url                : '{{route('file_uploader')}}',
@@ -444,28 +275,24 @@
 
 
                 $(document).ready(function(){
+                    /* Нажатие на кнопку изменить и создать новый*/
                     $('#product_list').delegate('.open', 'click', function(){
                         nededPath = 'temp/'+Date.now()+'/';
                         productId = false;
                         mainImg = '';
-
                         $('.mod').find('.form-group').find('input[data-name="product_id"]').val('');
                         $('.mod').find('.form-group').find('.product_id').val('');
                         $('.mod').find('.form-group').find('select[data-name="category_name"]').val('');
                         $('.mod').find('.form-group').find('input[data-name="name"]').val('');
-                        $('.mod').find('.form-group').find('input[data-name="description"]').val('');
+                        $('.mod').find('.form-group').find('textarea[data-name="description"]').val('');
                         $('.mod').find('.form-group').find('input[data-name="content"]').val('');
                         $('.mod').find('.form-group').find('input[data-name="photo"]').val('');
                         $('.mod').find('.form-group').find('input[data-name="price"]').val('');
-
-
                         $('.files').html('');
-
                         var categoryId    = $('.table').find('.companyIdClass').val();
                         var categoryTitle = $('.table').find('.companyTitleClass').val();
                         var modalSelect   = $('.mod').find('select[data-name="category_name"]');
                         var modalSpan     = $('.mod').find('.modalSpan');
-
                         if(categoryId.length && modalSelect.find('option[value="' + categoryId + '"]').length){
                             modalSelect.val(categoryId);
                             modalSelect.hide();
@@ -474,11 +301,9 @@
                             modalSelect.show();
                             modalSpan.html('').hide();
                         }
-
-                        
                         if($(this).hasClass('edit')){
-                            var id     = $(this).parents('tr').eq(0).find('.option').val();
                             
+                            var id     = $(this).parents('tr').eq(0).find('.option').val();
                             $.ajax({
                                 type    : "POST",
                                 url     : "/products/edit-categoty",
@@ -498,17 +323,12 @@
                                     $('.mod').find('.form-group').find('input[data-name="product_id"]').val(msg.product.id);
                                     $('.mod').find('.form-group').find('input[data-name="name"]').val(msg.product.product_name);
                                     $('.mod').find('.form-group').find('input[data-name="description"]').val(msg.product.product_description);
-                                    $('.mod').find('.form-group').find('input[data-name="content"]').val(msg.product.content);
+                                    tinyMCE.activeEditor.setContent(msg.product.content);
                                     $('.mod').find('.form-group').find('input[data-name="photo"]').val(msg.product.product_image);
                                     $('.mod').find('.form-group').find('input[data-name="price"]').val(msg.product.product_price);
-                                    $('.mod').find('.addProductCategory').show();
-                                    $('.mod').find('#product_form').find('input.create').hide();
-                                    $('.mod').find('#product_form').find('input.update').show();
                                     $('.mod').find('#product_form').find('input[type="text"]').eq(0).focus();
-
                                     productId = msg.product.id;
                                     nededPath  = 'companies/<?=$company->id;?>'+'/products/'+msg.product.id+'/';
-
                                     $.ajax({
                                         url      : $('#fileupload').fileupload('option', 'url'),
                                         dataType : 'json',
@@ -521,9 +341,6 @@
 
                                         if(result.files.length){
                                             result.files.forEach(function(value){
-
-
-
                                                 var row   = $('<tr class="template-upload">' +
                                                         '<td>' +
                                                         '<div>' +
@@ -553,13 +370,11 @@
                         }
 
                     });
-
-
+                    /* Выбор главной картинки (чекпоинт)*/
                     $('body').delegate('.product_image', 'change', function(){
                         $('.mod').find('form').find('input[name="product_image"]').val($(this).val());
                     });
-
-
+                    /* Сохранение (кнопка сохранить изминения) изменения товаров при нажатии на кнопку (изменить)*/
                     $('.submit_modal_form').on('click', function(){
                         var modForm = $('.mod').find('form');
                         if(modForm.length){
@@ -568,12 +383,11 @@
                             inputs.each(function(){
                                 data[$(this).attr('data-name')] = $(this).val();
                             });
-                            
+                            data.content = tinyMCE.activeEditor.getContent();
                             if(data.name.length == 0){
                                 $('[data-name="name"]').focus();
                                 return false;
                             }
-
                               if(data.description.length == 0){
                                     $('[data-name="description"]').focus();
                                     return false;
@@ -586,20 +400,17 @@
                             }
 
 
-                            var path = '/products-category';
+                            $('div.error').hide();
 
+                            var path = '/products-category';
                             var update = false;
                             if(data.product_id.length > 0){
                                 path = '/products/ajax-update';
                                 update = true;
                             }
 
-
                             if(!productId)
                                 data.filesPath = nededPath;
-
-
-
                             $.ajax({
                                 type    : "POST",
                                 url     : path,
@@ -611,7 +422,14 @@
                                     product    : data
                                 },
                                 success : function(data){
+                                    if(data.error){
+                                        $.each(data.error, function( index, value ) {
 
+                                            $('div[data-id="'+index+'"]').find('span').text(value);
+                                            $('div[data-id="'+index+'"]').show();
+                                        });
+                                        return false;
+                                    }
                                     var tr = $(data);
                                     var id = tr.find('.option').val();
 
@@ -619,6 +437,10 @@
                                         var old = $('.tBody').find('.option[value="'+id+'"]').parents('tr').eq(0);
                                         old.after(tr);
                                         old.remove();
+
+                                        $('[data-name="description"]').val('');
+                                        tinyMCE.activeEditor.setContent('');
+
                                     }else{
                                         $('.tBody').append(tr);
                                         inputs.each(function(){
@@ -627,22 +449,26 @@
                                             }
                                         });
                                     }
-
-
+                                    
                                     $('.mod').modal('hide');
                                 }
                             });
 
                         }
+                        /*На закрытие модалки чистим все поля формы*/
+                        $('#myModal').on('hidden.bs.modal', function (e) {
+                            inputs.each(function(){
+                                if($(this).attr('data-name') != 'category_name'){
+                                    $(this).val('');
+                                }
+                            });
+                            $('[data-name="description"]').val('');
+                            tinyMCE.activeEditor.setContent('');
+                        })
+
                     });
 
                 });
-
-
-
-
-
-
 
             </script>
 
@@ -650,217 +476,25 @@
         </div>
 
         <script>
-            /*---------------------Работа с катигориями-----------------------*/
-
 
             var categories      = [];
             var currentCategory = null;
             var data            = <?=$category?>;
             var images          = [];
 
-
             $(document).ready(function(){
 
-                $('.table').delegate('.add-new-product', 'click', function(){
-                    images = [''];
-                    $('#fileupload table tbody tr.template-upload').remove();
-                    $('#fileupload table tbody tr.template-download').remove();
-                    $('#myModal').modal('show');
-                    $('#myModal').find('.modal-body').html($('.addProductCategory'));
-                    $('#myModal').find('.create').show();
-                    $('#myModal').find('.update').hide();
-                    $('#myModal').find('.modal-body').html($('.addProductCategory'));
-                    var inputs = $('#myModal').find('.addProductCategory').find('[data-name]');
-                    inputs.each(function(){
-                        if($(this).attr('data-name') != 'category_name'){
-                            $(this).val('');
-                        }
-                    });
-                    $('#product_form').find('input.update').hide();
-                    $('#product_form').find('input.create').show();
-                    var inputs        = $('.addProductCategory').find('[data-name]');
-                    var categoryId    = $('.table').find('.companyIdClass').val();
-                    var categoryTitle = $('.table').find('.companyTitleClass').val();
-                    var modalSelect   = $('#myModal').find('select[data-name="category_name"]');
-                    var modalSpan     = $('#myModal').find('.modalSpan');
-                    if(categoryId.length && modalSelect.find('option[value="' + categoryId + '"]').length){
-                        modalSelect.val(categoryId);
-                        modalSelect.hide();
-                        modalSpan.html(categoryTitle).show();
-                    }else{
-                        modalSelect.show();
-                        modalSpan.html('').hide();
-                    }
-                });
-
-                $('#product_list').delegate('.chang-product', 'click', function(){
-                    images = [];
-                    $('#fileupload table tbody tr.template-upload').remove();
-                    $('#fileupload table tbody tr.template-download').remove();
-                    $('#myModal').modal('show');
-                    $('#myModal').find('.modal-body').html($('.addProductCategory'));
-                    $('#myModal').find('.create').hide();
-                    $('#myModal').find('.update').show();
-                    $('#myModal').find('.form-group ').find('.productId').val('');
-                    event.preventDefault();
-                    var id     = $(this).parents('tr').eq(0).find('.option').val();
-                    var inputs = $('#myModal').find('.addProductCategory').find('[data-name]');
-                    inputs.each(function(){
-                        if($(this).attr('data-name') != 'category_name'){
-                            $(this).val('');
-                        }
-                    });
-                    $('#myModal').find('.modalSpan').text('');
-
-                    $.ajax({
-                        type    : "POST",
-                        url     : "/products/edit-categoty",
-                        headers : {
-                            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data    : {
-                            productId : id
-                        },
-                        success : function(msg){
-                            console.log(msg.productCategory.title);
-                            $('#myModal').find('select[name="category_name"]').hide();
-                            $('#myModal').find('.modalSpan').text(msg.productCategory.title).show();
-                            $('#myModal').find('.form-group').find('select[data-name="category_name"]').find("option[selected='selected']").attr('selected', false);
-                            $('#myModal').find('.form-group').find('.product_id').val(msg.product.id);
-                            $('#myModal').find('.form-group').find('select[data-name="category_name"]').val(msg.product.category_id);
-                            $('#myModal').find('.form-group').find('input[data-name="product_id"]').val(msg.product.id);
-                            $('#myModal').find('.form-group').find('input[data-name="name"]').val(msg.product.product_name);
-                            $('#myModal').find('.form-group').find('input[data-name="description"]').val(msg.product.product_description);
-                            $('#myModal').find('.form-group').find('input[data-name="content"]').val(msg.product.content);
-                            $('#myModal').find('.form-group').find('input[data-name="photo"]').val(msg.product.product_image);
-                            $('#myModal').find('.form-group').find('input[data-name="price"]').val(msg.product.product_price);
-                            $('#myModal').find('.addProductCategory').show();
-                            $('#myModal').find('#product_form').find('input.create').hide();
-                            $('#myModal').find('#product_form').find('input.update').show();
-                            $('#myModal').find('#product_form').find('input[type="text"]').eq(0).focus();
-                            image = JSON.parse(msg.product.product_image);
-                            if(image[0].name){
-                                images = image;
-                                image  = [];
-                                images.forEach(function(item, i, images){
-                                    image.push(item['name']);
-                                });
-                            }
-                            $('#fileupload').addClass('fileupload-processing');
-                            $.ajax({
-                                url      : $('#fileupload').fileupload('option', 'url'),
-                                dataType : 'json',
-                                context  : $('#fileupload')[0],
-                                data     : {
-                                    image  : image,
-                                    'path' : ''
-                                },
-                            }).always(function(){
-                                $(this).removeClass('fileupload-processing');
-                            }).done(function(result){
-
-                                //                        console.log(result);
-                                $(this).fileupload('option', 'done').call(this, $.Event('done'), {result : result});
-                            });
-                        }
-                    });
-                });
-
-                $('#myModal').delegate('.update', 'click', function(){
-                    event.preventDefault();
-                    var rec = '';
-                    if(images.length){
-                        rec = JSON.stringify(images);
-                    }
-                    var data              = {};
-                    data['id']            = $('#myModal').find('.form-group').find('input[data-name="product_id"]').val();
-                    data['name']          = $('#myModal').find('.form-group').find('input[data-name="name"]').val();
-                    data['description']   = $('#myModal').find('.form-group').find('input[data-name="description"]').val();
-                    data['content']       = $('#myModal').find('.form-group').find('input[data-name="content"]').val();
-                    //                    data['photo']         = $('#myModal').find('.form-group').find('input[data-name="photo"]').val();
-                    data['photo']         = rec;
-                    data['price']         = $('#myModal').find('.form-group').find('input[data-name="price"]').val();
-                    data['category_name'] = $('#myModal').find('.form-group').find('select[data-name="category_name"]').val();
-                    images                = [];
-                    $.ajax({
-                        type    : "POST",
-                        url     : "/products/ajax-update",
-                        headers : {
-                            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data    : data,
-                        success : function(msg){
-                            $('#myModal').find('.close').click();
-                            /* $('.addProductCategory').hide();*/
-                            var currentTr = $('#product_list').find('.option[value="' + data.id + '"]').parents('tr').eq(0);
-                            currentTr.after(msg);
-                            currentTr.remove();
-                        }
-                    });
-                });
-
-                $('#myModal').delegate('.create', 'click', function(){
-
-                    var rec = '';
-                    if(images.length){
-                        rec = JSON.stringify(images);
-                    }
-                    event.preventDefault();
-                    var selected1 = {};
-                    var inputs    = $('#myModal').find('.addProductCategory').find('[data-name]');
-                    var img       = $('.files');
-                    inputs.each(function(){
-                        selected1[$(this).attr('data-name')] = $(this).val();
-                    });
-                    console.log(selected1);
-                    if(selected1.name.length == 0){
-                        $('[data-name="name"]').focus();
-                        return false;
-                    }
-                    if(selected1.category_name.length == 0){
-                        $('#myModal').find('.msgDenger').show();
-                        return false;
-                    }else{
-                        $('#myModal').find('.msgDenger').hide();
-                    }
-                    selected1['photo'] = rec;
-
-                    console.log(selected1);
-
-                    $.ajax({
-                        type    : "POST",
-                        url     : "/products-category",
-                        headers : {
-                            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data    : {
-                            company_id : '<?=$company->id?>',
-                            product    : selected1
-                        },
-                        success : function(data){
-                            $('.tBody').append(data);
-                            inputs.each(function(){
-                                if($(this).attr('data-name') != 'category_name'){
-                                    $(this).val('');
-                                }
-                            });
-                            $('#myModal').modal('hide');
-                        }
-                    });
-                });
-
-                $('#myModal').modal({show : false});
 
 
+                /*---------------------Работа с катигориями-----------------------*/
                 $('#custom-checkable').treeview({
+
                     data            : data,
                     showCheckbox    : true,
                     enableLinks     : false,
                     onNodeChecked   : function(event, node){
 
                         $('#custom-checkable').treeview('selectNode', node.nodeId);
-
-                        /* $('.addProductCategory').hide();//ertyuiosdfghkwertyuierty*/
                         categories = [];
                         $('#product_list').html('');
                         var list = $('#custom-checkable').treeview('getChecked');
@@ -1003,10 +637,8 @@
             });
 
         </script>
-
+        {!! HTML::script('/plugins/tinymce/tinymce_init.js') !!}
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-
         <!-- Generic page styles -->
         <link rel="stylesheet" href="/plugins/file_uploader/css/style.css">
         <!-- blueimp Gallery styles -->
@@ -1054,6 +686,12 @@
         <!-- The main application script -->
     {{--<script src="/plugins/file_uploader/js/main.js"></script>--}}
 
+        <style>
 
+            .error{
+                color: red;
+            }
+
+        </style>
 @endsection
 
