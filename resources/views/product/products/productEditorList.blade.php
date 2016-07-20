@@ -53,6 +53,20 @@
             </th>
         </tr>
     <?php } ?>
+
+    <style type="text/css">
+        .modal_product_desc{
+            padding: 0 10px;            
+        }
+        .modal_product_price{
+            background: #fff3b5;
+        }
+        .modal_product_price > p{
+            padding: 5px 5px 0 5px;
+            font-size: 20px;
+        }
+    </style>
+
     <div class="button_holder" style="display: <?=(isset($hide))? 'none':'block' ?>;">
         <span class="open btn btn-success btn-sm">Добавить продукт</span>
         <a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">Удалить продукт</a>
@@ -98,13 +112,13 @@
         </div>
         <div class="col-sm-7">
             <span style="font-size: 17px;">Краткое описание:</span>
-            <div class="description_modal_product">
+            <div class="description_modal_product modal_product_desc">
 
                 <p class="product_description"></p>
             </div>
 
-        <div class="price_modal_product">
-                <p style="float: right;">Цена:  <span class="product_price"></span>
+        <div class="price_modal_product modal_product_price">
+                <p style="float: right;">Цена:  <span class="product_price"></span> руб.
                 </p>
             </div>
 
