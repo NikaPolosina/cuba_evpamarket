@@ -222,12 +222,12 @@
                                 {{ Str::limit($v->product_description, 50) }}
                             </p>
                         </div>
-                        <div class="product_content">
+                        {{--<div class="product_content">
                             <span class="span_title">Полное описание:</span>
                             <p>
                                 {{ Str::limit($v->content, 50) }}
                             </p>
-                        </div>
+                        </div>--}}
                     </div>
                 </div>
             </div>

@@ -105,7 +105,6 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::post('/user-block', ['as' => 'admin', 'uses'=>'AdminController@userBlock']);
 });
 
-
 /*-------------------------------------------Home--------------------------------------------*/
 
 Route::get('/login-user', ['as' => 'login-user', 'uses' => 'HomeController@Index' ]);
@@ -117,8 +116,11 @@ Route::group([ 'middleware' => [ 'role:simple_user'] ], function (){
 
 Route::group([ 'middleware' => [ 'role:company_owner'] ], function (){
     Route::get('/homeOwnerUser', ['as'=>'homeOwnerUser', 'uses'=>'HomeController@registerOwner'] );
-
 });
 
-
 Route::post('/new-user-dashboard', ['as'=>'set_user_role', 'uses'=>'UserController@setRole']);
+
+/*-------------------------------------------Order--------------------------------------------*/
+Route::get('/order', [ 'as' => 'order', 'uses' => 'OrderController@createOrder' ]);
+Route::post('/order-ready', [ 'as' => 'order-ready', 'uses' => 'OrderController@ready' ]);
+

@@ -76,7 +76,7 @@
                                     <div class="buttom_menu">
                                         <input style="display: none" value="{{$val['id']}}" type="text"/>
                                         <button type="button" class="btn btn-default button_delete">Удалить</button>
-                                        <button type="button" class="btn btn-warning">Оплатить товар</button>
+                                        <a href="/order"> <button type="button" class="btn btn-warning">Оформить заказ</button></a>
                                     </div>
                                 </div>
 
