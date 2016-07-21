@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model{
 
     protected $table = 'order';
-    protected $fillable = [ 'simple_user_id', 'owner_user_id', 'status', 'total_price', 'order_phone', 'order_address', 'name', 'surname'];
+    protected $fillable = [ 'simple_user_id', 'owner_user_id', 'status', 'total_price', 'order_phone', 'region', 'city', 'street', 'address', 'name', 'surname'];
 
     public function getStatusOwner(){
         return $this->hasOne('App\StatusOwner', 'id', 'status');

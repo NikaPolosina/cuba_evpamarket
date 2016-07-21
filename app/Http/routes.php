@@ -121,6 +121,6 @@ Route::group([ 'middleware' => [ 'role:company_owner'] ], function (){
 Route::post('/new-user-dashboard', ['as'=>'set_user_role', 'uses'=>'UserController@setRole']);
 
 /*-------------------------------------------Order--------------------------------------------*/
-Route::get('/order', [ 'as' => 'order', 'uses' => 'OrderController@createOrder' ]);
+Route::post('/order', [ 'as' => 'order', 'uses' => 'OrderController@createOrder' ]);
 Route::post('/order-ready', [ 'as' => 'order-ready', 'uses' => 'OrderController@ready' ]);
 

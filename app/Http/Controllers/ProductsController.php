@@ -258,10 +258,6 @@ class ProductsController extends Controller{
         $singleProduct = Product::find($id)->toArray();
         $companyId = Product::find($id)->getCompany[0]['id'];
 
-
-
-
-
             $idProduct = $singleProduct['id'];
 
             $directory = public_path().'/img/custom/companies/'.$companyId.'/products/'.$idProduct;

@@ -19,6 +19,7 @@ class CreateOrderAllTable extends Migration
         Schema::create('status_owner', function(Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->string('key');
             $table->integer('status_simple_id');
             $table->timestamps();
         });
@@ -29,7 +30,10 @@ class CreateOrderAllTable extends Migration
             $table->integer('status');
             $table->integer('total_price');
             $table->string('order_phone');
-            $table->string('order_address');
+            $table->string('region');
+            $table->string('city');
+            $table->string('street');
+            $table->string('address');
             $table->string('name');
             $table->string('surname');
             $table->timestamps();

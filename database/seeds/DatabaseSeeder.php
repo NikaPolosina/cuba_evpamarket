@@ -37,62 +37,77 @@ class DatabaseSeeder extends Seeder{
         $simpleStatus = $this->createStatusSimple();
         $status = StatusOwner::create([
             'title'            => 'Уточнение деталей',
+            'key'              => 'details',
             'status_simple_id' => $simpleStatus['1']->id
         ]);
         $status = StatusOwner::create([
             'title'            => 'Звонок',
+            'key'              => 'call',
             'status_simple_id' => $simpleStatus['1']->id
         ]);
         $status = StatusOwner::create([
-            'title' => 'Нет ответа',
+            'title'            => 'Нет ответа',
+            'key'              => 'no_answer',
             'status_simple_id' => $simpleStatus['1']->id
         ]);
         $status = StatusOwner::create([
-            'title' => 'Изготовление',
+            'title'            => 'Изготовление',
+            'key'              => 'making',
             'status_simple_id' => $simpleStatus['2']->id
         ]);
         $status = StatusOwner::create([
-            'title' => 'Уточнение наличия на складе',
+            'title'            => 'Уточнение наличия на складе',
+            'key'              => 'verification',
             'status_simple_id' => $simpleStatus['2']->id
         ]);
         $status = StatusOwner::create([
-            'title' => 'Доставка со склада',
+            'title'            => 'Доставка со склада',
+            'key'              => 'delivery_warehouse',
             'status_simple_id' => $simpleStatus['2']->id
         ]);
         $status = StatusOwner::create([
-            'title' => 'Есть в наличии',
+            'title'            => 'Есть в наличии',
+            'key'              => 'available',
             'status_simple_id' => $simpleStatus['2']->id
         ]);
         $status = StatusOwner::create([
-            'title' => 'Ждем оплаты',
+            'title'            => 'Ждем оплаты',
+            'key'              => 'waiting_payment',
             'status_simple_id' => $simpleStatus['3']->id
         ]);
         $status = StatusOwner::create([
-            'title' => 'Ждем подтверждения оплаты',
+            'title'            => 'Ждем подтверждения оплаты',
+            'key'              => 'waiting_confirmation_payment',
             'status_simple_id' => $simpleStatus['3']->id
         ]);
         $status = StatusOwner::create([
-            'title' => 'Оплата прошла успешно',
+            'title'            => 'Оплата прошла успешно',
+            'key'              => 'payment_successful',
             'status_simple_id' => $simpleStatus['3']->id
         ]);
         $status = StatusOwner::create([
-            'title' => 'Отказ оплаты',
+            'title'            => 'Отказ оплаты',
+            'key'              => 'refusal_payment',
             'status_simple_id' => $simpleStatus['3']->id
         ]);
         $status = StatusOwner::create([
-            'title' => 'Формирование заказа',
+            'title'            => 'Формирование заказа',
+            'key'              => 'formation_order',
             'status_simple_id' => $simpleStatus['4']->id
         ]);
         $status = StatusOwner::create([
-            'title' => 'Упаковка',
+            'title'            => 'Упаковка',
+            'key'              => 'packaging',
             'status_simple_id' => $simpleStatus['4']->id
         ]);
         $status = StatusOwner::create([
-            'title' => 'Отправка на промежуточный склад',
+            'title'            => 'Отправка на промежуточный склад',
+            'key'              => 'send_intermediate_storage',
             'status_simple_id' => $simpleStatus['5']->id
         ]);
         $status = StatusOwner::create([
-            'title' => 'Отправка покупателю',
+            'title'            => 'Отправка покупателю',
+            'key'              => 'sending_buyer',
             'status_simple_id' => $simpleStatus['5']->id
         ]);
 
