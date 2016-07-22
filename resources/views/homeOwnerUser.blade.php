@@ -37,10 +37,10 @@
                     <a href="#tab_1_1" data-toggle="tab"> Мой профиль </a>
                 </li>
                 <li style="display: none">
-                    <a href="#tab_1_3" data-toggle="tab"> Настройки аккаунта </a>
+                    <a href="#tab_1_2" data-toggle="tab"> Настройки аккаунта </a>
                 </li>
                 <li style="display: none">
-                    <a href="#tab_1_6" data-toggle="tab"> Помощь </a>
+                    <a href="#tab_1_3" data-toggle="tab"> Помощь </a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -83,6 +83,7 @@
                                 </li>
 
                             </ul>
+
                         </div>
                         <div class="col-md-9">
                             <div class="row">
@@ -139,9 +140,13 @@
                             <div class="row">
                                 <div class="panel">
 
+
                                     <?php
                                     if(count($curentUser->getCompanies)){
+
+
                                     ?>
+
                                     <div class="">
                                             <h3 class="font-green sbold uppercase">Мои магазины <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Добавить магазин</a></h3>
                                             <div class="table">
@@ -153,6 +158,7 @@
                                                     </thead>
                                                     <tbody>
                                                     {{-- */$x=0;/* --}}
+
                                                     @foreach($curentUser->getCompanies as $item)
 
                                                         <?php  if(!empty($item->company_logo )&& file_exists(public_path().'/img/custom/companies/thumbnail/'.$item->company_logo)) {
@@ -188,11 +194,14 @@
                                             </div>
                                         </div>
                                     <?php
-                                    }else{ ?>
+                                    }else{
+
+                                        ?>
                                     <div><h3>У вас пока нет ни одного магазина. Воспользуйтесь кнопкой "создать" для того что бы создать магазин.</h3></div>
                                     <a href="{{ url('company/create') }}" class="btn btn-primary pull-left btn-sm btn green">Создать магазин</a>
 
-                                    <?php }
+                                    <?php
+                                        }
                                     ?>
 
                                 </div>
@@ -204,7 +213,7 @@
                     </div>
                 </div>
                 <!--tab_1_2-->
-                <div class="tab-pane" id="tab_1_3">
+                <div class="tab-pane" id="tab_1_2">
                     <div class="row profile-account">
                         <div class="col-md-3">
                             <ul class="ver-inline-menu tabbable margin-bottom-10">
@@ -371,7 +380,7 @@
                     </div>
                 </div>
                 <!--end tab-pane-->
-                <div class="tab-pane" id="tab_1_6">
+                <div class="tab-pane" id="tab_1_3">
                     <div class="row">
                         <div class="col-md-2">
                             <ul class="ver-inline-menu tabbable margin-bottom-10">

@@ -16,7 +16,7 @@ class UserInformation extends Authenticatable
     protected $fillable = [ 'name', 'surname','avatar', 'date_birth', 'gender', 'country', 'region_id', 'city_id', 'street', 'address','about_me','my_site'];
 
     public function getUser(){
-        return $this->hasOne('App\User', 'id');
+        return $this->hasOne('App\User',  'id', 'user_id');
     }
 
 
