@@ -38,10 +38,10 @@
                             {{-- */$x++;/* --}}
                             <tr class="odd gradeX">
                                 <td> {{ $x }} </td>
-                                <td><a href="/show-company/{{$item->id}}"> {{$item->name}} {{$item->surname}}</a></td>
+                                <td><a href="/show-simple-order/{{$item->id}}"> {{$item->name}} {{$item->surname}}</a></td>
                                 <td> {{$item->order_phone}}</td>
 
-                                <td> {{$item->street}} {{$item->address}} </td>
+                                <td> Регион: {{$item->region}}, г. {{$item->city}}, {{$item->street}} {{$item->address}} </td>
                                 <td> {{$item->total_price}} <span> руб.</span> </td>
 
                                 <td>

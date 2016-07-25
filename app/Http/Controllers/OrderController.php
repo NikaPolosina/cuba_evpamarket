@@ -149,5 +149,18 @@ class OrderController extends Controller{
         $status = StatusOwner::find($status_id);
         dd($status);
     }
+    public function showSimpleOrder($id){
+     
+
+      $order = Order::find($id);
+      $products =  Product::whereIn('id', ProductOrder::where('order_id', $id)->get()->lists(['product_id']))->get();
+
+        if(count($products))
+            $order->products = IndexController::showProduct($products);
+
+        return view('order.simple')
+            ->with('order', $order);
+
+    }
 
 }
