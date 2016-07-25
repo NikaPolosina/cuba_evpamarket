@@ -6,6 +6,9 @@ use App\Category;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Company;
+
+use App\StatusOwner;
+
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -171,6 +174,19 @@ class CompanyController extends Controller
             'companyAll' => $companyAll
         ]);
     }
+
+    public function getMyShop(Request $request){
+
+        $curentUser = Auth::user();
+        $companys = $curentUser->getCompanies()->with(['getOrder'=>function($query){
+            $query->where('status', StatusOwner::where('key', 'not_processed')->first(['id'])->id);
+        }])->get();
+
+        return view('company.myShop')
+            ->with('companys', $companys);
+    }
+  
+
 
 
 

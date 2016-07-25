@@ -40,7 +40,10 @@
                             <li style="display: none">
                                 <a href="#tab_1_2" data-toggle="tab"> Настройки аккаунта </a>
                             </li>
-                            <li style="display: nonegit">
+
+                            <li style="display: none">
+
+
                                 <a href="#tab_1_3" data-toggle="tab"> Помощь </a>
                             </li>
                         </ul>

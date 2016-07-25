@@ -36,6 +36,13 @@ class DatabaseSeeder extends Seeder{
     public function createStatusOwner(){
         $simpleStatus = $this->createStatusSimple();
         $status = StatusOwner::create([
+
+            'title'            => 'Не обработанный',
+            'key'              => 'not_processed',
+            'status_simple_id' => $simpleStatus['1']->id
+        ]);
+        $status = StatusOwner::create([
+
             'title'            => 'Уточнение деталей',
             'key'              => 'details',
             'status_simple_id' => $simpleStatus['1']->id

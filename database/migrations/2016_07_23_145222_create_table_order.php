@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrderAllTable extends Migration
+class CreateTableOrder extends Migration
 {
     /**
      * Run the migrations.
@@ -37,6 +37,10 @@ class CreateOrderAllTable extends Migration
             $table->string('name');
             $table->string('surname');
             $table->timestamps();
+//            $table->foreign('status')
+//                ->references('id')->on('status_owner')
+//                ->onUpdate('cascade')
+//                ->onDelete('null');
         });
         Schema::create('product_order', function(Blueprint $table) {
             $table->increments('id');
@@ -45,8 +49,8 @@ class CreateOrderAllTable extends Migration
             $table->integer('price');
             $table->integer('order_id');
             $table->timestamps();
-        });
 
+        });
         Schema::create('company_order', function (Blueprint $table) {
             $table->integer('company_id')->unsigned();
             $table->integer('order_id')->unsigned();
@@ -72,5 +76,6 @@ class CreateOrderAllTable extends Migration
         Schema::drop('order');
         Schema::drop('product_order');
         Schema::drop('company_order');
+
     }
 }

@@ -106,6 +106,34 @@ $('.item_class_3').find('.item_class_4').find('.product_navigation').delegate('s
 });
 
 
+$('#modal_add_product_cart').delegate('.go_cart', 'click', function (e) {
+    e.preventDefault();
+    var cnt = $('#modal_add_product_cart').find('input.my_b').val();
+    var pId = $('#modal_add_product_cart').find('input.product_id').val();
+    if(cnt.length > 0 && cnt > 1){
+        $.ajax({
+            type:"POST",
+            url:"/products/cart-update-cnt",
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+            },
+            data:{
+                cnt : cnt,
+                id: pId
+            },
+            success:function(msg) {
+                window.location = '/cart';
+                var product = msg.product;
+                $('.row_row').siblings('.navbar-default').find('.nav_li_menu').find('span.cart_count').text(msg.product_cnt);
+            },
+            error: function(){
+                window.location = '/cart';
+            }
+        });
+    }else{
+        window.location = '/cart';
+    }
+});
 
 
 $('#modal_add_product_cart').on('hide.bs.modal', function (e) {
