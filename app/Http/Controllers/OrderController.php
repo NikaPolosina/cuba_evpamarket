@@ -162,7 +162,7 @@ class OrderController extends Controller{
 
         if(count($products))
             $order->products = IndexController::showProduct($products);
-        dd( $order->total_price );
+   
 
           
 
