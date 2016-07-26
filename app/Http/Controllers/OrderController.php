@@ -150,13 +150,21 @@ class OrderController extends Controller{
         dd($status);
     }
     public function showSimpleOrder($id){
-     
+
 
       $order = Order::find($id);
-      $products =  Product::whereIn('id', ProductOrder::where('order_id', $id)->get()->lists(['product_id']))->get();
+
+      $products =  Product::whereIn('products.id', ProductOrder::where('order_id', $id)->get()->lists(['product_id']))
+          ->join('product_order', function($join) use ($id){
+              $join->on('products.id', '=', 'product_order.product_id')->where('product_order.order_id', '=',$id);
+          })
+          ->get(['products.*', 'product_order.cnt']);
 
         if(count($products))
             $order->products = IndexController::showProduct($products);
+        dd( $order->total_price );
+
+          
 
         return view('order.simple')
             ->with('order', $order);
