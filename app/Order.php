@@ -19,6 +19,6 @@ class Order extends Model{
         return $this->hasOne('App\User', 'id', 'owner_user_id');
     }
     public function getProductOrder(){
-        return $this->belongsTo('App\ProductOrder', 'order_id', 'id');
+        return $this->hasMany('App\ProductOrder', 'order_id', 'id');
     }
 }

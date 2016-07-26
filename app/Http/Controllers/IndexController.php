@@ -32,6 +32,7 @@ class IndexController extends Controller{
             $idCompany = $v->getCompany[0]['id'];
             $directory = public_path() . '/img/custom/companies/' . $idCompany . '/products/' . $idProduct;
             $directoryMy = '/img/custom/companies/' . $idCompany . '/products/' . $idProduct . '/';
+      
             if(!empty($v['product_image']) && File::exists($directory . '/' . $v['product_image'])){
                 $v->firstFile = $directoryMy . $v['product_image'];
             }else{

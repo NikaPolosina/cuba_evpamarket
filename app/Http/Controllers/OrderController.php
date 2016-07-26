@@ -149,5 +149,26 @@ class OrderController extends Controller{
         $status = StatusOwner::find($status_id);
         dd($status);
     }
+    public function showSimpleOrder($id){
+
+
+      $order = Order::find($id);
+
+      $products =  Product::whereIn('products.id', ProductOrder::where('order_id', $id)->get()->lists(['product_id']))
+          ->join('product_order', function($join) use ($id){
+              $join->on('products.id', '=', 'product_order.product_id')->where('product_order.order_id', '=',$id);
+          })
+          ->get(['products.*', 'product_order.cnt']);
+
+        if(count($products))
+            $order->products = IndexController::showProduct($products);
+   
+
+          
+
+        return view('order.simple')
+            ->with('order', $order);
+
+    }
 
 }
