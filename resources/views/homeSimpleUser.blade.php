@@ -74,6 +74,11 @@
                                                      <span> @if(isset($product_cnt_like)){{$product_cnt_like}}@endif </span>
                                                 </a>
                                             </li>
+                                            <li>
+                                                <a href="/show-list-order-simple"> Заказы
+                                                    <span>@if(count($order) > 0){{count($order)}}@endif</span>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="col-md-9">

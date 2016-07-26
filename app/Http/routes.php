@@ -135,8 +135,11 @@ Route::post('/order-ready', [ 'as' => 'order-ready', 'uses' => 'OrderController@
 Route::get('/show-order/{id}', 'OrderController@showOrder');
 Route::get('/change-order-status/{order}/{status}', ['as'=>'change_order_status', 'uses'=>'OrderController@changStatus']);
 Route::get('/show-simple-order/{id}', ['as'=>'show-simple-order', 'uses'=>'OrderController@showSimpleOrder']);
+Route::get('/show-list-order-simple', ['as'=>'show-list-order-simple', 'uses'=>'OrderController@showSimpleOrderList']);
 
 /*---------------------------------------Status----------------------------------*/
+Route::get('/change-order-status/{order}/{status}', ['as'=>'change_order_status', 'uses'=>'OrderController@changStatus']);
+
 
 
 

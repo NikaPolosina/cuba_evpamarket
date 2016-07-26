@@ -8,6 +8,7 @@ use App\Region;
 use App\City;
 use App\Order;
 use App\OrderProduct;
+use App\StatusSimple;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -147,7 +148,13 @@ class OrderController extends Controller{
 
     public function changStatus($order, $status_id){
         $status = StatusOwner::find($status_id);
-        dd($status);
+        $order = Order::find($order);
+
+        $order->status = $status['id'];
+        $order->save();
+        return redirect()->back();
+
+        
     }
     public function showSimpleOrder($id){
 
@@ -168,6 +175,14 @@ class OrderController extends Controller{
 
         return view('order.simple')
             ->with('order', $order);
+
+    }
+    public function showSimpleOrderList(){
+        $order =  Order::where('simple_user_id', '=', Auth::user()->id)->get();
+        $status = StatusSimple::get();
+        return view('order.orderListShopSimple')
+            ->with('order', $order)
+            ->with('status', $status);
 
     }
 
