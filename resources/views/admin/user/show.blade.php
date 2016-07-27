@@ -41,6 +41,7 @@
                                     <th> Действия </th>
                                 </tr>
                                 </thead>
+
                                 <tbody>
                                 {{-- */$x=0;/* --}}
                                 @foreach($user as $item)
@@ -53,7 +54,7 @@
                                         </label>
                                     </td>
                                     <td data-attr="{{$item->id}}"> {{ $x }}</td>
-                                    <td> {{$item->getUserInformation->name}}</td>
+{{--                                    <td> {{$item->getUserInformation->name}}</td>--}}
                                     <td>
                                         <a href="mailto:shuxer@gmail.com"> {{$item->email}} </a>
                                     </td>
@@ -68,8 +69,13 @@
                                             <span class="label label-sm label-success"> подтв. </span>
                                         </td>
                                     @endif
-                                    <td class="center"> {{$item->getUserInformation->date_birth}} </td>
+                                    <td class="center">
+                                        @if($item->getUserInformation)
+                                            {{$item->getUserInformation->date_birth}}
+                                        @endif
+                                    </td>
                                     <td>
+
                                         <div class="btn-group">
                                             <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Действия
                                                 <i class="fa fa-angle-down"></i>
@@ -83,6 +89,7 @@
                                                     <a href="javascript:;">
                                                         <i class="icon-tag"></i> Коментарий </a>
                                                 </li>
+
                                                 @if($item->block == 1)
                                                 <li class="block">
                                                     <a href="javascript:;">
@@ -105,11 +112,13 @@
                                         </div>
                                     </td>
                                 </tr>
+
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
+
                     <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
             </div>
@@ -144,7 +153,7 @@
                             }
                         }
                     });
-                    
+
 
                 });
 
