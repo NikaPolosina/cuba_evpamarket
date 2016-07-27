@@ -20,7 +20,7 @@ class OrderController extends Controller{
 
     public function createOrder(Request $request){
         if(!Auth::user()){
-            die(' не залогинен!!!');
+            return view('auth.login');
         }
 
         $company = Company::find($request['company_id']);

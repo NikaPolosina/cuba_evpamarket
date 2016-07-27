@@ -23,7 +23,7 @@
                         <tr>
                             <th> # </th>
                             <th> Продавец </th>
-                            <th> Номер телефона </th>
+                            <th> Контактная информация </th>
                             <th> Адресс доставки </th>
                             <th> Сумма заказа </th>
                             <th> Статус </th>
@@ -42,7 +42,7 @@
                             <tr class="odd gradeX">
                                 <td> {{ $x }} </td>
                                 <td><a href=""> </a>{{$item->getCompany[0]['company_name']}}</td>
-                                <td></td>
+                                <td>{{$item->getCompany[0]['company_contact_info']}}</td>
 
                                 <td> Регион: {{$item->region}}, г. {{$item->city}}, {{$item->street}} {{$item->address}} </td>
                                 <td> {{$item->total_price}} <span> руб.</span> </td>
