@@ -1,12 +1,8 @@
 <link rel="stylesheet" type="text/css" href="/css/show_product.css"/>
-
-
 <div class="col-sm-12">
     <h3>Товары</h3>
     <hr/>
 </div>
-
-
 {{-----------------------------------------------------------}}
 <!-- Modal -->
 <div style="z-index: 100000000000000" class="modal fade" id="modal_add_product_cart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -202,7 +198,7 @@
                         </div>
                         <div class="product_name">
                             <a href="/single-product/{{$v->id}}">
-                                {{$v->product_name}}
+                                {{ Str::limit($v->product_name, 50) }}
                             </a>
                         </div>
                         <div class="product_price">

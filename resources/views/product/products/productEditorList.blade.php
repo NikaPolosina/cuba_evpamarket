@@ -13,75 +13,85 @@
         ?>
             <table class="table table-bordered table-striped table-hover" style="display: <?=(isset($hide))? 'none':'' ?>;" >
     <thead>
-    <tr>
-        <th colspan="7">
-            <?php
-
-            if($category){
-
-                    $mainCategory = array_shift($category);
-                    echo $mainCategory[0]['title'];
-                    $categoryID = $mainCategory[0]['id'];
-                    $categoryTitle = $mainCategory[0]['title'];
-                }else{
-                    echo 'Все продукты магазина';
-                }
-            ?>
-        </th>
-    </tr>
-
-
-
-    <?php
-    if($category){ ?>
         <tr>
             <th colspan="7">
                 <?php
-                    $bread = '';
-                    if(count($category) > 0){
-                        foreach ($category as $value) {
-                            $bread = $bread.$value[0]['title'].' > ';
-                            $categoryID = $value[0]['id'];
-                            $categoryTitle = $value[0]['title'];
-                        }
+
+                if($category){
+
+                        $mainCategory = array_shift($category);
+                        echo $mainCategory[0]['title'];
+                        $categoryID = $mainCategory[0]['id'];
+                        $categoryTitle = $mainCategory[0]['title'];
+                    }else{
+                        echo 'Все продукты магазина';
                     }
-                    echo $bread;
-
                 ?>
-
-
             </th>
         </tr>
-    <?php } ?>
 
-    <style type="text/css">
-        .modal_product_desc{
-            padding: 0 10px;            
-        }
-        .modal_product_price{
-            background: #fff3b5;
-        }
-        .modal_product_price > p{
-            padding: 5px 5px 0 5px;
-            font-size: 20px;
-        }
-    </style>
 
-    <div class="button_holder" style="display: <?=(isset($hide))? 'none':'block' ?>;">
-        <span class="open btn btn-success btn-sm">Добавить продукт</span>
-        <a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">Удалить продукт</a>
-    </div>
 
-    <th></th><th>Товар</th><th>Описание товара</th><th>Описание расширеное</th><th>Цена</th><th>Действие</th>
-    </tr>
+        <?php
+        if($category){ ?>
+            <tr>
+                <th colspan="7">
+                    <?php
+                        $bread = '';
+                        if(count($category) > 0){
+                            foreach ($category as $value) {
+                                $bread = $bread.$value[0]['title'].' > ';
+                                $categoryID = $value[0]['id'];
+                                $categoryTitle = $value[0]['title'];
+                            }
+                        }
+                        echo $bread;
+
+                    ?>
+
+
+                </th>
+            </tr>
+        <?php } ?>
+
+        <style type="text/css">
+            .modal_product_desc{
+                padding: 0 10px;
+            }
+            .modal_product_price{
+                background: #fff3b5;
+            }
+            .modal_product_price > p{
+                padding: 5px 5px 0 5px;
+                font-size: 20px;
+            }
+            th{
+                text-align: center;
+            }
+        </style>
+
+        <div class="button_holder" style="display: <?=(isset($hide))? 'none':'block' ?>;">
+            <span class="open btn btn-success btn-sm">Добавить продукт</span>
+            <a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">Удалить продукт</a>
+        </div>
+        <tr style="background-color: #e6f9eb">
+            <th></th>
+            <th>№</th>
+            <th width="120">Товар</th>
+            <th width="400">Описание товара</th>
+            <th>Описание расширеное</th>
+            <th width="80">Цена</th>
+            <th>Действие</th>
+        </tr>
     </thead>
     <tbody class="tBody">
 
             <input class="companyIdClass" style="display: none"  name="companyId" value="{{$categoryID or ''}}"/>
             <input class="companyTitleClass" style="display: none"  name="companyTitle" value="{{$categoryTitle or ''}}"/>
 
-
+            {{-- */$x=0;/* --}}
     @foreach ($products as $item)
+        {{-- */$x++;/* --}}
 
         @include('product.products.singleProductTr', array('item' => $item))
     @endforeach
