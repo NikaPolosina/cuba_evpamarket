@@ -33,6 +33,9 @@ Route::any('/show-company/{id}', 'CompanyController@show');
 Route::any('/company-content', ['as' => 'company-content', 'uses' => 'CompanyController@companyContent']);
 
 Route::get('/my_shops', ['as' => 'my_shops', 'uses' => 'CompanyController@getMyShop']);
+Route::get('/company-discount-setup/{id}', ['as' => 'company-discount-setup', 'uses' => 'CompanyController@setupDiscount']);
+Route::post('/company-create-discount/{id}', ['as' => 'company-create-discount', 'uses' => 'CompanyController@createDiscount']);
+Route::get('/company-destroy-discount/{company_id}/{discount_id}', ['as' => 'company-destroy-discount', 'uses' => 'CompanyController@destroyDiscount']);
 
 Route::group(['middleware' => ['web']], function () {
     Route::resource('company', 'CompanyController');

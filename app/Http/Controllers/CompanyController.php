@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\DiscountAccumulativ;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Company;
@@ -11,6 +12,8 @@ use App\StatusOwner;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Redirect;
+use League\Flysystem\Exception;
 use Session;
 use App\Models\UserCompany;
 use Illuminate\Support\Facades\DB;
@@ -185,7 +188,55 @@ class CompanyController extends Controller
         return view('company.myShop')
             ->with('companys', $companys);
     }
-  
+
+    public function setupDiscount($id){
+        $company = Company::find($id);
+        $discount = $company->getDiscountAccumulativ;
+        
+        return view('company.setupDiscount')
+            ->with('discount', $discount)
+            ->with('company', $company);
+        
+
+        
+    }
+    public function createDiscount($id, Request $request){
+
+        if(empty($request['id'])){
+
+            $newDiscount = DiscountAccumulativ::create([
+                'from'       => $request['from'],
+                'to'    => $request['to'],
+                'percent' => $request['percent'],
+                'company_id' => $id
+            ]);
+
+            $newDiscount->save();
+
+            if($newDiscount){
+                $company = Company::find($id);
+                $company->getDiscountAccumulativ()->save($newDiscount);
+            }
+
+        }else{
+            $discount = [
+                'from'       => $request['from'],
+                'to'    => $request['to'],
+                'percent' => $request['percent'],
+            ];
+            $discount_single = DiscountAccumulativ::findOrFail($request['id']);
+            $discount_single->update($discount);
+        }
+
+
+        return redirect()->intended('company-discount-setup/'.$id);
+
+    }
+  public function destroyDiscount($company_id, $discount_id){
+      $company = Auth::user()->getCompanies()->where('id', $company_id)->first();
+      $company->getDiscountAccumulativ()->where('id', $discount_id)->first()->delete();
+      return redirect()->back();
+  }
 
 
 

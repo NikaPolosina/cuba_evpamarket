@@ -11,6 +11,8 @@
 
         <div class="row">
             <div class="col-md-2">
+                <a id="addCategory" href="{{url('/company-discount-setup', $company->id)}}">Установка накопительных скидок</a>
+                <hr>
                 <a id="addCategory" href="{{url('/category/category-setup', $company->id)}}">Добавить категорию</a>
                 <hr>
                 <h4>Мои категории</h4>
