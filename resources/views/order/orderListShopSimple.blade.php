@@ -26,6 +26,8 @@
                             <th> Контактная информация </th>
                             <th> Адресс доставки </th>
                             <th> Сумма заказа </th>
+                            <th> Скидка</th>
+                            <th> Сумма co скидкой</th>
                             <th> Статус </th>
                         </tr>
                         </thead>
@@ -45,8 +47,9 @@
                                 <td>{{$item->getCompany[0]['company_contact_info']}}</td>
 
                                 <td> Регион: {{$item->region}}, г. {{$item->city}}, {{$item->street}} {{$item->address}} </td>
-                                <td> {{$item->total_price}} <span> руб.</span> </td>
-
+                                <td> {{$item->total_price}} <span> руб.</span>
+                                </td>  <td> 0 <span> %</span> </td>
+                                <td> {{$item->total_price}} <span> руб.</span>
                                 <td>
                                     <div class="btn-group">
                                         <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> {{$item->getStatusOwner->getStatusSiple->title}}</button>
