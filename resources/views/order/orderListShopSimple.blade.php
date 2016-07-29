@@ -41,7 +41,7 @@
                             {{-- */$x++;/* --}}
                             <tr class="odd gradeX">
                                 <td> {{ $x }} </td>
-                                <td><a href=""> </a>{{$item->getCompany[0]['company_name']}}</td>
+                                <td><a href="/show-simple-order/{{$item->id}}"> {{$item->getCompany[0]['company_name']}}</a></td>
                                 <td>{{$item->getCompany[0]['company_contact_info']}}</td>
 
                                 <td> Регион: {{$item->region}}, г. {{$item->city}}, {{$item->street}} {{$item->address}} </td>
