@@ -97,8 +97,11 @@ return [
     |
     */
     'custom'               => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'sgdgfdgdfg' => [
+            'required' => 'custom-message',
+            'min' => 'custom-message',
+            'max' => 'custom-message',
+            'integer' => 'custom-message',
         ],
     ],
     /*
@@ -118,6 +121,8 @@ return [
     |
     */
     'attributes'           => [
-        //
+        'from'=> 'Со скольки :',
+        'to'=> 'До скольки :',
+        'percent'=> 'Скидка :',
     ],
 ];

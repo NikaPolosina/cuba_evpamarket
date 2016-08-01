@@ -1,19 +1,69 @@
+
 {{ Form::open(array(  'method' => 'post', 'url' => '/company-create-discount/'.$company->id , 'class' => 'form-inline' )) }}
 {!! csrf_field() !!}
 
 {!! Form::hidden('id', $item->id ?? null, ['class' => 'form-control', 'required' => 'required',  'min' => '0']) !!}
+
+
+
     <div class="form-group">
         <p>Со скольки (руб): </p>
-        {!! Form::number('from', $item->from ?? null, ['class' => 'form-control', 'required' => 'required',  'min' => '0']) !!}
+        <?php
+            $data['from']='';
+            $data['to']='';
+            $data['percent']='';
+            $err = false;
+            if(isset($item)){
+                    $data['from'] = $item->from;
+                    $data['to'] = $item->to;
+                    $data['percent'] = $item->percent;
+
+                if($errors->count() && old('id') == $item->id){
+                    $err = true;
+                    $data['from'] = old('from');
+                    $data['to'] = old('to');
+                    $data['percent'] = old('percent');
+                }
+            }else{
+                if($errors->count() && !old('id')){
+                    $err = true;
+                    $data['from'] = old('from');
+                    $data['to'] = old('to');
+                    $data['percent'] = old('percent');
+                }
+            }
+        ?>
+
+        <input type="number" name="from" value="<?=$data['from']?>"  class = 'form-control' min="0" required>
+        @if ($err  && $errors->has('from'))
+            <div>
+            <span class="help-block">
+                <strong>{{ $errors->first('from') }}</strong>
+            </span>
+            </div>
+        @endif
     </div>
     <div class="form-group">
         <p>До скольки (руб): </p>
-        {!! Form::number('to', $item->to ?? null, ['class' => 'form-control', 'required' => 'required',  'min' => '0']) !!}
+        <input type="number" name="to" value="<?=$data['to']?>"  class = 'form-control' min="1" required>
+        @if ($err  && $errors->has('to'))
+            <div>
+                <span class="help-block">
+                     <strong>{{ $errors->first('to') }}</strong>
+                </span>
+            </div>
+        @endif
     </div>
     <div class="form-group">
         <p>Скидка(%) </p>
-        {!! Form::number('percent', $item->percent ?? null, ['class' => 'form-control percent', 'required' => 'required',  'min' => '0', 'max' => '99']) !!}
-
+        <input type="number" name="percent" value="<?=$data['percent']?>"  class = 'form-control percent' min="1" max="99">
+        @if ($err  && $errors->has('percent'))
+             <div>
+                <span class="help-block">
+                 <strong>{{ $errors->first('percent')}}</strong>
+                </span>
+            </div>
+        @endif
     </div>
 
     <button type="submit" class="btn btn-primary bt_t"><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span></button>
@@ -33,5 +83,8 @@
     }
     .bt_t{
         margin: 25px 0 0 10px;
+    }
+    .help-block{
+        color: red;
     }
 </style>

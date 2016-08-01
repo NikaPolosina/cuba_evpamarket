@@ -39,7 +39,6 @@ class CartController extends Controller{
             }
         }
 
-
         return view('product.products.cart')->with('companies', $companies);
     }
 

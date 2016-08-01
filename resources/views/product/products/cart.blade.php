@@ -55,10 +55,8 @@
                                                                 </button>
                                                             </span>
 
-                                                              {{--  <input type="text" class="form-control text-center my_b" value="{{$val['cnt']}}" min="1" max="40" readonly>--}}
                                                                 {!! Form::text('product['.$val->id.'][cnt]', $val['cnt'], ['class' => 'form-control  text-center my_b"', 'data-name' =>'cnt',  "min"=>"1", "max"=>"40", "readonly" ]) !!}
-                                                               {{-- {!! Form::checkbox('product['.$val->id.'][checked]', '1', ['class' => 'sfzs']) !!}
-    --}}
+
                                                             <span class="input-group-btn data-up">
                                                                 <button  type="button" class="btn btn-default btn-info right_b" data-dir="up">
                                                                     <span style="width: 2px;" class="glyphicon glyphicon-plus"></span>
@@ -89,6 +87,26 @@
                                                     <td width="35%" valign="top"><span class="option_table">Общяя стомость:</span></td>
                                                     <td width="65%" valign="top"><div class="product_price yelloy_big"><span class="all_product_price" style=""> {{$val['product_price']*$val['cnt']}} </span><span>руб.</span></div></td>
                                                 </tr>
+
+                                                @if(count($value['company']->getDiscountAccumulativ) > 0)
+                                                     <tr>
+                                                         <td width="20%" valign="top"><span class="option_table">Cкидки магазина:</span></td>
+                                                        <td>
+                                                             <table class="my_table" border="2" align="center" bordercolor="#ddd">
+                                                                 <tr>
+                                                                     <th>От:</th>
+                                                                     <th>До:</th>
+                                                                     <th>Скидка</th>
+                                                                 </tr>
+                                                                 @foreach($value['company']->getDiscountAccumulativ as $val)
+                                                                     <tr><td><span style="color: #2a62bc;">{{$val->from}} руб.</span></td><td><span style="color: #2a62bc;">{{$val->to}} руб.</span></td><td><span style="color: indianred;">{{$val->percent}} %</span></td></tr>
+                                                                 @endforeach
+
+                                                             </table>
+                                                        </td>
+                                                     </tr>
+                                                @endif
+
                                             </table>
                                             <hr/>
                                             <div class="buttom_menu">
@@ -129,6 +147,16 @@
 
     <style>
 
+        .my_table td,th {
+            padding: 5px!important;
+        }
+
+        .my_table{
+            border-spacing: 3px!important;
+            border-collapse: separate;
+            text-align: center;
+            margin-top: 10px;
+        }
         .button_my{
             margin-bottom: 10px;
             float:right;
