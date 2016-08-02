@@ -16,7 +16,7 @@
 
 <div class="col-sm-12">
     <hr>
-    {!! Form::open(['url' => 'company', 'class' => 'form-horizontal company_form', 'id'=>'fileupload']) !!}
+    {!! Form::open(['url' => 'company-done-create', 'class' => 'form-horizontal company_form', 'id'=>'fileupload']) !!}
 
                 <div class="form-group {{ $errors->has('company_name') ? 'has-error' : ''}}">
                 {!! Form::label('company_name', 'Название магазина: ', ['class' => 'col-sm-2 control-label']) !!}

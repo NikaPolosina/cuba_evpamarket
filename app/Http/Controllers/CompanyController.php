@@ -6,6 +6,7 @@ use App\DiscountAccumulativ;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Company;
+use App\Product;
 use App\StatusOwner;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -24,11 +25,6 @@ use App\Region;
 class CompanyController extends Controller{
     public $category  = array();
     public $nCategory = array();
-
-/*    public function index(){
-        $company = Company::paginate(15);
-        return view('company.index', compact('company'));
-    }*/
 
     public function create(){
         $region = Region::all();
@@ -53,6 +49,8 @@ class CompanyController extends Controller{
             $curentUser = Auth::user();
             $curentUser->getCompanies()->save($company);
         }
+
+
         return view('company.companyContent')->with('company_id', $company['id']);
         // return redirect()->intended('homeOwnerUser');
     }
@@ -77,9 +75,9 @@ class CompanyController extends Controller{
                 array_push($value['child'], $this->nCategory[$value['id']]);
             }
             dd($value);
-            die('Surprise, you are here !!!');
+            die('Surprise, you are here 5!!!');
         }
-        die('Surprise, you are here !!!');
+        die('Surprise, you are here 7!!!');
     }
 
     public function show($id, CategoryController $category){
@@ -124,7 +122,14 @@ class CompanyController extends Controller{
     }
 
     public function destroy($id){
+
+        $company = Company::find($id);
+        if(count($company->getProducts) > 0){
+            Product::destroy($company->getProducts->lists('id'));
+        }
+
         Company::destroy($id);
+
         Session::flash('flash_message', 'Company deleted!');
         return redirect()->intended('homeOwnerUser');
     }

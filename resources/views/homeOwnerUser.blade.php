@@ -181,7 +181,7 @@
                                                                 </a> /
                                                                 {!! Form::open([
                                                                 'method'=>'DELETE',
-                                                                'url' => ['company', $item->id],
+                                                                'url' => ['company-delete', $item->id],
                                                                 'style' => 'display:inline'
                                                                 ]) !!}
                                                                 {!! Form::submit('Удалить', ['class' => 'btn btn-danger btn-xs']) !!}
