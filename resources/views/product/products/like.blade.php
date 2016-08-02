@@ -48,9 +48,9 @@
                                     </div>
                                     <div class="col-sm-9">
 
-                                        <div class="shop_name">
-                                            <span class="span_title">Магазин:</span>
-                                            <span>{{$v->getCompany()->first()->company_name}}</span>
+                                        <div class="shop_name" style="color: darkblue;">
+                                            <span class="span_title option_table">Магазин:</span>
+                                            <span class="option_table" style="text-align: center; margin-left: 180px"> {{$v->getCompany()->first()->company_name}}</span>
                                         </div>
                                         <table class="table_product" border="0" cellpadding="0" cellspacing="0" width="100%">
                                             <tr>
@@ -64,11 +64,11 @@
                                                 <td width="65%" valign="top"><p style="font-size: 20px;" class="product_description"> {{$v['product_description']}}</p>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                          {{--  <tr>
                                                 <td width="35%"><span class="option_table">В наличии: </span></td>
                                                 <td width="65%" valign="top"><p style="font-size: 20px;" class=""> 40шт</p>
 
-                                            </tr>
+                                            </tr>--}}
                                             <tr>
                                                 <td width="35%" valign="top"><span class="option_table">Цена:</span></td>
                                                 <td width="65%" valign="top">

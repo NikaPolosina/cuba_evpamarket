@@ -30,26 +30,77 @@
                                 </div>
                             </div>
 
+                            <style>
+                                .table_mod{
+                                    border-collapse: separate!important;
+                                }
+
+                                .table_mod td, .table_mod th{
+                                    padding: 5px!important;
+                                    margin: 5px!important;
+                                }
+
+                                .glyphicon{
+                                    right: 5px;
+                                }
+
+                                .my_b{
+                                    width: 50%;
+                                }
+                                .input-group-btn{
+                                    max-width: 30px;
+                                    max-height: 30px;
+                                    height: 30px;
+                                    text-align: center;
+                                }
+                                .price_b{
+                                    background: #fff3b5;
+                                    border-radius: 4px;
+                                    display: inline-block;
+                                    padding: 7px 7px 5px;
+                                    vertical-align: middle;
+                                    margin-bottom: 5px;
+                                    white-space: nowrap;
+                                    border: 1px solid transparent;
+                                    font-size: 1.38462em;font-size: 20px;
+                                }
+                                .price_all_b{
+                                    background: #fff3b5;
+                                    border-radius: 4px;
+                                    display: inline-block;
+                                    padding: 7px 7px 5px;
+                                    vertical-align: middle;
+                                    margin-bottom: 5px;
+                                    white-space: nowrap;
+                                    border: 1px solid transparent;
+                                    font-size: 1.38462em;font-size: 20px;
+                                }
+
+
+
+
+                            </style>
+
                             <div class="col-sm-9">
-                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <table class="table_mod" border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tr>
                                         <td width="35%">
-                                            <span style="font-size: 20px; font-weight: bolder;">Товар:</span>
+                                            <span style="font-size: 17px; font-weight: bolder;">Товар:</span>
                                             <input type="hidden" class="product_id"/>
                                         </td>
-                                        <td width="65%" valign="top"><p class="name" style=" font-size: 20px;"></p></td>
+                                        <td width="65%" valign="top"><p class="name" style=" font-size: 17px;"></p></td>
                                     </tr>
                                     <tr>
                                         <td width="35%">
-                                            <span style="font-size: 20px; font-weight: bolder;">Краткое описание:</span>
+                                            <span style="font-size: 17px; font-weight: bolder;">Краткое описание:</span>
                                         </td>
                                         <td width="65%" valign="top">
-                                            <p style="font-size: 20px;" class="product_description"></p></td>
+                                            <p style="font-size: 17px;" class="product_description"></p></td>
                                     </tr>
 
 
                                     <tr>
-                                        <td width="35%"><span class="option_table">Количество:</span></td>
+                                        <td width="35%"><span style="font-size: 17px; font-weight: bolder;" class="option_table">Количество:</span></td>
                                         <td width="65%" valign="top">
 
                                             {{-------------------------------Количество товара----------------------------------}}
@@ -71,10 +122,12 @@
                                                 </div>
                                             </div>
 
-                                            <div class="">
-                                                <p>В наличии: 40 шт.</p>
-                                            </div>
+                                          {{--  <div class="">
+                                                <p>В наличии: 45 шт.</p>
+                                            </div>--}}
                                             {{-----------------------------------------------------------------------------------}}
+
+
 
                                         </td>
                                     </tr>
@@ -84,37 +137,21 @@
                                         <td width="35%" valign="top">
                                             <span style="font-size: 20px; font-weight: bolder;">Цена:</span></td>
                                         <td width="65%" valign="top">
-                                            <span class="all_product_price" style="    background: #fff3b5;
-                                                                    border-radius: 4px;
-                                                                    display: inline-block;
-                                                                    padding: 7px 7px 5px;
-                                                                    vertical-align: middle;
-                                                                    margin-bottom: 5px;
-                                                                    white-space: nowrap;
-                                                                    border: 1px solid transparent;
-                                                                    font-size: 1.38462em;
-                                                                    font-size: 20px;
-                                                        ">0</span>
-                                            <span >руб</span>
-                                            <span class="product_price_one" style="display: none"></span>
+                                            <p class="price_b">
+                                                <span class="all_product_price">0</span>
+                                                <span >руб</span>
+                                                <span class="product_price_one" style="display: none"></span>
+                                            </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td width="35%" valign="top">
                                             <span style="font-size: 20px; font-weight: bolder;">Всего в этом магазине:</span></td>
                                         <td width="65%" valign="top">
-                                            <span class="total_in_shop" style="    background: #fff3b5;
-                                                                    border-radius: 4px;
-                                                                    display: inline-block;
-                                                                    padding: 7px 7px 5px;
-                                                                    vertical-align: middle;
-                                                                    margin-bottom: 5px;
-                                                                    white-space: nowrap;
-                                                                    border: 1px solid transparent;
-                                                                    font-size: 1.38462em;font-size: 20px;
-                                                        ">0</span>
-                                            <span >руб</span>
-
+                                            <p class="price_all_b">
+                                                <span class="total_in_shop">0</span>
+                                                <span >руб</span>
+                                            </p>
                                             <span class="total_in_shop_one" style="display: none"></span>
                                         </td>
                                     </tr>
@@ -204,7 +241,7 @@
                         <div class="product_price">
                             <span class="price">{{$v->product_price}} руб</span>
                             <span class="stars"></span>
-                            <span class="testimonials">24 отзыва</span>
+                            <span class="testimonials">нет отзывов</span>
 
                         </div>
                         <div class="product_navigation">

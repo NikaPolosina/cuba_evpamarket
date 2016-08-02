@@ -7,7 +7,7 @@
         {!! HTML::script('/js/caunt_product.js') !!}
         @if(count($companies))
             @foreach($companies as $value)
-                <div class="col-md-8 col-md-offset-2" style="border: 1px solid #eee; background-color: #f8f8f8; margin-bottom: 5px;">
+                <div class="col-md-8 col-md-offset-2" style="    border: 1px solid #c1c1c1; background-color: #f1f1f1; margin-bottom: 5px;">
                     <div class="company_block_cart" >
 
                         {{ Form::open(array('url' => '/order',  'method' => 'post')) }}
@@ -19,6 +19,36 @@
                         {!! Form::hidden('company_id', $value['company']->id, ['class' => 'form-control', 'data-name' =>'company_id']) !!}
 
                             <div class="col-md-12 ">
+
+                                <style>
+                                    .table_mod{
+                                        border-collapse: separate!important;
+                                    }
+
+                                    .table_mod td, .table_mod th{
+                                        padding: 5px!important;
+                                        margin: 5px!important;
+                                    }
+
+
+                                    .my_b{
+                                        width: 50%;
+                                    }
+                                    .input-group-btn{
+                                        max-width: 30px;
+                                        max-height: 30px;
+                                        height: 30px;
+                                        text-align: center;
+                                        width: 30px;
+                                    }
+                                    #input_b{
+                                        height:30px;
+                                    }
+
+
+
+                                </style>
+
                                 @foreach($value['products'] as $val)
 
                                     <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p" style="background-color: white;">
@@ -32,7 +62,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            <table class="table_product" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                            <table class="table_product table_mod" border="0" cellpadding="0" cellspacing="0" width="100%">
                                                 <tr>
                                                     <td width="35%"><span class="option_table">Товар:</span></td>
                                                     <td width="65%" valign="top"><p class="name" style="font-size: 16px; font-weight: bold; color: darkblue;" >{{$val['product_name']}}</p></td>
@@ -50,15 +80,15 @@
                                                         <div class="my_b">
                                                             <div class="input-group number-spinner">
                                                             <span class="input-group-btn data-dwn">
-                                                                <button type="button" class="btn btn-default btn-info left_b" data-dir="dwn">
-                                                                    <span class="glyphicon glyphicon-minus"></span>
+                                                                <button type="button" class="btn btn-default btn-info left_b" data-dir="dwn" style="width: 30px;     height: 30px;">
+                                                                    <span class="glyphicon glyphicon-minus" style=" left: 5px;"></span>
                                                                 </button>
                                                             </span>
 
-                                                                {!! Form::text('product['.$val->id.'][cnt]', $val['cnt'], ['class' => 'form-control  text-center my_b"', 'data-name' =>'cnt',  "min"=>"1", "max"=>"40", "readonly" ]) !!}
+                                                                {!! Form::text('product['.$val->id.'][cnt]', $val['cnt'], ['class' => 'form-control  text-center my_b"', 'id'=>'input_b', 'data-name' =>'cnt',  "min"=>"1", "max"=>"40", "readonly" ]) !!}
 
                                                             <span class="input-group-btn data-up">
-                                                                <button  type="button" class="btn btn-default btn-info right_b" data-dir="up">
+                                                                <button  type="button" class="btn btn-default btn-info right_b" data-dir="up" style="width: 30px;     height: 30px;">
                                                                     <span style="width: 2px;" class="glyphicon glyphicon-plus"></span>
                                                                 </button>
                                                             </span>
@@ -96,10 +126,10 @@
                                                      <tr style="background-color: #f7f7f9; border: 1px solid #e1e1e8;  border-radius: 4px;">
                                                          <td width="50%" valign="top">
                                                              <span class="option_table" style="margin: 10px;">Cкидки магазина:</span>
-                                                             <p style="font-size: 13px; margin: 10px">Это накпительная скидка, которую предоставляет магазин.
-                                                                 Эта скидка действует при заказе на сумму, которая соответствует диапазону оответствующей процентной скидки.
+                                                             <p style="font-size: 13px; margin: 10px">Это накопительная скидка, которую предоставляет магазин.
+                                                                 Эта скидка действует при заказе на сумму, которая соответствует диапазону соответствующей процентной скидки.
                                                                  После оформления заказа и подтверждени продавцом о его получении покупателем - эта скидка закрепляется за Вами до тех пор,
-                                                                 пока Вы не не повысите сумму накплений в этом магазине до следующей болие выской скидки. </p>
+                                                                 пока Вы не повысите сумму накоплений в этом магазине до следующей болие высокой скидки. </p>
                                                          </td>
                                                         <td>
                                                              <table class="my_table" border="2" align="center" bordercolor="#ddd">
