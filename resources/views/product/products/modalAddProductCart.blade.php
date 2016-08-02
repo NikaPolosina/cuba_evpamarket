@@ -53,7 +53,7 @@
                                                 <div class="input-group number-spinner">
                                                     <span class="input-group-btn data-dwn">
                                                         <button class="btn btn-default btn-info left_b" data-dir="dwn" style="height: 30px; width: 30px;">
-                                                            <span class="glyphicon glyphicon-minus" style="left: 5px;"></span>
+                                                            <span class="glyphicon glyphicon-minus" {{--style="left: 5px;--}}"></span>
                                                         </button>
                                                     </span>
 
