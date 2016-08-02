@@ -35,11 +35,11 @@
                                             <table class="table_product" border="0" cellpadding="0" cellspacing="0" width="100%">
                                                 <tr>
                                                     <td width="35%"><span class="option_table">Товар:</span></td>
-                                                    <td width="65%" valign="top"><p class="name">{{$val['product_name']}}</p></td>
+                                                    <td width="65%" valign="top"><p class="name" style="font-size: 16px; font-weight: bold; color: darkblue;" >{{$val['product_name']}}</p></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="35%"><span class="option_table">Краткое описание:</span></td>
-                                                    <td width="65%" valign="top"><p style="font-size: 20px;" class="product_description"> {{$val['product_description']}}</p>
+                                                    <td width="65%" valign="top"><p style="font-size: 16px;" class="product_description"> {{$val['product_description']}}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -85,12 +85,22 @@
                                                 </tr>
                                                 <tr>
                                                     <td width="35%" valign="top"><span class="option_table">Общяя стомость:</span></td>
-                                                    <td width="65%" valign="top"><div class="product_price yelloy_big"><span class="all_product_price" style=""> {{$val['product_price']*$val['cnt']}} </span><span>руб.</span></div></td>
+                                                    <td width="65%" valign="top">
+                                                        <div class="product_price yelloy_big">
+                                                            <span class="all_product_price" style=""> {{$val['product_price']*$val['cnt']}} </span><span>руб.</span>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
                                                 @if(count($value['company']->getDiscountAccumulativ) > 0)
-                                                     <tr>
-                                                         <td width="20%" valign="top"><span class="option_table">Cкидки магазина:</span></td>
+                                                     <tr style="background-color: #f7f7f9; border: 1px solid #e1e1e8;  border-radius: 4px;">
+                                                         <td width="50%" valign="top">
+                                                             <span class="option_table" style="margin: 10px;">Cкидки магазина:</span>
+                                                             <p style="font-size: 13px; margin: 10px">Это накпительная скидка, которую предоставляет магазин.
+                                                                 Эта скидка действует при заказе на сумму, которая соответствует диапазону оответствующей процентной скидки.
+                                                                 После оформления заказа и подтверждени продавцом о его получении покупателем - эта скидка закрепляется за Вами до тех пор,
+                                                                 пока Вы не не повысите сумму накплений в этом магазине до следующей болие выской скидки. </p>
+                                                         </td>
                                                         <td>
                                                              <table class="my_table" border="2" align="center" bordercolor="#ddd">
                                                                  <tr>
@@ -146,6 +156,9 @@
     {!! HTML::script('/js/product/cart_delete.js') !!}
 
     <style>
+        .option_table{
+            font-size: 18px;
+        }
 
         .my_table td,th {
             padding: 5px!important;

@@ -2,7 +2,7 @@
 {{ Form::open(array(  'method' => 'post', 'url' => '/company-create-discount/'.$company->id , 'class' => 'form-inline' )) }}
 {!! csrf_field() !!}
 
-{!! Form::hidden('id', $item->id ?? null, ['class' => 'form-control', 'required' => 'required',  'min' => '0']) !!}
+{!! Form::hidden('id', (isset($item->id)) ? $item->id : null, ['class' => 'form-control', 'required' => 'required',  'min' => '0']) !!}
 
 
 

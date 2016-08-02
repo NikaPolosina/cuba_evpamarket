@@ -27,9 +27,9 @@ class HomeController extends Controller{
 
     public function Index(){
 
-        Cookie::queue(
+        /*Cookie::queue(
             Cookie::forget('cart')
-        );
+        );*/
 
         if(Auth::user()->hasRole('admin')){
             return redirect()->intended('admin');

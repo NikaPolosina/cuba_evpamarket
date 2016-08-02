@@ -25,10 +25,10 @@ class CompanyController extends Controller{
     public $category  = array();
     public $nCategory = array();
 
-    public function index(){
+/*    public function index(){
         $company = Company::paginate(15);
         return view('company.index', compact('company'));
-    }
+    }*/
 
     public function create(){
         $region = Region::all();

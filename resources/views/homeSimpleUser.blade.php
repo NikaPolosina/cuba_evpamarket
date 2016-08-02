@@ -76,7 +76,7 @@
                                             </li>
                                             <li>
                                                 <a href="/show-list-order-simple"> Заказы
-                                                    <span>@if(count($order) > 0){{count($order)}}@endif</span>
+                                                    @if(count($order) > 0) <span>{{count($order)}}</span>@endif
                                                 </a>
                                             </li>
                                         </ul>

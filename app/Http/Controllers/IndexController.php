@@ -42,7 +42,7 @@ class IndexController extends Controller{
                     $v->firstFile = $directoryMy . $files[2];
                     if(is_dir(public_path() . $v->firstFile)){
                         if(isset($files[3]))
-                            $v->$firstFile = $directoryMy . $files[3];else
+                            $v->firstFile = $directoryMy . $files[3];else
                             $v->firstFile = '/img/custom/files/thumbnail/plase.jpg';
                     }
                 }else{

@@ -19,6 +19,7 @@ use App\StatusOwner;
 class OrderController extends Controller{
 
     public function createOrder(Request $request){
+
         if(!Auth::user()){
             return view('auth.login');
         }
@@ -47,6 +48,30 @@ class OrderController extends Controller{
         $info_user =  $user->getUserInformation;
         $region = Region::find($info_user['region_id']);
         $city = City::find($info_user['city_id']);
+
+        $owner = $company->getUser;
+        $status = StatusOwner::where('key','sending_buyer')->get();
+
+        $order = Order::select('order.*', DB::raw('sum(order.total_price) as total_sum'))
+            ->where('simple_user_id', $user->id)
+            ->where('owner_user_id', $owner[0]['id'])
+            ->where('status', $status[0]['id'])
+            ->first();
+        $total_discount = 0;
+        if(($total - $order->total_sum ) < 0 ){
+            $persent = $company->getDiscountAccumulativ()->where('from', '<=', $order->total_sum )->where('to', '>=', $order->total_sum )->get();
+
+        }else{
+            $persent = $company->getDiscountAccumulativ()->where('from', '<=', $total)->where('to', '>=', $total)->get();
+
+        }
+
+        if(count($persent) > 0){
+            $total_discount = ($total*$persent[0]['percent'])/100;
+        }
+
+
+
         return view('order.create')
             ->with('user', $user)
             ->with('info_user', $info_user)
@@ -54,6 +79,7 @@ class OrderController extends Controller{
             ->with('city', $city)
             ->with('company', $company)
             ->with('total_price', $total)
+            ->with('total_discount', $total_discount)
             ->with('products', $products);
     }
     public function ready(Request $request){
@@ -84,7 +110,6 @@ class OrderController extends Controller{
 
         $satus = StatusOwner::where('key', '=', 'not_processed')->get();
 
-        $cart = $request->cookie('cart');
 
         DB::beginTransaction();
         try{
@@ -114,13 +139,22 @@ class OrderController extends Controller{
 
             DB::commit();
 
-            if(array_key_exists($company['id'], $cart) && count($cart[$company['id']]['products'])){
+
+
+            $cart = array();
+            if($request->cookie('cart')){
+                $cart = $request->cookie('cart');
+            }
+            $k = (Auth::user()) ? Auth::user()->id.'_id' : '0_id';
+            $cart[$k] =  (isset($cart[$k])) ? $cart[$k] : array();
+
+            if(array_key_exists($company['id'], $cart[$k]) && count($cart[$k][$company['id']]['products'])){
                 foreach($products as $currentProduct){
-                    if(array_key_exists($currentProduct['id'], $cart[$company['id']]['products'])){
-                        unset($cart[$company['id']]['products'][$currentProduct['id']]);
+                    if(array_key_exists($currentProduct['id'], $cart[$k][$company['id']]['products'])){
+                        unset($cart[$k][$company['id']]['products'][$currentProduct['id']]);
                     }
-                    if(!count($cart[$company['id']]['products'])){
-                        unset($cart[$company['id']]);
+                    if(!count($cart[$k][$company['id']]['products'])){
+                        unset($cart[$k][$company['id']]);
                         break;
                     }
                 }
