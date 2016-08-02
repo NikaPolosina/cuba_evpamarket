@@ -127,9 +127,9 @@ class AuthController extends Controller{
     }
 
     public function registerC(){
-        Cookie::queue(
+       /* Cookie::queue(
             Cookie::forget('cart')
-        );
+        );*/
 
         return view('auth.register')/*->withCompany(true)*/;
     }

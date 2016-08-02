@@ -2,6 +2,7 @@
 
 namespace App;
 use App\Category;
+use App\DiscountAccumulativ;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +25,10 @@ class Company extends Model{
 
     public function getOrder(){
         return $this->belongsToMany('App\Order');
+    }
+
+    public function getDiscountAccumulativ(){
+        return $this->hasMany('App\DiscountAccumulativ');
     }
 
 

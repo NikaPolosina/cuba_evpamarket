@@ -154,7 +154,7 @@ class ProductsController extends Controller{
                 File::deleteDirectory($originPath);
             }
 
-            return view('product.products.singleProductTr')->with([ 'item' => $newProduct ]);
+            return view('product.products.singleProductTr')->with([ 'item' => $newProduct ])->with(['x'=>$request->x+1]);;
         }
         return response()->json([ 'success' => false ]);
     }
@@ -352,6 +352,8 @@ class ProductsController extends Controller{
 
     public function productAjaxUpdate(Request $request){
 
+
+
         $validator = Validator::make(
             $request->input('product'),
             array(
@@ -374,13 +376,15 @@ class ProductsController extends Controller{
             return response()->json([
                 'error'  => $validator->errors() ], 200);
         }
-
         $data = $request->all();
         if($request->input('product')['product_id']){
+
             $product = Product::findOrFail($request->input('product')['product_id']);
 
             $result = $product->update(array(
-                'product_name'        => $request->input('product')['name'],
+
+
+            'product_name'        => $request->input('product')['name'],
                 'product_description' => $request->input('product')['description'],
                 'content'             => $request->input('product')['content'],
                 'product_image'       => $request->input('product')['photo'],
@@ -388,7 +392,7 @@ class ProductsController extends Controller{
                 'category_id'         => $request->input('product')['category_name'],
             ));
             if($result){
-                return view('product.products.singleProductTr')->with([ 'item' => $product ]);
+                return view('product.products.singleProductTr')->with([ 'item' => $product ])->with(['x'=>$request->x]);
             }
             return '';
         }

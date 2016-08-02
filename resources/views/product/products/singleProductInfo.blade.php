@@ -187,26 +187,55 @@
                                                 </div>
                                             </div>
 
+
+                                            <style>
+                                                .table_mod{
+                                                    border-collapse: separate!important;
+                                                }
+
+                                                .table_mod td, .table_mod th{
+                                                    padding: 5px!important;
+                                                    margin: 5px!important;
+                                                }
+
+                                                .glyphicon{
+                                                    right: 5px;
+                                                }
+
+                                                .my_b{
+                                                    width: 50%;
+                                                }
+                                                .input-group-btn{
+                                                    max-width: 30px;
+                                                    max-height: 30px;
+                                                    height: 30px;
+                                                    text-align: center;
+                                                }
+
+
+
+                                            </style>
+
                                             <div class="col-sm-9">
-                                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <table class="table_mod" border="0" cellpadding="0" cellspacing="0" width="100%">
                                                     <tr>
                                                         <td width="35%">
-                                                            <span style="font-size: 20px; font-weight: bolder;">Товар:</span>
+                                                            <span style="font-size: 17px; font-weight: bolder;">Товар:</span>
                                                             <input type="hidden" class="product_id"/>
                                                         </td>
-                                                        <td width="65%" valign="top"><p class="name" style=" font-size: 20px;"></p></td>
+                                                        <td width="65%" valign="top"><p class="name" style=" font-size: 17px;"></p></td>
                                                     </tr>
                                                     <tr>
                                                         <td width="35%">
-                                                            <span style="font-size: 20px; font-weight: bolder;">Краткое описание:</span>
+                                                            <span style="font-size: 17px; font-weight: bolder;">Краткое описание:</span>
                                                         </td>
                                                         <td width="65%" valign="top">
-                                                            <p style="font-size: 20px;" class="product_description"></p></td>
+                                                            <p style="font-size: 17px;" class="product_description"></p></td>
                                                     </tr>
 
 
                                                     <tr>
-                                                        <td width="35%"><span class="option_table">Количество:</span></td>
+                                                        <td width="35%"><span class="option_table" style="font-size: 17px; font-weight: bolder;">Количество:</span></td>
                                                         <td width="65%" valign="top">
 
                                                             {{-------------------------------Количество товара----------------------------------}}
@@ -228,9 +257,9 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="">
+                                                           {{-- <div class="">
                                                                 <p>В наличии: 40 шт.</p>
-                                                            </div>
+                                                            </div>--}}
                                                             {{-----------------------------------------------------------------------------------}}
 
                                                         </td>
@@ -239,7 +268,7 @@
 
                                                     <tr>
                                                         <td width="35%" valign="top">
-                                                            <span style="font-size: 20px; font-weight: bolder;">Цена:</span></td>
+                                                            <span style="font-size: 17px; font-weight: bolder;">Цена:</span></td>
                                                         <td width="65%" valign="top">
                                                         <span class="all_product_price" style="    background: #fff3b5;
                                                                                 border-radius: 4px;
@@ -257,7 +286,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td width="35%" valign="top">
-                                                            <span style="font-size: 20px; font-weight: bolder;">Всего в этом магазине:</span></td>
+                                                            <span style="font-size: 17px; font-weight: bolder;">Всего в этом магазине:</span></td>
                                                         <td width="65%" valign="top">
                                                         <span class="total_in_shop" style="    background: #fff3b5;
                                                                                 border-radius: 4px;
@@ -427,7 +456,7 @@
                                                             </div>
                                                             <div class="cont_stars">
                                                                 <span class="product_stars"></span>
-                                                                <span class="num_of_rev">24 отзыва</span>
+                                                                <span class="num_of_rev">нет отзывов</span>
                                                             </div>
                                                         </div>
                                                     </div>

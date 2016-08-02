@@ -20,16 +20,26 @@ class CartController extends Controller{
      * Show cart
      * */
     public function index(Request $request){
+
         $product = '';
         $companies = array();
+
         if($request->cookie('cart')){
-            foreach($request->cookie('cart') as $key => $company){
+            $cart = $request->cookie('cart');
+        }
+
+        $k = (Auth::user()) ? Auth::user()->id.'_id' : '0_id';
+
+        $cart[$k] =  (isset($cart[$k])) ? $cart[$k] : array();
+
+        if($cart[$k]){
+            foreach($cart[$k] as $key => $company){
                 $companies[$key]['company'] = Company::find($key);
                 $companies[$key]['products'] = $companies[$key]['company']->getProducts()->whereIn('id', array_keys($company['products']))->get();
 
                 $companies[$key]['products'] = IndexController::showProduct($companies[$key]['products']);
-                foreach ($companies[$key]['products'] as $value) {
 
+                foreach ($companies[$key]['products'] as $value) {
                     if(array_key_exists($value->id, $company['products'])){
                         $value->cnt = $company['products'][$value->id]['cnt'];
                     }else{
@@ -39,44 +49,45 @@ class CartController extends Controller{
             }
         }
 
-
         return view('product.products.cart')->with('companies', $companies);
     }
 
 
     public function cart(Request $request){
-        $cart = array();
+
         $cnt = 0;
+
 
         if($request->cookie('cart')){
             $cart = $request->cookie('cart');
         }
+        $k = (Auth::user()) ? Auth::user()->id.'_id' : '0_id';
+        $cart[$k] =  (isset($cart[$k])) ? $cart[$k] : array();
 
         $currentCompany = Product::find($request->input('id'))->getCompany()->first();
         $currentCompanyId = $currentCompany->id;
 
-        if(array_key_exists($currentCompanyId, $cart)){
-            if(array_key_exists($request->input('id'), $cart[$currentCompanyId]['products'])){
-                $cart[$currentCompanyId]['products'][$request->input('id')]['cnt']++;
+        if(array_key_exists($currentCompanyId,  $cart[$k])){
+            if(array_key_exists($request->input('id'),  $cart[$k][$currentCompanyId]['products'])){
+                 $cart[$k][$currentCompanyId]['products'][$request->input('id')]['cnt']++;
             }else{
-                $cart[$currentCompanyId]['products'][$request->input('id')]['cnt'] = 1;
+                 $cart[$k][$currentCompanyId]['products'][$request->input('id')]['cnt'] = 1;
             }
         }else{
-            $cart[$currentCompanyId] = array();
-            $cart[$currentCompanyId]['products'][$request->input('id')]['cnt'] = 1;
+             $cart[$k][$currentCompanyId] = array();
+             $cart[$k][$currentCompanyId]['products'][$request->input('id')]['cnt'] = 1;
         }
 
-        foreach($cart as $company){
+        foreach( $cart[$k] as $company){
             foreach($company['products'] as $product){
                 $cnt += $product['cnt'];
             }
         } 
 
         $total = 0;
-        foreach($cart[$currentCompanyId]['products'] as $key => $product){
+        foreach( $cart[$k][$currentCompanyId]['products'] as $key => $product){
             $total += Product::find($key)->product_price * $product['cnt'];
         }
-
 
         return response()->json([
             'success'       => true,
@@ -93,21 +104,30 @@ class CartController extends Controller{
         $cnt = 0;
 
         if($request->cookie('cart')){
-            $cart = $request->cookie('cart');
+//            $cart = $request->cookie('cart');
+
+            if($request->cookie('cart')){
+                $cart = $request->cookie('cart');
+            }
+
+            $k = (Auth::user()) ? Auth::user()->id.'_id' : '0_id';
+
+            $cart[$k] =  (isset($cart[$k])) ? $cart[$k] : array();
+            
 
             $currentCompany = Product::find($request->input('id'))->getCompany()->first();
             $currentCompanyId = $currentCompany->id;
 
             $cn = 0;
-            if(array_key_exists($currentCompanyId, $cart)){
-                $cn = $cart[$currentCompanyId]['products'][$request->input('id')]['cnt'];
-                unset($cart[$currentCompanyId]['products'][$request->input('id')]);
-                $current_company_cnt = count($cart[$currentCompanyId]['products']);
+            if(array_key_exists($currentCompanyId, $cart[$k])){
+                $cn = $cart[$k][$currentCompanyId]['products'][$request->input('id')]['cnt'];
+                unset($cart[$k][$currentCompanyId]['products'][$request->input('id')]);
+                $current_company_cnt = count($cart[$k][$currentCompanyId]['products']);
                 if(!$current_company_cnt)
-                    unset($cart[$currentCompanyId]);
+                    unset($cart[$k][$currentCompanyId]);
             }
 
-            foreach($cart as $company){
+            foreach($cart[$k] as $company){
                 foreach($company['products'] as $product){
                     $cnt += $product['cnt'];
                 }
@@ -117,7 +137,7 @@ class CartController extends Controller{
 
             return response()->json([
                 'success'       => true,
-                'product_cnt'   => $cnt,
+                'product_cnt'   => $cnt,    
                 'product'       => Product::find($request->input('id')),
                 'total_in_shop' => $total,
                 'in_current_company' =>$current_company_cnt
@@ -131,23 +151,27 @@ class CartController extends Controller{
 
     public function cartAddCnt(Request $request){
 
-        $cart = array();
         $cnt = 0;
+
+        $cart = array();
 
         if($request->cookie('cart')){
             $cart = $request->cookie('cart');
         }
 
+        $k = (Auth::user()) ? Auth::user()->id.'_id' : '0_id';
+        $cart[$k] =  (isset($cart[$k])) ? $cart[$k] : array();
+
         $currentCompany = Product::find($request->input('id'))->getCompany()->first();
         $currentCompanyId = $currentCompany->id;
 
-        if(array_key_exists($currentCompanyId, $cart)){
-            if(array_key_exists($request->input('id'), $cart[$currentCompanyId]['products'])){
-                $cart[$currentCompanyId]['products'][$request->input('id')]['cnt'] = $cart[$currentCompanyId]['products'][$request->input('id')]['cnt'] + $request->input('cnt') - 1;
+        if(array_key_exists($currentCompanyId, $cart[$k])){
+            if(array_key_exists($request->input('id'), $cart[$k][$currentCompanyId]['products'])){
+                $cart[$k][$currentCompanyId]['products'][$request->input('id')]['cnt'] = $cart[$k][$currentCompanyId]['products'][$request->input('id')]['cnt'] + $request->input('cnt') - 1;
             }
         }
 
-        foreach($cart as $company){
+        foreach($cart[$k] as $company){
             foreach($company['products'] as $product){
                 $cnt += $product['cnt'];
             }
@@ -155,9 +179,10 @@ class CartController extends Controller{
 
 
         $total = 0;
-        foreach($cart[$currentCompanyId]['products'] as $key => $product){
+        foreach($cart[$k][$currentCompanyId]['products'] as $key => $product){
             $total += Product::find($key)->product_price * $product['cnt'];
         }
+        
         return response()->json([
             'success'       => true,
             'product_cnt'   => $cnt,
@@ -171,14 +196,19 @@ class CartController extends Controller{
      * */
     public static function getProductCount(Request $request){
         $cnt = 0;
+
+        $k = (Auth::user()) ? Auth::user()->id.'_id' : '0_id';
+        $cart = $request->cookie('cart');
+
         if($request->cookie('cart')){
-            $cart = $request->cookie('cart');
-            foreach($cart as $company){
+            $cart[$k] =  (isset($cart[$k])) ? $cart[$k] : array();
+            foreach($cart[$k] as $company){
                 foreach($company['products'] as $product){
                     $cnt += $product['cnt'];
                 }
             }
         }
+
         return $cnt;
     }
 }

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 //use Faker\Provider\pl_PL\Company;
+use App\Order;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,9 +27,9 @@ class HomeController extends Controller{
 
     public function Index(){
 
-        Cookie::queue(
+        /*Cookie::queue(
             Cookie::forget('cart')
-        );
+        );*/
 
         if(Auth::user()->hasRole('admin')){
             return redirect()->intended('admin');
@@ -38,7 +39,11 @@ class HomeController extends Controller{
             return redirect()->intended('homeOwnerUser');
         }
         if(Auth::user()->hasRole('simple_user')){
+
+
+          
             return redirect()->intended('homeSimpleUser');
+
         }
     }
 
@@ -52,9 +57,13 @@ class HomeController extends Controller{
             $curentUser = Auth::user();
             $userInfo = $curentUser->getUserInformation;
             $companies = $curentUser->getCompanies;
+            $order =  Order::where('simple_user_id', '=', Auth::user()->id)->get();
         }
         
-        return view('user.simple_user.home')->with('userInfo', $userInfo)->with('user', $curentUser);
+        return view('user.simple_user.home')
+            ->with('userInfo', $userInfo)
+            ->with('order', $order)
+            ->with('user', $curentUser);
     }
 
     public function registerOwner(){

@@ -9,98 +9,10 @@
 
     {!! Form::model($company, [
         'method' => 'PATCH',
-        'url' => ['company', $company->id],
+        'url' => ['company-create-single', $company->id],
         'class' => 'form-horizontal company_form',
         'id'=>'fileupload'
     ]) !!}
-
-
-             {{--   <div class="form-group {{ $errors->has('company_name') ? 'has-error' : ''}}">
-                {!! Form::label('company_name', 'Название магазина: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::text('company_name', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    {!! $errors->first('company_name', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('company_description') ? 'has-error' : ''}}">
-                {!! Form::label('company_description', 'Описание магазина: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::text('company_description', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    {!! $errors->first('company_description', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-
-            <div class="form-group">
-                {!! Form::label('company_logo', 'Logo: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-
-                    <div class="row fileupload-buttonbar">
-
-                        <div class="col-lg-7">
-                                        <span class="btn btn-success fileinput-button">
-                                            <i class="glyphicon glyphicon-plus"></i>
-                                            <span>Загрузить файл...</span>
-                                            <input type="file" name="files[]">
-                                        </span>
-                            <button type="button" class="btn btn-danger delete">
-                                <i class="glyphicon glyphicon-trash"></i>
-                                <span>Удалить</span>
-                            </button>
-                        </div>
-
-                    </div>
-
-                    <div class="files">
-                        <img width="300" height="300" src="/img/system/place_holder.png">
-                    </div>
-
-                </div>
-                {!! Form::hidden('company_logo', null, ['class' => 'form-control', 'id'=>'company_logo']) !!}
-            </div>
-
-
-    <div class="form-group {{ $errors->has('company_content') ? 'has-error' : ''}}">
-                {!! Form::label('company_content', 'Описание: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::textarea('company_content', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('company_content', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('company_address') ? 'has-error' : ''}}">
-                {!! Form::label('company_address', 'Адрес: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::text('company_address', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('company_address', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('company_contact_info') ? 'has-error' : ''}}">
-                {!! Form::label('company_contact_info', 'Контактная информация: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::text('company_contact_info', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('company_contact_info', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('company_additional_info') ? 'has-error' : ''}}">
-                {!! Form::label('company_additional_info', 'Дополнительная информация: ', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::textarea('company_additional_info', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('company_additional_info', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-
-
-    <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-1">
-            {!! Form::submit('Сохранить', ['class' => 'btn btn-primary form-control']) !!}
-        </div>
-    </div>--}}
-
-
-
-
-
-
-
 
 
     <div class="form-group {{ $errors->has('company_name') ? 'has-error' : ''}}">

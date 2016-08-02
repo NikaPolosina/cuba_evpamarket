@@ -10,8 +10,9 @@
         </div>
 
         <div class="row">
-            <div class="col-md-3">
-
+            <div class="col-md-2">
+                <a id="addCategory" href="{{url('/company-discount-setup', $company->id)}}">Установка накопительных скидок</a>
+                <hr>
                 <a id="addCategory" href="{{url('/category/category-setup', $company->id)}}">Добавить категорию</a>
                 <hr>
                 <h4>Мои категории</h4>
@@ -22,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-9">
+            <div class="col-sm-10">
                 <div class="table" id="product_list">
                     @include('product.products.productEditorList', array(
                                     'products' => $company->getProducts()->paginate($paginCnt),
@@ -224,7 +225,7 @@
 
             <script>
 
-                var nededPath, productId, mainImg;
+                var nededPath, productId, mainImg, number;
                 $(function(){
                     $('#fileupload').fileupload({
                         url                : '{{route('file_uploader')}}',
@@ -302,6 +303,7 @@
                             modalSpan.html('').hide();
                         }
                         if($(this).hasClass('edit')){
+                            number = $(this).parents('tr').eq(0).attr('data-number');
                             
                             var id     = $(this).parents('tr').eq(0).find('.option').val();
                             $.ajax({
@@ -367,6 +369,12 @@
 
                         }else{
                             $('.mod').modal();
+                            number = $('#product_list').find('tr[data-number]');
+                            if(number && number.length > 0){
+                                number = $(number[number.length-1]).attr('data-number');
+                            }else{
+                                number = 1;
+                            }
                         }
 
                     });
@@ -419,7 +427,8 @@
                                 },
                                 data    : {
                                     company_id : '<?=$company->id?>',
-                                    product    : data
+                                    product    : data,
+                                    x : number
                                 },
                                 success : function(data){
                                     if(data.error){

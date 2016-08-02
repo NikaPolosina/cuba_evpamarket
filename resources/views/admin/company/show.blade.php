@@ -33,7 +33,7 @@
                                 </label>
                             </th>
                             <th> # </th>
-                            <th> Имя </th
+                            <th> Имя </th>
                             <th> Описание </th>
                             <th> Арес </th>
                             <th> Статус </th>
@@ -56,7 +56,7 @@
                                 <td> {{$item->company_name}}</td>
 
                                 <td class="center"> {{$item->company_description}} </td>
-                                <td class="center"> {{$item->company_address}} </td>
+                                <td class="center"> ул. {{$item->street}} дом. {{$item->address}}  </td>
                                 <td>
                                     <span class="label label-sm label-success"> подтв. </span>
                                 </td>

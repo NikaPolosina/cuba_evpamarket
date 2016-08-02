@@ -7,7 +7,21 @@
                 <div class="col-sm-10 col-sm-offset-1">
                     <h1 style="text-align: center">Оформление заказа</h1>
                 </div>
-
+                <style>
+                    .ara{
+                        background-color: rgb(249, 249, 251);
+                        border: 1px solid #e1e1e8;
+                        border-radius: 4px;
+                        margin-bottom: 20px;
+                        padding:5px;
+                    }
+                    .ara:after{
+                        content: '';
+                        display: table;
+                        clear: both;
+                    }
+                    
+                </style>
 
                 {{ Form::open(array('url' => '/order-ready',  'method' => 'post')) }}
                 {!! Form::hidden('company_id', $company->id, ['class' => 'form-control', 'data-name' =>'company_id']) !!}
@@ -23,7 +37,7 @@
                         @foreach($products as $val)
 
 
-                                <div>
+                                <div class="ara">
                                 <div class="col-sm-3">
                                     <div style="max-width: 100%;">
                                         <img class="img_product img-thumbnail" src="{{$val->firstFile}}" alt=""/>
@@ -32,18 +46,18 @@
                                 <div class="col-sm-8">
                                     <table class="table_product" border="1" bordercolor="#cecdc9"  width="100%">
                                         <tr>
-                                            <td><span class="option_table_order">Товар:</span></td>
-                                            <td  valign="top"><span class="name">{{$val->product_name}}</span></td>
+                                            <td  width="30%"><span class="option_table_order">Товар:</span></td>
+                                            <td  width="70%" valign="top"><span class="name">{{$val->product_name}}</span></td>
                                         </tr>
                                         <tr>
-                                            <td><span class="option_table_order">Краткое описание:</span></td>
-                                            <td valign="top"><span class="product_description"> {{$val->product_description}}</span></td>
+                                            <td width="30%"><span class="option_table_order">Краткое описание:</span></td>
+                                            <td  width="70%" valign="top"><span class="product_description"> {{$val->product_description}}</span></td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td  width="30%">
                                                 {!! Form::label('product['.$val->id.'][cnt]', 'Количество: ', ['class' => 'control-label option_table_order']) !!}
                                             </td>
-                                            <td  valign="top">
+                                            <td  width="70%" valign="top">
 
                                                 {!! Form::text('product['.$val->id.'][cnt]', $val->cnt, ['class' => 'form-control count_product', 'data-name' =>'cnt', 'readonly']) !!}
 
@@ -51,10 +65,10 @@
                                         </tr>
 
                                         <tr>
-                                            <td valign="top">
+                                            <td  width="30%" valign="top">
                                                 {!! Form::label('price', 'Цена: ', ['class' => 'control-label option_table_order']) !!}
                                             </td>
-                                            <td valign="top">
+                                            <td  width="70%" valign="top">
                                                 <div class="form-control product_price">
                                                     {{$val->product_price}} <span> руб.</span>
                                                 </div>
@@ -62,10 +76,10 @@
 
                                         </tr>
                                         <tr>
-                                            <td valign="top">
+                                            <td  width="30%" valign="top">
                                                 {!! Form::label('price_product', 'Вместе: ', ['class' => ' control-label option_table_order']) !!}
                                             </td>
-                                            <td valign="top">
+                                            <td  width="70%" valign="top">
                                                 <div class="form-control product_price">
                                                     {{$val->product_price*$val->cnt}}<span> руб.</span>
                                                 </div>
@@ -92,8 +106,19 @@
                                             {{$total_price}}<span> руб.</span>
                                         </div>
                                    </td>
-
                                 </tr>
+                                @if($total_discount > 0)
+                                    <tr>
+                                        <td width="50%" valign="top">
+                                        {!! Form::label('total_price_discount', 'Цена со скидкой: ', ['class' => 'control-label option_table_order_вшысщгте']) !!}
+                                        </td>
+                                        <td width="50%" valign="top">
+                                            <div class="form-control product_price" style="background-color: #fdd0af; color: red;">
+                                                {{$total_price-$total_discount}}<span> руб.</span>
+                                            </div>
+                                       </td>
+                                    </tr>
+                                @endif
                             </table>
 
 
