@@ -8,3 +8,4 @@ Homestead.json
 /public/img/custom
 public/img/custom/*
 .idea/
+.DS_Store

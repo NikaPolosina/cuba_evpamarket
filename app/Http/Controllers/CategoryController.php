@@ -94,7 +94,7 @@ class CategoryController extends Controller{
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
 
         $company = Company::find($id);
-        
+
         
         return view('category.category_setup')
             ->with('categories', $categories)

@@ -12,7 +12,7 @@
             <div class="col-sm-12">
                         <hr/>
                         <div class="footer_button" style="float: right;">
-                            <a href="/product-editor/{{$company->id}}" class="btn btn-primary">Перейти в магазин</a>
+                            <a href="/product-editor/{{$company->id}}" class="btn btn-primary to_shop">Перейти в магазин</a>
                         </div>
                     </div>
         </div>
@@ -103,6 +103,9 @@
                         addButton.attr('disabled', false);
                         removeButton.attr('disabled', false);
                         progress.hide();
+
+                        window.location = $('.to_shop').attr('href');
+
                     },
                     error   : function(){
                         alert('System error');
