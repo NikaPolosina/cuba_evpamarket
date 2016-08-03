@@ -177,14 +177,16 @@
 
                                                             <td width="165">
                                                                 <a href="{{ url('company/' . $item->id . '/edit') }}">
-                                                                    <button type="submit" class="btn btn-primary btn-xs">Редактировать</button>
-                                                                </a> /
+                                                                    <button type="submit" class="btn btn-primary btn-xs">
+                                                                        <span class="glyphicon  glyphicon-pencil" aria-hidden="true"></span>
+                                                                    </button>
+                                                                </a>
                                                                 {!! Form::open([
                                                                 'method'=>'DELETE',
                                                                 'url' => ['company-delete', $item->id],
                                                                 'style' => 'display:inline'
                                                                 ]) !!}
-                                                                {!! Form::submit('Удалить', ['class' => 'btn btn-danger btn-xs']) !!}
+                                                                {{Form::button('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>', ['type'=>'submit', 'class' => 'btn btn-danger btn-xs'])}}
                                                                 {!! Form::close() !!}
                                                             </td>
                                                         </tr>

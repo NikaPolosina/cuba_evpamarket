@@ -252,8 +252,7 @@ class ProductsController extends Controller{
             'productAll' => $productAll
         ]);
     }
-
-
+    
     public function singleProduct(Request $request, CategoryController $category, $id){
 
 
@@ -300,18 +299,11 @@ class ProductsController extends Controller{
                     $firstFile = '/img/custom/files/thumbnail/plase.jpg';
                 }
             }
-
-     
-        
-        
-
         return view('product.products.singleProductInfo')
             ->with('singleProduct', $singleProduct)
             ->with('firstFile', $firstFile)
             ->with('singleFile', $singleFile)
-
             ->with('category', $category->getAllCategoris())
-
             ->with('companyId', $companyId);
     }
 

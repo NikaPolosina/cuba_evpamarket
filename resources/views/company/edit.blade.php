@@ -177,11 +177,104 @@
         @endif
 
         @include('file_upload')
+        <script>
+
+            var nededPath = 'companies/';
+            var imageObj;
+            var nededFiles = ['<?=$company->company_logo?>'];
+            var defaultObj;
+            var deleteObj;
+
+            $(function(){
+
+
+                $('#fileupload').fileupload({
+                    url : '{{route('file_uploader')}}',
+                    uploadTemplateId: null,
+                    downloadTemplateId: null,
+                    previewMaxWidth: 150,
+                    previewMaxHeight: 150,
+                })
+                        .on('fileuploadprocessalways', function (e, data) {
+                            var preview = '<img width="150" height="150" src="/img/system/place_holder.png">';
+                            if(data.files[0]['preview']){
+                                preview = data.files[0]['preview'];
+                            }
+                            $('.files').html(preview);
+                            if(defaultObj){
+                                deleteObj = defaultObj;
+                                defaultObj = null;
+                            }
+                        })
+                        .on('fileuploadadd', function(e, data){
+                            imageObj = data;
+                        })
+                        .on('fileuploadsubmit', function(e, data){
+                            data.formData = {path : nededPath};
+                        })
+                        .on('fileuploaddone', function(e, data){
+                            if(data.result.files[0]['name']){
+                                $('#company_logo').val(data.result.files[0]['name']);
+                            }
+                            $('.company_form').submit();
+                        })
+                        .on('fileuploadfail', function(e, data){
+                            $('.company_form').submit();
+                        });
+
+                $('.delete').on('click', function(){
+                    var preview = '<img width="150" height="150" src="/img/system/place_holder.png">';
+                    $('#company_logo').val('');
+                    $('.files').html(preview);
+                    imageObj = null;
+                    if(defaultObj){
+                        deleteObj = defaultObj;
+                        defaultObj = null;
+                    }
+                });
+
+                $('.company_form').on('submit', function(){
+                    if(deleteObj){
+                        $.ajax({
+                            url      : deleteObj.files[0]['deleteUrl'],
+                            method:'delete',
+                            data:{path: nededPath}
+                        });
+                    }
+                    if(imageObj){
+                        imageObj.submit();
+                        imageObj = null;
+                        event.preventDefault();
+                    }
+                });
+
+                $.ajax({
+                    url      : $('#fileupload').fileupload('option', 'url'),
+                    dataType : 'json',
+                    context  : $('#fileupload')[0],
+                    data     : {
+                        image : nededFiles,
+                        path  : nededPath
+                    },
+                }).done(function(result){
+                    var preview = '<img width="150" height="150" src="/img/system/place_holder.png">';
+                    if(result.files.length){
+                        defaultObj = result;
+                        console.log(result.files[0]);
 
 
 
+                        preview = '<a ' +
+                                'href="'+result.files[0]["url"]+'" ' +
+                                'title="'+result.files[0]["name"]+'" download="'+result.files[0]["name"]+'" data-gallery="">' +
+                                '<img src="'+result.files[0]["thumbnailUrl"]+'">' +
+                                '</a>';
+                    }
+                    $('.files').html(preview);
+                });
 
-
+            });
+        </script>
 
         <script src="/plugins/tinymce/tinymce.min.js"></script>
         <script>
