@@ -53,7 +53,7 @@
         </div>
 
         <div class="footer_button" style="float: right;">
-            <a href="" class="btn btn-default">Отменить изменения</a>
+            <a href="/product-editor/{{$company->id}}" class="btn btn-default">Отменить изменения</a>
             <a href="" class="btn btn-success save_changes">Сохранить изменения</a>
 
         </div>

@@ -432,6 +432,8 @@
                                                         @endforeach
                                                     @endif
                                                 </td>
+
+
                                                 <td style="width: 50%;">
                                                     <div class="product_img">
                                                          <img  style="max-width: 350px" class="img-thumbnail"  src="{{$firstFile}}">
@@ -556,6 +558,13 @@
                         </div>
                     </div>
                 <style>
+                    .table-responsive{
+                        border: 1px solid #ddd;
+                    }
+                    .table-hover td{
+                        border: solid 1px transparent!important;
+                    }
+
                     .tabbable-custom>.nav-tabs>li.active {
                         border-top: 3px solid #32c5d2!important;
                     }

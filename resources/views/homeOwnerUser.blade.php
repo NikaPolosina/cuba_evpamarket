@@ -154,7 +154,7 @@
                                                 <table class="table table-bordered table-striped table-hover">
                                                     <thead>
                                                     <tr bgcolor="#FBFBEF">
-                                                        <th>№</th><th>Logo</th><th>Имя магазина</th><th>Описание</th><th width="350px">Детальное описание</th><th>Действие</th>
+                                                        <th>№</th><th>Logo</th><th>Имя магазина</th><th>Описание магазина</th>{{--<th width="350px">Детальное описание</th>--}}<th>Действие</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -173,7 +173,7 @@
                                                         {{-- */$x++;/* --}}
                                                         <tr>
                                                             <td>{{ $x }}</td>
-                                                            <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="<?=$logo?>"></td><td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td><td width="200">{!!$item->company_content!!}</td>
+                                                            <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="<?=$logo?>"></td><td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td>{{--<td width="200">{!!$item->company_content!!}</td>--}}
 
                                                             <td width="165">
                                                                 <a href="{{ url('company/' . $item->id . '/edit') }}">
