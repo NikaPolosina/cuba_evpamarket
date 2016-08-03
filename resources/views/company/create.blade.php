@@ -56,13 +56,6 @@
             </div>
 
             {!! Form::hidden('company_logo', null, ['class' => 'form-control', 'id'=>'company_logo']) !!}
-     {{--       <div class="form-group {{ $errors->has('company_content') ? 'has-error' : ''}}">
-                {!! Form::label('company_content', 'Детальное описание: ', ['class' => 'col-sm-2 control-label']) !!}
-                <div class="col-sm-4">
-                    {!! Form::textarea('company_content', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('company_content', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>--}}
             <div class="form-group {{ $errors->has('company_contact_info') ? 'has-error' : ''}}">
                 {!! Form::label('company_contact_info', 'Контактная информация: ', ['class' => 'col-sm-2 control-label']) !!}
                 <div class="col-sm-4">
@@ -75,7 +68,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <select class="chosen-select" name="region" id="sel1">
-                            <option value="">Выбирите регион</option>
+                            {{--<option value="{{$user->region_id}}">{{$region_tile->title}}</option>--}}
                             @foreach($region as $value)
                                 <option value="{{$value->id}}">{{$value->title}}</option>
                             @endforeach
@@ -88,6 +81,8 @@
             $(document).ready(function(){
                 $(".chosen-select").chosen({no_results_text: "Oops, nothing found!"});
 
+                $('#sel1').val({{$user->region_id}}).trigger('chosen:updated');
+                $('#sel2').val({{$user->city_id}}).trigger('chosen:updated');
 
                 $('#sel1').on('change', function(){
                     console.log($(this).val());
@@ -121,11 +116,16 @@
 
         </script>
 
-            <div style="display: none" id="sel2_holder" class="form-group{{ $errors->has('city_id') ? ' has-error' : '' }}">
+            <div style="padding: 0px 15px 0px 15px;" id="sel2_holder" class="form-group{{ $errors->has('city_id') ? ' has-error' : '' }}">
                 <label class="col-md-2 control-label">Город</label>
                 <div class="col-md-4">
-                    <div>
-                        <select class="chosen"  name="city" id="sel2">
+                    <div class="form-group">
+
+                        <select class="chosen-select"  name="city" id="sel2">
+                            {{--<option value="{{$user->city_id}}">{{$city_tile->title_cities}}</option>--}}
+                             @foreach($city as $value)
+                                 <option value="{{$value->id}}">{{$value->title_cities}}</option>
+                             @endforeach
                         </select>
                     </div>
                 </div>
@@ -134,7 +134,7 @@
             <div class="form-group{{ $errors->has('street') ? ' has-error' : '' }}">
                 <label class="col-md-2 control-label">Улица</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" name="street" value="{{ old('street') }}">
+                    <input type="text" class="form-control" name="street" value="{{--{{ old('street') }}--}}{{$user->street}}">
                     @if ($errors->has('street'))
                         <span class="help-block">
                             <strong>{{ $errors->first('street') }}</strong>
@@ -146,12 +146,12 @@
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                 <label class="col-md-2 control-label">Дом</label>
                 <div class="col-md-1">
-                    <input type="text" class="form-control" name="address" value="{{ old('address') }}">
+                    <input type="text" class="form-control" name="address" value="{{--{{ old('address') }}--}} {{$user->address}}">
 
                     @if ($errors->has('address'))
                         <span class="help-block">
-                                                <strong>{{ $errors->first('address') }}</strong>
-                                            </span>
+                            <strong>{{ $errors->first('address') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>
@@ -174,11 +174,6 @@
                         @endforeach
                     </ul>
                 @endif
-
-
-
-
-
 
 
     <div>
@@ -281,29 +276,6 @@
             });
         </script>
     </div>
-
-{{--
-    <script src="/plugins/tinymce/tinymce.min.js"></script>
-    <script>
-        tinymce.init({
-            selector: "textarea",theme: "modern",width: 605,height: 200,
-            language: 'ru',
-            plugins: [
-                "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-                "table contextmenu directionality emoticons paste textcolor " +
-                "responsivefilemanager" +
-                " code"
-            ],
-            toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
-            toolbar2: "| responsivefilemanager | link unlink anchor | image media | forecolor backcolor  | print preview code ",
-            image_advtab: true ,
-
-            external_filemanager_path:"/plugins/responsive_filemanager/filemanager/",
-            filemanager_title:"Responsive Filemanager" ,
-            external_plugins: { "filemanager" : "/plugins/responsive_filemanager/filemanager/plugin.min.js"}
-        });
-    </script>--}}
 
     </div>
 </div>

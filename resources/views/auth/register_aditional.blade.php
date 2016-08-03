@@ -129,7 +129,7 @@
                                             data: '',
                                             success: function(data){
                                                 $('#sel2_holder').show();
-                                                var selector = $('#sel2')
+                                                var selector = $('#sel2');
 
                                                 selector.html('');
 

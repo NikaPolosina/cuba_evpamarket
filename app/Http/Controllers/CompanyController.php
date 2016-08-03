@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Company;
 use App\Product;
+use App\City;
 use App\StatusOwner;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -28,7 +29,14 @@ class CompanyController extends Controller{
 
     public function create(){
         $region = Region::all();
-        return view('company.create')->with('region', $region);
+        $user = Auth::user()->getUserInformation;
+        $city = City::where('region_id', $user->region_id)->get();
+
+
+        return view('company.create')
+            ->with('region', $region)
+            ->with('city', $city)
+            ->with('user', $user);
     }
 
     public function store(Request $request){
@@ -93,9 +101,14 @@ class CompanyController extends Controller{
     }
 
     public function edit($id){
+
         $company = Company::findOrFail($id);
         $region = Region::all();
-        return view('company.edit', compact('company'))->with('region', $region);
+        $city = City::where('region_id', $company->region_id)->get();
+        return view('company.edit', compact('company'))
+            ->with('city', $city)
+            ->with('region', $region);
+        
     }
 
     public function update($id, Request $request){
