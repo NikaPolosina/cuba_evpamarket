@@ -1,7 +1,7 @@
 <tr data-number="{{ $x }}">
     <td><input class="option" type="checkbox" name="option" value="{{ $item->id }}"></td>
     <td>{{ $x }}</td>
-    <td><a href="/single-product/{{ $item->id }}">{{ Str::limit($item->product_name, 80) }}</a></td>
+    <td><a href="/single-product-my-shop/{{ $item->id }}">{{ Str::limit($item->product_name, 80) }}</a></td>
     <td>{{  Str::limit($item->product_description, 300) }}</td>
     <td> {!! Str::limit( $item->content, 350) !!} </td>
 

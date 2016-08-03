@@ -1,4 +1,4 @@
-<div class="col-md-8 item_class">
+<div class="col-xs-10 col-sm-10 item_class">
     <div class="panel panel-default item_class_2">
         <div class="panel-body item_class_3">
             <link rel="stylesheet" type="text/css" href="/css/single_product_info.css"/>

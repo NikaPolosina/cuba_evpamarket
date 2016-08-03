@@ -252,54 +252,43 @@ class ProductsController extends Controller{
             'productAll' => $productAll
         ]);
     }
-    
-    public function singleProduct(Request $request, CategoryController $category, $id){
 
-
-
+    public function way(CategoryController $category, $wey, $id){
         $singleProduct = Product::find($id)->toArray();
         $companyId = Product::find($id)->getCompany[0]['id'];
+        $idProduct = $singleProduct['id'];
+        $directory = public_path().'/img/custom/companies/'.$companyId.'/products/'.$idProduct;
+        $directoryMy = '/img/custom/companies/'.$companyId.'/products/'.$idProduct.'/';
+        if(is_dir($directory)){
+            $allFile = array_diff(scandir($directory), array('.', '..'));
+            $singleFile = array();
+            foreach($allFile as $value){
+                if(file_exists($directory.'/'.$value) && !is_dir($directory.'/'.$value)){
+                    $singleFile[] = $directoryMy.$value;
+                }
+            }
+        }else{
+            $singleFile[] = '/img/custom/files/thumbnail/plase.jpg';
+        }
+        if(!empty($singleProduct['product_image']) && File::exists($directory.'/'.$singleProduct['product_image'])){
 
-            $idProduct = $singleProduct['id'];
-
-            $directory = public_path().'/img/custom/companies/'.$companyId.'/products/'.$idProduct;
-            $directoryMy = '/img/custom/companies/'.$companyId.'/products/'.$idProduct.'/';
-
-
+            $firstFile = $directoryMy.$singleProduct['product_image'];
+        }else{
             if(is_dir($directory)){
-                $allFile = array_diff(scandir($directory), array('.', '..'));
-                $singleFile = array();
-                foreach($allFile as $value){
-                    if(file_exists($directory.'/'.$value) && !is_dir($directory.'/'.$value)){
-                        $singleFile[] = $directoryMy.$value;
-                    }
+                $files = scandir($directory);
+                $firstFile = $directoryMy.$files[2];// because [0] = "." [1] = ".."
+
+                if(is_dir(public_path().$firstFile)){
+                    if(isset($files[3]))
+                        $firstFile = $directoryMy.$files[3];
+                    else
+                        $firstFile = '/img/custom/files/thumbnail/plase.jpg';
                 }
             }else{
-               $singleFile[] = '/img/custom/files/thumbnail/plase.jpg';
+                $firstFile = '/img/custom/files/thumbnail/plase.jpg';
             }
-
-
-            if(!empty($singleProduct['product_image']) && File::exists($directory.'/'.$singleProduct['product_image'])){
-
-                $firstFile = $directoryMy.$singleProduct['product_image'];
-            }else{
-
-                if(is_dir($directory)){
-                    $files = scandir($directory);
-                    $firstFile = $directoryMy.$files[2];// because [0] = "." [1] = ".."
-
-                    if(is_dir(public_path().$firstFile)){
-                        if(isset($files[3]))
-                            $firstFile = $directoryMy.$files[3];
-                        else
-                            $firstFile = '/img/custom/files/thumbnail/plase.jpg';
-
-                    }
-                }else{
-                    $firstFile = '/img/custom/files/thumbnail/plase.jpg';
-                }
-            }
-        return view('product.products.singleProductInfo')
+        }
+        return view('product.products'.$wey)
             ->with('singleProduct', $singleProduct)
             ->with('firstFile', $firstFile)
             ->with('singleFile', $singleFile)
@@ -307,6 +296,14 @@ class ProductsController extends Controller{
             ->with('companyId', $companyId);
     }
 
+    public function singleProduct(CategoryController $category, $id){
+        return $this->way($category, '.singleProductInfo', $id);
+    }
+    
+    public function singleProductMyShop(CategoryController $category, $id){
+        return $this->way($category, '.singleProductMyShop', $id);
+    }
+    
     public function productEditor(CategoryController $category, $id){
 
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
