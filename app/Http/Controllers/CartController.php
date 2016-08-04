@@ -99,9 +99,11 @@ class CartController extends Controller{
 
 
     public function destroy(Request $request){
+
         $id = $request['id'];
         $cart = array();
         $cnt = 0;
+
 
         if($request->cookie('cart')){
 //            $cart = $request->cookie('cart');
@@ -109,15 +111,10 @@ class CartController extends Controller{
             if($request->cookie('cart')){
                 $cart = $request->cookie('cart');
             }
-
             $k = (Auth::user()) ? Auth::user()->id.'_id' : '0_id';
-
             $cart[$k] =  (isset($cart[$k])) ? $cart[$k] : array();
-            
-
             $currentCompany = Product::find($request->input('id'))->getCompany()->first();
             $currentCompanyId = $currentCompany->id;
-
             $cn = 0;
             if(array_key_exists($currentCompanyId, $cart[$k])){
                 $cn = $cart[$k][$currentCompanyId]['products'][$request->input('id')]['cnt'];
@@ -132,9 +129,8 @@ class CartController extends Controller{
                     $cnt += $product['cnt'];
                 }
             }
-
             $total = CartController::getProductCount($request)-$cn;
-
+            
             return response()->json([
                 'success'       => true,
                 'product_cnt'   => $cnt,    
@@ -147,8 +143,7 @@ class CartController extends Controller{
         }
         return response()->json([ 'success' => true ]);
     }
-
-
+    
     public function cartAddCnt(Request $request){
 
         $cnt = 0;

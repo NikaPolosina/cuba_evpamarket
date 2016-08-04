@@ -7,30 +7,31 @@
         {!! HTML::script('/js/caunt_product.js') !!}
         @if(count($companies))
             @foreach($companies as $value)
-                <div class="col-md-8 col-md-offset-2" style="    border: 1px solid #c1c1c1; background-color: #f1f1f1; margin-bottom: 5px;">
-                    <div class="company_block_cart" >
+                <div class="company_block_cart">
+
+                <div class="col-md-12 cart_name">
+                    <h3 style="    font-family: sans-serif; text-transform: uppercase; text-align: center; font-weight: 700;">Магазин: <sapn style="color: darkblue;">{{$value['company']->company_name}}</sapn></h3>
+                </div>
+
+                <div class="col-md-8 col-md-offset-2" style="border: 1px solid #c1c1c1; background-color: #f5f5f5; margin-bottom: 25px;">
+                    <div class="" style="margin-top: 25px">
 
                         {{ Form::open(array('url' => '/order',  'method' => 'post')) }}
                         {{  Form::token()}}
-                        <div class="col-md-12 cart_name">
-                            <h3 style="text-align: center">Магазин: <sapn style="color: darkblue;">{{$value['company']->company_name}}</sapn></h3>
-                        </div>
+
 
                         {!! Form::hidden('company_id', $value['company']->id, ['class' => 'form-control', 'data-name' =>'company_id']) !!}
 
-                            <div class="col-md-12 ">
+                            <div class="col-md-12 my_my">
 
                                 <style>
                                     .table_mod{
                                         border-collapse: separate!important;
                                     }
-
                                     .table_mod td, .table_mod th{
                                         padding: 5px!important;
                                         margin: 5px!important;
                                     }
-
-
                                     .my_b{
                                         width: 50%;
                                     }
@@ -45,8 +46,6 @@
                                         height:30px;
                                     }
 
-
-
                                 </style>
 
                                 @foreach($value['products'] as $val)
@@ -54,6 +53,7 @@
                                     <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p" style="background-color: white;">
                                         <div class="col-sm-1">
                                             {!! Form::checkbox('product['.$val->id.'][checked]', 'true', ['class' => 'sfzs']) !!}
+                                            <input class="input_id_del" value="{{$val->id}}" type="hidden"/>
                                         </div>
                                         <div class="col-sm-2">
                                             <div style="max-width: 100%;">
@@ -110,7 +110,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td width="35%" valign="top"><span class="option_table">Цена:</span></td>
+                                                    <td width="35%" valign="top"><span class="option_table">Цена за еденицу товара:</span></td>
                                                     <td width="65%" valign="top"><div class="product_price yelloy"><span class="product_price_one" style=""> {{$val['product_price']}}</span> <span>руб.</span></div></td>
                                                 </tr>
                                                 <tr>
@@ -123,7 +123,7 @@
                                                 </tr>
 
                                                 @if(count($value['company']->getDiscountAccumulativ) > 0)
-                                                     <tr style="background-color: #f7f7f9; border: 1px solid #e1e1e8;  border-radius: 4px;">
+                                                     <tr style="background-color: #f7f7f9; outline: 1px solid #dedee4;">
                                                          <td width="50%" valign="top">
                                                              <span class="option_table" style="margin: 10px;">Cкидки магазина:</span>
                                                              <p style="font-size: 13px; margin: 10px">Это накопительная скидка, которую предоставляет магазин.
@@ -159,19 +159,17 @@
                                     </div>
 
                                 @endforeach
-                                    <div class="col-sm-10 col-sm-offset-1">
+                                    <div class="col-sm-10 col-sm-offset-1" style="margin-bottom: 25px;">
 
                                         {!! Form::submit('Оформить заказ', ['class' => 'btn btn-lg btn-success button_my']) !!}
 
                                     </div>
                             </div>
 
-
-
                         {{ Form::close() }}
                     </div>
                 </div>
-
+                </div>
             @endforeach
             <div class="col-sm-9 col-sm-offset-1 product_item_cart cart_empty product_item_p" style="display: none">
                 <h1>Ваша корзина пуста. Вернитесь к сайту что бы добавить товары в корзину.</h1>
