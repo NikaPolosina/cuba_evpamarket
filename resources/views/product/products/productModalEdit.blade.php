@@ -32,12 +32,12 @@
                                 <div class="form-group {{ $errors->has('category_name') ? 'has-error' : ''}}">
                                     {!! Form::label('category_name', 'Категория: ', ['class' => 'col-sm-3 control-label']) !!}
                                     <select name="category_name" data-name="category_name">
-                                        @if(count($myCategories))
-                                            <option value="">Выбирите категорию</option>
-                                            @foreach($myCategories as $value)
-                                                <option value="{{$value['id']}}">{{$value['title']}}</option>
-                                            @endforeach
-                                        @endif
+                                            @if(count($myCategories))
+                                                <option value="">Выбирите категорию</option>
+                                                @foreach($myCategories as $value)
+                                                    <option value="{{$value['id']}}">{{$value['title']}}</option>
+                                                @endforeach
+                                            @endif
                                     </select>
                                     <span class="modalSpan"></span>
                                 </div>

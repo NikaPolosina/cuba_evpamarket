@@ -297,13 +297,32 @@ class ProductsController extends Controller{
     }
 
     public function singleProduct(CategoryController $category, $id){
+
+
         return $this->way($category, '.singleProductInfo', $id);
     }
     
     public function singleProductMyShop(CategoryController $category, $id){
-        return $this->way($category, '.singleProductMyShop', $id);
+        $companyId = Product::find($id)->getCompany[0]['id'];
+        $currentCompanyCategories = $category->getCompanyCategorySorted($companyId);
+        
+        return $this->way($category, '.singleProductMyShop', $id)->with('myCategories', $currentCompanyCategories);
     }
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function productEditor(CategoryController $category, $id){
 
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);

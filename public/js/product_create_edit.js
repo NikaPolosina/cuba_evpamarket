@@ -47,9 +47,14 @@ $(function(){
         .on('fileuploadfail', function(e, data){});
 });
 
+
+
 $(document).ready(function() {
     /* Нажатие на кнопку изменить и создать новый*/
     $('#product_list').delegate('.open', 'click', function () {
+
+
+        
         nededPath = 'temp/' + Date.now() + '/';
         productId = false;
         mainImg = '';
@@ -62,10 +67,22 @@ $(document).ready(function() {
         $('.mod').find('.form-group').find('input[data-name="photo"]').val('');
         $('.mod').find('.form-group').find('input[data-name="price"]').val('');
         $('.files').html('');
-        var categoryId = $('.table').find('.companyIdClass').val();
-        var categoryTitle = $('.table').find('.companyTitleClass').val();
+
+        if($(this).hasClass('edit')){
+            var categoryId = '';
+        }else{
+            var categoryId = $('.table').find('.companyIdClass').val();
+        }
+        
+        
+        if(!categoryTitle){
+            var categoryTitle = $('.table').find('.companyTitleClass').val();
+        }
+
         var modalSelect = $('.mod').find('select[data-name="category_name"]');
         var modalSpan = $('.mod').find('.modalSpan');
+
+
         if (categoryId.length && modalSelect.find('option[value="' + categoryId + '"]').length) {
             modalSelect.val(categoryId);
             modalSelect.hide();
@@ -78,7 +95,15 @@ $(document).ready(function() {
         if ($(this).hasClass('edit')) {
             number = $(this).parents('tr').eq(0).attr('data-number');
 
-            var id = $(this).parents('tr').eq(0).find('.option').val();
+
+            if(window.id != undefined){
+                var id = window.id;
+            }else{
+                var id = $(this).parents('tr').eq(0).find('.option').val();
+
+            }
+
+            
             $.ajax({
                 type: "POST",
                 url: "/products/edit-categoty",
@@ -89,6 +114,7 @@ $(document).ready(function() {
                 success: function (msg) {
 
                     mainImg = msg.product.product_image;
+
 
                     $('.mod').find('select[name="category_name"]').hide();
                     $('.mod').find('.modalSpan').text(msg.productCategory.title).show();
@@ -102,6 +128,8 @@ $(document).ready(function() {
                     $('.mod').find('.form-group').find('input[data-name="photo"]').val(msg.product.product_image);
                     $('.mod').find('.form-group').find('input[data-name="price"]').val(msg.product.product_price);
                     $('.mod').find('#product_form').find('input[type="text"]').eq(0).focus();
+
+                    
                     productId = msg.product.id;
                     nededPath = '/companies/'+company_id+'/products/' + msg.product.id + '/';
                     $.ajax({
@@ -163,6 +191,7 @@ $(document).ready(function() {
         if(modForm.length){
             var data = {};
             var inputs    = $('.mod').find('[data-name]');
+
             inputs.each(function(){
                 data[$(this).attr('data-name')] = $(this).val();
             });
@@ -175,6 +204,7 @@ $(document).ready(function() {
                 $('[data-name="description"]').focus();
                 return false;
             }
+            
             if(data.category_name.length == 0){
                 $('.mod').find('.msgDenger').show();
                 return false;
@@ -214,6 +244,11 @@ $(document).ready(function() {
                         });
                         return false;
                     }
+
+                    if(window.id != undefined){
+                        window.location = '';
+                    }
+
                     var tr = $(data);
                     var id = tr.find('.option').val();
 

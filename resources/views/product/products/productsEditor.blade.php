@@ -1,4 +1,5 @@
 @extends('...layouts.app')
+
 @section('content')
     @include('layouts.header_menu')
 
@@ -7,6 +8,7 @@
             <h1 style="text-align: center">{{ $company->company_name }} </h1>
             <hr>
         </div>
+
         <div class="row">
             <div class="col-md-2">
                 <a id="addCategory" href="{{url('/company-discount-setup', $company->id)}}">Установка накопительных скидок</a>
@@ -20,6 +22,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-sm-10">
                 <div class="table" id="product_list">
                     @include('product.products.productEditorList', array(
@@ -37,6 +40,7 @@
            var company_id = '{{$company->id}}';
 
         </script>
+
 
             <script>
 
@@ -202,6 +206,7 @@
             </script>
         {!! HTML::script('/js/product_create_edit.js') !!}
         {!! HTML::script('/plugins/tinymce/tinymce_init.js') !!}
+
 
             <style>
 
