@@ -45,12 +45,6 @@ Route::get('/company-done-create', ['as' => 'company-done-create', 'uses' => 'Co
 Route::post('/company-done-create', ['as' => 'company-done-create', 'uses' => 'CompanyController@store']);
 Route::delete('company-delete/{id}', 'CompanyController@destroy');
 
-
-
-/*Route::group(['middleware' => ['web']], function () {
-    Route::resource('company', 'CompanyController');
-});*/
-
 /*------------------------------------------ProductController---------------------------------------------*/
 Route::group(['middleware' => ['web']], function () {
     Route::resource('products', 'ProductsController');
@@ -86,11 +80,7 @@ Route::post('/user/simple_user/setting/security/edit-owner', 'UserController@set
 Route::any('category/category-setup/{id}', 'CategoryController@categorySetup');
 Route::post('/category/edit-categoty', ['as' => 'attach_categories', 'uses'=>'CategoryController@attachCategoriesToCompany']);
 Route::post('/category/edit-categoty_two', ['as' => 'attach_categories_two', 'uses'=>'CategoryController@attachCategoriesToCompanyTwo']);
-
-
 Route::post('/category/remove-categoty', ['as' => 'remove_categories', 'uses'=>'CategoryController@detachCategoriesToCompany']);
-
-
 
 /*-------------------------------------------File--Uploader--------------------------------------------*/
 Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);

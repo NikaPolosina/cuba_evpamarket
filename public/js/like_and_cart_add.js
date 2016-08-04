@@ -8,8 +8,6 @@ $('#app-layout').find('.row_row').find('.item_class_4').find('.product_navigatio
     var parent = $(this).parents('.item_1');
     var product_id = parent.find("input[data-name='product-id']").val();
     var product_img = parent.find('.product_img').find('img').attr('src');
-
-    
     var product_name = parent.find('.product_name').find('a').text();
     var product_price = parent.find('.product_price').find('span.price').text();
     var product_description = parent.find('.product_description').find('p').text();
@@ -45,6 +43,8 @@ $('#app-layout').find('.row_row').find('.item_class_4').find('.product_navigatio
             body_modal_add_cart.find('.modal-title').find('span').text(msg.product_cnt);
             body_modal_add_cart.find('img.img_product').attr('src', product_img);
     
+            body_modal_add_cart.find('span.single_product_price').text(msg.product.product_price);
+
             body_modal_add_cart.find('span.all_product_price').text(msg.product.product_price);
             body_modal_add_cart.find('span.product_price_one').html(msg.product.product_price);
 
