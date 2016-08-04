@@ -40,6 +40,7 @@ class CompanyController extends Controller{
     }
 
     public function store(Request $request){
+        
         $company = Company::create([
             'company_name'         => $request['company_name'],
             'company_description'  => $request['company_description'],
@@ -59,11 +60,23 @@ class CompanyController extends Controller{
         }
 
 
+        $dir = public_path().'/img/custom/companies/'.$company['id'];
+        $dir_m = public_path().'/img/custom/companies/'.$company['id'].'/company';
+        
+        if(!is_dir($dir)){
+            mkdir($dir, 0700, true) ;
+            mkdir($dir_m,  0700, true) ;
+        } 
+        
+
+    copy(public_path().'/img/custom/companies/'.$request['company_logo'] , public_path().'/img/custom/companies/'.$company['id'].'/company/'.$request['company_logo'] );
+
         return view('company.companyContent')->with('company_id', $company['id']);
         // return redirect()->intended('homeOwnerUser');
     }
 
     public function companyContent(Request $request){
+
         $id = $request['company_id'];
         $company = Company::find($id);
         $company_content = [
