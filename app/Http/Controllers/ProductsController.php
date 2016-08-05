@@ -26,6 +26,14 @@ class ProductsController extends Controller{
 
     }
 
+    public function destroyProductDir($id){
+        $company = Product::find($id)->getCompany;
+        $dir = public_path().'/img/custom/companies/'.$company[0]['id'].'/products/'.$id;
+        if(is_dir($dir)){
+            File::deleteDirectory($dir);
+        }
+    }
+
     public function index(){
         $products = Product::paginate($this->paginCnt);
         return view('product.products.index', compact('products'));
@@ -224,12 +232,14 @@ class ProductsController extends Controller{
     }
 
     public function destroy(Request $request){
+        $this->destroyProductDir($request['id']);
         Product::destroy($request['id']);
         Session::flash('flash_message', 'Product deleted!');
     }
 
     public function destroyCheck(Request $request){
         foreach($request['checkId'] as $value){
+            $this->destroyProductDir($value);
             Product::destroy($value);
         }
         Session::flash('flash_message', 'Product deleted all!');

@@ -166,7 +166,6 @@ class CompanyController extends Controller{
     }
 
     public function destroy($id){
-
         $company = Company::find($id);
         if(count($company->getProducts) > 0){
             Product::destroy($company->getProducts->lists('id'));
