@@ -179,14 +179,12 @@
         @include('file_upload')
         <script>
 
-            var nededPath = 'companies/';
+            var nededPath = 'companies/{{$company->id}}/company/';
             var imageObj;
             var nededFiles = ['<?=$company->company_logo?>'];
             var defaultObj;
             var deleteObj;
-
             $(function(){
-
 
                 $('#fileupload').fileupload({
                     url : '{{route('file_uploader')}}',
