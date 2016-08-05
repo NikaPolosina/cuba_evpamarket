@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Carbon\Carbon;
+use Mockery\Exception;
 use Session;
 use App\Company;
 use Auth;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Validator;
 class ProductsController extends Controller{
 
     public $paginCnt = 5;
+    private $_product;
 
     public function __construct(Request $request){
 
@@ -298,14 +300,13 @@ class ProductsController extends Controller{
 
     public function singleProduct(CategoryController $category, $id){
 
-
         return $this->way($category, '.singleProductInfo', $id);
     }
-    
+
     public function singleProductMyShop(CategoryController $category, $id){
         $companyId = Product::find($id)->getCompany[0]['id'];
         $currentCompanyCategories = $category->getCompanyCategorySorted($companyId);
-        
+
         return $this->way($category, '.singleProductMyShop', $id)->with('myCategories', $currentCompanyCategories);
     }
 
@@ -380,7 +381,7 @@ class ProductsController extends Controller{
         ]);
 
         if($validator->fails()){
-            
+
             return response()->json([
                 'error'  => $validator->errors() ], 200);
         }
@@ -420,6 +421,39 @@ class ProductsController extends Controller{
             'companyId' => $companyId,
             'category'  => $request['categories']
         ]);
+    }
+
+    /**
+     * Get single product by ajax
+     *
+     * @return json
+     * */
+    public function ajaxSingleProduct(Request $request, CartController $cartController){
+        $this->validate($request, [
+            'id' => 'required|integer'
+        ]);
+
+        try{
+            $this->_product = self::getSingleProduct($request->input('id'));
+            return response()->json([
+                'product' => self::getSingleProduct($request->input('id')),
+                'cart_cnt'    => $cartController->getTotalProductCnt(),
+                'total_in_shop'    => $cartController->getTotalAmount($this->_product->getCompany[0]->id),
+            ], 200);
+        }catch(\Exception $e){
+            return response()->json([ 'error' => $e->getMessage() ], 422);
+        }
+    }
+
+    /**
+     * Get single product
+     *
+     * @param int $id - product id
+     *
+     * @return object
+     * */
+    public static function getSingleProduct($id){
+        return Product::findOrFail($id);
     }
 
 }

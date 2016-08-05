@@ -1,13 +1,14 @@
 <!-- Modal -->
-<div style="z-index: 100000000000000" class="modal fade" id="modal_add_product_cart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div style="z-index: 100000000000000" class="modal fade" id="cart_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content col-md-10 col-sm-offset-1">
             <div class="modal-header">
                 <button type="button" class="close myClose" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">
-                    <img style="display: inline-block;" src="/img/system/check-mark.png" alt=""/> Товар был добавлен в корзину. Товаров в Вашей корзине:
-                    <span style="color:blue"></span></h4>
+                    <img style="display: inline-block;" src="/img/system/check-mark.png" alt="" /> Товар был добавлен в корзину. Товаров в Вашей корзине:
+                    <span style="color:blue" class="m_car_cnt"></span>
+                </h4>
             </div>
             <div class="modal-body">
                 <div class="product_info_add_cart product_item_cart">
@@ -15,7 +16,7 @@
                         <div class="col-sm-12">
                             <div class="col-sm-3">
                                 <div style="max-width: 100%;">
-                                    <img class="img_product img-thumbnail" src="" alt=""/>
+                                    <img class="m_img_product img-thumbnail" src="" alt="" />
                                 </div>
                                 <div class="gal">
                                 </div>
@@ -26,19 +27,25 @@
                                     <tr>
                                         <td width="40%">
                                             <span class="title_span_css">Товар:</span>
-                                            <input type="hidden" class="product_id"/>
+                                            <input type="hidden" class="m_h_product_id" />
+                                            <input type="hidden" class="m_h_product_price_one" />
+                                            <input type="hidden" class="m_h_total_in_shop" />
+
                                         </td>
-                                        <td width="60%" valign="top"><p class="name"></p></td>
+                                        <td width="60%" valign="top">
+                                            <p class="name m_product_title"></p>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td width="40%">
                                             <span class="title_span_css">Краткое описание:</span>
                                         </td>
                                         <td width="60%" valign="top">
-                                            <p style="font-size: 14px;" class="product_description"></p></td>
-                                        </tr>
+                                            <p style="font-size: 14px;" class="m_product_description"></p></td>
+                                    </tr>
                                     <tr>
-                                        <td width="40%"><span class="option_table title_span_css">Количество:</span></td>
+                                        <td width="40%"><span class="option_table title_span_css">Количество:</span>
+                                        </td>
                                         <td width="60%" valign="top">
 
                                             {{-------------------------------Количество товара----------------------------------}}
@@ -50,7 +57,7 @@
                                                         </button>
                                                     </span>
 
-                                                    <input type="text" class="form-control text-center my_b" value="1" min="1" max="40" readonly style="height: 30px;">
+                                                    <input type="text" class="form-control text-center my_b my_counter" value="1" min="1" max="40" readonly style="height: 30px;">
 
                                                     <span class="input-group-btn data-up">
                                                         <button class="btn btn-default btn-info right_b" data-dir="up" style="height: 30px; width: 30px;">
@@ -59,12 +66,6 @@
                                                     </span>
                                                 </div>
                                             </div>
-
-                                          {{--  <div class="">
-                                                <p>В наличии: 40 шт.</p>
-                                            </div>--}}
-                                            {{-----------------------------------------------------------------------------------}}
-
                                         </td>
                                     </tr>
                                     <tr>
@@ -72,8 +73,7 @@
                                             <span class="title_span_css">Цена за единицу товара:</span></td>
                                         <td width="60%" valign="top">
                                             <p class="price_single">
-                                                <span class="single_product_price">0</span>
-                                                <span >руб.</span>
+                                                <span class="m_single_product_price">0</span> <span>руб.</span>
                                             </p>
                                         </td>
                                     </tr>
@@ -82,9 +82,7 @@
                                             <span class="title_span_css">Цена с учётом количества:</span></td>
                                         <td width="60%" valign="top">
                                             <p class="price_b">
-                                                <span class="all_product_price">0</span>
-                                                <span >руб.</span>
-                                                <span class="product_price_one" style="display: none"></span>
+                                                <span class="m_all_product_price">0</span> <span>руб.</span>
                                             </p>
                                         </td>
                                     </tr>
@@ -93,10 +91,8 @@
                                             <span class="title_span_css">Сумма по этому магазину:</span></td>
                                         <td width="60%" valign="top">
                                             <p class="price_all_b">
-                                                 <span class="total_in_shop">0</span>
-                                                <span >руб.</span>
+                                                <span class="m_total_in_shop">0</span> <span>руб.</span>
                                             </p>
-                                            <span class="total_in_shop_one" style="display: none"></span>
                                         </td>
                                     </tr>
                                 </table>
@@ -111,13 +107,13 @@
             </div>
             <div class="modal-footer">
 
-                    <button type="button" class="btn btn-success" data-dismiss="modal">
-                        <img class="img_button_icon" src="/img/system/back-arrow.png" alt=""/>Продолжить покупки
-                    </button>
+                <button type="button" class="btn btn-success buy_button" data-dismiss="modal">
+                    <img class="img_button_icon" src="/img/system/back-arrow.png" alt="" />Добавить и продолжить покупки
+                </button>
 
-                    <button type="button" class="btn btn-danger go_cart">
-                        <img class="img_button_icon" src="/img/system/shopping-cart-button.png" alt=""/> Перейти в корзину
-                    </button>
+                <button type="button" class="btn btn-danger buy_button go_cart">
+                    <img class="img_button_icon" src="/img/system/shopping-cart-button.png" alt="" /> Добавить и перейти в корзину
+                </button>
 
                 <button type="button" class="btn btn-default right_bt_css">
                     Отменить
@@ -128,107 +124,7 @@
         </div>
     </div>
 </div>
-{{-----------------------------------------------------------------}}
-<script>
-    $(function () {
-        var action;
-        $(".number-spinner button").mousedown(function () {
-            btn = $(this);
-            input = btn.closest('.number-spinner').find('input');
-            btn.closest('.number-spinner').find('button').prop("disabled", false);
-            var price = $(this).parents('.product_item_cart').eq(0).find('span.product_price_one').text();
-            var price_all = $(this).parents('.product_item_cart').eq(0).find('span.all_product_price');
-            var total_in_shop = $(this).parents('.product_item_cart').eq(0).find('span.total_in_shop');
-            var total_in_shop_origin = $(this).parents('.product_item_cart').eq(0).find('span.total_in_shop_one').text();
 
-            if (btn.attr('data-dir') == 'up') {
-                if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {
-                    input.val(parseInt(input.val()) + 1);
-                    price_all.text(parseInt(parseInt(input.val()) * price));
-                } else {
-                    btn.prop("disabled", true);
-                    clearInterval(action);
-                }
-            } else {
-                if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {
-                    input.val(parseInt(input.val()) - 1);
-                    price_all.text(parseInt(parseInt(input.val()) * price));
-                } else {
-                    btn.prop("disabled", true);
-                    clearInterval(action);
-                }
-            }
 
-            total_in_shop.html(parseInt(total_in_shop_origin) + parseInt(price)*(parseInt(input.val())-1));
-
-        }).mouseup(function () {
-            clearInterval(action);
-        });
-    });
-
-</script>
-<style>
-    .name{
-        font-size: 18px;
-        color: darkblue;
-        font-weight: bold;
-    }
-    .modal-footer{
-        text-align: center;
-    }
-    .modal-footer button{
-        display: inline-block;
-    }
-    .right_bt_css{
-        float: right;
-    }
-    .title_span_css{
-        font-size: 16px;
-        font-weight: bolder;
-    }
-    .table_mod{
-        border-collapse: separate!important;
-    }
-    .table_mod td, .table_mod th{
-        padding: 5px!important;
-        margin: 5px!important;
-    }
-    .my_b{
-        width: 50%;
-    }
-    .input-group-btn{
-        max-width: 30px;
-        max-height: 30px;
-        text-align: center;
-    }
-    .price_single{
-        padding: 7px 7px 5px;
-        margin-bottom: 5px;
-        font-size: 1.38462em;font-size: 20px;
-    }
-    .price_b{
-        background: #fff3b5;
-        border-radius: 4px;
-        display: inline-block;
-        padding: 7px 7px 5px;
-        vertical-align: middle;
-        margin-bottom: 5px;
-        white-space: nowrap;
-        border: 1px solid transparent;
-        font-size: 1.38462em;font-size: 20px;
-    }
-    .price_all_b{
-        background: #fff3b5;
-        border-radius: 4px;
-        display: inline-block;
-        padding: 7px 7px 5px;
-        vertical-align: middle;
-        margin-bottom: 5px;
-        white-space: nowrap;
-        border: 1px solid transparent;
-        font-size: 1.38462em;font-size: 20px;
-    }
-    .glyphicon{
-        right: 5px;
-    }
-</style>
+{!! HTML::script('/js/modal_cart_counter.js') !!}
+{{HTML::style('/css/cart_modal.css')}}

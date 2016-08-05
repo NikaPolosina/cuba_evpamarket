@@ -79,7 +79,7 @@
                                                                             <span class="desk-price">{{ $singleProduct['product_price'] }} руб.</span>
                                                                                         <span style="margin: auto;">
 
-                                                                                            <button class=" btn-lg btn-success button_my"><img style="display: inline-block;" src="/img/system/cart-white.png" alt=""><span style="font-weight: bold"> Купить</span></button>
+                                                                                            <button class=" btn-lg btn-success button_my to_cart"  data-product-id="{{$singleProduct['id']}}" ><img style="display: inline-block;" src="/img/system/cart-white.png" alt=""><span style="font-weight: bold"> Купить</span></button>
                                                                                         </span>
                                                                         </div>
                                                                         <div class="detail-tools">
@@ -166,3 +166,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    var getProductUrl = '{{route('ajax_single_product')}}';
+    var addToCartUrl = '{{route('ajax_add_to_cart')}}';
+    var cartUrl = '{{route('cart')}}';
+</script>
+
+{!! HTML::script('/js/like_and_cart_add.js') !!}

@@ -81,7 +81,7 @@
 
                                             <input style="display: none" value="{{$v['id']}}" type="text"/>
                                             <button type="button" class="btn btn-default button_delete">Удалить из избранного</button>
-                                            <button class="btn btn-success ">В корзину</button>
+                                            <button class="btn btn-success to_cart" data-product-id="{{$v['id']}}">В корзину</button>
 
                                         </div>
 
@@ -107,5 +107,12 @@
     </div>
 
     {!! HTML::script('/js/product/like_delete.js') !!}
+    <script>
+        var getProductUrl = '{{route('ajax_single_product')}}';
+        var addToCartUrl = '{{route('ajax_add_to_cart')}}';
+        var cartUrl = '{{route('cart')}}';
+    </script>
+
+    {!! HTML::script('/js/like_and_cart_add.js') !!}
 
 @endsection

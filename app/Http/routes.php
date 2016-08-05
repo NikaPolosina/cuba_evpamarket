@@ -64,6 +64,9 @@ Route::get('/single-product-my-shop/{id}', 'ProductsController@singleProductMySh
 Route::post('/products/ajax-update', ['as'=>'product-ajax-update', 'uses'=>'ProductsController@productAjaxUpdate']);
 Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 'uses'=>'ProductsController@attachCategoryToCompany']);
 
+Route::post('/products/ajax-single-product',['as'=>'ajax_single_product', 'uses'=>'ProductsController@ajaxSingleProduct']);
+
+
 /*-------------------------------------------User----------------------------------------------*/
 Route::any('/user/simple_user/message', 'UserController@message');
 Route::any('/user/simple_user/payments', 'UserController@payments');
@@ -87,9 +90,14 @@ Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@ind
 Route::any('/avatar-uploader', 'UserController@createAvatar');
 
 /*-------------------------------------------Cart----------------------------------------------*/
-Route::any('/cart', 'CartController@index');
+Route::any('/cart', ['as'=>'cart', 'uses'=>'CartController@index']);
 Route::any('/cart/destroy-product', 'CartController@destroy');
 Route::post('/products/cart', 'CartController@cart');
+
+Route::post('/products/ajax_cart', ['as'=>'ajax_add_to_cart', 'uses'=>'CartController@ajaxCart']);
+
+
+
 Route::post('/products/cart-update-cnt', 'CartController@cartAddCnt');
 
 /*-------------------------------------------Like----------------------------------------------*/

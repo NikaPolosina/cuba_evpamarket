@@ -7,13 +7,15 @@ use App\Http\Controllers\LikeController;
 
 class HeadComposer{
     protected $request;
+    protected $cartController;
 
-    public function __construct(Request $request){
+    public function __construct(Request $request, CartController $cartController){
         $this->request = $request;
+        $this->cartController = $cartController;
     }
 
     public function compose(View $view){
-        $view->with('product_cnt', CartController::getProductCount($this->request));
+        $view->with('product_cnt', $this->cartController->getTotalProductCnt());
         $view->with('product_cnt_like', LikeController::getProductCount($this->request));
     }
 }

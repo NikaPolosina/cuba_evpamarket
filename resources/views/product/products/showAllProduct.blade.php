@@ -37,7 +37,7 @@
 
                                 </div>
                                 <div class="product_navigation">
-                                    <button class="btn btn-success ">В корзину</button>
+                                    <button class="btn btn-success to_cart" data-product-id="{{$v->id}}">В корзину</button>
                                     @if(!Auth::guest())
                                         <span class="like"></span>
                                     @endif
@@ -57,6 +57,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    var getProductUrl = '{{route('ajax_single_product')}}';
+    var addToCartUrl = '{{route('ajax_add_to_cart')}}';
+    var cartUrl = '{{route('cart')}}';
+</script>
+
+{!! HTML::script('/js/like_and_cart_add.js') !!}
 
 <script>
     var carentFindProduct = $('.carentFindProduct');
