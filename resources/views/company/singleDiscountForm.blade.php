@@ -10,25 +10,21 @@
         <p>Со скольки (руб): </p>
         <?php
             $data['from']='';
-            $data['to']='';
             $data['percent']='';
             $err = false;
             if(isset($item)){
                     $data['from'] = $item->from;
-                    $data['to'] = $item->to;
                     $data['percent'] = $item->percent;
 
                 if($errors->count() && old('id') == $item->id){
                     $err = true;
                     $data['from'] = old('from');
-                    $data['to'] = old('to');
                     $data['percent'] = old('percent');
                 }
             }else{
                 if($errors->count() && !old('id')){
                     $err = true;
                     $data['from'] = old('from');
-                    $data['to'] = old('to');
                     $data['percent'] = old('percent');
                 }
             }
@@ -43,17 +39,7 @@
             </div>
         @endif
     </div>
-    <div class="form-group">
-        <p>До скольки (руб): </p>
-        <input type="number" name="to" value="<?=$data['to']?>"  class = 'form-control' min="1" required>
-        @if ($err  && $errors->has('to'))
-            <div>
-                <span class="help-block">
-                     <strong>{{ $errors->first('to') }}</strong>
-                </span>
-            </div>
-        @endif
-    </div>
+
     <div class="form-group">
         <p>Скидка(%) </p>
         <input type="number" name="percent" value="<?=$data['percent']?>"  class = 'form-control percent' min="1" max="99">

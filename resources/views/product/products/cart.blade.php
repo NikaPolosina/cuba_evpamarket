@@ -134,12 +134,11 @@
                                                         <td>
                                                              <table class="my_table" border="2" align="center" bordercolor="#ddd">
                                                                  <tr>
-                                                                     <th>От:</th>
-                                                                     <th>До:</th>
+                                                                     <th>При заказе на сумму от:</th>
                                                                      <th>Скидка</th>
                                                                  </tr>
                                                                  @foreach($value['company']->getDiscountAccumulativ as $val)
-                                                                     <tr><td><span style="color: #2a62bc;">{{$val->from}} руб.</span></td><td><span style="color: #2a62bc;">{{$val->to}} руб.</span></td><td><span style="color: indianred;">{{$val->percent}} %</span></td></tr>
+                                                                     <tr><td><span style="color: #2a62bc;">{{$val->from}} руб.</span></td><td><span style="color: indianred;">{{$val->percent}} %</span></td></tr>
                                                                  @endforeach
 
                                                              </table>

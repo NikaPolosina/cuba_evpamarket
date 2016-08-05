@@ -211,8 +211,7 @@ class CompanyController extends Controller{
     public function createDiscount($id, Request $request){
 
          $this->validate($request, [
-            'from'=> 'required|integer|min:0|max:'.$request->to ,
-            'to' => 'required|integer|min:'.$request->from,
+            'from'=> 'required|integer|min:0|max:'.$request->from ,
             'percent' => 'required|integer|min:1|max:99'
         ]);
 
@@ -221,7 +220,6 @@ class CompanyController extends Controller{
         if(empty($request['id'])){
             $newDiscount = DiscountAccumulativ::create([
                 'from'       => $request['from'],
-                'to'         => $request['to'],
                 'percent'    => $request['percent'],
                 'company_id' => $id
             ]);
@@ -233,7 +231,6 @@ class CompanyController extends Controller{
         }else{
             $discount = [
                 'from'    => $request['from'],
-                'to'      => $request['to'],
                 'percent' => $request['percent'],
             ];
             $discount_single = DiscountAccumulativ::findOrFail($request['id']);

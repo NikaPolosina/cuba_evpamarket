@@ -15,7 +15,6 @@ class CreateDiscount extends Migration
         Schema::create('discount_accumulative', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('from')->unsigned();
-            $table->integer('to')->unsigned();
             $table->integer('percent')->unsigned();
             $table->integer('company_id')->unsigned();
             $table->timestamps();

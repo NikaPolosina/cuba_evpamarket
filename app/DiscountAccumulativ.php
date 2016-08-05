@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DiscountAccumulativ extends Model{
     protected $table = 'discount_accumulative';
-    protected $fillable = ['from', 'to', 'percent', 'company_id'];
+    protected $fillable = ['from', 'percent', 'company_id'];
 
 
     public function getCompany(){
