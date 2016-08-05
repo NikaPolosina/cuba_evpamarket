@@ -2,6 +2,7 @@
 use Illuminate\Database\Seeder;
 use App\StatusSimple;
 use App\StatusOwner;
+use App\Models\Role;
 
 class DatabaseSeeder extends Seeder{
     /**
@@ -116,6 +117,25 @@ class DatabaseSeeder extends Seeder{
             'title'            => 'Отправка покупателю',
             'key'              => 'sending_buyer',
             'status_simple_id' => $simpleStatus['5']->id
+        ]);
+
+    }
+    
+    public function createRole(){
+        $role = Role::create([
+            'name'            => 'admin',
+            'display_name'    => 'Admin',
+            'description'    => 'Administratir site'
+        ]);
+        $role = Role::create([
+            'name'            => 'simple_user',
+            'display_name'    => 'Simple User',
+            'description'    => 'User is simple user'
+        ]);
+        $role = Role::create([
+            'name'            => 'company_owner',
+            'display_name'    => 'Company Owner',
+            'description'    => 'User is the owner of a company'
         ]);
 
     }
