@@ -24,22 +24,22 @@
                             <div class="col-sm-9">
                                 <table class="table_mod" border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tr>
-                                        <td width="35%">
-                                            <span style="font-size: 20px; font-weight: bolder;">Товар:</span>
+                                        <td width="40%">
+                                            <span class="title_span_css">Товар:</span>
                                             <input type="hidden" class="product_id"/>
                                         </td>
-                                        <td width="65%" valign="top"><p class="name" style=" font-size: 20px;"></p></td>
+                                        <td width="60%" valign="top"><p class="name"></p></td>
                                     </tr>
                                     <tr>
-                                        <td width="35%">
-                                            <span style="font-size: 20px; font-weight: bolder;">Краткое описание:</span>
+                                        <td width="40%">
+                                            <span class="title_span_css">Краткое описание:</span>
                                         </td>
-                                        <td width="65%" valign="top">
-                                            <p style="font-size: 20px;" class="product_description"></p></td>
-                                    </tr>
+                                        <td width="60%" valign="top">
+                                            <p style="font-size: 14px;" class="product_description"></p></td>
+                                        </tr>
                                     <tr>
-                                        <td width="35%"><span style="font-size: 20px; font-weight: bolder;" class="option_table">Количество:</span></td>
-                                        <td width="65%" valign="top">
+                                        <td width="40%"><span class="option_table title_span_css">Количество:</span></td>
+                                        <td width="60%" valign="top">
 
                                             {{-------------------------------Количество товара----------------------------------}}
                                             <div class="my_b">
@@ -68,9 +68,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="35%" valign="top">
-                                            <span style="font-size: 20px; font-weight: bolder;">Цена за единицу товара:</span></td>
-                                        <td width="65%" valign="top">
+                                        <td width="40%" valign="top">
+                                            <span class="title_span_css">Цена за единицу товара:</span></td>
+                                        <td width="60%" valign="top">
                                             <p class="price_single">
                                                 <span class="single_product_price">0</span>
                                                 <span >руб.</span>
@@ -78,9 +78,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="35%" valign="top">
-                                            <span style="font-size: 20px; font-weight: bolder;">Цена с учётом количества:</span></td>
-                                        <td width="65%" valign="top">
+                                        <td width="40%" valign="top">
+                                            <span class="title_span_css">Цена с учётом количества:</span></td>
+                                        <td width="60%" valign="top">
                                             <p class="price_b">
                                                 <span class="all_product_price">0</span>
                                                 <span >руб.</span>
@@ -89,9 +89,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="35%" valign="top">
-                                            <span style="font-size: 20px; font-weight: bolder;">Сумма по этому магазину:</span></td>
-                                        <td width="65%" valign="top">
+                                        <td width="40%" valign="top">
+                                            <span class="title_span_css">Сумма по этому магазину:</span></td>
+                                        <td width="60%" valign="top">
                                             <p class="price_all_b">
                                                  <span class="total_in_shop">0</span>
                                                 <span >руб.</span>
@@ -109,13 +109,18 @@
                 </div>
 
             </div>
-            <div class="modal-footer" style="text-align: center">
-                <button type="button" class="btn btn-success" data-dismiss="modal">
-                    <img class="img_button_icon" src="/img/system/back-arrow.png" alt=""/>Продолжить покупки
-                </button>
+            <div class="modal-footer">
 
-                <button type="button" class="btn btn-danger go_cart">
-                    <img class="img_button_icon" src="/img/system/shopping-cart-button.png" alt=""/> Перейти в корзину
+                    <button type="button" class="btn btn-success" data-dismiss="modal">
+                        <img class="img_button_icon" src="/img/system/back-arrow.png" alt=""/>Продолжить покупки
+                    </button>
+
+                    <button type="button" class="btn btn-danger go_cart">
+                        <img class="img_button_icon" src="/img/system/shopping-cart-button.png" alt=""/> Перейти в корзину
+                    </button>
+
+                <button type="button" class="btn btn-default right_bt_css">
+                    Отменить
                 </button>
 
 
@@ -163,6 +168,24 @@
 
 </script>
 <style>
+    .name{
+        font-size: 18px;
+        color: darkblue;
+        font-weight: bold;
+    }
+    .modal-footer{
+        text-align: center;
+    }
+    .modal-footer button{
+        display: inline-block;
+    }
+    .right_bt_css{
+        float: right;
+    }
+    .title_span_css{
+        font-size: 16px;
+        font-weight: bolder;
+    }
     .table_mod{
         border-collapse: separate!important;
     }
