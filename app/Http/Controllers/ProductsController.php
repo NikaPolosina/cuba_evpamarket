@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Order;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
+use App\StatusOwner;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Carbon\Carbon;
@@ -26,6 +27,14 @@ class ProductsController extends Controller{
 
     public function __construct(Request $request){
 
+    }
+
+    public function destroyProductDir($id){
+        $company = Product::find($id)->getCompany;
+        $dir = public_path().'/img/custom/companies/'.$company[0]['id'].'/products/'.$id;
+        if(is_dir($dir)){
+            File::deleteDirectory($dir);
+        }
     }
 
     public function index(){
@@ -226,12 +235,14 @@ class ProductsController extends Controller{
     }
 
     public function destroy(Request $request){
+        $this->destroyProductDir($request['id']);
         Product::destroy($request['id']);
         Session::flash('flash_message', 'Product deleted!');
     }
 
     public function destroyCheck(Request $request){
         foreach($request['checkId'] as $value){
+            $this->destroyProductDir($value);
             Product::destroy($value);
         }
         Session::flash('flash_message', 'Product deleted all!');
@@ -309,27 +320,19 @@ class ProductsController extends Controller{
 
         return $this->way($category, '.singleProductMyShop', $id)->with('myCategories', $currentCompanyCategories);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     public function productEditor(CategoryController $category, $id){
 
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
-
+        $status = StatusOwner::get();
         $company = Company::find($id);
+        $order  = $company->getOrder()->get();
+        foreach($order as $item){
+            $item->getStatusOwner->where('key', 'not_processed')->get();
+        }
+        
+
         return view('product.products.productsEditor')->with([
             'category'     => json_encode($currentCompanyCategoriesSorted),
             'company'      => $company,

@@ -106,36 +106,7 @@
                                     </ul>
                                 </div>
                                 <!--end col-md-8-->
-                                <div class="col-md-4">
-                                    <div class="portlet sale-summary">
-                                        <div class="portlet-title">
-                                            <div class="caption font-red sbold"> Продано Товаров </div>
-                                            <div class="tools">
-                                                <a class="reload" href="javascript:;"> </a>
-                                            </div>
-                                        </div>
-                                        <div class="portlet-body">
-                                            <ul class="list-unstyled">
-                                                <li>
-                                                                    <span class="sale-info"> ЗA СЕГОДНЯ
-                                                                        <i class="fa fa-img-up"></i>
-                                                                    </span>
-                                                    <span class="sale-num"> 23 </span>
-                                                </li>
-                                                <li>
-                                                                    <span class="sale-info"> ЗА НЕДЕЛЮ
-                                                                        <i class="fa fa-img-down"></i>
-                                                                    </span>
-                                                    <span class="sale-num"> 87 </span>
-                                                </li>
-                                                <li>
-                                                    <span class="sale-info"> ВСЕГО </span>
-                                                    <span class="sale-num"> 2377 </span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <!--end col-md-4-->
                             </div>
                             <div class="row">

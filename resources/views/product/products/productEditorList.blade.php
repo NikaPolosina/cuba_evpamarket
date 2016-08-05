@@ -1,3 +1,46 @@
+<link href="../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+<link href="../assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css" />
+
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="col-md-4">
+            <div class="portlet sale-summary">
+                <div class="portlet-title">
+                    <div class="caption font-red sbold"> Продано Товаров </div>
+                    <div class="tools">
+                        <a class="reload" href="javascript:;"> </a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <ul class="list-unstyled">
+                        <li>
+                            <span class="sale-info"> ЗA СЕГОДНЯ
+                                <i class="fa fa-img-up"></i>
+                            </span>
+                            <span class="sale-num"> 23 </span>
+                        </li>
+                        <li>
+                            <span class="sale-info"> ЗА НЕДЕЛЮ
+                                <i class="fa fa-img-down"></i>
+                            </span>
+                            <span class="sale-num"> 87 </span>
+                        </li>
+                        <li>
+                            <span class="sale-info"> ВСЕГО </span>
+                            <span class="sale-num"> 2377 </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
 <?php
 if(isset($company)){
 if(isset($company) && !count($company->getCategoryCompany) || !count($company->getProducts)){
@@ -11,6 +54,10 @@ if(isset($company) && !count($company->getCategoryCompany) || !count($company->g
 }
 
 ?>
+
+
+
+
 <table class="table table-bordered table-striped table-hover" style="display: <?=(isset($hide))? 'none':'' ?>;" >
     <thead>
 <tr>
@@ -45,6 +92,8 @@ if($category){ ?>
     </th>
 </tr>
 <?php } ?>
+
+
 
 <div class="button_holder" style="display: <?=(isset($hide))? 'none':'block' ?>;">
 <span class="open btn btn-success btn-sm">Добавить продукт</span>
