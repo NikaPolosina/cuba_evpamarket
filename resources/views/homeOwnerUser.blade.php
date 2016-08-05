@@ -142,12 +142,8 @@
                                 <div class="panel">
 
 
-                                    <?php
-                                    if(count($curentUser->getCompanies)){
 
-
-                                    ?>
-
+                                    @if(count($curentUser->getCompanies))
                                     <div class="">
                                             <h3 class="font-green sbold uppercase">Мои магазины <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Добавить магазин</a></h3>
                                             <div class="table">
@@ -159,21 +155,11 @@
                                                     </thead>
                                                     <tbody>
                                                     {{-- */$x=0;/* --}}
-
                                                     @foreach($curentUser->getCompanies as $item)
-
-                                                        <?php  if(!empty($item->company_logo )&& file_exists(public_path().'/img/custom/companies/thumbnail/'.$item->company_logo)) {
-                                                            $logo = '/img/custom/companies/thumbnail/'.$item->company_logo;
-                                                        }else{
-
-                                                            $logo = '/img/custom/files/thumbnail/plase.jpg';
-                                                        } ?>
-
-
                                                         {{-- */$x++;/* --}}
                                                         <tr>
                                                             <td>{{ $x }}</td>
-                                                            <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="<?=$logo?>"></td><td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td>{{--<td width="200">{!!$item->company_content!!}</td>--}}
+                                                            <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="{{$item->company_logo}}"></td><td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td>{{--<td width="200">{!!$item->company_content!!}</td>--}}
 
                                                             <td width="165">
                                                                 <a href="{{ url('company/' . $item->id . '/edit') }}">
@@ -196,22 +182,14 @@
                                                 {{--<div class="pagination"> {!! $company->render() !!} </div>--}}
                                             </div>
                                         </div>
-                                    <?php
-                                    }else{
+                                    @else
 
-                                        ?>
                                     <div><h3>У вас пока нет ни одного магазина. Воспользуйтесь кнопкой "создать" для того что бы создать магазин.</h3></div>
                                     <a href="{{ url('company/create') }}" class="btn btn-primary pull-left btn-sm btn green">Создать магазин</a>
-
-                                    <?php
-                                        }
-                                    ?>
-
+                                   @endif
                                 </div>
                             </div>
-
                             <!--end row-->
-
                         </div>
                     </div>
                 </div>
@@ -239,7 +217,6 @@
                                 </li>
                             </ul>
                         </div>
-
 
                         <div class="col-md-9">
                             <div class="tab-content">

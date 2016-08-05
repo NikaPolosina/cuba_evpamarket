@@ -66,11 +66,14 @@ class HomeController extends Controller{
             ->with('user', $curentUser);
     }
 
-    public function registerOwner(){
+    public function registerOwner(CompanyController $companyController){
         if(Auth::check()){
             $curentUser = Auth::user();
+            foreach ($curentUser->getCompanies as $value) {
+                $value->company_logo = $companyController->showCompanyLogo($value->id);
+            }
             $userInfo = $curentUser->getUserInformation;
-            $companies = $curentUser->getCompanies;
+
         }
         return view('homeOwnerUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
     }

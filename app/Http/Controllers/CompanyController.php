@@ -23,6 +23,7 @@ use PhpParser\Builder;
 use App\Models\Role;
 use App\Region;
 
+use Illuminate\Support\Facades\File;
 class CompanyController extends Controller{
     public $category  = array();
     public $nCategory = array();
@@ -40,7 +41,8 @@ class CompanyController extends Controller{
     }
 
     public function store(Request $request){
-        
+
+
         $company = Company::create([
             'company_name'         => $request['company_name'],
             'company_description'  => $request['company_description'],
@@ -53,26 +55,33 @@ class CompanyController extends Controller{
             'address'              => $request->input('address'),
             'country'              => 'Росcия',
         ]);
+
+
         $company->save();
         if($company){
             $curentUser = Auth::user();
             $curentUser->getCompanies()->save($company);
         }
-
-
-        $dir = public_path().'/img/custom/companies/'.$company['id'];
-        $dir_m = public_path().'/img/custom/companies/'.$company['id'].'/company';
         
-        if(!is_dir($dir)){
-            mkdir($dir, 0700, true) ;
-            mkdir($dir_m,  0700, true) ;
-        } 
+       if(!empty($request['company_logo'])){
+           $dir = public_path().'/img/custom/companies/'.$company['id'];
+           $dir_m = public_path().'/img/custom/companies/'.$company['id'].'/company';
+           $source = public_path().'/img/custom/companies/'.$request['company_logo'];
+           $dest  = public_path().'/img/custom/companies/'.$company['id'].'/company/'.$request['company_logo'];
+           $dest_t  = public_path().'/img/custom/companies/'.$company['id'].'/company/thumbnail/'.$request['company_logo'];
+           $dir_m_t = public_path().'/img/custom/companies/'.$company['id'].'/company/thumbnail';
+           $source_t = public_path().'/img/custom/companies/thumbnail/'.$request['company_logo'];
+           if(!is_dir($dir)){
+               mkdir($dir, 0700, true) ;
+               mkdir($dir_m,  0700, true) ;
+               mkdir($dir_m_t,  0700, true) ;
+           }
+           File::move($source, $dest);
+           File::move($source_t, $dest_t);
+           File::deleteDirectory(public_path().'/img/custom/companies/thumbnail');
+       } 
         
-
-    copy(public_path().'/img/custom/companies/'.$request['company_logo'] , public_path().'/img/custom/companies/'.$company['id'].'/company/'.$request['company_logo'] );
-
         return view('company.companyContent')->with('company_id', $company['id']);
-        // return redirect()->intended('homeOwnerUser');
     }
 
     public function companyContent(Request $request){
@@ -101,13 +110,22 @@ class CompanyController extends Controller{
         die('Surprise, you are here 7!!!');
     }
 
-    public function show($id, CategoryController $category){
+
+    public function showCompanyLogo($id){
+        
         $company = Company::findOrFail($id);
-        if(file_exists(public_path() . '/img/custom/companies/' . $company->company_logo) && !empty($company->company_logo)){
-            $img = '/img/custom/companies/' . $company->company_logo;
+        if(file_exists(public_path() . '/img/custom/companies/' .$company->id.'/company/thumbnail/'. $company->company_logo) && !empty($company->company_logo)){
+            $img = '/img/custom/companies/' .$company->id.'/company/thumbnail/'. $company->company_logo;
         }else{
             $img = '/img/custom/files/thumbnail/plase.jpg';
         }
+        return $img;
+    }
+
+    public function show($id, CategoryController $category){
+
+        $company = Company::findOrFail($id);
+        $img = $this->showCompanyLogo($company->id);
         $res = $company->getProducts;
         $productAll = IndexController::showProduct($res);
         return view('company.show')->with('company', $company)->with('img', $img)->with('category', $category->getAllCategoris())->with('productAll', $productAll);

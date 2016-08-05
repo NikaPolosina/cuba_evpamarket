@@ -12,6 +12,7 @@ use Session;
 use App\Company;
 use Auth;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cookie;
@@ -62,6 +63,10 @@ class IndexController extends Controller{
 
         $companyAll = $company->getCompanyAll();
 
+        foreach($companyAll['companyAll'] as $value){
+
+            $value->company_logo = $company->showCompanyLogo($value->id);
+        }
         $dir = 'images/large';
         $vip_category = Category::where('vip', 1)->get();
 

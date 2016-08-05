@@ -20,7 +20,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="<?=$img?>"> </td><td> {{ $company->company_name }} </td><td> {{ $company->company_description }} </td>
+                                        <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="{{$img}}"> </td><td> {{ $company->company_name }} </td><td> {{ $company->company_description }} </td>
                                         <td> {!! $company->company_content !!} </td> <td> {{ $company->company_address }} </td> <td> {{ $company->company_contact_info }} </td> <td> {!! $company->company_additional_info !!} </td>
                                     </tr>
                                 </tbody>
