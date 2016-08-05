@@ -59,10 +59,10 @@ class OrderController extends Controller{
             ->first();
         $total_discount = 0;
         if(($total - $order->total_sum ) < 0 ){
-            $persent = $company->getDiscountAccumulativ()->where('from', '<=', $order->total_sum )->where('to', '>=', $order->total_sum )->get();
+            $persent = $company->getDiscountAccumulativ()->where('from', '<=', $order->total_sum )->get();
 
         }else{
-            $persent = $company->getDiscountAccumulativ()->where('from', '<=', $total)->where('to', '>=', $total)->get();
+            $persent = $company->getDiscountAccumulativ()->where('from', '<=', $total)->get();
 
         }
 

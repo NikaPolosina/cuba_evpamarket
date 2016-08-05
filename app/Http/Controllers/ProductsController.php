@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Order;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-
+use App\StatusOwner;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Carbon\Carbon;
@@ -318,27 +319,19 @@ class ProductsController extends Controller{
         
         return $this->way($category, '.singleProductMyShop', $id)->with('myCategories', $currentCompanyCategories);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     public function productEditor(CategoryController $category, $id){
 
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
-
+        $status = StatusOwner::get();
         $company = Company::find($id);
+        $order  = $company->getOrder()->get();
+        foreach($order as $item){
+            $item->getStatusOwner->where('key', 'not_processed')->get();
+        }
+        
+
         return view('product.products.productsEditor')->with([
             'category'     => json_encode($currentCompanyCategoriesSorted),
             'company'      => $company,
