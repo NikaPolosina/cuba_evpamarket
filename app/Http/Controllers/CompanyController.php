@@ -171,7 +171,10 @@ class CompanyController extends Controller{
         if(count($company->getProducts) > 0){
             Product::destroy($company->getProducts->lists('id'));
         }
-
+        $dir = public_path().'/img/custom/companies/'.$id;
+       if(is_dir($dir)){
+           File::deleteDirectory($dir);
+       }
         Company::destroy($id);
 
         Session::flash('flash_message', 'Company deleted!');
