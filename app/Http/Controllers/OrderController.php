@@ -70,7 +70,11 @@ class OrderController extends Controller{
             $total_discount = ($total*$persent[0]['percent'])/100;
         }
 
-
+        if(count($persent)){
+            $persent = $persent[0];
+        }else{
+            $persent = null;
+        }
 
         return view('order.create')
             ->with('user', $user)
@@ -80,6 +84,7 @@ class OrderController extends Controller{
             ->with('company', $company)
             ->with('total_price', $total)
             ->with('total_discount', $total_discount)
+            ->with('percent', $persent)
             ->with('products', $products);
     }
     public function ready(Request $request){

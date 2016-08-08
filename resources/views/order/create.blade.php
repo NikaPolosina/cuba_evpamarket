@@ -110,6 +110,16 @@
                                 @if($total_discount > 0)
                                     <tr>
                                         <td width="50%" valign="top">
+                                        {!! Form::label('total_discount', 'Cкидка: ', ['class' => 'control-label option_table_order_вшысщгте']) !!}
+                                        </td>
+                                        <td width="50%" valign="top">
+                                            <div class="form-control product_price" style="background-color: #fdd0af; color: red;">
+                                                {{$percent->percent}}<span> %</span>
+                                            </div>
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="50%" valign="top">
                                         {!! Form::label('total_price_discount', 'Цена со скидкой: ', ['class' => 'control-label option_table_order_вшысщгте']) !!}
                                         </td>
                                         <td width="50%" valign="top">
