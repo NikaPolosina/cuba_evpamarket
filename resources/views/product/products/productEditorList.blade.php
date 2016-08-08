@@ -19,17 +19,17 @@
                             <span class="sale-info"> ЗA СЕГОДНЯ
                                 <i class="fa fa-img-up"></i>
                             </span>
-                            <span class="sale-num"> 23 </span>
+                            <span class="sale-num"> {{$company->perDayAmount}} </span>
                         </li>
                         <li>
                             <span class="sale-info"> ЗА НЕДЕЛЮ
                                 <i class="fa fa-img-down"></i>
                             </span>
-                            <span class="sale-num"> 87 </span>
+                            <span class="sale-num"> {{$company->perWeekAmount}}  </span>
                         </li>
                         <li>
                             <span class="sale-info"> ВСЕГО </span>
-                            <span class="sale-num"> 2377 </span>
+                            <span class="sale-num"> {{$company->totalAmount}} </span>
                         </li>
                     </ul>
                 </div>

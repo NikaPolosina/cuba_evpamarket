@@ -327,6 +327,12 @@ class ProductsController extends Controller{
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
         $status = StatusOwner::get();
         $company = Company::find($id);
+
+        $company->perDayAmount = OrderController::getAmount($company->id, 1);
+        $company->perWeekAmount = OrderController::getAmount($company->id, 7);
+        $company->totalAmount = OrderController::getAmount($company->id, 365);
+
+
         $order  = $company->getOrder()->get();
         foreach($order as $item){
             $item->getStatusOwner->where('key', 'not_processed')->get();

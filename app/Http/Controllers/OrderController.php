@@ -9,6 +9,7 @@ use App\City;
 use App\Order;
 use App\OrderProduct;
 use App\StatusSimple;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -223,6 +224,29 @@ class OrderController extends Controller{
             ->with('order', $order)
             ->with('status', $status);
 
+    }
+
+    /**
+     * Get total amount for single company for period
+     *
+     * @param int $companyId
+     * @param int $days
+     *
+     * @return integer
+     * */
+    public static function getAmount($companyId, $days){
+        $amount = 0;
+        $orsders = Company::find($companyId)
+            ->getOrder()
+            ->where('status', 16)
+            ->where('updated_at', '>=',  Carbon::now()->subDays($days))
+            ->get();
+        if(count($orsders)){
+            foreach ($orsders as $order) {
+                $amount = $amount+$order->total_price;
+            }
+        }
+        return $amount;
     }
 
 }
