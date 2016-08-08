@@ -320,7 +320,7 @@ class ProductsController extends Controller{
 
         return $this->way($category, '.singleProductMyShop', $id)->with('myCategories', $currentCompanyCategories);
     }
-    
+
     public function productEditor(CategoryController $category, $id){
 
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
@@ -331,7 +331,7 @@ class ProductsController extends Controller{
         foreach($order as $item){
             $item->getStatusOwner->where('key', 'not_processed')->get();
         }
-        
+
 
         return view('product.products.productsEditor')->with([
             'category'     => json_encode($currentCompanyCategoriesSorted),
@@ -456,7 +456,7 @@ class ProductsController extends Controller{
      * @return object
      * */
     public static function getSingleProduct($id){
-        return Product::findOrFail($id);
+        return IndexController::showProduct(Product::findOrFail($id));
     }
 
 }

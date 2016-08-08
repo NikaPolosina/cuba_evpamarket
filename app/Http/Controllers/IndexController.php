@@ -28,32 +28,69 @@ class IndexController extends Controller{
      * */
     public static function showProduct($arr){
 
-        foreach($arr as $v){
-            $idProduct = $v['id'];
-            $idCompany = $v->getCompany[0]['id'];
-            $directory = public_path() . '/img/custom/companies/' . $idCompany . '/products/' . $idProduct;
-            $directoryMy = '/img/custom/companies/' . $idCompany . '/products/' . $idProduct . '/';
-      
-            if(!empty($v['product_image']) && File::exists($directory . '/' . $v['product_image'])){
-                $v->firstFile = $directoryMy . $v['product_image'];
-            }else{
-                if(is_dir($directory)){
+        if ($arr instanceof Product) {
+            $arr = self::getProductImg($arr);
+        }else{
+            foreach($arr as $v){
+                $idProduct = $v['id'];
+                $idCompany = $v->getCompany[0]['id'];
+                $directory = public_path() . '/img/custom/companies/' . $idCompany . '/products/' . $idProduct;
+                $directoryMy = '/img/custom/companies/' . $idCompany . '/products/' . $idProduct . '/';
 
-                    $files = scandir($directory);
-                    $v->firstFile = $directoryMy . $files[2];
-                    if(is_dir(public_path() . $v->firstFile)){
-                        if(isset($files[3]))
-                            $v->firstFile = $directoryMy . $files[3];else
-                            $v->firstFile = '/img/custom/files/thumbnail/plase.jpg';
-                    }
+                if(!empty($v['product_image']) && File::exists($directory . '/' . $v['product_image'])){
+                    $v->firstFile = $directoryMy . $v['product_image'];
                 }else{
-                    $v->firstFile = '/img/custom/files/thumbnail/plase.jpg';
+                    if(is_dir($directory)){
 
+                        $files = scandir($directory);
+                        $v->firstFile = $directoryMy . $files[2];
+                        if(is_dir(public_path() . $v->firstFile)){
+                            if(isset($files[3]))
+                                $v->firstFile = $directoryMy . $files[3];else
+                                $v->firstFile = '/img/custom/files/thumbnail/plase.jpg';
+                        }
+                    }else{
+                        $v->firstFile = '/img/custom/files/thumbnail/plase.jpg';
+
+                    }
                 }
             }
         }
 
         return $arr;
+    }
+
+    /**
+     * Get single product image
+     * 
+     * @param object $v Instance of model class
+     *                    
+     * @return 
+     * */
+    private static function getProductImg(Product $product){
+        $idProduct = $product['id'];
+        $idCompany = $product->getCompany[0]['id'];
+        $directory = public_path() . '/img/custom/companies/' . $idCompany . '/products/' . $idProduct;
+        $directoryMy = '/img/custom/companies/' . $idCompany . '/products/' . $idProduct . '/';
+
+        if(!empty($product['product_image']) && File::exists($directory . '/' . $product['product_image'])){
+            $product->firstFile = $directoryMy . $product['product_image'];
+        }else{
+            if(is_dir($directory)){
+
+                $files = scandir($directory);
+                $product->firstFile = $directoryMy . $files[2];
+                if(is_dir(public_path() . $product->firstFile)){
+                    if(isset($files[3]))
+                        $product->firstFile = $directoryMy . $files[3];else
+                        $product->firstFile = '/img/custom/files/thumbnail/plase.jpg';
+                }
+            }else{
+                $product->firstFile = '/img/custom/files/thumbnail/plase.jpg';
+
+            }
+        }
+        return $product;
     }
 
 
