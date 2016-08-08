@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\DiscountAccumulativ;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Product;
@@ -65,8 +66,14 @@ class CartController extends Controller{
                         $value->cnt = 0;
                     }
                 }
+
+                $companies[$key]['totalAmount'] = $this->getTotalAmount($key);
+                $companies[$key]['discount'] = $companies[$key]['company']->getDiscountAccumulativ()->where('from', '<=', $companies[$key]['totalAmount'])->orderBy('from', 'desc')->first();
+
             }
+
         }
+
 
         return view('product.products.cart')->with('companies', $companies);
     }
@@ -270,6 +277,7 @@ class CartController extends Controller{
      * @return integer
      * */
     public function getTotalAmount($companyId = false){
+        $this->_totalAmount = 0;
         $this->_countTotalAmount($companyId);
         return $this->_totalAmount;
     }
@@ -282,6 +290,7 @@ class CartController extends Controller{
      * */
     private function _countTotalAmount($companyId = false){
         if($companyId){
+
             if(array_key_exists($companyId, $this->_cart[$this->_currentUserKey])){
                 foreach(Product::whereIn('id', array_keys($this->_cart[$this->_currentUserKey][$companyId]['products']))->get([
                     'id',

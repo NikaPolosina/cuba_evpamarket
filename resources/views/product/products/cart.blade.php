@@ -122,30 +122,6 @@
                                                     </td>
                                                 </tr>
 
-                                                @if(count($value['company']->getDiscountAccumulativ) > 0)
-                                                     <tr style="background-color: #f7f7f9; outline: 1px solid #dedee4;">
-                                                         <td width="50%" valign="top">
-                                                             <span class="option_table" style="margin: 10px;">Cкидки магазина:</span>
-                                                             <p style="font-size: 13px; margin: 10px">Это накопительная скидка, которую предоставляет магазин.
-                                                                 Эта скидка действует при заказе на сумму, которая соответствует диапазону соответствующей процентной скидки.
-                                                                 После оформления заказа и подтверждени продавцом о его получении покупателем - эта скидка закрепляется за Вами до тех пор,
-                                                                 пока Вы не повысите сумму накоплений в этом магазине до следующей болие высокой скидки. </p>
-                                                         </td>
-                                                        <td>
-                                                             <table class="my_table" border="2" align="center" bordercolor="#ddd">
-                                                                 <tr>
-                                                                     <th>При заказе на сумму от:</th>
-                                                                     <th>Скидка</th>
-                                                                 </tr>
-                                                                 @foreach($value['company']->getDiscountAccumulativ as $val)
-                                                                     <tr><td><span style="color: #2a62bc;">{{$val->from}} руб.</span></td><td><span style="color: indianred;">{{$val->percent}} %</span></td></tr>
-                                                                 @endforeach
-
-                                                             </table>
-                                                        </td>
-                                                     </tr>
-                                                @endif
-
                                             </table>
                                             <hr/>
                                             <div class="buttom_menu">
@@ -158,7 +134,39 @@
                                     </div>
 
                                 @endforeach
-                                    <div class="col-sm-10 col-sm-offset-1" style="margin-bottom: 25px;">
+                                @if(count($value['company']->getDiscountAccumulativ) > 0)
+                                    <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p" style="background-color: white;">
+                                        <tr style="background-color: #f7f7f9; outline: 1px solid #dedee4;">
+                                            <td width="50%" valign="top">
+                                                <span class="option_table" style="margin: 10px;">Cкидки магазина:</span>
+                                                <p style="font-size: 13px; margin: 10px">Это накопительная скидка, которую предоставляет магазин.
+                                                    Эта скидка действует при заказе на сумму, которая соответствует диапазону соответствующей процентной скидки.
+                                                    После оформления заказа и подтверждени продавцом о его получении покупателем - эта скидка закрепляется за Вами до тех пор,
+                                                    пока Вы не повысите сумму накоплений в этом магазине до следующей болие высокой скидки. </p>
+                                            </td>
+                                            <td>
+                                                <table class="my_table" border="2" align="center" bordercolor="#ddd">
+                                                    <tr>
+                                                        <th>При заказе на сумму от:</th>
+                                                        <th>Скидка</th>
+                                                    </tr>
+                                                    @foreach($value['company']->getDiscountAccumulativ as $val)
+                                                        <tr class=" <?=($value['discount']['id'] == $val->id)? 'current_discount':'' ?>" ><td><span style="color: #2a62bc;">{{$val->from}} руб.</span></td><td><span style="color: indianred;">{{$val->percent}} %</span></td></tr>
+                                                    @endforeach
+
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                @endif
+
+                                <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p" style="background-color: white;">
+                                <h3>Всего в этом магазине товаров на : <b>{{$value['totalAmount']}}</b> руб.</h3>
+                                    @if($value['discount'])
+                                        <h3>У Вас будет скидка : <b>{{$value['discount']['percent']}}</b> %</h3>
+                                    @endif
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-1" style="margin-bottom: 25px;">
 
                                         {!! Form::submit('Оформить заказ', ['class' => 'btn btn-lg btn-success button_my']) !!}
 
@@ -202,6 +210,12 @@
             float:right;
             box-shadow: 3px 3px 7px 0 rgba(105, 206, 95, .5), inset 0 -3px 0 0 #3a9731;
             background: -webkit-linear-gradient(top, #79d670, #4bbe3f);
+        }
+
+        .current_discount{
+            background: green;
+            font-weight: bold;
+            color: black;
         }
     </style>
 
