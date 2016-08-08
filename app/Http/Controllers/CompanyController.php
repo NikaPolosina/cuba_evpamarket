@@ -62,7 +62,7 @@ class CompanyController extends Controller{
             $curentUser = Auth::user();
             $curentUser->getCompanies()->save($company);
         }
-        
+
        if(!empty($request['company_logo'])){
            $dir = public_path().'/img/custom/companies/'.$company['id'];
            $dir_m = public_path().'/img/custom/companies/'.$company['id'].'/company';
@@ -79,8 +79,8 @@ class CompanyController extends Controller{
            File::move($source, $dest);
            File::move($source_t, $dest_t);
            File::deleteDirectory(public_path().'/img/custom/companies/thumbnail');
-       } 
-        
+       }
+
         return view('company.companyContent')->with('company_id', $company['id']);
     }
 
@@ -112,7 +112,7 @@ class CompanyController extends Controller{
 
 
     public function showCompanyLogo($id){
-        
+
         $company = Company::findOrFail($id);
         if(file_exists(public_path() . '/img/custom/companies/' .$company->id.'/company/thumbnail/'. $company->company_logo) && !empty($company->company_logo)){
             $img = '/img/custom/companies/' .$company->id.'/company/thumbnail/'. $company->company_logo;
@@ -139,7 +139,7 @@ class CompanyController extends Controller{
         return view('company.edit', compact('company'))
             ->with('city', $city)
             ->with('region', $region);
-        
+
     }
 
     public function update($id, Request $request){
@@ -207,36 +207,65 @@ class CompanyController extends Controller{
     public function setupDiscount($id){
         $company = Company::find($id);
         $discount = $company->getDiscountAccumulativ;
-        return view('company.setupDiscount')->with('discount', $discount)->with('company', $company);
+
+        $max['from'] = $company->getDiscountAccumulativ()->max('from')+1;
+        $max['percent'] = $company->getDiscountAccumulativ()->max('percent')+1;
+
+        return view('company.setupDiscount')
+            ->with('discount', $discount)
+            ->with('max', $max)
+            ->with('company', $company);
     }
 
     public function createDiscount($id, Request $request){
 
-         $this->validate($request, [
-            'from'=> 'required|integer|min:0|max:'.$request->from ,
-            'percent' => 'required|integer|min:1|max:99'
-        ]);
-
-
+        $company = Company::find($id);
 
         if(empty($request['id'])){
+
+            $max['from'] = $company->getDiscountAccumulativ()->max('from')+1;
+            $max['percent'] = $company->getDiscountAccumulativ()->max('percent')+1;
+
+            $this->validate($request, [
+                'from'=> 'required|integer|min:'.$max['from'],
+                'percent' => 'required|integer|min:'.$max['percent']
+            ]);
+
             $newDiscount = DiscountAccumulativ::create([
                 'from'       => $request['from'],
                 'percent'    => $request['percent'],
                 'company_id' => $id
             ]);
-            $newDiscount->save();
+
             if($newDiscount){
                 $company = Company::find($id);
                 $company->getDiscountAccumulativ()->save($newDiscount);
             }
         }else{
-            $discount = [
-                'from'    => $request['from'],
-                'percent' => $request['percent'],
-            ];
+
+            $currentDiscount = $company->getDiscountAccumulativ()->where('id', $request->input('id'))->first()->toArray();
+            $min = $company->getDiscountAccumulativ()->where('id', '!=', $request->input('id'))->where('from', '<', $currentDiscount['from'])->orderBy('from', 'desc')->first();
+            $max = $company->getDiscountAccumulativ()->where('id', '!=', $request->input('id'))->where('from', '>', $currentDiscount['from'])->orderBy('from', 'asc')->first();
+
+            if($min){
+                $this->validate($request, [
+                    'from'    => 'required|integer|min:'.($min->from + 1),
+                    'percent' => 'required|integer|min:'.($min->percent + 1).'|max:99'
+                ]);
+            }
+
+
+            if($max){
+                $this->validate($request, [
+                    'from'    => 'required|integer|min:0|max:'.($max->from - 1),
+                    'percent' => 'required|integer|min:1|max:'.($max->percent - 1)
+                ]);
+            }
+
             $discount_single = DiscountAccumulativ::findOrFail($request['id']);
-            $discount_single->update($discount);
+            $discount_single->from = $request['from'];
+            $discount_single->percent = $request['percent'];
+            $discount_single->save();
         }
         return redirect()->intended('company-discount-setup/' . $id);
     }

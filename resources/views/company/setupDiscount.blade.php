@@ -22,7 +22,8 @@
                     @endforeach
                 @endif
 
-                @include('company.singleDiscountForm')
+                    <h3>Добавить новую :</h3>
+                @include('company.singleDiscountForm', array('max_value'=>$max))
 
                 </div>
             </div>

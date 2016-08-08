@@ -30,7 +30,13 @@
             }
         ?>
 
-        <input type="number" name="from" value="<?=$data['from']?>"  class = 'form-control' min="0" required>
+
+        @if(isset($max_value) && $max_value['from'])
+            <input type="number" name="from" value=""  class = 'form-control' min="{{$max_value['from']}}" required>
+        @else
+            <input type="number" name="from" value="<?=$data['from']?>"  class = 'form-control' min="0" required>
+        @endif
+
         @if ($err  && $errors->has('from'))
             <div>
             <span class="help-block">
@@ -42,7 +48,12 @@
 
     <div class="form-group">
         <p>Скидка(%) </p>
-        <input type="number" name="percent" value="<?=$data['percent']?>"  class = 'form-control percent' min="1" max="99">
+        @if(isset($max_value) && $max_value['percent'])
+            <input type="number" name="percent" value=""  class = 'form-control percent' min="{{$max_value['percent']}}" max="99" required>
+        @else
+            <input type="number" name="percent" value="<?=$data['percent']?>"  class = 'form-control percent' min="1" max="99" required>
+        @endif
+
         @if ($err  && $errors->has('percent'))
              <div>
                 <span class="help-block">
