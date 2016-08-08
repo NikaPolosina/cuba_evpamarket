@@ -37,6 +37,11 @@ $(document).ready(function(){
                 }
             });
         });
+
+        $('.m_close_modal').on('click', function(){
+            cart_modal.modal('hide');
+        });
+
     }else{
         console.error('Modal window was not wound');
     }

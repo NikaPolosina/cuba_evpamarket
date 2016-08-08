@@ -115,7 +115,7 @@
                     <img class="img_button_icon" src="/img/system/shopping-cart-button.png" alt="" /> Добавить и перейти в корзину
                 </button>
 
-                <button type="button" class="btn btn-default right_bt_css">
+                <button type="button" class="btn btn-default right_bt_css m_close_modal">
                     Отменить
                 </button>
 
