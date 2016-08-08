@@ -145,13 +145,13 @@ class CartController extends Controller{
                     $cnt += $product['cnt'];
                 }
             }
-            $total = CartController::getProductCount($request) - $cn;
+            $this->_userCartProductCnt();
 
             return response()->json([
                 'success'            => true,
                 'product_cnt'        => $cnt,
                 'product'            => Product::find($request->input('id')),
-                'total_in_shop'      => $total,
+                'total_in_shop'      => $this->_totalCnt,
                 'in_current_company' => $current_company_cnt
             ], 200)->withCookie(cookie('cart', $cart));
         }
