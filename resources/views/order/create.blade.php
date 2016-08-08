@@ -114,7 +114,7 @@
                                         </td>
                                         <td width="50%" valign="top">
                                             <div class="form-control product_price" style="background-color: #fdd0af; color: red;">
-                                                {{$percent->percent}}<span> %</span>
+                                                {{$percent}}<span> %</span>
                                             </div>
                                        </td>
                                     </tr>

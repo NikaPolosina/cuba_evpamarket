@@ -5,6 +5,7 @@ Homestead.yaml
 Homestead.json
 .env
 /public/pgmyadmin
+public/phpmyadmin
 /public/img/custom
 public/img/custom/*
 .idea/

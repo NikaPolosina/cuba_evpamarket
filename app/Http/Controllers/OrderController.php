@@ -19,7 +19,7 @@ use App\StatusOwner;
 
 class OrderController extends Controller{
 
-    public function createOrder(Request $request){
+    public function createOrder(Request $request, CartController $cartController){
 
         if(!Auth::user()){
             return view('auth.login');
@@ -35,10 +35,12 @@ class OrderController extends Controller{
         $products = Product::whereIn('id', $keys)->select(['id', 'product_name', 'product_description', 'product_price'])->get();
         $products =  IndexController::showProduct($products);
 
+        //$total = $cartController->getTotalAmount($company->id);
+
         $total = 0;
         foreach($products as $currentProduct){
             $currentProduct->cnt = 1;
-                if(array_has($request['product'], $currentProduct->id)){
+            if(array_has($request['product'], $currentProduct->id)){
                 $currentProduct->cnt = $request['product'][$currentProduct->id]['cnt'];
             }
             $currentProduct->total = $currentProduct->product_price*$currentProduct->cnt;
@@ -58,22 +60,20 @@ class OrderController extends Controller{
             ->where('owner_user_id', $owner[0]['id'])
             ->where('status', $status[0]['id'])
             ->first();
+
         $total_discount = 0;
-        if(($total - $order->total_sum ) < 0 ){
-            $persent = $company->getDiscountAccumulativ()->where('from', '<=', $order->total_sum )->get();
 
+        if($order->total_sum > $total){
+            $discount = $company->getDiscountAccumulativ()->where('from', '<=', $order->total_sum)->orderBy('from', 'desc')->first();
         }else{
-            $persent = $company->getDiscountAccumulativ()->where('from', '<=', $total)->get();
-
+            $discount = $company->getDiscountAccumulativ()->where('from', '<=', $total)->orderBy('from', 'desc')->first();
         }
 
-        if(count($persent) > 0){
-            $total_discount = ($total*$persent[0]['percent'])/100;
-        }
-
-        if(count($persent)){
-            $persent = $persent[0];
+        if($discount){
+            $total_discount = ($total*$discount['percent'])/100;
+            $persent = $discount['percent'];
         }else{
+            $total_discount = 0;
             $persent = null;
         }
 
