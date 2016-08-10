@@ -91,6 +91,7 @@ class OrderController extends Controller{
     public function ready(Request $request){
 
 
+
         $this->validate($request, [ 'company_id' => 'required',
                                     'name' => 'required',
                                     'surname' => 'required',
@@ -114,6 +115,32 @@ class OrderController extends Controller{
             $total = $total+$currentProduct->total;
         }
 
+        /*--------------------------*/
+        $owner = $company->getUser;
+        $status = StatusOwner::where('key','sending_buyer')->get();
+
+        $order = Order::select('order.*', DB::raw('sum(order.total_price) as total_sum'))
+            ->where('simple_user_id', $userSeller)
+            ->where('owner_user_id', $owner[0]['id'])
+            ->where('status', $status[0]['id'])
+            ->first();
+
+        if($order->total_sum > $total){
+            $discount = $company->getDiscountAccumulativ()->where('from', '<=', $order->total_sum)->orderBy('from', 'desc')->first();
+        }else{
+            $discount = $company->getDiscountAccumulativ()->where('from', '<=', $total)->orderBy('from', 'desc')->first();
+        }
+
+        if($discount){
+            $total_discount = ($total*$discount['percent'])/100;
+            $persent = $discount['percent'];
+        }else{
+            $total_discount = 0;
+            $persent = null;
+        }
+        /*--------------------------*/
+        $a =  $total - $total_discount;
+
         $satus = StatusOwner::where('key', '=', 'not_processed')->get();
 
 
@@ -124,6 +151,8 @@ class OrderController extends Controller{
                 'owner_user_id'     => $userOwner[0]['id'],
                 'status'            => $satus[0]['id'],
                 'total_price'       => $total,
+                'discount_price'    => $a,
+                'percent'           => $persent,
                 'order_phone'       => $request['phone'] ,
                 'region'            => $request['region_id'] ,
                 'city'              => $request['city_id'] ,
@@ -132,12 +161,13 @@ class OrderController extends Controller{
                 'name'              => $request['name'] ,
                 'surname'           => $request['surname'] ,
             ]);
+
             foreach($products as $currentProduct){
                 $order_product = ProductOrder::create([
                     'product_id'    => $currentProduct['id'] ,
                     'cnt'           => $currentProduct['cnt'] ,
                     'price'         => $currentProduct['product_price'] ,
-                    'order_id'         => $order->id ,
+                     'order_id'         => $order->id ,
                 ]);
             }
 
