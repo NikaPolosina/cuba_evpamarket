@@ -328,7 +328,7 @@ class ProductsController extends Controller{
         $status = StatusOwner::get();
         $company = Company::find($id);
 
-        $company->perDayAmount = OrderController::getAmount($company->id, 1);
+        $company->perDayAmount = OrderController::getAmount($company->id, 0);
         $company->perWeekAmount = OrderController::getAmount($company->id, 7);
         $company->totalAmount = OrderController::getAmount($company->id, 365);
 
