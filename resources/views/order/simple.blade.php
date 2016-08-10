@@ -13,6 +13,7 @@
             <div class="company_block_cart">
 
                     <div class="col-sm-10 col-sm-offset-1">
+
                         @foreach($order->products as $val)
                             <div class="row product_item_p">
 
@@ -62,6 +63,17 @@
                                             </td>
 
                                         </tr>
+                                        <tr>
+                                            <td valign="top">
+                                                {!! Form::label('discount_price', 'С учётом скидки -  '.$order->percent.' %', ['class' => ' control-label option_table_order']) !!}
+                                            </td>
+                                            <td valign="top">
+                                                <div class="form-control product_price" style="color: red;">
+                                                    {{$order->discount_price}}<span> руб.</span>
+                                                </div>
+                                            </td>
+
+                                        </tr>
 
 
                                     </table>
@@ -78,7 +90,7 @@
                         <div class="col-sm-3 col-sm-offset-9">
                             <span style="font-weight: bold;">Общяя стоимость: </span>
                             <div class="form-control product_price">
-                                {{$order->total_price}}<span> руб.</span>
+                                {{$order->discount_price}}<span> руб.</span>
                             </div>
 
                         </div>

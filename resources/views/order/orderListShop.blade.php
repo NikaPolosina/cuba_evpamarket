@@ -26,6 +26,8 @@
                             <th> Номер телефона </th>
                             <th> Адресс доставки </th>
                             <th> Сумма заказа </th>
+                            <th> Сумма заказа с учётом скидки </th>
+                            <th> Скидка в процентах </th>
                             <th> Статус </th>
                         </tr>
                         </thead>
@@ -43,6 +45,8 @@
 
                                 <td> Регион: {{$item->region}}, г. {{$item->city}}, {{$item->street}} {{$item->address}} </td>
                                 <td> {{$item->total_price}} <span> руб.</span> </td>
+                                <td style="color: red;"> {{$item->discount_price}} <span> руб.</span> </td>
+                                <td style="color: red;"> {{$item->percent}} <span> %</span> </td>
 
                                 <td>
                                     <div class="btn-group">

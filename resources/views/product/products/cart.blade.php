@@ -161,7 +161,9 @@
                                 @endif
 
                                 <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p" style="background-color: white;">
-                                <h3>Всего в этом магазине товаров на : <b>{{$value['totalAmount']}}</b> руб.</h3>
+                                <h3>Сумма по завершенным заказам в этом магазине : <b>{{$value['totalHistoryAmount']}}</b> руб.</h3>
+                                <h3>Текущая покупка на сумму : <b>{{$value['totalAmount']}}</b> руб.</h3>
+                                <h3>Ощая сумма для учёта скидки : <b>{{$value['total']}}</b> руб.</h3>
                                     @if($value['discount'])
                                         <h3>У Вас будет скидка : <b>{{$value['discount']['percent']}}</b> %</h3>
                                     @endif

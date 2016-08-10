@@ -25,6 +25,8 @@ class OrderController extends Controller{
             return view('auth.login');
         }
 
+
+
         $company = Company::find($request['company_id']);
         $keys = array();
         foreach($request['product'] as $id=>$product){
@@ -47,6 +49,7 @@ class OrderController extends Controller{
             $total = $total+$currentProduct->total;
         }
 
+
         $user = Auth::user();
         $info_user =  $user->getUserInformation;
         $region = Region::find($info_user['region_id']);
@@ -55,19 +58,15 @@ class OrderController extends Controller{
         $owner = $company->getUser;
         $status = StatusOwner::where('key','sending_buyer')->get();
 
-        $order = Order::select('order.*', DB::raw('sum(order.total_price) as total_sum'))
-            ->where('simple_user_id', $user->id)
-            ->where('owner_user_id', $owner[0]['id'])
-            ->where('status', $status[0]['id'])
-            ->first();
+
+
 
         $total_discount = 0;
+        $t = self::getTotalCompanyAmount($company, StatusOwner::where('key','sending_buyer')->first()) + $total;
 
-        if($order->total_sum > $total){
-            $discount = $company->getDiscountAccumulativ()->where('from', '<=', $order->total_sum)->orderBy('from', 'desc')->first();
-        }else{
-            $discount = $company->getDiscountAccumulativ()->where('from', '<=', $total)->orderBy('from', 'desc')->first();
-        }
+
+        $discount = $company->getDiscountAccumulativ()->where('from', '<=', $t)->orderBy('from', 'desc')->first();
+
 
         if($discount){
             $total_discount = ($total*$discount['percent'])/100;
@@ -88,6 +87,7 @@ class OrderController extends Controller{
             ->with('percent', $persent)
             ->with('products', $products);
     }
+
     public function ready(Request $request){
 
 
@@ -124,27 +124,26 @@ class OrderController extends Controller{
             ->where('owner_user_id', $owner[0]['id'])
             ->where('status', $status[0]['id'])
             ->first();
+//        dd($company);
+        $order = self::getTotalCompanyAmount($company, StatusOwner::where('key','sending_buyer')->first());
 
-        if($order->total_sum > $total){
-            $discount = $company->getDiscountAccumulativ()->where('from', '<=', $order->total_sum)->orderBy('from', 'desc')->first();
-        }else{
-            $discount = $company->getDiscountAccumulativ()->where('from', '<=', $total)->orderBy('from', 'desc')->first();
-        }
+        $t = $total + $order;
+        $discount = $company->getDiscountAccumulativ()->where('from', '<=', $t)->orderBy('from', 'desc')->first();
 
         if($discount){
             $total_discount = ($total*$discount['percent'])/100;
             $persent = $discount['percent'];
         }else{
             $total_discount = 0;
-            $persent = null;
+            $persent = 0;
         }
         /*--------------------------*/
         $a =  $total - $total_discount;
 
         $satus = StatusOwner::where('key', '=', 'not_processed')->get();
 
-
         DB::beginTransaction();
+
         try{
             $order = Order::create([
                 'simple_user_id'    => $userSeller,
@@ -202,6 +201,7 @@ class OrderController extends Controller{
                 return Redirect::back();
         }
 
+
         return response()->view('order.ready')->withCookie(cookie('cart', $cart));
     }
 
@@ -240,8 +240,7 @@ class OrderController extends Controller{
         if(count($products))
             $order->products = IndexController::showProduct($products);
    
-
-          
+        
 
         return view('order.simple')
             ->with('order', $order);
@@ -277,6 +276,10 @@ class OrderController extends Controller{
             }
         }
         return $amount;
+    }
+
+    public static function getTotalCompanyAmount(Company $company, StatusOwner $statusOwner){
+        return $company->getOrder()->select()->where('status', $statusOwner->id)->get()->sum('total_price');
     }
 
 }
