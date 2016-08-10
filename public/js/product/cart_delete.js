@@ -13,6 +13,8 @@ $('.button_delete').on('click', function(){
             id: id
         },
         success: function(msg){
+            window.location = '';
+            return;
             if(msg.product_cnt == 0){
                 button.parents('.product_item_cart').parents('.row').eq(0).find('.cart_empty').show();
             }
