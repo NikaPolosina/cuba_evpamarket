@@ -57,7 +57,7 @@
                                     @endif
                                 </li>
                                 <li>
-                                    <a href="/my_shops"> Магазины
+                                    <a href="/my_shops"> Заказы
 
                                         <span> {{count($curentUser->getCompanies)}} </span>
                                     </a>
