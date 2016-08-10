@@ -239,7 +239,7 @@ class OrderController extends Controller{
         $orsders = Company::find($companyId)
             ->getOrder()
             ->where('status', 16)
-            ->where('updated_at', '>=',  Carbon::now()->subDays($days))
+            ->where('updated_at', '>=',  Carbon::today()->subDays($days))
             ->get();
         if(count($orsders)){
             foreach ($orsders as $order) {
