@@ -59,7 +59,7 @@
                                 <li>
                                     <a href="/my_shops"> Заказы
 
-                                        <span> {{count($curentUser->getCompanies)}} </span>
+                                        {{--<span> {{count($curentUser->getCompanies)}} </span>--}}
                                     </a>
                                 </li>
                                 <li>

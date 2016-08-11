@@ -49,8 +49,28 @@
                                 <td style="color: red;"> {{$item->percent}} <span> %</span> </td>
 
                                 <td>
+
+
+
+
                                     <div class="btn-group">
-                                        <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> {{$item->getStatusOwner->title}}
+                                        <button class="btn btn-xs dropdown-toggle
+                                        @if($item->getStatusOwner->key == 'not_processed')a
+                                        @elseif($item->getStatusOwner->key == 'details')v
+                                        @elseif($item->getStatusOwner->key == 'call')b
+                                        @elseif($item->getStatusOwner->key == 'refusal_payment')c
+                                         @elseif($item->getStatusOwner->key == 'verification')y
+                                         @elseif($item->getStatusOwner->key == 'delivery_warehouse')bl
+                                         @elseif($item->getStatusOwner->key == 'no_answer')p
+                                         @elseif($item->getStatusOwner->key == 'available')e
+                                         @elseif($item->getStatusOwner->key == 'waiting_payment')k
+                                         @elseif($item->getStatusOwner->key == 'waiting_confirmation_payment')h
+                                         @elseif($item->getStatusOwner->key == 'payment_successful')s
+                                         @elseif($item->getStatusOwner->key == 'formation_order')u
+                                         @elseif($item->getStatusOwner->key == 'packaging')w
+                                         @elseif($item->getStatusOwner->key == 'send_intermediate_storage')n
+                                         @elseif($item->getStatusOwner->key == 'sending_buyer')q
+                                          @endif" type="button" data-toggle="dropdown" aria-expanded="false"> {{$item->getStatusOwner->title}}
                                             <i class="fa fa-angle-down"></i>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
@@ -77,6 +97,51 @@
     <style>
         .badge{
             background-color: red
+        }
+        .a{
+            background-color: green;
+        }
+        .b{
+            background-color: #0b94ea;
+        }
+        .c{
+            background-color: red;
+        }
+        .v{
+            background-color: gold;
+        }
+        .y{
+            background-color: yellow;
+        }
+        .bl{
+            background-color: #00c4ff;
+        }
+        .p{
+            background-color: orange;
+        }
+        .e{
+            background-color: #2ae0bb;
+        }
+        .k{
+            background-color: #4d9200;
+        }
+        .h{
+            background-color: burlywood;
+        }
+        .s{
+            background-color: deeppink;
+        }
+        .u{
+            background-color: mediumpurple;
+        }
+        .w{
+            background-color: salmon;
+        }
+        .n{
+            background-color: lightpink;
+        }
+        .q{
+            background-color: lawngreen;
         }
 
     </style>
