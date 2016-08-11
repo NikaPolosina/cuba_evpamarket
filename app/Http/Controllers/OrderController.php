@@ -9,6 +9,7 @@ use App\City;
 use App\Order;
 use App\OrderProduct;
 use App\StatusSimple;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +63,7 @@ class OrderController extends Controller{
 
 
         $total_discount = 0;
-        $t = self::getTotalCompanyAmount($company, StatusOwner::where('key','sending_buyer')->first()) + $total;
+        $t = self::getTotalCompanyAmount($company, StatusOwner::where('key','sending_buyer')->first(), $user) + $total;
 
 
         $discount = $company->getDiscountAccumulativ()->where('from', '<=', $t)->orderBy('from', 'desc')->first();
@@ -125,7 +126,7 @@ class OrderController extends Controller{
             ->where('status', $status[0]['id'])
             ->first();
 //        dd($company);
-        $order = self::getTotalCompanyAmount($company, StatusOwner::where('key','sending_buyer')->first());
+        $order = self::getTotalCompanyAmount($company, StatusOwner::where('key','sending_buyer')->first(), Auth::user());
 
         $t = $total + $order;
         $discount = $company->getDiscountAccumulativ()->where('from', '<=', $t)->orderBy('from', 'desc')->first();
@@ -278,8 +279,8 @@ class OrderController extends Controller{
         return $amount;
     }
 
-    public static function getTotalCompanyAmount(Company $company, StatusOwner $statusOwner){
-        return $company->getOrder()->select()->where('status', $statusOwner->id)->get()->sum('total_price');
+    public static function getTotalCompanyAmount(Company $company, StatusOwner $statusOwner, User $user){
+        return $company->getOrder()->where('simple_user_id', $user->id)->where('status', $statusOwner->id)->get()->sum('total_price');
     }
 
 }

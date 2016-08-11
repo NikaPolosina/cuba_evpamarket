@@ -70,8 +70,8 @@ class CartController extends Controller{
                 }
 
                 $companies[$key]['totalAmount'] = $this->getTotalAmount($key);
-                $companies[$key]['totalHistoryAmount'] = OrderController::getTotalCompanyAmount($companies[$key]['company'], StatusOwner::where('key','sending_buyer')->first());
-                $companies[$key]['total'] = $companies[$key]['totalAmount'] + OrderController::getTotalCompanyAmount($companies[$key]['company'], StatusOwner::where('key','sending_buyer')->first());
+                $companies[$key]['totalHistoryAmount'] = OrderController::getTotalCompanyAmount($companies[$key]['company'], StatusOwner::where('key','sending_buyer')->first(), Auth::user());
+                $companies[$key]['total'] = $companies[$key]['totalAmount'] + OrderController::getTotalCompanyAmount($companies[$key]['company'], StatusOwner::where('key','sending_buyer')->first(), Auth::user());
 
                 $companies[$key]['discount'] = $companies[$key]['company']->getDiscountAccumulativ()->where('from', '<=', $companies[$key]['total'])->orderBy('from', 'desc')->first();
 
