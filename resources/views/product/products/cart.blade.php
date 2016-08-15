@@ -29,8 +29,8 @@
                                         border-collapse: separate!important;
                                     }
                                     .table_mod td, .table_mod th{
-                                        padding: 5px!important;
-                                        margin: 5px!important;
+                                        /*padding: 5px!important;
+                                        margin: 5px!important;*/
                                     }
                                     .my_b{
                                         width: 50%;
@@ -45,6 +45,68 @@
                                     #input_b{
                                         height:30px;
                                     }
+
+                                    .right{
+                                        text-align: right;
+                                    }
+                                    .name{
+                                        color: darkblue;
+                                    }
+                                    .left{
+                                        font-size: 16px;
+                                        font-weight: bold;
+                                        margin: 0;
+                                        padding: 0 35px;
+                                    }
+                                    .option_table{
+                                        font-size: 18px;
+                                    }
+
+                                    .my_table td,th {
+                                        padding: 5px!important;
+                                    }
+
+                                    .my_table{
+                                        border-spacing: 3px!important;
+                                        border-collapse: separate;
+                                        text-align: center;
+                                        margin-top: 10px;
+                                    }
+                                    .button_my{
+                                        margin-bottom: 10px;
+                                        float:right;
+                                        box-shadow: 3px 3px 7px 0 rgba(105, 206, 95, .5), inset 0 -3px 0 0 #3a9731;
+                                        background: -webkit-linear-gradient(top, #79d670, #4bbe3f);
+                                    }
+
+                                    .current_discount{
+                                        background: green;
+                                        font-weight: bold;
+                                        color: black;
+                                    }
+                                    .btn-info{
+                                        height:100%;
+                                    }
+                                    .product_price_cart{
+                                        border-radius: 4px;
+                                        display: inline-block;
+                                        vertical-align: middle;
+                                        white-space: nowrap;
+                                        border: 1px solid transparent;
+                                        font-size: 16px;
+                                        padding: 5px;
+                                    }
+                                    tr{
+                                        height: 40px;
+                                    }
+                                    .a{
+                                        text-align: right;
+                                        display: inline-block;
+                                    }
+                                    .b{
+                                        display: inline-block;
+                                    }
+
 
                                 </style>
 
@@ -64,17 +126,36 @@
                                         <div class="col-sm-9">
                                             <table class="table_product table_mod" border="0" cellpadding="0" cellspacing="0" width="100%">
                                                 <tr>
-                                                    <td width="35%"><span class="option_table">Товар:</span></td>
-                                                    <td width="65%" valign="top"><p class="name" style="font-size: 16px; font-weight: bold; color: darkblue;" >{{$val['product_name']}}</p></td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="35%"><span class="option_table">Краткое описание:</span></td>
-                                                    <td width="65%" valign="top"><p style="font-size: 16px;" class="product_description"> {{$val['product_description']}}</p>
+                                                    <td width="40%" class="right option_table">
+
+                                                        Товар:
+
+                                                    </td>
+                                                    <td width="60%" class="name left">
+
+                                                            {{$val['product_name']}}
+
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td width="35%"><span class="option_table">Количество:</span></td>
-                                                    <td width="65%" valign="top">
+                                                    <td width="40%" class="right option_table">
+
+                                                       Краткое описание:
+
+                                                    </td>
+                                                    <td width="60%" class="product_description left">
+
+                                                        {{$val['product_description']}}
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="40%" class="right option_table">
+
+                                                            Количество:
+
+                                                     </td>
+                                                    <td width="60%" class="left">
 
                                                         {{-------------------------------Количество товара----------------------------------}}
                                                         <div class="my_b">
@@ -95,12 +176,6 @@
                                                             </div>
                                                         </div>
 
-                                                        <style>
-                                                            .btn-info{
-                                                                height:100%;
-                                                            }
-                                                        </style>
-
                                                         <div class="">
                                                             <p>{{--В наличии: 40 шт.--}}</p>
 
@@ -110,13 +185,25 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td width="35%" valign="top"><span class="option_table">Цена за еденицу товара:</span></td>
-                                                    <td width="65%" valign="top"><div class="product_price yelloy"><span class="product_price_one" style=""> {{$val['product_price']}}</span> <span>руб.</span></div></td>
+                                                    <td width="40%" class="right option_table">
+                                                       Цена за еденицу товара:
+                                                    </td>
+                                                    <td width="60%" class="left">
+                                                        <div class="product_price_cart yelloy">
+                                                            <span class="product_price_one">
+                                                                {{$val['product_price']}}</span>
+                                                            <span>руб.</span>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                    <td width="35%" valign="top"><span class="option_table">Общяя стомость:</span></td>
-                                                    <td width="65%" valign="top">
-                                                        <div class="product_price yelloy_big">
+                                                    <td width="40%" class="right option_table">
+
+                                                            Общяя стомость:
+
+                                                    </td>
+                                                    <td width="60%" class="left">
+                                                        <div class="product_price_cart yelloy_big">
                                                             <span class="all_product_price" style=""> {{$val['product_price']*$val['cnt']}} </span><span>руб.</span>
                                                         </div>
                                                     </td>
@@ -161,9 +248,17 @@
                                 @endif
 
                                 <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p" style="background-color: white;">
-                                <h3>Сумма по завершенным заказам в этом магазине : <b>{{$value['totalHistoryAmount']}}</b> руб.</h3>
-                                <h3>Текущая покупка на сумму : <b>{{$value['totalAmount']}}</b> руб.</h3>
-                                <h3>Ощая сумма для учёта скидки : <b>{{$value['total']}}</b> руб.</h3>
+
+                                <h3>
+                                   <div class="a col-sm-8">Сумма по завершенным заказам в этом магазине :</div>  <div class="b col-sm-4"><b>{{$value['totalHistoryAmount']}}</b> руб.</div>
+                                </h3>
+                                <h3>
+                                    <div class="a col-sm-8"> Текущая покупка на сумму :</div>  <div class="b col-sm-4"> <b>{{$value['totalAmount']}}</b> руб.</div>
+                                </h3>
+                                <h3>
+                                    <div class="a col-sm-8">Ощая сумма для учёта скидки :</div>  <div class="b col-sm-4"> <b>{{$value['total']}}</b> руб.</div>
+                                </h3>
+
                                     @if($value['discount'])
                                         <h3>У Вас будет скидка : <b>{{$value['discount']['percent']}}</b> %</h3>
                                     @endif
@@ -192,33 +287,5 @@
 
     {!! HTML::script('/js/product/cart_delete.js') !!}
 
-    <style>
-        .option_table{
-            font-size: 18px;
-        }
-
-        .my_table td,th {
-            padding: 5px!important;
-        }
-
-        .my_table{
-            border-spacing: 3px!important;
-            border-collapse: separate;
-            text-align: center;
-            margin-top: 10px;
-        }
-        .button_my{
-            margin-bottom: 10px;
-            float:right;
-            box-shadow: 3px 3px 7px 0 rgba(105, 206, 95, .5), inset 0 -3px 0 0 #3a9731;
-            background: -webkit-linear-gradient(top, #79d670, #4bbe3f);
-        }
-
-        .current_discount{
-            background: green;
-            font-weight: bold;
-            color: black;
-        }
-    </style>
 
 @endsection
