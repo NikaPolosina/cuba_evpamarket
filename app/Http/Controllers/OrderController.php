@@ -232,7 +232,9 @@ class OrderController extends Controller{
     public function changStatus($order, $status_id){
         $status = StatusOwner::find($status_id);
         $order = Order::find($order);
-
+        $user_id = $order->simple_user_id;
+        $company_id = $order->getCompany[0]['id'];
+        
         $order->status = $status['id'];
         $order->save();
         return redirect()->back();
