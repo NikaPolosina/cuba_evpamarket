@@ -1,6 +1,15 @@
 
     /*----------------Стили блока с выбром количества товара-----------------*/
-.buttom_menu{
+    tr{
+        height:40px;
+    }
+    .left{
+        padding: 0px 0px 0px 30px;
+    }
+    .right{
+        text-align: right;
+    }
+    .buttom_menu{
     float: right;
 }
 

@@ -47,21 +47,24 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-9">
-
-                                        <div class="shop_name" style="color: darkblue;">
-                                            <span class="span_title option_table">Магазин:</span>
-                                            <span class="option_table" style="text-align: center; margin-left: 180px"> {{$v->getCompany()->first()->company_name}}</span>
-                                        </div>
                                         <table class="table_product" border="0" cellpadding="0" cellspacing="0" width="100%">
                                             <tr>
-                                                <td width="35%"><span class="option_table">Товар:</span></td>
-                                                <td width="65%" valign="top">
+                                                <td width="35%" class="right shop_name" style="color: darkblue;">
+                                                    <span class="span_title option_table">Магазин:</span>
+                                                </td>
+                                                <td width="65%" class="left">
+                                                    <span class="option_table"> {{$v->getCompany()->first()->company_name}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td width="35%" class="right"><span class="option_table">Товар:</span></td>
+                                                <td width="65%" class="left">
                                                     <div class="product_name"> <p class="name" style=" font-size: 20px;">{{$v['product_name']}}</p></div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td width="35%"><span class="option_table">Краткое описание:</span></td>
-                                                <td width="65%" valign="top"><p style="font-size: 20px;" class="product_description"> {{$v['product_description']}}</p>
+                                                <td width="35%"  class="right"><span class="option_table">Краткое описание:</span></td>
+                                                <td width="65%" class="left"><p style="font-size: 20px;" class="product_description"> {{$v['product_description']}}</p>
                                                 </td>
                                             </tr>
                                           {{--  <tr>
@@ -70,8 +73,8 @@
 
                                             </tr>--}}
                                             <tr>
-                                                <td width="35%" valign="top"><span class="option_table">Цена:</span></td>
-                                                <td width="65%" valign="top">
+                                                <td width="35%"  class="right"><span class="option_table">Цена:</span></td>
+                                                <td width="65%" class="left">
                                                     <div class="product_price yelloy"><span class="product_price_one price" style=""> {{$v['product_price']}}</span> <span>руб.</span></div></td>
                                             </tr>
 
