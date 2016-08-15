@@ -7,21 +7,7 @@
                 <div class="col-sm-10 col-sm-offset-1">
                     <h1 style="text-align: center">Оформление заказа</h1>
                 </div>
-                <style>
-                    .ara{
-                        background-color: rgb(249, 249, 251);
-                        border: 1px solid #e1e1e8;
-                        border-radius: 4px;
-                        margin-bottom: 20px;
-                        padding:5px;
-                    }
-                    .ara:after{
-                        content: '';
-                        display: table;
-                        clear: both;
-                    }
-                    
-                </style>
+
 
                 {{ Form::open(array('url' => '/order-ready',  'method' => 'post')) }}
                 {!! Form::hidden('company_id', $company->id, ['class' => 'form-control', 'data-name' =>'company_id']) !!}
@@ -43,21 +29,22 @@
                                         <img class="img_product img-thumbnail" src="{{$val->firstFile}}" alt=""/>
                                     </div>
                                 </div>
+
                                 <div class="col-sm-8">
                                     <table class="table_product" border="1" bordercolor="#cecdc9"  width="100%">
                                         <tr>
-                                            <td  width="30%"><span class="option_table_order">Товар:</span></td>
-                                            <td  width="70%" valign="top"><span class="name">{{$val->product_name}}</span></td>
+                                            <td  width="40%" class="right"><span class="option_table_order">Товар:</span></td>
+                                            <td  width="60%" class="left"><span class="name">{{$val->product_name}}</span></td>
                                         </tr>
                                         <tr>
-                                            <td width="30%"><span class="option_table_order">Краткое описание:</span></td>
-                                            <td  width="70%" valign="top"><span class="product_description"> {{$val->product_description}}</span></td>
+                                            <td width="40%" class="right"><span class="option_table_order">Краткое описание:</span></td>
+                                            <td  width="60%" class="left"><span class="product_description"> {{$val->product_description}}</span></td>
                                         </tr>
                                         <tr>
-                                            <td  width="30%">
+                                            <td  width="40%" class="right">
                                                 {!! Form::label('product['.$val->id.'][cnt]', 'Количество: ', ['class' => 'control-label option_table_order']) !!}
                                             </td>
-                                            <td  width="70%" valign="top">
+                                            <td  width="60%" class="left">
 
                                                 {!! Form::text('product['.$val->id.'][cnt]', $val->cnt, ['class' => 'form-control count_product', 'data-name' =>'cnt', 'readonly']) !!}
 
@@ -65,10 +52,10 @@
                                         </tr>
 
                                         <tr>
-                                            <td  width="30%" valign="top">
+                                            <td  width="40%" class="right">
                                                 {!! Form::label('price', 'Цена: ', ['class' => 'control-label option_table_order']) !!}
                                             </td>
-                                            <td  width="70%" valign="top">
+                                            <td  width="60%" class="left">
                                                 <div class="form-control product_price">
                                                     {{$val->product_price}} <span> руб.</span>
                                                 </div>
@@ -76,10 +63,10 @@
 
                                         </tr>
                                         <tr>
-                                            <td  width="30%" valign="top">
+                                            <td  width="40%" class="right">
                                                 {!! Form::label('price_product', 'Вместе: ', ['class' => ' control-label option_table_order']) !!}
                                             </td>
-                                            <td  width="70%" valign="top">
+                                            <td  width="60%" class="left">
                                                 <div class="form-control product_price">
                                                     {{$val->product_price*$val->cnt}}<span> руб.</span>
                                                 </div>
@@ -98,10 +85,10 @@
                             <hr/>
                             <table class="table_product" border="0"  width="100%">
                                 <tr>
-                                    <td width="50%" valign="top">
+                                    <td width="50%" class="right">
                                     {!! Form::label('total_price', 'Общяя стомость: ', ['class' => 'control-label option_table_order']) !!}
                                     </td>
-                                    <td width="50%" valign="top">
+                                    <td width="50%" class="left">
                                         <div class="form-control product_price">
                                             {{$total_price}}<span> руб.</span>
                                         </div>
@@ -109,20 +96,20 @@
                                 </tr>
                                 @if($total_discount > 0)
                                     <tr>
-                                        <td width="50%" valign="top">
+                                        <td width="50%" class="right">
                                         {!! Form::label('total_discount', 'Cкидка: ', ['class' => 'control-label option_table_order_вшысщгте']) !!}
                                         </td>
-                                        <td width="50%" valign="top">
+                                        <td width="50%" class="left">
                                             <div class="form-control product_price" style="background-color: #fdd0af; color: red;">
                                                 {{$percent}}<span> %</span>
                                             </div>
                                        </td>
                                     </tr>
                                     <tr>
-                                        <td width="50%" valign="top">
+                                        <td width="50%" class="right">
                                         {!! Form::label('total_price_discount', 'Цена со скидкой: ', ['class' => 'control-label option_table_order_вшысщгте']) !!}
                                         </td>
-                                        <td width="50%" valign="top">
+                                        <td width="50%" class="left">
                                             <div class="form-control product_price" style="background-color: #fdd0af; color: red;">
                                                 {{$total_price-$total_discount}}<span> руб.</span>
                                             </div>
@@ -175,14 +162,14 @@
 
                                     </div>
                                     <div class="form-group col-sm-12" style="margin-bottom: 3px">
-                                        {!! Form::label('street', 'Улица ', ['class' => 'col-sm-3 control-label']) !!}
+                                        {!! Form::label('street', 'Улица: ', ['class' => 'col-sm-3 control-label']) !!}
                                         <div class="col-sm-9">
                                         {!! Form::text('street', $info_user->street, ['class' => 'form-control', 'data-name' =>'street']) !!}
                                         </div>
 
                                     </div>
                                     <div class="form-group col-sm-12" style="margin-bottom: 3px">
-                                        {!! Form::label('address', 'Дом ', ['class' => 'col-sm-3 control-label']) !!}
+                                        {!! Form::label('address', 'Дом: ', ['class' => 'col-sm-3 control-label']) !!}
                                         <div class="col-sm-9">
                                         {!! Form::text('address', $info_user->address, ['class' => 'form-control', 'data-name' =>'address']) !!}
                                             </div>

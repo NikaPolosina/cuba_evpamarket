@@ -250,13 +250,13 @@
                                 <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p" style="background-color: white;">
 
                                 <h3>
-                                   <div class="a col-sm-8">Сумма по завершенным заказам в этом магазине :</div>  <div class="b col-sm-4"><b>{{$value['totalHistoryAmount']}}</b> руб.</div>
+                                   <div class="a col-sm-9">Сумма по завершенным заказам в этом магазине :</div>  <div class="b col-sm-3"><b>{{$value['totalHistoryAmount']}}</b> руб.</div>
                                 </h3>
                                 <h3>
-                                    <div class="a col-sm-8"> Текущая покупка на сумму :</div>  <div class="b col-sm-4"> <b>{{$value['totalAmount']}}</b> руб.</div>
+                                    <div class="a col-sm-9"> Текущая покупка на сумму :</div>  <div class="b col-sm-3"> <b>{{$value['totalAmount']}}</b> руб.</div>
                                 </h3>
                                 <h3>
-                                    <div class="a col-sm-8">Ощая сумма для учёта скидки :</div>  <div class="b col-sm-4"> <b>{{$value['total']}}</b> руб.</div>
+                                    <div class="a col-sm-9">Ощая сумма для учёта скидки :</div>  <div class="b col-sm-3"> <b>{{$value['total']}}</b> руб.</div>
                                 </h3>
 
                                     @if($value['discount'])
