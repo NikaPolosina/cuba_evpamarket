@@ -25,28 +25,31 @@
                             <div class="col-sm-9">
                                 <table class="table_mod" border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tr>
-                                        <td width="40%">
+                                        <td width="45%" class="right">
                                             <span class="title_span_css">Товар:</span>
                                             <input type="hidden" class="m_h_product_id" />
                                             <input type="hidden" class="m_h_product_price_one" />
                                             <input type="hidden" class="m_h_total_in_shop" />
 
                                         </td>
-                                        <td width="60%" valign="top">
+                                        <td width="55%" class="left">
                                             <p class="name m_product_title"></p>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="40%">
+                                        <td width="45%" class="right">
                                             <span class="title_span_css">Краткое описание:</span>
                                         </td>
-                                        <td width="60%" valign="top">
+                                        <td width="55%" class="left">
                                             <p style="font-size: 14px;" class="m_product_description"></p></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%"><span class="option_table title_span_css">Количество:</span>
+                                        <td width="45%" class="right">
+                                            <span class="option_table title_span_css">
+                                                Количество:
+                                            </span>
                                         </td>
-                                        <td width="60%" valign="top">
+                                        <td width="55%" class="left">
 
                                             {{-------------------------------Количество товара----------------------------------}}
                                             <div class="my_b">
@@ -69,27 +72,30 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" valign="top">
-                                            <span class="title_span_css">Цена за единицу товара:</span></td>
-                                        <td width="60%" valign="top">
+                                        <td width="45%" class="right">
+                                            <span class="title_span_css">
+                                                Цена за единицу товара:
+                                            </span>
+                                        </td>
+                                        <td width="55%" class="left">
                                             <p class="price_single">
                                                 <span class="m_single_product_price">0</span> <span>руб.</span>
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" valign="top">
+                                        <td width="45%" class="right">
                                             <span class="title_span_css">Цена с учётом количества:</span></td>
-                                        <td width="60%" valign="top">
+                                        <td width="55%" class="left">
                                             <p class="price_b">
                                                 <span class="m_all_product_price">0</span> <span>руб.</span>
                                             </p>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" valign="top">
+                                        <td width="45%" class="right">
                                             <span class="title_span_css">Сумма по этому магазину:</span></td>
-                                        <td width="60%" valign="top">
+                                        <td width="55%" class="left">
                                             <p class="price_all_b">
                                                 <span class="m_total_in_shop">0</span> <span>руб.</span>
                                             </p>
@@ -100,7 +106,6 @@
                             </div>
                         </div>
                     </div>
-
 
                 </div>
 
