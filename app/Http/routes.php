@@ -151,6 +151,7 @@ Route::get('/show-list-order-simple', ['as'=>'show-list-order-simple', 'uses'=>'
 
 /*---------------------------------------Status----------------------------------*/
 Route::get('/change-order-status/{order}/{status}', ['as'=>'change_order_status', 'uses'=>'OrderController@changStatus']);
+Route::get('/order-by-status/{company}/{status}', ['as'=>'order-by-status', 'uses'=>'OrderController@showOrder']);
 
 
 

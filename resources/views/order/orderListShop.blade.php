@@ -3,19 +3,30 @@
 @section('content')
 
     @include('layouts.header_menu')
-    <link href="../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
 
     <div class="row">
-        <div class="col-md-10 col-sm-offset-1">
+        <div class="col-sm-12">
+            <div class="portlet-title">
+                <div class="caption font-dark" style=" text-align: center">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase" style="color: darkblue;"> Список Заказов</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="list-group-item list-group-item-info" style="text-align: center">Статусы</div>
+            <a class="list-group-item" href="/order-by-status/{{$company->id}}/0"><div>Все заказы</div></a>
+        @foreach($myStatus as $val)
+                <a class="list-group-item" href="/order-by-status/{{$company->id}}/{{$val->getStatusOwner->id}}"><div>{{$val->getStatusOwner->title}}</div></a>
+                @endforeach
+
+        </div>
+        <div class="col-md-10">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet light ">
-                <div class="portlet-title">
-                    <div class="caption font-dark">
-                        <i class="icon-settings font-dark"></i>
-                        <span class="caption-subject bold uppercase" style="color: darkblue"> Список Заказов</span>
-                    </div>
 
-                </div>
                 <div class="portlet-body">
 
                     <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
@@ -44,9 +55,9 @@
                                 <td> {{$item->order_phone}}</td>
 
                                 <td> Регион: {{$item->region}}, г. {{$item->city}}, {{$item->street}} {{$item->address}} </td>
-                                <td> {{$item->total_price}} <span> руб.</span> </td>
-                                <td style="color: red;"> {{$item->discount_price}} <span> руб.</span> </td>
-                                <td style="color: red;"> {{$item->percent}} <span> %</span> </td>
+                                <td style="text-align: center"> {{$item->total_price}} <span> руб.</span> </td>
+                                <td style="color: red; text-align: center""> {{$item->discount_price}} <span> руб.</span> </td>
+                                <td style="color: red; text-align: center""> {{$item->percent}} <span> %</span> </td>
 
                                 <td>
 
@@ -90,11 +101,16 @@
                         </tbody>
                     </table>
                 </div>
+
             </div>
             <!-- END EXAMPLE TABLE PORTLET-->
         </div>
     </div>
     <style>
+        .row {
+            margin-right: 0px;
+            margin-left: 0px;
+        }
         .badge{
             background-color: red
         }

@@ -206,16 +206,28 @@ class OrderController extends Controller{
         return response()->view('order.ready')->withCookie(cookie('cart', $cart));
     }
 
-    public function showOrder($id){
+    public function showOrder($id, $status=0){
         $company = Company::find($id);
-        $order  = $company->getOrder()->with('getStatusOwner')->get();
+
+        if(!$status){
+            $order  = $company->getOrder()->with('getStatusOwner')->get();
+        }else{
+            $order = $company->getOrder()->where('status', $status)->with('getStatusOwner')->get();
+
+        }
+
         $status = StatusOwner::get();
+        $myStatus = $company->getOrder()->select(['status'])->groupBy('status')->with(['getStatusOwner'=>function($query){
+            $query->select(['id', 'title']);
+        }])->get();
+
         return view('order.orderListShop')
             ->with('company', $company)
             ->with('order', $order)
+            ->with('myStatus', $myStatus)
             ->with('status', $status);
     }
-
+    
 
     public function changStatus($order, $status_id){
         $status = StatusOwner::find($status_id);
