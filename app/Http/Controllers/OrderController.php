@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\StatusOwner;
+use App\UserMoney;
 
 
 class OrderController extends Controller{
@@ -234,7 +235,18 @@ class OrderController extends Controller{
         $order = Order::find($order);
         $user_id = $order->simple_user_id;
         $company_id = $order->getCompany[0]['id'];
-        
+        $totalHistoryAmount = OrderController::getTotalCompanyAmount($order->getCompany[0], StatusOwner::where('key','sending_buyer')->first(), Auth::user());
+        $pricePr = $order->total_price;
+        if($status['key'] == 'sending_buyer'){
+            $money = $totalHistoryAmount + $pricePr;
+            $userMoney = new UserMoney([
+                'user_id'        => $user_id,
+                'company_id' => $company_id,
+                'money'       => $money,
+            ]);
+            dd($userMoney);
+
+        }
         $order->status = $status['id'];
         $order->save();
         return redirect()->back();
