@@ -109,12 +109,12 @@
 
 
                                 </style>
-
                                 @foreach($value['products'] as $val)
 
-                                    <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p" style="background-color: white;">
+                                    <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p on" style="background-color: white;">
                                         <div class="col-sm-1">
-                                            {!! Form::checkbox('product['.$val->id.'][checked]', 'true', ['class' => 'sfzs']) !!}
+                                            <input type="checkbox" name="{{'product['.$val->id.'][checked]'}}" value="true" class="switch" checked/>
+{{--                                            {!! Form::checkbox('product['.$val->id.'][checked]', 'true', ['checked' => 'checked', 'class'=>'switch']) !!}--}}
                                             <input class="input_id_del" value="{{$val->id}}" type="hidden"/>
                                         </div>
                                         <div class="col-sm-2">
@@ -221,48 +221,60 @@
                                     </div>
 
                                 @endforeach
-                                @if(count($value['company']->getDiscountAccumulativ) > 0)
-                                    <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p" style="background-color: white;">
-                                        <tr style="background-color: #f7f7f9; outline: 1px solid #dedee4;">
-                                            <td width="50%" valign="top">
-                                                <span class="option_table" style="margin: 10px;">Cкидки магазина:</span>
-                                                <p style="font-size: 13px; margin: 10px">Это накопительная скидка, которую предоставляет магазин.
-                                                    Эта скидка действует при заказе на сумму, которая соответствует диапазону соответствующей процентной скидки.
-                                                    После оформления заказа и подтверждени продавцом о его получении покупателем - эта скидка закрепляется за Вами до тех пор,
-                                                    пока Вы не повысите сумму накоплений в этом магазине до следующей болие высокой скидки. </p>
-                                            </td>
-                                            <td>
-                                                <table class="my_table" border="2" align="center" bordercolor="#ddd">
-                                                    <tr>
-                                                        <th>При заказе на сумму от:</th>
-                                                        <th>Скидка</th>
-                                                    </tr>
-                                                    @foreach($value['company']->getDiscountAccumulativ as $val)
-                                                        <tr class=" <?=($value['discount']['id'] == $val->id)? 'current_discount':'' ?>" ><td><span style="color: #2a62bc;">{{$val->from}} руб.</span></td><td><span style="color: indianred;">{{$val->percent}} %</span></td></tr>
-                                                    @endforeach
 
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </div>
-                                @endif
+                                <div>
+                                        @if(count($value['company']->getDiscountAccumulativ) > 0)
+                                            <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p discount_zone" style="background-color: white;">
+                                                <tr style="background-color: #f7f7f9; outline: 1px solid #dedee4;">
+                                                    <td width="50%" valign="top">
+                                                        <span class="option_table" style="margin: 10px;">Cкидки магазина:</span>
+                                                        <p style="font-size: 13px; margin: 10px">Это накопительная скидка, которую предоставляет магазин.
+                                                            Эта скидка действует при заказе на сумму, которая соответствует диапазону соответствующей процентной скидки.
+                                                            После оформления заказа и подтверждени продавцом о его получении покупателем - эта скидка закрепляется за Вами до тех пор,
+                                                            пока Вы не повысите сумму накоплений в этом магазине до следующей болие высокой скидки. </p>
+                                                    </td>
+                                                    <td>
+                                                        <table class="my_table discount_table" border="2" align="center" bordercolor="#ddd">
+                                                            <tr>
+                                                                <th>При заказе на сумму от:</th>
+                                                                <th>Скидка</th>
+                                                            </tr>
+                                                            @foreach($value['company']->getDiscountAccumulativ as $val)
+                                                                <tr data-from="{{$val['from']}}" class=" <?=($value['discount']['id'] == $val->id)? 'current_discount':'' ?>" ><td><span style="color: #2a62bc;">{{$val->from}} руб.</span></td><td><span style="color: indianred;">{{$val->percent}} %</span></td></tr>
+                                                            @endforeach
 
-                                <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p" style="background-color: white;">
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                        @endif
 
-                                <h3>
-                                   <div class="a col-sm-9">Сумма по завершенным заказам в этом магазине :</div>  <div class="b col-sm-3"><b>{{$value['totalHistoryAmount']}}</b> руб.</div>
-                                </h3>
-                                <h3>
-                                    <div class="a col-sm-9"> Текущая покупка на сумму :</div>  <div class="b col-sm-3"> <b>{{$value['totalAmount']}}</b> руб.</div>
-                                </h3>
-                                <h3>
-                                    <div class="a col-sm-9">Ощая сумма для учёта скидки :</div>  <div class="b col-sm-3"> <b>{{$value['total']}}</b> руб.</div>
-                                </h3>
+                                        <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p amount_zone" style="background-color: white;">
 
-                                    @if($value['discount'])
-                                        <h3>У Вас будет скидка : <b>{{$value['discount']['percent']}}</b> %</h3>
-                                    @endif
+                                            <h3 class="total_history_amount">
+                                               <div class="a col-sm-9">Сумма по завершенным заказам в этом магазине :</div>
+                                                <div class="b col-sm-3"> <b><span class="total_history_amount">{{$value['totalHistoryAmount']}}</span></b> руб.</div>
+                                                <input type="hidden" class="total_history_amount" value="{{$value['totalHistoryAmount']}}"/>
+                                            </h3>
+
+                                            <h3  class="total_amount">
+                                                <div class="a col-sm-9"> Текущая покупка на сумму :</div>
+                                                <div class="b col-sm-3">  <b><span class="total_amount">{{$value['totalAmount']}}</span></b> руб.</div>
+                                                <input type="hidden" class="total_amount" value="{{$value['totalAmount']}}"/>
+                                            </h3>
+
+                                            <h3  class="total">
+                                                <div class="a col-sm-9">Ощая сумма для учёта скидки :</div>
+                                                <div class="b col-sm-3"> <b><span class="total">{{$value['total']}}</span></b> руб.</div>
+                                                <input type="hidden" class="total" value="{{$value['total']}}"/>
+                                            </h3>
+
+                                            @if($value['discount'])
+                                                <h3>Ваша скидка :  <b><span class="percent">{{$value['discount']['percent']}}</span> %</b></h3>
+                                            @endif
+                                        </div>
                                 </div>
+
                                 <div class="col-sm-10 col-sm-offset-1" style="margin-bottom: 25px;">
 
                                         {!! Form::submit('Оформить заказ', ['class' => 'btn btn-lg btn-success button_my']) !!}
@@ -275,6 +287,7 @@
                 </div>
                 </div>
             @endforeach
+
             <div class="col-sm-9 col-sm-offset-1 product_item_cart cart_empty product_item_p" style="display: none">
                 <h1>Ваша корзина пуста. Вернитесь к сайту что бы добавить товары в корзину.</h1>
             </div>
