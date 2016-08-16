@@ -80,7 +80,7 @@ class CartController extends Controller{
         }
 
 
-        return view('product.products.cart')->with('companies', $companies);
+        return view('product.cart')->with('companies', $companies);
     }
 
     public function cart(Request $request){
