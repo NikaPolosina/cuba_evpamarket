@@ -26,10 +26,14 @@ class Company extends Model{
     public function getOrder(){
         return $this->belongsToMany('App\Order');
     }
+    public function getUserMoney(){
+        return $this->hasMany('App\UserMoney');
+    }
 
     public function getDiscountAccumulativ(){
         return $this->hasMany('App\DiscountAccumulativ');
     }
+    
 
 
 }

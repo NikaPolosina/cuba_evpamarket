@@ -233,19 +233,16 @@ class OrderController extends Controller{
     public function changStatus($order, $status_id){
         $status = StatusOwner::find($status_id);
         $order = Order::find($order);
-        $user_id = $order->simple_user_id;
-        $company_id = $order->getCompany[0]['id'];
-        $totalHistoryAmount = OrderController::getTotalCompanyAmount($order->getCompany[0], StatusOwner::where('key','sending_buyer')->first(), Auth::user());
-        $pricePr = $order->total_price;
-        if($status['key'] == 'sending_buyer'){
-            $money = $totalHistoryAmount + $pricePr;
-            $userMoney = new UserMoney([
-                'user_id'        => $user_id,
-                'company_id' => $company_id,
-                'money'       => $money,
-            ]);
-            dd($userMoney);
 
+        if($status['key'] == 'sending_buyer'){
+            $user_id = $order->simple_user_id;
+            $company_id = $order->getCompany[0]['id'];
+            $totalHistoryAmount = OrderController::getTotalCompanyAmount($order->getCompany[0], StatusOwner::where('key','sending_buyer')->first(), Auth::user());
+            
+            $userMoney = UserMoney::firstOrNew(array('user_id' => $user_id, 'company_id' => $company_id));
+            $userMoney->money = $totalHistoryAmount + $order->total_price;
+            $userMoney->save();
+            
         }
         $order->status = $status['id'];
         $order->save();

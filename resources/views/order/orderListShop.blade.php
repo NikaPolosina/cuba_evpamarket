@@ -61,29 +61,14 @@
 
                                 <td>
 
-
-
-
                                     <div class="btn-group">
-                                        <button class="btn btn-xs dropdown-toggle
-                                        @if($item->getStatusOwner->key == 'not_processed')a
-                                        @elseif($item->getStatusOwner->key == 'details')v
-                                        @elseif($item->getStatusOwner->key == 'call')b
-                                        @elseif($item->getStatusOwner->key == 'refusal_payment')c
-                                         @elseif($item->getStatusOwner->key == 'verification')y
-                                         @elseif($item->getStatusOwner->key == 'delivery_warehouse')bl
-                                         @elseif($item->getStatusOwner->key == 'no_answer')p
-                                         @elseif($item->getStatusOwner->key == 'available')e
-                                         @elseif($item->getStatusOwner->key == 'waiting_payment')k
-                                         @elseif($item->getStatusOwner->key == 'waiting_confirmation_payment')h
-                                         @elseif($item->getStatusOwner->key == 'payment_successful')s
-                                         @elseif($item->getStatusOwner->key == 'formation_order')u
-                                         @elseif($item->getStatusOwner->key == 'packaging')w
-                                         @elseif($item->getStatusOwner->key == 'send_intermediate_storage')n
-                                         @elseif($item->getStatusOwner->key == 'sending_buyer')q
-                                          @endif" type="button" data-toggle="dropdown" aria-expanded="false"> {{$item->getStatusOwner->title}}
+                                        <button class="btn btn-xs dropdown-toggle {{$item->getStatusOwner->key}}" type="button" data-toggle="dropdown" aria-expanded="false"> {{$item->getStatusOwner->title}}
+                                            @if($item->getStatusOwner->key !== 'sending_buyer')
+
                                             <i class="fa fa-angle-down"></i>
                                         </button>
+
+
                                         <ul class="dropdown-menu" role="menu">
                                             @foreach($status as $st)
                                                 <li>
@@ -93,6 +78,7 @@
                                             @endforeach
 
                                         </ul>
+                                            @endif
                                     </div>
                                 </td>
 
@@ -114,49 +100,49 @@
         .badge{
             background-color: red
         }
-        .a{
+        .not_processed{
             background-color: green;
         }
-        .b{
+        .call{
             background-color: #0b94ea;
         }
-        .c{
+        .refusal_payment{
             background-color: red;
         }
-        .v{
+        .details{
             background-color: gold;
         }
-        .y{
+        .verification{
             background-color: yellow;
         }
-        .bl{
+        .delivery_warehouse{
             background-color: #00c4ff;
         }
-        .p{
+        .no_answer{
             background-color: orange;
         }
-        .e{
+        .available{
             background-color: #2ae0bb;
         }
-        .k{
+        .waiting_payment{
             background-color: #4d9200;
         }
-        .h{
+        .waiting_confirmation_payment{
             background-color: burlywood;
         }
-        .s{
+        .payment_successful{
             background-color: deeppink;
         }
-        .u{
+        .formation_order{
             background-color: mediumpurple;
         }
-        .w{
+        .packaging{
             background-color: salmon;
         }
-        .n{
+        .send_intermediate_storage{
             background-color: lightpink;
         }
-        .q{
+        .sending_buyer{
             background-color: lawngreen;
         }
 
