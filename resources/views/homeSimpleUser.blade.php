@@ -79,6 +79,10 @@
                                                     @if(count($order) > 0) <span>{{count($order)}}</span>@endif
                                                 </a>
                                             </li>
+                                            <li>
+                                                <a href="/show-group-list"> Группы
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="col-md-9">

@@ -54,7 +54,7 @@
                                         </label>
                                     </td>
                                     <td data-attr="{{$item->id}}"> {{ $x }}</td>
-{{--                                    <td> {{$item->getUserInformation->name}}</td>--}}
+                                    <td> {{$item->getUserInformation->name}}</td>
                                     <td>
                                         <a href="mailto:shuxer@gmail.com"> {{$item->email}} </a>
                                     </td>

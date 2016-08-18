@@ -38,6 +38,9 @@ class User extends Authenticatable
     public function getProduct(){
         return $this->belongsToMany('App\Product', 'user_product');
     }
+    public function getGroup(){
+        return $this->belongsToMany('App\Group', 'group_user')->withPivot('is_admin');
+    }
 
 
     public function getUserInformation(){
