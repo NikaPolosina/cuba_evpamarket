@@ -106,12 +106,19 @@
                                     .b{
                                         display: inline-block;
                                     }
+                                    .my_input{
+                                        width: 80px!important;
+
+                                    }
+                                    .table_product{
+                                         border-spacing: 0px!important;
+                                    }
 
 
                                 </style>
                                 @foreach($value['products'] as $val)
 
-                                    <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p on" style="background-color: white;">
+                                    <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p on" style="background-color: white;     padding-top: 30px;">
                                         <div class="col-sm-1">
                                             <input type="checkbox" name="{{'product['.$val->id.'][checked]'}}" value="true" class="switch" checked/>
 {{--                                            {!! Form::checkbox('product['.$val->id.'][checked]', 'true', ['checked' => 'checked', 'class'=>'switch']) !!}--}}
@@ -166,7 +173,7 @@
                                                                 </button>
                                                             </span>
 
-                                                                {!! Form::text('product['.$val->id.'][cnt]', $val['cnt'], ['class' => 'form-control  text-center my_b"', 'id'=>'input_b', 'data-name' =>'cnt',  "min"=>"1", "max"=>"40", "readonly" ]) !!}
+                                                                {!! Form::text('product['.$val->id.'][cnt]', $val['cnt'], ['class' => 'form-control my_input text-center my_b"', 'id'=>'input_b', 'data-name' =>'cnt',  "min"=>"1", "max"=>"40", "readonly" ]) !!}
 
                                                             <span class="input-group-btn data-up">
                                                                 <button  type="button" class="btn btn-default btn-info right_b" data-dir="up" style="width: 30px;     height: 30px;">
@@ -249,7 +256,7 @@
                                             </div>
                                         @endif
 
-                                        <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p amount_zone" style="background-color: white;">
+                                        <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p amount_zone" style="background-color: white; padding-bottom: 20px;">
 
                                             <h3 class="total_history_amount">
                                                <div class="a col-sm-9">Сумма по завершенным заказам в этом магазине :</div>

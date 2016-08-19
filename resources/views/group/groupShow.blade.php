@@ -45,7 +45,7 @@
                             <label class="col-md-4 control-label">Компании</label>
                             <div class="col-md-6">
                                 <div class="form-group" style="margin: 0px">
-                                    <select class="chosen-select" name="my_company" id="sel1">
+                                    <select required class="chosen-select" name="my_company" id="sel1">
 
 
 

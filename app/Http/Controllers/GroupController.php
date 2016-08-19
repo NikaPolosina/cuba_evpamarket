@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\UserMoney;
 use App\Group;
+use App\StatusOwner;
 
 class GroupController extends Controller{
     public function showGroupList(){
@@ -24,9 +25,7 @@ class GroupController extends Controller{
             }
         }
 
-
         $my_company = Company::whereNotIn('id', $user_id->getGroup()->having('pivot_is_admin','=','1')->get()->lists('company_id'))->get();
-
 
         return view('group.groupShow')
            ->with('my_group', $my_group)
@@ -35,7 +34,9 @@ class GroupController extends Controller{
     }
     public function createGroup(Request $request){
         $user_id = Auth::user();
+
         $userMoney = UserMoney::firstOrNew(array('user_id' => $user_id['id'], 'company_id' => $request['my_company']));
+        
         $newGroup = new Group([
             'group_name'        => $request['group_name'],
             'company_id'        => $request['my_company'],

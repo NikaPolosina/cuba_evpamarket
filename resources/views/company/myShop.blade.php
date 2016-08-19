@@ -29,12 +29,22 @@
                             </tr>
                         </thead>
                         <tbody>
+
                         {{-- */$x=0;/* --}}
                         @foreach($companys as $item)
                             {{-- */$x++;/* --}}
                             <tr class="odd gradeX">
                                 <td> {{ $x }} </td>
-                                <td><a href="/show-order/{{$item->id}}"> {{$item->company_name}}</a></td>
+                                <td>
+                                    @if(count($item->getOrder) > 0)
+                                        <a href="order-by-status/{{$item->id}}/1"> {{$item->company_name}}</a>
+                                    @else
+                                        <a href="/show-order/{{$item->id}}"> {{$item->company_name}}</a>
+
+                                    @endif
+
+
+                                </td>
                                 <td> {{$item->company_description}} </td>
                                 <td> {{$item->street}} {{$item->address}}</td>
                                 <td align="center">

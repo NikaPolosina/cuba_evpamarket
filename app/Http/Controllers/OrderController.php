@@ -208,6 +208,8 @@ class OrderController extends Controller{
     }
 
     public function showOrder($id, $status=0){
+
+
         $company = Company::find($id);
 
         if(!$status){
@@ -221,6 +223,15 @@ class OrderController extends Controller{
         $myStatus = $company->getOrder()->select(['status'])->groupBy('status')->with(['getStatusOwner'=>function($query){
             $query->select(['id', 'title']);
         }])->get();
+
+      /*  foreach($myStatus as $item){
+            $status = StatusOwner::find($item['status']);
+            if($status['key'] == 'not_processed'){
+                return redirect('/order-by-status/'.$company['id'].'/'.$status['id']);
+            }
+
+        }*/
+
 
         return view('order.orderListShop')
             ->with('company', $company)
@@ -238,7 +249,10 @@ class OrderController extends Controller{
             $user_id = $order->simple_user_id;
             $company_id = $order->getCompany[0]['id'];
             $totalHistoryAmount = OrderController::getTotalCompanyAmount($order->getCompany[0], StatusOwner::where('key','sending_buyer')->first(), Auth::user());
-            
+            $totalHistoryOld = UserMoney::where('user_id', $user_id)->where('company_id', $company_id)->first();
+            if($totalHistoryOld){
+                $totalHistoryAmount += $totalHistoryOld->money;
+            }
             $userMoney = UserMoney::firstOrNew(array('user_id' => $user_id, 'company_id' => $company_id));
             $userMoney->money = $totalHistoryAmount + $order->total_price;
             $userMoney->save();
