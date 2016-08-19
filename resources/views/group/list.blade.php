@@ -21,6 +21,7 @@
         <th> Имя магазина </th>
         <th> Сумма (руб.) </th>
         <th> Скидка (%)</th>
+        <th> Действие</th>
     </tr>
     </thead>
     <tbody>
@@ -43,7 +44,10 @@
             <td>
                 {{$item->money}}
             <td>
-                0
+                {{$item->discount}}
+            </td>
+            <td>
+               какое то действие
             </td>
         </tr>
     @endforeach

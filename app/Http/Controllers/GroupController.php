@@ -10,9 +10,23 @@ use App\Group;
 class GroupController extends Controller{
     public function showGroupList(){
         $user_id = Auth::user();
-        $my_group = $user_id->getGroup;
+        $my_group = $user_id->getGroup()->with(['getCompany'])->get();
+        foreach($my_group as $item){
+            $item->discount = 0;
+            if($item->money){
+                $item->discount = $item->getCompany->getDiscountAccumulativ()->where('from', '<=', $item->money)->orderBy('from', 'desc')->first();
+                if($item->discount){
+
+                    $item->discount =  $item->discount->percent;
+                }else{
+                    $item->discount = 0;
+                }
+            }
+        }
+
 
         $my_company = Company::whereNotIn('id', $user_id->getGroup()->having('pivot_is_admin','=','1')->get()->lists('company_id'))->get();
+
 
         return view('group.groupShow')
            ->with('my_group', $my_group)
