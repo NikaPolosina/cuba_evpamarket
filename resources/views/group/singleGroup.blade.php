@@ -47,7 +47,7 @@
                         <span style="margin-right: 10px;">Сумма накопрлений составляет:</span>
                         <div class="money_css">
                             <span class="span_momey_css">
-                                {{$group['money']}}
+                               {{$group['money']}}
                             </span>
                         </div>
                         <span style="margin-left: 10px;">руб.</span>

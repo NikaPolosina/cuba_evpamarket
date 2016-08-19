@@ -17,8 +17,8 @@ var TableDatatablesManaged = function () {
                 "info": "Showing _START_ to _END_ of _TOTAL_ records",
                 "infoEmpty": "No records found",
                 "infoFiltered": "(filtered1 from _MAX_ total records)",
-                "lengthMenu": "Show _MENU_",
-                "search": "Search:",
+                "lengthMenu": "Показать _MENU_",
+                "search": "Поиск:",
                 "zeroRecords": "No matching records found",
                 "paginate": {
                     "previous":"Prev",
@@ -103,7 +103,7 @@ var TableDatatablesManaged = function () {
                 "infoEmpty": "No records found",
                 "infoFiltered": "(filtered1 from _MAX_ total records)",
                 "lengthMenu": "Show _MENU_",
-                "search": "Search:",
+                "search": "Поиск:",
                 "zeroRecords": "No matching records found",
                 "paginate": {
                     "previous":"Prev",
@@ -172,7 +172,7 @@ var TableDatatablesManaged = function () {
                 "infoEmpty": "No records found",
                 "infoFiltered": "(filtered1 from _MAX_ total records)",
                 "lengthMenu": "Show _MENU_",
-                "search": "Search:",
+                "search": "Поиск:",
                 "zeroRecords": "No matching records found",
                 "paginate": {
                     "previous":"Prev",
@@ -240,7 +240,7 @@ var TableDatatablesManaged = function () {
                 "infoEmpty": "No records found",
                 "infoFiltered": "(filtered1 from _MAX_ total records)",
                 "lengthMenu": "Show _MENU_",
-                "search": "Search:",
+                "search": "Поиск:",
                 "zeroRecords": "No matching records found",
                 "paginate": {
                     "previous":"Prev",
@@ -309,7 +309,7 @@ var TableDatatablesManaged = function () {
                 "infoEmpty": "No records found",
                 "infoFiltered": "(filtered1 from _MAX_ total records)",
                 "lengthMenu": "Show _MENU_",
-                "search": "Search:",
+                "search": "Поиск:",
                 "zeroRecords": "No matching records found",
                 "paginate": {
                     "previous":"Prev",

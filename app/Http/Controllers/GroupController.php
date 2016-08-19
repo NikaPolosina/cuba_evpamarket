@@ -35,17 +35,25 @@ class GroupController extends Controller{
 
     }
     public function singleGroup($id){
+
         $group = Group::find($id);
         $company = Company::where('id', $group->company_id)->first();
-        $discount = $company->getDiscountAccumulativ()->where('from', '<=', $group->money)->orderBy('from', 'desc')->first();
+
+       if($group->money){
+           $discount = $company->getDiscountAccumulativ()->where('from', '<=', $group->money)->orderBy('from', 'desc')->first();
+          if($discount){
+              $discount = $discount->percent;
+          }else{
+              $discount = 0;
+          }
+       }else{
+           $group->money = 0;
+           $discount = 0;
+       }
 
 
-        if($discount){
-            $discount = $discount->percent;
-        }else{
-            $discount = 0;
 
-        }
+
         $users = Group::find($id)->getUser()->with(['getUserInformation'])->get();
 
 
