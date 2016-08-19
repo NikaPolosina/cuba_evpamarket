@@ -12,8 +12,7 @@ class GroupController extends Controller{
         $user_id = Auth::user();
         $my_group = $user_id->getGroup;
 
-
-dd(Company::whereNotIn('id', $user_id->getGroup()->having('pivot_is_admin','=','1')->get()->lists('company_id'))->get());
+        $my_company = Company::whereNotIn('id', $user_id->getGroup()->having('pivot_is_admin','=','1')->get()->lists('company_id'))->get();
 
         return view('group.groupShow')
            ->with('my_group', $my_group)
@@ -31,14 +30,31 @@ dd(Company::whereNotIn('id', $user_id->getGroup()->having('pivot_is_admin','=','
         ]);
 
         $user_id->getGroup()->save($newGroup, ['is_admin' => 1]);
-
-        $my_group = $user_id->getGroup;
-        $my_company = UserMoney::where(array('user_id' => $user_id['id']))->with(['getCompany'])->get();
-        return view('group.groupShow')
-            ->with('my_group', $my_group)
-            ->with('my_company', $my_company);
+        return redirect('/show-group-list');
 
 
+    }
+    public function singleGroup($id){
+        $group = Group::find($id);
+        $company = Company::where('id', $group->company_id)->first();
+        $discount = $company->getDiscountAccumulativ()->where('from', '<=', $group->money)->orderBy('from', 'desc')->first();
+
+
+        if($discount){
+            $discount = $discount->percent;
+        }else{
+            $discount = 0;
+
+        }
+        $users = Group::find($id)->getUser()->with(['getUserInformation'])->get();
+
+
+        return view('group.singleGroup')
+            ->with('group', $group)
+            ->with('discount', $discount)
+            ->with('users', $users);
+
+        
     }
 
 }

@@ -16,7 +16,7 @@ class CreateGroupTable extends Migration
             $table->increments('id');
             $table->integer('company_id')->unsigned();
             $table->string('group_name');
-            $table->integer('money')->unsigned();
+            $table->integer('money');
             $table->timestamps();
             $table->foreign('company_id')
                 ->references('id')->on('companies')

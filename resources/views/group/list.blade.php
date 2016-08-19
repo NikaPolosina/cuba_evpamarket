@@ -36,7 +36,7 @@
             </td>
             <td> {{ $x }} </td>
 
-            <td> {{$item->group_name}}</td>
+            <td><a href="/single-group/{{$item->id}}">{{$item->group_name}}</a></td>
 
             <td class="center"> {{$item->getCompany->company_name}} </td>
 

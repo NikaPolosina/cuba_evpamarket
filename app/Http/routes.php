@@ -157,6 +157,7 @@ Route::get('/order-by-status/{company}/{status}', ['as'=>'order-by-status', 'use
 
 Route::get('/show-group-list', ['as'=>'show-group-list', 'uses'=>'GroupController@showGroupList']);
 Route::post('/group-create', ['as'=>'group-create', 'uses'=>'GroupController@createGroup']);
+Route::get('/single-group/{id}', 'GroupController@singleGroup');
 
 
 

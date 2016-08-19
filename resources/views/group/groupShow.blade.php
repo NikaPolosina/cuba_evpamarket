@@ -4,10 +4,6 @@
 
     @include('layouts.header_menu')
 
-
-
-
-
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
 
@@ -20,9 +16,6 @@
                     <a href="#tab_1_2" data-toggle="tab"> Создать группу </a>
                 </li>
 
-                <li>
-                    <a href="#tab_1_3" data-toggle="tab"> Приглашения </a>
-                </li>
             </ul>
 
             <div class="tab-content">
@@ -46,6 +39,8 @@
                             </div>
                         </div>
 
+
+
                         <div  class="form-group{{ $errors->has('my_company') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Компании</label>
                             <div class="col-md-6">
@@ -56,15 +51,11 @@
 
                                         <option value="">Выбирите компанию</option>
                                         @foreach($my_company as $value)
-                                            <option value="{{$value['getCompany']['id']}}">{{$value['getCompany']['company_name']}}</option>
+                                            <option value="{{$value['id']}}">{{$value['company_name']}}</option>
                                         @endforeach
                                     </select>
 
-                                    @if ($errors->has('region'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('region') }}</strong>
-                                    </span>
-                                    @endif
+
                                 </div>
                             </div>
                         </div>
@@ -79,9 +70,7 @@
 
                 </div>
 
-                <div class="tab-pane" id="tab_1_3">
-                    Здесь будут приглашения
-                </div>
+
             </div>
 
         </div>
