@@ -45,16 +45,13 @@
                             <label class="col-md-4 control-label">Компании</label>
                             <div class="col-md-6">
                                 <div class="form-group" style="margin: 0px">
-                                    <select required class="chosen-select" name="my_company" id="sel1">
 
-
-
-                                        <option value="">Выбирите компанию</option>
+                                    <select data-placeholder="Выбирите магазин..." class="chosen-select" style="width:350px;" tabindex="2" name="my_company" required>
+                                        <option value=""></option>
                                         @foreach($my_company as $value)
                                             <option value="{{$value['id']}}">{{$value['company_name']}}</option>
                                         @endforeach
                                     </select>
-
 
                                 </div>
                             </div>
@@ -77,8 +74,30 @@
 
     </div>
 
+    <style>
+        .chosen-container {
+            min-width: 200px;
+        }
+    </style>
 
+    <script type="text/javascript">
+        var config = {
+            '.chosen-select'           : {},
+            '.chosen-select-deselect'  : {allow_single_deselect:true},
+            '.chosen-select-no-single' : {disable_search_threshold:10},
+            '.chosen-select-no-results': {no_results_text:'Ой, ничего не найдено!'},
+            '.chosen-select-width'     : {width:"95%"}
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+       $('.chosen-select').change(function() {
+           var val = $(this).find('option:selected').text();
+           $('.chosen-select').parents('.form-inline').find('input#group_name').val(val);
 
+        });
+     
 
+    </script>
 
 @endsection

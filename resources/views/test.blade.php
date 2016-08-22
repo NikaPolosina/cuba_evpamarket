@@ -1,24 +1,35 @@
-<section class="tab-area tabs-hover">
 
-    <span class="tab-link" tabindex="1">Tab 1</span>
-    <span class="tab-link" tabindex="2">Tab 2</span>
-    <span class="tab-link" tabindex="3">Tab 3</span>
+    <link rel="stylesheet" href="css/docsupport/style.css">
+    <link rel="stylesheet" href="css/docsupport/prism.css">
+    <link rel="stylesheet" href="css/chosen.css">
 
-    <article class="tab">
-        <h3>Tab 3</h3>
-        <p>Lorem Ipsum Dolor Sit</p>
-    </article>
-    <article class="tab">
-        <h3>Tab 2</h3>
-        <p>Lorem Ipsum Dolor Sit</p>
-    </article>
-    <article class="tab">
-        <h3>I really just made this so I could say I have 4 instead of 3. Although hover can be used for more than you'd think, it's very impractical.</h3>
-    </article>
 
-    <h2 class="title">Hover Tabs</h2>
-    <p><strong>Non-Independent, No Default Selected</strong></p>
-    <p>Works In: Chrome(latest), Opera(Latest), FireFox(Latest), IE9</p>
 
-</section>
+                    <select data-placeholder="Выбирите магазин..." class="chosen-select" style="width:350px;" tabindex="2">
+                        <option value=""></option>
+                        <option value="United States">United States</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="Afghanistan">Afghanistan</option>
+                        <option value="Aland Islands">Aland Islands</option>
+                        <option value="Bonaire, Sint Eustatius and Saba">Bonaire, Sint Eustatius and Saba</option>
+                    </select>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+    <script src="js/select/docsupport/chosen.jquery.js" type="text/javascript"></script>
+    <script src="js/select/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        var config = {
+            '.chosen-select'           : {},
+            '.chosen-select-deselect'  : {allow_single_deselect:true},
+            '.chosen-select-no-single' : {disable_search_threshold:10},
+            '.chosen-select-no-results': {no_results_text:'Ой, ничего не найдено!'},
+            '.chosen-select-width'     : {width:"95%"}
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+
 
