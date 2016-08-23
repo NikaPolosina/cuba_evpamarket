@@ -100,7 +100,7 @@
 
 
     .chosen-container .chosen-results li.highlighted {
-        background-color: white!important;
+        background-color: rgba(198, 198, 198, 0.47) !important;
         color: black!important;
     }
 
@@ -123,11 +123,6 @@
 
 
     }
-    .active-result:hover{
-        color: red!important;
-        outline: solid 1px red!important;
-    }
-
 
     .span_momey_css{
         color: blue;
@@ -192,15 +187,3 @@
 </style>
 
 
-<script>
-    var setBg = function (elems, user) {
-
-        for (var i = 0; i < users.length; i++) {
-            var path = '/img/users/' + i + '/avatar' + i +'.png';
-        }
-
-        elems.css({
-            'background' : path;
-        });
-    }
-</script>
