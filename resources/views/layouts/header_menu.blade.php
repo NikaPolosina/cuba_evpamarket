@@ -109,6 +109,10 @@
 </script>
 
 <style>
+    .input-group-addon {
+        border-radius: 4px 0px 0px 4px!Important;
+    }
+
     .nav_li_menu>li>a{
         padding: 10px 10px;
 

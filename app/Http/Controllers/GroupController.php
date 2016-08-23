@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\UserMoney;
 use App\Group;
 use App\StatusOwner;
+use App\User;
 
 class GroupController extends Controller{
     public function showGroupList(){
@@ -70,11 +71,22 @@ class GroupController extends Controller{
 
 
         $users = Group::find($id)->getUser()->with(['getUserInformation'])->get();
-
+        $allUser = User::with(['getUserInformation'])->whereNotIn('id', $users->lists('id'))->get();
+        foreach($allUser as $val){
+            if(!is_file(public_path().$val['getUserInformation']['avatar'])){
+              $val['getUserInformation']['avatar'] ='/img/placeholder/avatar.jpg';
+            }
+        }
+        foreach($users as $val){
+            if(!is_file(public_path().$val['getUserInformation']['avatar'])){
+              $val['getUserInformation']['avatar'] ='/img/placeholder/avatar.jpg';
+            }
+        }
 
         return view('group.singleGroup')
             ->with('group', $group)
             ->with('discount', $discount)
+            ->with('allUser', $allUser)
             ->with('users', $users);
 
         
