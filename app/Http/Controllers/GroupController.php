@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -8,88 +9,217 @@ use App\UserMoney;
 use App\Group;
 use App\StatusOwner;
 use App\User;
+use App\Http\Controllers\MessageController;
+use Mockery\CountValidator\Exception;
+use Illuminate\Support\Facades\Session;
 
 class GroupController extends Controller{
+
+    protected $_group;
+    protected $_groupModel;
+    protected $_request;
+    protected $_msg;
+
+    /**
+     * Class init
+     * */
+    public function __construct(Group $group, Request $request, MessageController $messageController){
+        $this->_groupModel = $group;
+        $this->_request = $request;
+        $this->_msg = $messageController;
+    }
+
     public function showGroupList(){
         $user_id = Auth::user();
-        $my_group = $user_id->getGroup()->with(['getCompany'])->get();
+        $my_group = $user_id->getGroup()->with([ 'getCompany' ])->get();
         foreach($my_group as $item){
             $item->discount = 0;
             if($item->money){
                 $item->discount = $item->getCompany->getDiscountAccumulativ()->where('from', '<=', $item->money)->orderBy('from', 'desc')->first();
                 if($item->discount){
 
-                    $item->discount =  $item->discount->percent;
+                    $item->discount = $item->discount->percent;
                 }else{
                     $item->discount = 0;
                 }
             }
         }
 
-        $my_company = Company::whereNotIn('id', $user_id->getGroup()->having('pivot_is_admin','=','1')->get()->lists('company_id'))->get();
+        $my_company = Company::whereNotIn('id', $user_id->getGroup()->having('pivot_is_admin', '=', '1')->get()->lists('company_id'))->get();
 
-        return view('group.groupShow')
-           ->with('my_group', $my_group)
-           ->with('my_company', $my_company);
+        $this->_msg->getGroupInvite(Auth::user(), [ 'status' => 0 ]);
 
+        $groupInvites = $this->_msg->getMsg();
+
+        return view('group.groupShow')->with('my_group', $my_group)->with('my_company', $my_company)->with('groupInvites', $groupInvites);
     }
+
     public function createGroup(Request $request){
         $user_id = Auth::user();
 
-        $userMoney = UserMoney::firstOrNew(array('user_id' => $user_id['id'], 'company_id' => $request['my_company']));
-        
+        $userMoney = UserMoney::firstOrNew(array(
+            'user_id'    => $user_id['id'],
+            'company_id' => $request['my_company']
+        ));
+
         $newGroup = new Group([
-            'group_name'        => $request['group_name'],
-            'company_id'        => $request['my_company'],
-            'money'             =>  $userMoney['money'],
+            'group_name' => $request['group_name'],
+            'company_id' => $request['my_company'],
+            'money'      => $userMoney['money'],
 
         ]);
 
-        $user_id->getGroup()->save($newGroup, ['is_admin' => 1]);
+        $user_id->getGroup()->save($newGroup, [ 'is_admin' => 1 ]);
         return redirect('/show-group-list');
-
-
     }
-    public function singleGroup($id){
+
+    /**
+     * Single groups screen
+     * */
+    public function showSingleGroup($id){
 
         $group = Group::find($id);
         $company = Company::where('id', $group->company_id)->first();
 
-       if($group->money){
-           $discount = $company->getDiscountAccumulativ()->where('from', '<=', $group->money)->orderBy('from', 'desc')->first();
-          if($discount){
-              $discount = $discount->percent;
-          }else{
-              $discount = 0;
-          }
-       }else{
-           $group->money = 0;
-           $discount = 0;
-       }
+        if($group->money){
+            $discount = $company->getDiscountAccumulativ()->where('from', '<=', $group->money)->orderBy('from', 'desc')->first();
+            if($discount){
+                $discount = $discount->percent;
+            }else{
+                $discount = 0;
+            }
+        }else{
+            $group->money = 0;
+            $discount = 0;
+        }
 
-
-
-
-        $users = Group::find($id)->getUser()->with(['getUserInformation'])->get();
-        $allUser = User::with(['getUserInformation'])->whereNotIn('id', $users->lists('id'))->get();
+        $users = Group::find($id)->getUser()->with([ 'getUserInformation' ])->get();
+        $allUser = User::with([ 'getUserInformation' ])->whereNotIn('id', $users->lists('id'))->get();
         foreach($allUser as $val){
             if(!is_file(public_path().$val['getUserInformation']['avatar'])){
-              $val['getUserInformation']['avatar'] ='/img/placeholder/avatar.jpg';
+                $val['getUserInformation']['avatar'] = '/img/placeholder/avatar.jpg';
             }
         }
         foreach($users as $val){
             if(!is_file(public_path().$val['getUserInformation']['avatar'])){
-              $val['getUserInformation']['avatar'] ='/img/placeholder/avatar.jpg';
+                $val['getUserInformation']['avatar'] = '/img/placeholder/avatar.jpg';
             }
         }
 
-        return view('group.singleGroup')
-            ->with('group', $group)
-            ->with('discount', $discount)
-            ->with('allUser', $allUser)
-            ->with('users', $users);
-
-        
+        return view('group.singleGroup')->with('group', $group)->with('discount', $discount)->with('allUser', $allUser)->with('users', $users);
     }
 
+    /**
+     * Get single group
+     * */
+    public function singleGroup($id, array $fields = array( '*' )){
+        $this->_group = $this->_groupModel->select($fields)->find($id);
+    }
+
+    /**
+     * Check if item exists
+     * */
+    public function checkExists($id){
+        $this->_request->request->add([ 'item' => $id ]);
+        $this->validate($this->_request, [
+            'item' => 'requered|exists:groups,id'
+        ]);
+    }
+
+    /**
+     * Get current group
+     *
+     * @return mixed
+     */
+    public function getGroup(){
+        return $this->_group;
+    }
+
+    /**
+     *
+     * Set current group
+     *
+     * @param mixed $group
+     */
+    public function setGroup(Group $group){
+        $this->_group = $group;
+    }
+
+    /**
+     * Get group model
+     * */
+    public function getModel(){
+        return new $this->_groupModel;
+    }
+
+    /**
+     * Ajax send invite
+     * */
+    public function ajaxInviteToGroup(){
+        $this->checkExists($this->_request->input('id'));
+        $this->validate($this->_request, [
+            'user' => 'required'
+        ]);
+        try{
+            $this->_prepareInviteMsg();
+            $this->_msg->sendMsg();
+            return response()->json([ 'success' => true ], 200);
+        }catch(\Exception $e){
+            return response()->json([ 'error' => $e->getMessage() ], 422);
+        }
+    }
+
+    /**
+     * Prepare invite msg
+     * */
+    protected function _prepareInviteMsg(){
+        $this->_msg->setMsg($this->_msg->getModel());
+        $this->_msg->setMsgParam('type', 'group');
+        $this->_msg->setMsgParam('connected_id', $this->_request->input('group'));
+        $this->_msg->setMsgParam('status', 0);
+        $this->_msg->setMsgParam('from', Auth::user()->id);
+        $this->_msg->setMsgParam('to', $this->_request->input('user'));
+        $this->_msg->setMsgParam('subject', 'Invite to connect');
+        $this->_msg->setMsgParam('body', 'Invite to connect body');
+    }
+
+    /**
+     * Disable groups invite
+     * */
+    public function disableInvite($id){
+        try{
+            $this->_msg->singleMsg($id);
+            $this->_msg->setAsReaded();
+            Session::flash('flash_message', 'Disabled!');
+            return redirect()->route('homeSimpleUser');
+        }catch(\Exception $e){
+            Session::flash('flash_message', 'Enabled');
+            return Redirect::back();
+        }
+    }
+
+    /**
+     * Enable group invite
+     * */
+    public function enableInvite($id){
+        try{
+            $this->_msg->singleMsg($id);
+            $this->_msg->setAsReaded();
+            $this->singleGroup($this->_msg->getMsgParam('connected_id'));
+            $this->attachUser(Auth::user());
+            Session::flash('flash_message', 'Disabled!');
+            return redirect()->route('homeSimpleUser');
+        }catch(\Exception $e){
+            Session::flash('flash_message', 'Enabled');
+            return Redirect::back();
+        }
+    }
+
+    /**
+     * Attach user to group
+     * */
+    public function attachUser($user){
+        $user->getGroup()->detach($this->_group);
+        $user->getGroup()->attach($this->_group, [ 'is_admin' => 0 ]);
+    }
 }

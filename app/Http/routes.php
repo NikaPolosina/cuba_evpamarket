@@ -154,10 +154,16 @@ Route::get('/change-order-status/{order}/{status}', ['as'=>'change_order_status'
 Route::any('/order-by-status/{company}/{status}', ['as'=>'order-by-status', 'uses'=>'OrderController@showOrder']);
 
 
-
+// Groups
 Route::get('/show-group-list', ['as'=>'show-group-list', 'uses'=>'GroupController@showGroupList']);
 Route::post('/group-create', ['as'=>'group-create', 'uses'=>'GroupController@createGroup']);
-Route::get('/single-group/{id}', 'GroupController@singleGroup');
+Route::get('/single-group/{id}', 'GroupController@showSingleGroup');
+Route::post('/group/send-invite', ['as'=>'group_invite_action', 'uses'=>'GroupController@ajaxInviteToGroup']);
+
+Route::get('/disable-invite/{id}', ['as'=>'disable_group_invite', 'uses'=>'GroupController@disableInvite']);
+Route::get('/enable-invite/{id}', ['as'=>'enable_group_invite', 'uses'=>'GroupController@enableInvite']);
+
+
 
 
 

@@ -5,6 +5,7 @@ use App\StatusOwner;
 use App\Models\Role;
 
 class DatabaseSeeder extends Seeder{
+
     /**
      * Run the database seeds.
      *
@@ -118,25 +119,23 @@ class DatabaseSeeder extends Seeder{
             'key'              => 'sending_buyer',
             'status_simple_id' => $simpleStatus['5']->id
         ]);
-
     }
-    
+
     public function createRole(){
         $role = Role::create([
-            'name'            => 'admin',
-            'display_name'    => 'Admin',
-            'description'    => 'Administratir site'
+            'name'         => 'admin',
+            'display_name' => 'Admin',
+            'description'  => 'Administratir site'
         ]);
         $role = Role::create([
-            'name'            => 'simple_user',
-            'display_name'    => 'Simple User',
-            'description'    => 'User is simple user'
+            'name'         => 'simple_user',
+            'display_name' => 'Simple User',
+            'description'  => 'User is simple user'
         ]);
         $role = Role::create([
-            'name'            => 'company_owner',
-            'display_name'    => 'Company Owner',
-            'description'    => 'User is the owner of a company'
+            'name'         => 'company_owner',
+            'display_name' => 'Company Owner',
+            'description'  => 'User is the owner of a company'
         ]);
-
     }
 }
