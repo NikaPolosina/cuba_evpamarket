@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use App\StatusOwner;
 use App\UserMoney;
+use App\Group;
 
 
 class OrderController extends Controller{
@@ -256,6 +257,13 @@ class OrderController extends Controller{
             $userMoney = UserMoney::firstOrNew(array('user_id' => $user_id, 'company_id' => $company_id));
             $userMoney->money = $totalHistoryAmount + $order->total_price;
             $userMoney->save();
+
+            $user = User::find($order->simple_user_id);
+            $group = $user->getGroup()->where('company_id', $company_id)->get();
+            foreach($group as $item){
+                $item->money += $order->total_price;
+                $item->save();
+            }
             
         }
         $order->status = $status['id'];

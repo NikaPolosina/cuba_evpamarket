@@ -212,8 +212,15 @@ class GroupController extends Controller{
      * Enable group invite
      * */
     public function enableInvite($id){
+        $user = Auth::user();
+
+
         try{
             $this->_msg->singleMsg($id);
+            $group=Group::find($this->_msg->getMsgParam('connected_id'));
+            $userMoney = UserMoney::where('user_id', $user->id)->where('company_id', $group->getCompany->id)->first();
+            $group->money += $userMoney->money;
+            $group->save();
             $this->_msg->setAsReaded();
             $this->singleGroup($this->_msg->getMsgParam('connected_id'));
             $this->attachUser(Auth::user());
