@@ -7,33 +7,33 @@
 
     <div class="row">
         <div class="col-sm-12">
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <div class="group_body">
                     <div class="group_name">
                         <h2 class="name_css">Пригласить в группу</h2>
                         <div class="col-md-12">
-                            <div class="col-md-6">
+
                                 <div class="form-group myGroup group_holder" style="margin: 0px">
-                                    <select data-placeholder="Выбирите магазин..." class="chosen-select group_selector" style="width:300px;" tabindex="2" name="my_company" required>
+                                    <select data-placeholder="Выбирите пользователя..." class="chosen-select group_selector" style="width:300px;" tabindex="2" name="my_company" required>
                                         <option value=""></option>
                                         {{--<option value="calendar" title="http://www.abe.co.nz/edit/image_cache/Hamach_300x60c0.JPG"></option>--}}
                                         @foreach($allUser as $value)
                                             <option value="{{$value['id']}}" style="background-image: url('{{$value['getUserInformation']['avatar']}}')">{{$value['getUserInformation']['name']}}</option>
                                         @endforeach
                                     </select>
-                                    <button class="btn-default invite_to_group" data-group="{{$group->id}}">Пригласить в группу</button>
+                                    <button class="btn-default invite_to_group" data-group="{{$group->id}}">Пригласить</button>
 
                                     <div class="progress" style="display: none">
                                         <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                                             <span class="sr-only">45% Complete</span>
                                         </div>
                                     </div>
-                                    
-                                    <div class="alert alert-success invite_sent" role="alert" style="display: none">Ok</div>
-                                    <div class="alert alert-danger invite_error" role="alert" style="display: none">Error</div>
+
+                                    <div class="alert alert-success invite_sent" role="alert" style="display: none">Приглашение в группу было отправлено пльзователю.</div>
+                                    <div class="alert alert-danger invite_error" role="alert" style="display: none">Ошибка отправки, повторите попытку немного позже.</div>
 
                                 </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -85,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
 
             </div>
         </div>

@@ -12,6 +12,7 @@ use App\User;
 use App\Http\Controllers\MessageController;
 use Mockery\CountValidator\Exception;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class GroupController extends Controller{
 
@@ -31,7 +32,7 @@ class GroupController extends Controller{
 
     public function showGroupList(){
         $user_id = Auth::user();
-        $my_group = $user_id->getGroup()->with([ 'getCompany' ])->get();
+        $my_group = $user_id->getGroup()->with([ 'getCompany', 'getUser' ])->get();
         foreach($my_group as $item){
             $item->discount = 0;
             if($item->money){
@@ -50,8 +51,11 @@ class GroupController extends Controller{
         $this->_msg->getGroupInvite(Auth::user(), [ 'status' => 0 ]);
 
         $groupInvites = $this->_msg->getMsg();
-
-        return view('group.groupShow')->with('my_group', $my_group)->with('my_company', $my_company)->with('groupInvites', $groupInvites);
+        
+        return view('group.groupShow')
+            ->with('my_group', $my_group)
+            ->with('my_company', $my_company)
+            ->with('groupInvites', $groupInvites);
     }
 
     public function createGroup(Request $request){
@@ -122,8 +126,14 @@ class GroupController extends Controller{
     public function checkExists($id){
         $this->_request->request->add([ 'item' => $id ]);
         $this->validate($this->_request, [
-            'item' => 'requered|exists:groups,id'
+            'item' => 'required|exists:groups,id'
         ]);
+    }
+    /**
+     * Check if item exists
+     * */
+    public function checkRole(){
+        return $this->_group->getUser()->where('user_id', Auth::user()->id)->having('pivot_is_admin', '=', '1')->get()->count();
     }
 
     /**
@@ -156,7 +166,7 @@ class GroupController extends Controller{
      * Ajax send invite
      * */
     public function ajaxInviteToGroup(){
-        $this->checkExists($this->_request->input('id'));
+        $this->checkExists($this->_request->input('group'));
         $this->validate($this->_request, [
             'user' => 'required'
         ]);
@@ -221,5 +231,42 @@ class GroupController extends Controller{
     public function attachUser($user){
         $user->getGroup()->detach($this->_group);
         $user->getGroup()->attach($this->_group, [ 'is_admin' => 0 ]);
+    }
+    /**
+     * Detach user to group
+     * */
+    public function detachUser($user){
+        $user->getGroup()->detach($this->_group);
+    }
+
+    public function left($id){
+        $this->checkExists($id);
+        try{
+            $this->singleGroup($id);
+            $this->detachUser(Auth::user());
+            Session::flash('flash_message', 'Disabled!');
+            return Redirect::back();
+        }catch(\Exception $e){
+            Session::flash('flash_message', 'Enabled');
+            return Redirect::back();
+        }
+    }
+    public function destroy($id){
+        $this->checkExists($id);
+        try{
+            $this->singleGroup($id);
+            if(!$this->checkRole())
+                throw new \Exception('Не админ');
+            $this->delete();
+            Session::flash('flash_message', 'Disabled!');
+            return Redirect::back();
+        }catch(\Exception $e){
+            Session::flash('flash_message', 'Error');
+            return Redirect::back();
+        }
+    }
+
+    public function delete(){
+        $this->_group->delete();
     }
 }

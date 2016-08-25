@@ -23,8 +23,9 @@
 
             <div class="tab-content">
 
-            @include('group.list')
-
+                <div class="tab-pane active" id="tab_1_1">
+                    @include('group.list')
+                </div>
 
             <!--tab_1_2-->
                 <div class="tab-pane" id="tab_1_2">
@@ -73,10 +74,10 @@
                         @foreach($groupInvites as $msg)
                             <li class="list-group-item">
                                 <div>
-                                    <span>Group : {{$msg->group->group_name}}</span>
+                                    <span>Вы получили приглашение о вступлении в группу: {{$msg->group->group_name}}</span>
                                     <div class="btn-group" role="group" aria-label="...">
-                                        <a href="{{route('enable_group_invite', [$msg->id])}}">Вступить в группу</a>
-                                        <a href="{{route('disable_group_invite', [$msg->id])}}">Отказаться</a>
+                                        <a href="{{route('enable_group_invite', [$msg->id])}}"><button type="button" class="btn btn-success">Вступить</button></a>
+                                        <a href="{{route('disable_group_invite', [$msg->id])}}"><button type="button" class="btn btn-danger">Отказаться</button></a>
                                     </div>
                                 </div>
                             </li>
@@ -84,7 +85,7 @@
                         </ul>
                     @else
                         <ul class="list-group">
-                            <li class="list-group-item">No Invites found
+                            <li class="list-group-item">На данный ммент приглашений в группу нет.
                         </ul>
                     @endif
                 </div>
@@ -117,6 +118,8 @@
             var val = $(this).find('option:selected').text();
             $('.chosen-select').parents('.form-inline').find('input#group_name').val(val);
         });
+
+
         $(document).ready(function(){
             if(window.location.hash){
                 var hash = window.location.hash.substring(1);
@@ -128,7 +131,7 @@
                 var id = $('.nav-tabs').find('li[data-id="' + hash + '"]').find('a').attr('href');
                 id = id.substring(1);
 
-                $('.tab-pane').each(function(val){
+                $('.tab-pane').each(function(key, val){
                     $(val).removeClass('active');
                 });
 

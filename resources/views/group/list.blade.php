@@ -4,7 +4,6 @@
 <link href="../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
 <link href="../assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
 
-<div class="tab-pane active" id="tab_1_1">
     @if(!count($my_group) == 0)
 
 <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
@@ -27,6 +26,7 @@
     <tbody>
     {{-- */$x=0;/* --}}
     @foreach($my_group as $item)
+
         {{-- */$x++;/* --}}
         <tr class="odd gradeX">
             <td>
@@ -47,7 +47,11 @@
                 {{$item->discount}}
             </td>
             <td>
-               какое то действие
+                @if($item->pivot->is_admin)
+                    <a href="/group-destroy/{{$item->id}}"><button type="button" class="btn btn-danger">Удалить</button></a>
+                @else
+                    <a href="/group-left/{{$item->id}}"><button type="button" class="btn btn-primary">Покинуть</button></a>
+                @endif
             </td>
         </tr>
     @endforeach
@@ -58,7 +62,7 @@
         <h2>У Вас нет ни одной группы.</h2>
 
     @endif
-</div>
+
 
 
 

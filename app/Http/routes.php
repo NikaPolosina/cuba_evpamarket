@@ -163,6 +163,9 @@ Route::post('/group/send-invite', ['as'=>'group_invite_action', 'uses'=>'GroupCo
 Route::get('/disable-invite/{id}', ['as'=>'disable_group_invite', 'uses'=>'GroupController@disableInvite']);
 Route::get('/enable-invite/{id}', ['as'=>'enable_group_invite', 'uses'=>'GroupController@enableInvite']);
 
+Route::get('/group-destroy/{id}', ['as'=>'group-destroy', 'uses'=>'GroupController@destroy']);
+Route::get('/group-left/{id}', ['as'=>'group-left', 'uses'=>'GroupController@left']);
+
 
 
 
