@@ -295,6 +295,7 @@ class OrderController extends Controller{
     public function showSimpleOrderList(){
         $order =  Order::where('simple_user_id', '=', Auth::user()->id)->get();
         $status = StatusSimple::get();
+        
         return view('order.orderListShopSimple')
             ->with('order', $order)
             ->with('status', $status);

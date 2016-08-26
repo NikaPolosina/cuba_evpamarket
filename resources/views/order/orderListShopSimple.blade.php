@@ -48,7 +48,7 @@
 
                                 <td> Регион: {{$item->region}}, г. {{$item->city}}, {{$item->street}} {{$item->address}} </td>
                                 <td> {{$item->total_price}} <span> руб.</span>
-                                </td>  <td> 0 <span> %</span> </td>
+                                </td>  <td> {{$item->percent}} <span> %</span> </td>
                                 <td> {{$item->total_price}} <span> руб.</span>
                                 <td>
                                     <div class="btn-group">

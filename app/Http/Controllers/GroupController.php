@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\UserMoney;
@@ -109,8 +110,9 @@ class GroupController extends Controller{
                 $val['getUserInformation']['avatar'] = '/img/placeholder/avatar.jpg';
             }
         }
+        $region = Region::all();
 
-        return view('group.singleGroup')->with('group', $group)->with('discount', $discount)->with('allUser', $allUser)->with('users', $users);
+        return view('group.singleGroup')->with('group', $group)->with('discount', $discount)->with('allUser', $allUser)->with('users', $users)->with('region', $region);
     }
 
     /**

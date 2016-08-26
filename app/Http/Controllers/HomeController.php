@@ -50,6 +50,7 @@ class HomeController extends Controller{
 
     public function registerSimple(){
         if(!Auth::user()->getUserInformation){
+
             $region = Region::all();
             return view('auth.register_aditional')->with('region', $region);
         }

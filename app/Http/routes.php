@@ -11,10 +11,7 @@
 |
 */
 
-Route::get('/test', function()
-{
-    return view('test');
-});
+Route::any('/test', 'IndexController@test');
 
 
 /*-------------------------------------------Index----------------------------------------------*/

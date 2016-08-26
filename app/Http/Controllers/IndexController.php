@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Group;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Product;
@@ -18,6 +19,25 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cookie;
 
 class IndexController extends Controller{
+    public function test(Request $request){
+      
+        return view('test');
+
+
+
+
+        $products = Product::with(['getCompany' => function($query){
+            $query->with('getOrder');
+        }])->get();
+            dd($products);
+        foreach ($products as $product) {
+            $product->company = $product->getCompany()->first()->id;
+//            dd($product->getCompany()->first()->id);
+//            echo $product->getCompany->id;
+        }
+        die('Surprise, you are here !!!');
+        
+    }
 
     /**
      * Get products image
