@@ -1,0 +1,33 @@
+.advanced_search_button {
+    /* disable text select*/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.advanced_search_block {
+    display: none;
+
+}
+
+.advanced_search_result {
+    display: none;
+
+}
+
+.advanced_search_progress{
+    display: none;
+}
+
+.advanced_search_error{
+    display: none;
+}
+
+.search-result-data{
+    max-height: 295px;
+    overflow-y: scroll;
+    background-color: #f8f8ff;
+}

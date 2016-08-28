@@ -37,7 +37,6 @@
 
 
         $('#sel1').on('change', function(){
-            console.log($(this).val());
             if($(this).val().length){
                 $.ajax({
                     type: "GET",

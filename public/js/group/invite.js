@@ -38,4 +38,40 @@ $(document).ready(function(){
             });
         }
     });
+    $('.advanced_search_result_data').delegate('.invite_to_group_search', 'click', function(){
+        var current = $(this);
+        var currnetUserId  = current.attr('data-user');
+        var currnetGroupId = current.attr('data-group');
+        var progress       = $('.advanced_search_result').find('progress');
+        var success        = $('.advanced_search_result').find('.invite_sent');
+        var error          = $('.advanced_search_result').find('.invite_error');
+        if(currnetUserId.length && currnetGroupId.length){
+            $.ajax({
+                type    : "POST",
+                url     : groupInviteUrl,
+                headers : {
+                    'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                data    : {
+                    user  : currnetUserId,
+                    group : currnetGroupId
+                },
+                success : function(response){
+                    progress.hide();
+                    success.show();
+                    setTimeout(function(){
+                        success.hide(1000);
+                    }, 2000);
+                    current.parents('.single_person_holder').eq(0).remove();
+                },
+                error   : function(response){
+                    progress.hide();
+                    error.show();
+                    setTimeout(function(){
+                        error.hide(1000);
+                    }, 2000);
+                }
+            });
+        }
+    });
 });
