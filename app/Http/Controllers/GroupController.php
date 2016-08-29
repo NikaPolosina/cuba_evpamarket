@@ -25,11 +25,22 @@ class GroupController extends Controller{
     /**
      * Class init
      * */
+    
     public function __construct(Group $group, Request $request, MessageController $messageController){
         $this->_groupModel = $group;
         $this->_request = $request;
         $this->_msg = $messageController;
     }
+
+    public function prepareUserAvatar($user){
+        foreach($user as $val){
+            if(!is_file(public_path().$val['getUserInformation']['avatar'])){
+                $val['getUserInformation']['avatar'] = '/img/placeholder/avatar.jpg';
+            }
+        }
+        return $user;
+    }
+
 
     public function showGroupList(){
         $user_id = Auth::user();
@@ -100,20 +111,14 @@ class GroupController extends Controller{
 
         $users = Group::find($id)->getUser()->with([ 'getUserInformation' ])->get();
         $allUser = User::with([ 'getUserInformation' ])->whereNotIn('id', $users->lists('id'))->get();
-        foreach($allUser as $val){
-            if(!is_file(public_path().$val['getUserInformation']['avatar'])){
-                $val['getUserInformation']['avatar'] = '/img/placeholder/avatar.jpg';
-            }
-        }
-        foreach($users as $val){
-            if(!is_file(public_path().$val['getUserInformation']['avatar'])){
-                $val['getUserInformation']['avatar'] = '/img/placeholder/avatar.jpg';
-            }
-        }
+        $this->prepareUserAvatar($allUser);
+        $this->prepareUserAvatar($users);
+        
         $region = Region::all();
 
         return view('group.singleGroup')->with('group', $group)->with('discount', $discount)->with('allUser', $allUser)->with('users', $users)->with('region', $region);
     }
+  
 
     /**
      * Get single group
@@ -221,8 +226,10 @@ class GroupController extends Controller{
             $this->_msg->singleMsg($id);
             $group=Group::find($this->_msg->getMsgParam('connected_id'));
             $userMoney = UserMoney::where('user_id', $user->id)->where('company_id', $group->getCompany->id)->first();
-            $group->money += $userMoney->money;
-            $group->save();
+            if($userMoney){
+                $group->money += $userMoney->money;
+                $group->save();
+            }
             $this->_msg->setAsReaded();
             $this->singleGroup($this->_msg->getMsgParam('connected_id'));
             $this->attachUser(Auth::user());

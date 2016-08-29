@@ -87,19 +87,20 @@ $(document).ready(function(){
                         current = '';
                         for(var index in response.data){
                             current = response.data[index];
+                            
                             selectorScope['advanced_search_result_data'].append('' +
                                 '<div class="single_people_css single_person_holder" style="display: table; width: 100%">'+
                                 '<div style="display: table-cell; vertical-align: middle">'+
                                 '<div class="css_peo" style="display: inline-block">'+
                                 '<div class="sercl_img_css">'+
-                                '<img src="'+current.avatar+'" alt="logo">'+
+                                '<img src="'+current.get_user_information.avatar+'" alt="logo">'+
                                 '</div>'+
                                 '</div>'+
                                 '<div class="css_peo">'+
-                                '<p style="display: inline-block;">'+current.name+' '+current.surname+'</p>'+
+                                '<p style="display: inline-block;">'+current.get_user_information.name+' '+current.get_user_information.surname+'</p>'+
                                 '</div>'+
                                 '<div class="css_peo">'+
-                                '<button class="btn-default invite_to_group_search" data-user="'+current.id+'" data-group="'+currentGroup+'">Пригласить</button>'+
+                                '<button class="btn-primary invite_to_group_search" data-user="'+current.id+'" data-group="'+currentGroup+'">Пригласить</button>'+
                                 '</div>'+
                                 '</div>'+
                                 '</div>'+

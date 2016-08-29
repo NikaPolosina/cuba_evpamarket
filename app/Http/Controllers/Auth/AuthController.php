@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -109,10 +110,11 @@ class AuthController extends Controller{
            }
 
            if(Auth::user()){
+               
                $userinfo = UserInformation::create([
                    'name'       => $request->input('name'),
                    'surname'    => $request->input('surname'),
-                   'date_birth' => $request->input('date_birth'),
+                   'date_birth' => Carbon::createFromFormat('Y.m.d', $request->input('date_birth')),
                    'gender'     => $request->input('gender'),
                    'region_id'  => $request->input('region'),
                    'city_id'    => $request->input('city'),
@@ -120,6 +122,7 @@ class AuthController extends Controller{
                    'address'    => $request->input('address'),
                    'country'    => 'Росcия',
                ]);
+
                Auth::user()->getUserInformation()->save($userinfo);
            }
        }

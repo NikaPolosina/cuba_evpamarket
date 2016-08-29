@@ -4,7 +4,6 @@
 
     @include('layouts.header_menu')
 
-
     <div class="row">
         <div class="col-sm-12">
             <div class="col-sm-4">
@@ -24,7 +23,7 @@
                                         <option value="{{$value['id']}}" style="background-image: url('{{$value['getUserInformation']['avatar']}}')">{{$value['getUserInformation']['name']}}</option>
                                     @endforeach
                                 </select>
-                                <button class="btn-default invite_to_group" data-group="{{$group->id}}">Пригласить</button>
+                                <button class="btn-primary invite_to_group" data-group="{{$group->id}}">Пригласить</button>
 
                                 <div class="progress" style="display: none">
                                     <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
@@ -32,7 +31,7 @@
                                     </div>
                                 </div>
 
-                                <div class="alert alert-success invite_sent" role="alert" style="display: none">Приглашение в группу было отправлено пльзователю.</div>
+                                <div class="alert alert-success invite_sent" role="alert" style="display: none">Приглашение в группу было отправлено пользователю.</div>
                                 <div class="alert alert-danger invite_error" role="alert" style="display: none">Ошибка отправки, повторите попытку немного позже.</div>
 
                             </div>
@@ -52,14 +51,14 @@
                         <div class="row">
                             {!! Form::label('user_name', 'Имя: ', ['class' => 'col-sm-4 control-label']) !!}
                             <div class="col-sm-6">
-                                {!! Form::text('name', NULL, ['class' => 'form-group advanced_search_name', 'required' => 'required']) !!}
+                                {!! Form::text('name', NULL, ['class' => 'form-group advanced_search_name form-control', 'required' => 'required']) !!}
                                 {!! $errors->first('user_name', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
                         <div class="row">
                             {!! Form::label('surname', 'Фамилия: ', ['class' => 'col-sm-4 control-label']) !!}
                             <div class="col-sm-6">
-                                {!! Form::text('surname', NULL, ['class' => 'form-group advanced_search_surname']) !!}
+                                {!! Form::text('surname', NULL, ['class' => 'form-group advanced_search_surname form-control']) !!}
                                 {!! $errors->first('surname', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
@@ -87,11 +86,7 @@
 
                         </div>
                         <div class="row" style="margin-top: 5px">
-
-
                             {!! Form::label('gender', 'Пол: ', ['class' => 'col-sm-4 control-label']) !!}
-
-
                             <div class="col-sm-4">
                                 <fieldset class="find_group_css">
 
@@ -108,30 +103,22 @@
                                 </fieldset>
                             </div>
                         </div>
-
-
                         <div class="row">
                             @include('layouts.regionCity')
                         </div>
-
-
                         <div class="progress advanced_search_progress">
                             <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                                 <span class="sr-only">45% Complete</span>
                             </div>
                         </div>
-
                         <div class="alert alert-danger advanced_search_error" role="alert">Ошибка поиска, повторите попытку немного позже.</div>
-
 
                         <div class="row">
                             <div class="col-xs-12 text-right">
                                 {!! Form::submit('Найти', ['class' => 'button_find_css advanced_search_action_button']) !!}
                             </div>
                         </div>
-
                         {{ Form::close() }}
-
 
                         <div class="people_group_css advanced_search_result">
                             <div class="people_find">
@@ -148,34 +135,11 @@
                                 </div>
                                 <hr>
                                 <div class="advanced_search_result_data search-result-data">
-                                    <div class="single_people_css" style="display: table; width: 100%">
-
-                                        <div style="display: table-cell; vertical-align: middle">
-
-                                            <div class="css_peo" style="display: inline-block">
-                                                <div class="sercl_img_css">
-                                                    <img src="/img/system/plase.jpg" alt="">
-                                                </div>
-                                            </div>
-
-                                            <div class="css_peo">
-                                                <p style="display: inline-block;">Имя Фамилия</p>
-                                            </div>
-
-                                            <div class="css_peo">
-                                                <button class="btn-default invite_to_group" data-group="{{$group->id}}">Пригласить</button>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
-
-
                     <div class="people_group_css">
                         <div class="people_simple_css">
                             <p style="font-size: 14px">Учасники
@@ -258,6 +222,13 @@
 
 @endsection
 <style>
+    .btn-primary{
+       padding: 2px;
+        border-radius: 4px;
+    }
+    .form-control{
+        height: 30px!important;
+    }
     .css_peo {
         margin: 0 10px !important;
         padding: 0 !important;
@@ -341,7 +312,8 @@
     }
 
     .sercl_img_css img {
-        height: 50px !important;
+        max-width: 100%;
+        display: inline-block;
 
     }
 

@@ -237,9 +237,13 @@ class UserController extends Controller{
     /**
      * Advanced user search by params
      * */
-    public function ajaxAdvancedSearch(){
+    public function ajaxAdvancedSearch(GroupController $group){
         try{
-            return response()->json([ 'data' => $this->_advancedSearch($this->_request->params) ], 200);
+            $this->_user = $this->_advancedSearch($this->_request->params);
+            // todo: avatar prepare
+          $this->_user = $group->prepareUserAvatar($this->_user);
+
+            return response()->json([ 'data' => $this->_user ], 200);
         }catch(\Exception $e){
             return response()->json([ 'error' => $e->getMessage() ], 422);
         }
@@ -285,7 +289,9 @@ class UserController extends Controller{
         if(isset($params['city'])){
             $query->where('user_informations.city_id', $params['city']);
         }
-
+        $ids = $query->get()->lists('user_id');
+        //dd($ids);
+        return  User::whereIn('id', $ids)->with('getUserInformation')->get();
         //dd($query->get()->first());
         //dd($query->get()->toArray());
         return $query->get();
