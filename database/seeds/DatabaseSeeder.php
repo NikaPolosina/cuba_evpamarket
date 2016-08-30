@@ -3,6 +3,8 @@ use Illuminate\Database\Seeder;
 use App\StatusSimple;
 use App\StatusOwner;
 use App\Models\Role;
+use App\User;
+use App\UserInformation;
 
 class DatabaseSeeder extends Seeder{
 
@@ -121,6 +123,112 @@ class DatabaseSeeder extends Seeder{
         ]);
     }
 
+
+    public function createUser(){
+        $role = $this->createRole();
+        DB::table('users')->delete();
+
+        $user = User::create([
+            'id'               => 1,
+            'email'            => 'admin@admin.com',
+            'phone'            => '11111111111',
+            'active'           => 1,
+            'block'            => 0,
+            'password'         => bcrypt(123456),
+
+        ]);
+        $user->attachRole($role['admin']);
+
+        $user = User::create([
+            'id'               => 2,
+            'email'            => 'nika@nika.com',
+            'phone'            => '222222222',
+            'active'           => 1,
+            'block'            => 0,
+            'password'         => bcrypt(123456),
+        ]);
+        $user->attachRole($role['company_owner']);
+
+        $user = User::create([
+            'id'               => 3,
+            'email'            => 'simple1@simple1.com',
+            'phone'            => '33333333333',
+            'active'           => 1,
+            'block'            => 0,
+            'password'         => bcrypt(123456),
+        ]);
+        $user->attachRole($role['simple_user']);
+
+        $user = User::create([
+            'id'               => 4,
+            'email'            => 'simple2@simple2.com',
+            'phone'            => '44444444444444444',
+            'active'           => 1,
+            'block'            => 0,
+            'password'         => bcrypt(123456),
+        ]);
+        $user->attachRole($role['simple_user']);
+
+    }
+    public function createUserInformation(){
+        $user = $this->createUser();
+        $user = UserInformation::create([
+            'id'               => 1,
+            'user_id'          => $user->id,
+            'name'            => 'Админище',
+            'surname'           => 'Отличный',
+            'avatar'            => '',
+            'date_birth'         => '1990-07-12',
+            'country'         => 'Россия',
+            'region_id'         => '257',
+            'city_id'         => '47661',
+            'street'         => 'ул. Липовая',
+            'address'         => '34',
+        ]);
+        $user = UserInformation::create([
+            'id'               => 2,
+            'user_id'          => $user->id,
+            'name'            => 'Ника',
+            'surname'           => 'Николаева',
+            'avatar'            => '',
+            'date_birth'         => '1991-03-22',
+            'country'         => 'Россия',
+            'region_id'         => '257',
+            'city_id'         => '47661',
+            'street'         => 'ул. Роговца',
+            'address'         => '8',
+        ]);
+        $user = UserInformation::create([
+            'id'               => 3,
+            'user_id'          => $user->id,
+            'name'            => 'Простой1',
+            'surname'           => 'Нормальный1',
+            'avatar'            => '',
+            'date_birth'         => '1992-04-09',
+            'country'         => 'Россия',
+            'region_id'         => '257',
+            'city_id'         => '47661',
+            'street'         => 'ул. Парковая',
+            'address'         => '12',
+        ]);
+        $user = UserInformation::create([
+            'id'               => 4,
+            'user_id'          => $user->id,
+            'name'            => 'Простой2',
+            'surname'           => 'НОрмальный2',
+            'avatar'            => '',
+            'date_birth'         => '1986-01-12',
+            'country'         => 'Россия',
+            'region_id'         => '257',
+            'city_id'         => '47661',
+            'street'         => 'ул. Гаупа',
+            'address'         => '6',
+        ]);
+
+    }
+
+
+
     public function createRole(){
         $role = Role::create([
             'name'         => 'admin',
@@ -138,4 +246,5 @@ class DatabaseSeeder extends Seeder{
             'description'  => 'User is the owner of a company'
         ]);
     }
+
 }
