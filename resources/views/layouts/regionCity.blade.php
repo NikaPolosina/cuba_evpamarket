@@ -4,7 +4,7 @@
     <div class="col-md-6">
         <div class="form-group" style="margin: 0px">
             <select class="chosen-select" name="region" id="sel1">
-                <option value="">Выбирите регион</option>
+                <option value="">Искать по всем регионам</option>
                 @foreach($region as $value)
                     <option value="{{$value->id}}">{{$value->title}}</option>
                 @endforeach
@@ -43,7 +43,7 @@
                         $('#sel2_holder').show();
                         var selector = $('#sel2');
                         selector.html('');
-                        selector.append('<option value="">Выбирите регион</option>');
+                        selector.append('<option value="">Искать по всем городам</option>');
                         $.each(data, function(index, value){
                             selector.append('<option value="' + value.id + '">' + value.title_cities + '</option>');
                         });
