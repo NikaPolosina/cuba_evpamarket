@@ -56,12 +56,12 @@ $(document).ready(function(){
             data['city'] = '';
 
             // todo: add  region
-            // region = selectorScope['advanced_search_block'].find('.chosen');
-            // if(region.length){
-            //     data['region'] = region.val();
-            // }
+            region = selectorScope['advanced_search_block'].find('#sel1');
+            if(region.length){
+                data['region'] = region.val();
+            }
 
-            city = selectorScope['advanced_search_block'].find('.chosen');
+            city = selectorScope['advanced_search_block'].find('#sel2');
             if(city.length){
                 data['city'] = city.val();
             }
@@ -87,7 +87,7 @@ $(document).ready(function(){
                         current = '';
                         for(var index in response.data){
                             current = response.data[index];
-                            
+
                             selectorScope['advanced_search_result_data'].append('' +
                                 '<div class="single_people_css single_person_holder" style="display: table; width: 100%">'+
                                 '<div style="display: table-cell; vertical-align: middle">'+

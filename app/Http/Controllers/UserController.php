@@ -241,7 +241,7 @@ class UserController extends Controller{
         try{
             $this->_user = $this->_advancedSearch($this->_request->params);
             // todo: avatar prepare
-          $this->_user = $group->prepareUserAvatar($this->_user);
+            $this->_user = $group->prepareUserAvatar($this->_user);
 
             return response()->json([ 'data' => $this->_user ], 200);
         }catch(\Exception $e){
@@ -259,7 +259,7 @@ class UserController extends Controller{
     protected function _advancedSearch(array $params){
         $params = $this->_prepareAdvancedSearch($params);
 
-        $query = User::select([ '*' ])->join('user_informations', 'users.id', '=', 'user_informations.user_id');
+        $query = User::select([ 'users.*' ])->join('user_informations', 'users.id', '=', 'user_informations.user_id');
 
         //dd($params);
         if(isset($params['name'])){
@@ -289,11 +289,42 @@ class UserController extends Controller{
         if(isset($params['city'])){
             $query->where('user_informations.city_id', $params['city']);
         }
-        $ids = $query->get()->lists('user_id');
-        //dd($ids);
-        return  User::whereIn('id', $ids)->with('getUserInformation')->get();
-        //dd($query->get()->first());
-        //dd($query->get()->toArray());
+
+        if(!$query->count()){
+
+            $query = User::select([ 'users.*' ])->join('user_informations', 'users.id', '=', 'user_informations.user_id');
+
+            if(isset($params['name'])){
+                $query->where('user_informations.name', 'LIKE', '%'.$params['name'].'%');
+            }
+
+            if(isset($params['surname'])){
+                $query->orWhere('user_informations.surname', 'LIKE', '%'.$params['surname'].'%');
+            }
+
+            if(isset($params['age_from'])){
+                $query->where('user_informations.date_birth', '<=', $params['age_from']);
+            }
+
+            if(isset($params['age_to'])){
+                $query->where('user_informations.date_birth', '>=', $params['age_to']);
+            }
+
+            if(isset($params['gender'])){
+                $query->where('user_informations.gender', $params['gender']);
+            }
+
+            if(isset($params['region'])){
+                $query->where('user_informations.region_id', $params['region']);
+            }
+
+            if(isset($params['city'])){
+                $query->where('user_informations.city_id', $params['city']);
+            }
+
+            $query->orderBy('user_informations.name');
+        }
+
         return $query->get();
     }
 

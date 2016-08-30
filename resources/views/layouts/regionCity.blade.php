@@ -1,5 +1,5 @@
 {{----------------------------------------------------------------------------------------------------------------------------}}
-<div  class="form-group{{ $errors->has('region') ? ' has-error' : '' }}">
+<div class="form-group{{ $errors->has('region') ? ' has-error' : '' }}">
     <label class="col-md-4 control-label">Регион</label>
     <div class="col-md-6">
         <div class="form-group" style="margin: 0px">
@@ -33,28 +33,21 @@
 
 <script>
     $(document).ready(function(){
-        $(".chosen-select").chosen({no_results_text: "Oops, nothing found!"});
-
-
         $('#sel1').on('change', function(){
             if($(this).val().length){
                 $.ajax({
-                    type: "GET",
-                    url: "/get-city-by-region/"+$(this).val(),
-                    data: '',
-                    success: function(data){
+                    type    : "GET",
+                    url     : "/get-city-by-region/" + $(this).val(),
+                    data    : '',
+                    success : function(data){
                         $('#sel2_holder').show();
                         var selector = $('#sel2');
-
                         selector.html('');
-
-                        $.each(data, function(index, value) {
-
-                            selector.append('<option value="'+value.id+'">'+value.title_cities+'</option>');
+                        selector.append('<option value="">Выбирите регион</option>');
+                        $.each(data, function(index, value){
+                            selector.append('<option value="' + value.id + '">' + value.title_cities + '</option>');
                         });
-
-                        $('.chosen').chosen({no_results_text: "Oops, nothing found!"}).trigger("chosen:updated")
-
+                        $('.chosen').chosen({no_results_text : "Oops, nothing found!"}).trigger("chosen:updated")
                         if(city_id.length > 0){
                             $('.chosen').val(city_id);
                             $('.chosen').trigger("chosen:updated");
@@ -62,9 +55,10 @@
                         }
                     }
                 });
+            }else{
+                $('#sel2_holder').hide();
+                $('#sel2').html('');
             }
-
-
         });
     });
 
@@ -75,7 +69,7 @@
     <label class="col-md-4 control-label">Город</label>
     <div class="col-md-6">
         <div {{--class="form-group"--}}>
-            <select class="chosen"  name="city" id="sel2">
+            <select class="chosen" name="city" id="sel2">
                 {{-- @foreach($city as $value)
                      <option>{{$value->title_cities}}</option>
                  @endforeach--}}
