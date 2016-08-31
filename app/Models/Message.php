@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model{
 
     protected $table = 'messages';
+    protected $fillable = [ 'type', 'connected_id', 'status', 'from', 'to', 'subject', 'body'];
 
     /**
      * relationship between user and messages

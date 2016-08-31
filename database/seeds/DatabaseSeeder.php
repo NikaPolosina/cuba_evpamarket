@@ -5,8 +5,18 @@ use App\StatusOwner;
 use App\Models\Role;
 use App\User;
 use App\UserInformation;
+use App\Region;
+use App\City;
+use App\Company;
+use App\Product;
+use App\Category;
 
 class DatabaseSeeder extends Seeder{
+    public $region   = array();
+    public $city     = array();
+    public $company;
+    public $category = array();
+    public $product;
 
     /**
      * Run the database seeds.
@@ -14,7 +24,139 @@ class DatabaseSeeder extends Seeder{
      * @return void
      */
     public function run(){
+        $this->createRegion();
+        $this->createCity();
         $this->createStatusOwner();
+        $this->createCompany();
+        $this->createUserInformation();
+        $this->createCategory();
+        $this->createProduct();
+    }
+
+    public function createCity(){
+        $city['1'] = City::create([
+            'id'           => 47160,
+            'id_cities'    => 1000095,
+            'region_id'    => $this->region['1']->id,
+            'title_cities' => '17 лет Октября'
+        ]);
+        $city['2'] = City::create([
+            'id'           => 47161,
+            'id_cities'    => 1000095,
+            'region_id'    => $this->region['1']->id,
+            'title_cities' => 'Абадзехская'
+        ]);
+        $city['3'] = City::create([
+            'id'           => 49380,
+            'id_cities'    => 1003245,
+            'region_id'    => $this->region['2']->id,
+            'title_cities' => 'Андреев Починок'
+        ]);
+        $city['4'] = City::create([
+            'id'           => 49624,
+            'id_cities'    => 1001120,
+            'region_id'    => $this->region['2']->id,
+            'title_cities' => 'Большой Халуй'
+        ]);
+        $this->city = $city;
+    }
+
+    public function createRegion(){
+        $region['1'] = Region::create([
+            'id'        => 255,
+            'title'     => 'Адыгея',
+            'id_region' => 1000001,
+        ]);
+        $region['2'] = Region::create([
+            'id'        => 259,
+            'title'     => 'Архангельская область',
+            'id_region' => 1000236,
+        ]);
+        $this->region = $region;
+    }
+
+    public function createStatusOwner(){
+        $simpleStatus = $this->createStatusSimple();
+        StatusOwner::create([
+            'title'            => 'Не обработанный',
+            'key'              => 'not_processed',
+            'status_simple_id' => $simpleStatus['1']->id
+        ]);
+        $status = StatusOwner::create([
+            'title'            => 'Уточнение деталей',
+            'key'              => 'details',
+            'status_simple_id' => $simpleStatus['1']->id
+        ]);
+        StatusOwner::create([
+            'title'            => 'Звонок',
+            'key'              => 'call',
+            'status_simple_id' => $simpleStatus['1']->id
+        ]);
+        $status = StatusOwner::create([
+            'title'            => 'Нет ответа',
+            'key'              => 'no_answer',
+            'status_simple_id' => $simpleStatus['1']->id
+        ]);
+        StatusOwner::create([
+            'title'            => 'Изготовление',
+            'key'              => 'making',
+            'status_simple_id' => $simpleStatus['2']->id
+        ]);
+        StatusOwner::create([
+            'title'            => 'Уточнение наличия на складе',
+            'key'              => 'verification',
+            'status_simple_id' => $simpleStatus['2']->id
+        ]);
+        $status = StatusOwner::create([
+            'title'            => 'Доставка со склада',
+            'key'              => 'delivery_warehouse',
+            'status_simple_id' => $simpleStatus['2']->id
+        ]);
+        StatusOwner::create([
+            'title'            => 'Есть в наличии',
+            'key'              => 'available',
+            'status_simple_id' => $simpleStatus['2']->id
+        ]);
+        StatusOwner::create([
+            'title'            => 'Ждем оплаты',
+            'key'              => 'waiting_payment',
+            'status_simple_id' => $simpleStatus['3']->id
+        ]);
+        StatusOwner::create([
+            'title'            => 'Ждем подтверждения оплаты',
+            'key'              => 'waiting_confirmation_payment',
+            'status_simple_id' => $simpleStatus['3']->id
+        ]);
+        StatusOwner::create([
+            'title'            => 'Оплата прошла успешно',
+            'key'              => 'payment_successful',
+            'status_simple_id' => $simpleStatus['3']->id
+        ]);
+        $status = StatusOwner::create([
+            'title'            => 'Отказ оплаты',
+            'key'              => 'refusal_payment',
+            'status_simple_id' => $simpleStatus['3']->id
+        ]);
+        StatusOwner::create([
+            'title'            => 'Формирование заказа',
+            'key'              => 'formation_order',
+            'status_simple_id' => $simpleStatus['4']->id
+        ]);
+        StatusOwner::create([
+            'title'            => 'Упаковка',
+            'key'              => 'packaging',
+            'status_simple_id' => $simpleStatus['4']->id
+        ]);
+        StatusOwner::create([
+            'title'            => 'Отправка на промежуточный склад',
+            'key'              => 'send_intermediate_storage',
+            'status_simple_id' => $simpleStatus['5']->id
+        ]);
+        StatusOwner::create([
+            'title'            => 'Отправка покупателю',
+            'key'              => 'sending_buyer',
+            'status_simple_id' => $simpleStatus['5']->id
+        ]);
     }
 
     public function createStatusSimple(){
@@ -37,214 +179,268 @@ class DatabaseSeeder extends Seeder{
         return $status;
     }
 
-    public function createStatusOwner(){
-        $simpleStatus = $this->createStatusSimple();
-        $status = StatusOwner::create([
-
-            'title'            => 'Не обработанный',
-            'key'              => 'not_processed',
-            'status_simple_id' => $simpleStatus['1']->id
-        ]);
-        $status = StatusOwner::create([
-
-            'title'            => 'Уточнение деталей',
-            'key'              => 'details',
-            'status_simple_id' => $simpleStatus['1']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Звонок',
-            'key'              => 'call',
-            'status_simple_id' => $simpleStatus['1']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Нет ответа',
-            'key'              => 'no_answer',
-            'status_simple_id' => $simpleStatus['1']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Изготовление',
-            'key'              => 'making',
-            'status_simple_id' => $simpleStatus['2']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Уточнение наличия на складе',
-            'key'              => 'verification',
-            'status_simple_id' => $simpleStatus['2']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Доставка со склада',
-            'key'              => 'delivery_warehouse',
-            'status_simple_id' => $simpleStatus['2']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Есть в наличии',
-            'key'              => 'available',
-            'status_simple_id' => $simpleStatus['2']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Ждем оплаты',
-            'key'              => 'waiting_payment',
-            'status_simple_id' => $simpleStatus['3']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Ждем подтверждения оплаты',
-            'key'              => 'waiting_confirmation_payment',
-            'status_simple_id' => $simpleStatus['3']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Оплата прошла успешно',
-            'key'              => 'payment_successful',
-            'status_simple_id' => $simpleStatus['3']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Отказ оплаты',
-            'key'              => 'refusal_payment',
-            'status_simple_id' => $simpleStatus['3']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Формирование заказа',
-            'key'              => 'formation_order',
-            'status_simple_id' => $simpleStatus['4']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Упаковка',
-            'key'              => 'packaging',
-            'status_simple_id' => $simpleStatus['4']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Отправка на промежуточный склад',
-            'key'              => 'send_intermediate_storage',
-            'status_simple_id' => $simpleStatus['5']->id
-        ]);
-        $status = StatusOwner::create([
-            'title'            => 'Отправка покупателю',
-            'key'              => 'sending_buyer',
-            'status_simple_id' => $simpleStatus['5']->id
+    public function createCompany(){
+        $this->company = Company::create([
+            'company_name'            => 'Платья Asos',
+            'company_description'     => 'Продаем красивые наряды, которые радуют взгляд',
+            'company_logo'            => '',
+            'company_content'         => 'Очень хороший магазин, у нас есть рассрочка и всё таке, любим своих клиентв, а они нас',
+            'country'                 => 'Россия',
+            'region_id'               => $this->region[1]->id,
+            'city_id'                 => $this->city[1]->id,
+            'street'                  => 'ул. Кожедуба',
+            'address'                 => '32',
+            'company_contact_info'    => '+75276235476254',
+            'company_additional_info' => '',
+            'block'                   => 0,
         ]);
     }
 
+    public function createCategory(){
+        $this->category['1'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Одежда и обувь',
+            'vip'       => 1,
+            'icon'      => 'clothes',
+            'img'       => 'dress',
+        ]);
+        $this->category['2'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Зоотовары',
+            'vip'       => 1,
+            'icon'      => 'animals',
+            'img'       => 'zoo',
+        ]);
+        $this->category['3'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Косметика и парфюмерия',
+            'vip'       => 1,
+            'icon'      => 'perfume',
+            'img'       => 'perfume',
+        ]);
+        $this->category['4'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Продукты питания',
+            'vip'       => 1,
+            'icon'      => 'food',
+            'img'       => 'food',
+        ]);
+        $this->category['5'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Для спорта',
+            'vip'       => 1,
+            'icon'      => 'sport',
+            'img'       => 'sport',
+        ]);
+        $this->category['6'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Бытовая техника',
+            'vip'       => 1,
+            'icon'      => 'appliances',
+            'img'       => 'bit-technik',
+        ]);
+        $this->category['7'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Компьютеры, ноутбуки',
+            'vip'       => 1,
+            'icon'      => 'pc',
+            'img'       => 'computers',
+        ]);
+        $this->category['8'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Телефоны, MP3',
+            'vip'       => 1,
+            'icon'      => 'phone',
+            'img'       => 'telefon',
+        ]);
+        $this->category['9'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Транспорт',
+            'vip'       => 1,
+            'icon'      => 'car',
+            'img'       => 'bike',
+        ]);
+        $this->category['10'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Товары для дома',
+            'vip'       => 1,
+            'icon'      => 'room',
+            'img'       => 'decor',
+        ]);
+        $this->category['11'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Детский мир',
+            'vip'       => 0,
+            'icon'      => '',
+            'img'       => 'children',
+        ]);
+        $this->category['12'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Дача, огород, сад',
+            'vip'       => 0,
+            'icon'      => '',
+            'img'       => 'garden',
+        ]);
+        $this->category['13'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Электро-инструмент',
+            'vip'       => 0,
+            'icon'      => '',
+            'img'       => 'electro',
+        ]);
+        $this->category['14'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Ювелирные украшения',
+            'vip'       => 0,
+            'icon'      => '',
+            'img'       => 'jeverli',
+        ]);
+        $this->category['15'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Офис, школа, книги',
+            'vip'       => 0,
+            'icon'      => '',
+            'img'       => 'book',
+        ]);
+        $this->category['16'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Туризм',
+            'vip'       => 0,
+            'icon'      => '',
+            'img'       => 'turizm',
+        ]);
+        $this->category['17'] = Category::create([
+            'parent_id' => 0,
+            'title'     => 'Музыка',
+            'vip'       => 0,
+            'icon'      => '',
+            'img'       => 'music',
+        ]);
+    }
+
+    public function createProduct(){
+        $this->product = Product::create([
+            'product_name'        => 'Платья Синее',
+            'category_id'         => $this->category[1]->id,
+            'product_description' => 'отличный наряд на вечер',
+            'content'             => 'В наличии размер: s, m, l; Цвет: синий',
+            'product_image'       => '',
+            'product_price'       => 500,
+        ]);
+        $this->company->getProducts()->attach($this->product);
+    }
+
+    public function createUserInformation(){
+        $user = $this->createUser();
+        UserInformation::create([
+            'user_id'    => $user[0]->id,
+            'name'       => 'Админище',
+            'surname'    => 'Отличный',
+            'avatar'     => '',
+            'date_birth' => '1990-07-12',
+            'country'    => 'Россия',
+            'region_id'  => $this->region['1']->id,
+            'city_id'    => $this->city['1']->id,
+            'street'     => 'ул. Липовая',
+            'address'    => '34',
+        ]);
+        UserInformation::create([
+            'user_id'    => $user[1]->id,
+            'name'       => 'Ника',
+            'surname'    => 'Николаева',
+            'avatar'     => '',
+            'date_birth' => '1991-03-22',
+            'country'    => 'Россия',
+            'region_id'  => $this->region['1']->id,
+            'city_id'    => $this->city['2']->id,
+            'street'     => 'ул. Роговца',
+            'address'    => '8',
+        ]);
+        UserInformation::create([
+            'user_id'    => $user[2]->id,
+            'name'       => 'Простой1',
+            'surname'    => 'Нормальный1',
+            'avatar'     => '',
+            'date_birth' => '1992-04-09',
+            'country'    => 'Россия',
+            'region_id'  => $this->region['2']->id,
+            'city_id'    => $this->city['3']->id,
+            'street'     => 'ул. Парковая',
+            'address'    => '12',
+        ]);
+        UserInformation::create([
+            'user_id'    => $user[3]->id,
+            'name'       => 'Простой2',
+            'surname'    => 'НОрмальный2',
+            'avatar'     => '',
+            'date_birth' => '1986-01-12',
+            'country'    => 'Россия',
+            'region_id'  => $this->region['2']->id,
+            'city_id'    => $this->city['4']->id,
+            'street'     => 'ул. Гаупа',
+            'address'    => '6',
+        ]);
+    }
 
     public function createUser(){
         $role = $this->createRole();
-        DB::table('users')->delete();
-
+        $data = array();
         $user = User::create([
-            'id'               => 1,
-            'email'            => 'admin@admin.com',
-            'phone'            => '11111111111',
-            'active'           => 1,
-            'block'            => 0,
-            'password'         => bcrypt(123456),
-
+            'email'    => 'admin@admin.com',
+            'phone'    => '11111111111',
+            'active'   => 1,
+            'block'    => 0,
+            'password' => bcrypt(123456),
         ]);
         $user->attachRole($role['admin']);
-
+        $data[] = $user;
         $user = User::create([
-            'id'               => 2,
-            'email'            => 'nika@nika.com',
-            'phone'            => '222222222',
-            'active'           => 1,
-            'block'            => 0,
-            'password'         => bcrypt(123456),
+            'email'    => 'nika@nika.com',
+            'phone'    => '222222222',
+            'active'   => 1,
+            'block'    => 0,
+            'password' => bcrypt(123456),
         ]);
         $user->attachRole($role['company_owner']);
-
+        $this->company->getUser()->attach($user);
+        $data[] = $user;
         $user = User::create([
-            'id'               => 3,
-            'email'            => 'simple1@simple1.com',
-            'phone'            => '33333333333',
-            'active'           => 1,
-            'block'            => 0,
-            'password'         => bcrypt(123456),
+            'email'    => 'simple1@simple1.com',
+            'phone'    => '33333333333',
+            'active'   => 1,
+            'block'    => 0,
+            'password' => bcrypt(123456),
         ]);
         $user->attachRole($role['simple_user']);
-
+        $data[] = $user;
         $user = User::create([
-            'id'               => 4,
-            'email'            => 'simple2@simple2.com',
-            'phone'            => '44444444444444444',
-            'active'           => 1,
-            'block'            => 0,
-            'password'         => bcrypt(123456),
+            'email'    => 'simple2@simple2.com',
+            'phone'    => '44444444444444444',
+            'active'   => 1,
+            'block'    => 0,
+            'password' => bcrypt(123456),
         ]);
         $user->attachRole($role['simple_user']);
-
+        $data[] = $user;
+        return $data;
     }
-    public function createUserInformation(){
-        $user = $this->createUser();
-        $user = UserInformation::create([
-            'id'               => 1,
-            'user_id'          => $user->id,
-            'name'            => 'Админище',
-            'surname'           => 'Отличный',
-            'avatar'            => '',
-            'date_birth'         => '1990-07-12',
-            'country'         => 'Россия',
-            'region_id'         => '257',
-            'city_id'         => '47661',
-            'street'         => 'ул. Липовая',
-            'address'         => '34',
-        ]);
-        $user = UserInformation::create([
-            'id'               => 2,
-            'user_id'          => $user->id,
-            'name'            => 'Ника',
-            'surname'           => 'Николаева',
-            'avatar'            => '',
-            'date_birth'         => '1991-03-22',
-            'country'         => 'Россия',
-            'region_id'         => '257',
-            'city_id'         => '47661',
-            'street'         => 'ул. Роговца',
-            'address'         => '8',
-        ]);
-        $user = UserInformation::create([
-            'id'               => 3,
-            'user_id'          => $user->id,
-            'name'            => 'Простой1',
-            'surname'           => 'Нормальный1',
-            'avatar'            => '',
-            'date_birth'         => '1992-04-09',
-            'country'         => 'Россия',
-            'region_id'         => '257',
-            'city_id'         => '47661',
-            'street'         => 'ул. Парковая',
-            'address'         => '12',
-        ]);
-        $user = UserInformation::create([
-            'id'               => 4,
-            'user_id'          => $user->id,
-            'name'            => 'Простой2',
-            'surname'           => 'НОрмальный2',
-            'avatar'            => '',
-            'date_birth'         => '1986-01-12',
-            'country'         => 'Россия',
-            'region_id'         => '257',
-            'city_id'         => '47661',
-            'street'         => 'ул. Гаупа',
-            'address'         => '6',
-        ]);
-
-    }
-
-
 
     public function createRole(){
-        $role = Role::create([
+        $role['admin'] = Role::create([
             'name'         => 'admin',
             'display_name' => 'Admin',
             'description'  => 'Administratir site'
         ]);
-        $role = Role::create([
+        $role['simple_user'] = Role::create([
             'name'         => 'simple_user',
             'display_name' => 'Simple User',
             'description'  => 'User is simple user'
         ]);
-        $role = Role::create([
+        $role['company_owner'] = Role::create([
             'name'         => 'company_owner',
             'display_name' => 'Company Owner',
             'description'  => 'User is the owner of a company'
         ]);
+        return $role;
     }
-
 }
