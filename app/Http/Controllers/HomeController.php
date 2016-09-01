@@ -74,8 +74,11 @@ class HomeController extends Controller{
                 $value->company_logo = $companyController->showCompanyLogo($value->id);
             }
             $userInfo = $curentUser->getUserInformation;
+
+            $this->_msg->getGroupInvite(Auth::user(), [ 'status' => 0 ]);
+            $groupInvites = $this->_msg->getMsg()->count();
         }
-        return view('homeOwnerUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser);
+        return view('homeOwnerUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser)->with('groupInvites', $groupInvites);
     }
 
     public function test(){

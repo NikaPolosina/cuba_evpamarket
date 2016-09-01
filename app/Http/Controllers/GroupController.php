@@ -249,7 +249,7 @@ class GroupController extends Controller{
             $this->singleGroup($this->_msg->getMsgParam('connected_id'));
             $this->attachUser(Auth::user());
             Session::flash('flash_message', 'Disabled!');
-            return redirect()->route('home');
+            return redirect()->route('show-group-list');
         }catch(\Exception $e){
             Session::flash('flash_message', 'Enabled');
             return Redirect::back();
