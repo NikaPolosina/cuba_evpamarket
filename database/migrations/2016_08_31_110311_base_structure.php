@@ -250,7 +250,7 @@ class BaseStructure extends Migration{
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('company_id')->unsigned();
-            $table->integer('money')->unsigned();
+            $table->float('money')->unsigned();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
@@ -260,7 +260,7 @@ class BaseStructure extends Migration{
             $table->increments('id');
             $table->integer('company_id')->unsigned();
             $table->string('group_name');
-            $table->integer('money');
+            $table->float('money')->nullable();
             $table->timestamps();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
         });
@@ -292,6 +292,15 @@ class BaseStructure extends Migration{
             $table->foreign('from')->references('id')->on('users');
             $table->foreign('to')->references('id')->on('users');
         });
+        //Create table for member_group_history
+        Schema::create('member_group_history', function (Blueprint $table){
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('group_id')->unsigned();
+            $table->float('money')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('group_id')->references('id')->on('groups');
+        });
     }
 
     /**
@@ -300,6 +309,7 @@ class BaseStructure extends Migration{
      * @return void
      */
     public function down(){
+        Schema::drop('member_group_history');
         Schema::drop('messages');
         Schema::drop('messages_types');
         Schema::drop('group_user');

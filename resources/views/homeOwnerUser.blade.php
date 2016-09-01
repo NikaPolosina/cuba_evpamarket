@@ -50,11 +50,13 @@
                             <ul class="list-unstyled profile-nav">
 
                                 <li>
-                                    @if(!empty($userInfo->avatar) && file_exists(public_path().$userInfo->avatar))
-                                        <img src="{{$userInfo->avatar}}" alt="avatar">
-                                    @else
-                                         <img src="/img/placeholder/avatar.jpg" alt="avatar" />
-                                    @endif
+                                    <div class="img_avatar_css">
+                                        @if(!empty($userInfo->avatar) && file_exists(public_path().$userInfo->avatar))
+                                            <img src="{{$userInfo->avatar}}" alt="avatar">
+                                        @else
+                                             <img src="/img/placeholder/avatar.jpg" alt="avatar" />
+                                        @endif
+                                    </div>
                                 </li>
                                 <li>
                                     <a href="/my_shops"> Заказы

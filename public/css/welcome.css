@@ -145,4 +145,14 @@ img, iframe {
 }
 
 
+/*css home simple user*/
+.img_avatar_css{
+    width: 150px;
+    height: 200px;
+    margin: auto;
+}
+.img_avatar_css img{
+    width:100%;
+}
+
 

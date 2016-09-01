@@ -10,13 +10,14 @@ use App\City;
 use App\Company;
 use App\Product;
 use App\Category;
+use App\DiscountAccumulativ;
 
 class DatabaseSeeder extends Seeder{
     public $region   = array();
     public $city     = array();
     public $company;
     public $category = array();
-    public $product;
+    public $discount;
 
     /**
      * Run the database seeds.
@@ -31,6 +32,8 @@ class DatabaseSeeder extends Seeder{
         $this->createUserInformation();
         $this->createCategory();
         $this->createProduct();
+        $this->createDiscountAccumulative();
+
     }
 
     public function createCity(){
@@ -183,7 +186,7 @@ class DatabaseSeeder extends Seeder{
         $this->company = Company::create([
             'company_name'            => 'Платья Asos',
             'company_description'     => 'Продаем красивые наряды, которые радуют взгляд',
-            'company_logo'            => '',
+            'company_logo'            => '13.jpg',
             'company_content'         => 'Очень хороший магазин, у нас есть рассрочка и всё таке, любим своих клиентв, а они нас',
             'country'                 => 'Россия',
             'region_id'               => $this->region[1]->id,
@@ -316,6 +319,8 @@ class DatabaseSeeder extends Seeder{
             'icon'      => '',
             'img'       => 'music',
         ]);
+
+        $this->company->getCategoryCompany()->attach($this->category[1]->id);
     }
 
     public function createProduct(){
@@ -328,6 +333,34 @@ class DatabaseSeeder extends Seeder{
             'product_price'       => 500,
         ]);
         $this->company->getProducts()->attach($this->product);
+
+        $this->product = Product::create([
+            'product_name'        => 'Платья Красне',
+            'category_id'         => $this->category[1]->id,
+            'product_description' => 'длинное в пол',
+            'content'             => 'В наличии размер: s, m, l; Цвет: красный насышенный',
+            'product_image'       => '',
+            'product_price'       => 100,
+        ]);
+        $this->company->getProducts()->attach($this->product);
+    }
+
+    public function createDiscountAccumulative(){
+        $this->discount = DiscountAccumulativ::create([
+            'from'       => 100,
+            'percent'    => 1,
+            'company_id' => $this->company->id,
+        ]);
+        $this->discount = DiscountAccumulativ::create([
+            'from'       => 500,
+            'percent'    => 2,
+            'company_id' => $this->company->id,
+        ]);
+        $this->discount = DiscountAccumulativ::create([
+            'from'       => 100,
+            'percent'    => 3,
+            'company_id' => $this->company->id,
+        ]);
     }
 
     public function createUserInformation(){
@@ -385,6 +418,7 @@ class DatabaseSeeder extends Seeder{
     public function createUser(){
         $role = $this->createRole();
         $data = array();
+
         $user = User::create([
             'email'    => 'admin@admin.com',
             'phone'    => '11111111111',
@@ -394,6 +428,7 @@ class DatabaseSeeder extends Seeder{
         ]);
         $user->attachRole($role['admin']);
         $data[] = $user;
+
         $user = User::create([
             'email'    => 'nika@nika.com',
             'phone'    => '222222222',
@@ -404,6 +439,7 @@ class DatabaseSeeder extends Seeder{
         $user->attachRole($role['company_owner']);
         $this->company->getUser()->attach($user);
         $data[] = $user;
+
         $user = User::create([
             'email'    => 'simple1@simple1.com',
             'phone'    => '33333333333',
@@ -413,6 +449,7 @@ class DatabaseSeeder extends Seeder{
         ]);
         $user->attachRole($role['simple_user']);
         $data[] = $user;
+
         $user = User::create([
             'email'    => 'simple2@simple2.com',
             'phone'    => '44444444444444444',
