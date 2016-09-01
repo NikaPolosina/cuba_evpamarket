@@ -84,6 +84,18 @@
                                 <li>
                                     <a href="javascript:;"> Доставка </a>
                                 </li>
+                                <li>
+                                    @if(isset($groupInvites) && $groupInvites>0)
+                                        <a href="/show-group-list#invite"> Группы
+                                            @if(isset($groupInvites)) <span>{{$groupInvites}}</span>@endif
+                                        </a>
+                                    @else
+                                        <a href="/show-group-list"> Группы
+                                            @if(isset($groupInvites)) <span>{{$groupInvites}}</span>@endif
+                                        </a>
+                                    @endif
+
+                                </li>
 
                             </ul>
 

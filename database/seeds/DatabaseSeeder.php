@@ -11,6 +11,7 @@ use App\Company;
 use App\Product;
 use App\Category;
 use App\DiscountAccumulativ;
+use App\Group;
 
 class DatabaseSeeder extends Seeder{
     public $region   = array();
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder{
     public $company;
     public $category = array();
     public $discount;
+    public $group;
 
     /**
      * Run the database seeds.
@@ -29,6 +31,7 @@ class DatabaseSeeder extends Seeder{
         $this->createCity();
         $this->createStatusOwner();
         $this->createCompany();
+        $this->createGroup();
         $this->createUserInformation();
         $this->createCategory();
         $this->createProduct();
@@ -363,6 +366,16 @@ class DatabaseSeeder extends Seeder{
         ]);
     }
 
+    public function createGroup(){
+        $this->group = Group::create([
+            'company_id' => $this->company->id,
+            'group_name' => 'Скидки по магазину Asos',
+            'money'      => '',
+        ]);
+        
+
+    }
+
     public function createUserInformation(){
         $user = $this->createUser();
         UserInformation::create([
@@ -448,6 +461,7 @@ class DatabaseSeeder extends Seeder{
             'password' => bcrypt(123456),
         ]);
         $user->attachRole($role['simple_user']);
+        $this->group->getUser()->attach($user, ['is_admin' => 1]);
         $data[] = $user;
 
         $user = User::create([

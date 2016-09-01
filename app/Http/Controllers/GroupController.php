@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\MemberGroupHistory;
 use App\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -219,22 +220,36 @@ class GroupController extends Controller{
      * Enable group invite
      * */
     public function enableInvite($id){
+
         $user = Auth::user();
-
-
         try{
+
             $this->_msg->singleMsg($id);
-            $group=Group::find($this->_msg->getMsgParam('connected_id'));
+            $group = Group::find($this->_msg->getMsgParam('connected_id'));
             $userMoney = UserMoney::where('user_id', $user->id)->where('company_id', $group->getCompany->id)->first();
+            $group_history = MemberGroupHistory::where('user_id', $user->id)->where('group_id', $group->id)->first();
             if($userMoney){
-                $group->money += $userMoney->money;
-                $group->save();
+                if($group_history){
+                    $group->money += ($userMoney->money - $group_history->money);
+                    $group->save();
+                    $group_history->money += ($userMoney->money - $group_history->money);
+                    $group_history->save();
+                }else{
+                    $group_history = new MemberGroupHistory([
+                        'user_id'  => $user->id,
+                        'group_id' => $group->id,
+                        'money'    => $userMoney->money
+                    ]);
+                    $group_history->save();
+                    $group->money += $userMoney->money;
+                    $group->save();
+                }
             }
             $this->_msg->setAsReaded();
             $this->singleGroup($this->_msg->getMsgParam('connected_id'));
             $this->attachUser(Auth::user());
             Session::flash('flash_message', 'Disabled!');
-            return redirect()->route('homeSimpleUser');
+            return redirect()->route('home');
         }catch(\Exception $e){
             Session::flash('flash_message', 'Enabled');
             return Redirect::back();

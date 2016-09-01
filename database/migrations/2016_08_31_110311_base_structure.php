@@ -298,6 +298,8 @@ class BaseStructure extends Migration{
             $table->integer('user_id')->unsigned();
             $table->integer('group_id')->unsigned();
             $table->float('money')->nullable();
+            $table->timestamps();
+            
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('group_id')->references('id')->on('groups');
         });

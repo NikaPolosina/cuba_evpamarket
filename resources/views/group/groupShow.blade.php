@@ -74,7 +74,7 @@
                         @foreach($groupInvites as $msg)
                             <li class="list-group-item">
                                 <div>
-                                    <span>Вы получили приглашение о вступлении в группу: {{$msg->group->group_name}}</span>
+                                    <span>Вы получили приглашение о вступлении в группу: <div style="display: inline-block; margin: 0px 10px 0px 10px;"><a href="/single-group/{{$msg->group->id}}">{{$msg->group->group_name}}</a></div> </span>
                                     <div class="btn-group" role="group" aria-label="...">
                                         <a href="{{route('enable_group_invite', [$msg->id])}}"><button type="button" class="btn btn-success">Вступить</button></a>
                                         <a href="{{route('disable_group_invite', [$msg->id])}}"><button type="button" class="btn btn-danger">Отказаться</button></a>
