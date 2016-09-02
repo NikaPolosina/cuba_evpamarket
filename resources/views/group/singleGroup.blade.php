@@ -66,12 +66,12 @@
 
                             <label class="col-md-4 control-label">Возраст: </label>
                             <div class="col-md-4">
-                                <div class="form-group" style="margin: 0px">
+                                <div class="form-group parent_select_js" style="margin: 0px">
 
                                     <select data-placeholder="" class="advanced_search_age_from" style="width:50px;" tabindex="2" name="age_from">
                                         <option value="">От</option>
                                         @for($i = 18; $i < 90; $i++)
-                                            <option value="{{ $i }}">{{ $i }}</option>
+                                            <option class="from" value="{{ $i }}">{{ $i }}</option>
                                         @endfor
                                     </select>
                                     <select data-placeholder="" class="advanced_search_age_to" style="width:50px;" tabindex="2" name="age_to">
@@ -122,7 +122,7 @@
 
                         <div class="people_group_css advanced_search_result">
                             <div class="people_find">
-                                <h4>По запрсу найдено:</h4>
+                                <h4>По Вашему запрсу ничего не найдено</h4>
                                 <div>
                                     <div class="progress" style="display: none">
                                         <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
@@ -194,6 +194,26 @@
         </div>
     </div>
 
+    {{--<script>
+        var select =  $('select.advanced_search_age_from');
+        select.on('change', function () {
+            var from = $(this).val();
+            var parent = select.parents('.parent_select_js');
+            var sel2 = parent.find('select.advanced_search_age_to');
+
+
+            sel2.find('option').each(function(v, k){
+
+                if($(k).val >=  from){
+                    $(k).attr('disabled', false);
+                }else{
+                    $(k).attr('disabled', 'disabled');
+                }
+            });
+        })
+
+
+    </script>--}}
 
 
     <script type="text/javascript">
@@ -207,6 +227,7 @@
             }
             for(var selector in config){
                 $(selector).chosen(config[selector]);
+                
             }
         });
 

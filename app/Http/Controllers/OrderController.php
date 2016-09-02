@@ -93,8 +93,6 @@ class OrderController extends Controller{
 
     public function ready(Request $request){
 
-
-
         $this->validate($request, [ 'company_id' => 'required',
                                     'name' => 'required',
                                     'surname' => 'required',
@@ -255,13 +253,14 @@ class OrderController extends Controller{
                 $totalHistoryAmount += $totalHistoryOld->money;
             }
             $userMoney = UserMoney::firstOrNew(array('user_id' => $user_id, 'company_id' => $company_id));
-            $userMoney->money = $totalHistoryAmount + $order->total_price;
+            $userMoney->money = $totalHistoryAmount + $order->discount_price;
             $userMoney->save();
 
             $user = User::find($order->simple_user_id);
             $group = $user->getGroup()->where('company_id', $company_id)->get();
             foreach($group as $item){
-                $item->money += $order->total_price;
+
+                $item->money += $order->discount_price;
                 $item->save();
             }
             
