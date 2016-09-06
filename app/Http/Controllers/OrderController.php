@@ -61,12 +61,12 @@ class OrderController extends Controller{
         $owner = $company->getUser;
         $status = StatusOwner::where('key','sending_buyer')->get();
 
-
-
-
         $total_discount = 0;
         $t = self::getTotalCompanyAmount($company, StatusOwner::where('key','sending_buyer')->first(), $user) + $total;
 
+        if(Auth::user()->getGroup()->where('company_id', $company->id)->count()){
+            $t = $total + Auth::user()->getGroup()->where('company_id', $company->id)->max('money');
+        }
 
         $discount = $company->getDiscountAccumulativ()->where('from', '<=', $t)->orderBy('from', 'desc')->first();
 
@@ -129,6 +129,9 @@ class OrderController extends Controller{
         $order = self::getTotalCompanyAmount($company, StatusOwner::where('key','sending_buyer')->first(), Auth::user());
 
         $t = $total + $order;
+        if(Auth::user()->getGroup()->where('company_id', $company->id)->count()){
+            $t = $total + Auth::user()->getGroup()->where('company_id', $company->id)->max('money');
+        }
         $discount = $company->getDiscountAccumulativ()->where('from', '<=', $t)->orderBy('from', 'desc')->first();
 
         if($discount){

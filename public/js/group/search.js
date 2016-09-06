@@ -8,11 +8,15 @@ $(document).ready(function(){
     selectorScope['advanced_search_progress']          = $('.advanced_search_progress');
     selectorScope['advanced_search_error']             = $('.advanced_search_error');
 
+    var ageFrom = $('.advanced_search_age_from');
+    var ageTo = $('.advanced_search_age_to');
+
     var error                                          = false;
     var current;
     var data                                           = {};
     var region;
     var city;
+
     $(selectorScope['advanced_search_button']).on('click', function(){
         selectorScope['advanced_search_block'].toggle();
         selectorScope['advanced_search_result'].hide();
@@ -42,8 +46,8 @@ $(document).ready(function(){
 
             data['name'] = $('.advanced_search_name').val();
             data['surname'] = $('.advanced_search_surname').val();
-            data['age_from'] = $('.advanced_search_age_from').val();
-            data['age_to'] = $('.advanced_search_age_to').val();
+            data['age_from'] = ageFrom.val();
+            data['age_to'] = ageTo.val();
             data['gender'] = '';
 
             $('.advanced_search_gender').each(function(index, item){
@@ -120,4 +124,34 @@ $(document).ready(function(){
             });
         });
     });
+
+
+    ageFrom.on('change', function(){
+        var currentVal = $(this).val();
+        ageTo.find('option').each(function(){
+            if($(this).val() && $(this).val() <= currentVal){
+                $(this).attr('disabled', true);
+                $(this).hide();
+            }else{
+                $(this).attr('disabled', false);
+                $(this).show();
+            }
+        });
+    });
+
+    ageTo.on('change', function(){
+        var currentVal = $(this).val();
+        ageFrom.find('option').each(function(){
+            if($(this).val() && $(this).val() >= currentVal){
+                $(this).attr('disabled', true);
+                $(this).hide();
+            }else{
+                $(this).attr('disabled', false);
+                $(this).show();
+            }
+        });
+    });
+
+
+
 });

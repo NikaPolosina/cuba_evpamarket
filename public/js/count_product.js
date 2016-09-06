@@ -88,15 +88,16 @@ function calculateAmount(check){
     });
     showTotal         = showTotal + parseInt(current);
     var discountTable = mainParent.find('.discount_table');
+
     if(discountTable.length){
         var tr = discountTable.find('tr[data-from]');
         tr.removeClass('current_discount');
         var percent = 0;
         tr.each(function(){
-            percent = ($(this).attr('data-from') <= showTotal ) ? $(this).attr('data-from') : percent;
+            percent = ($(this).attr('data-from') <= showTotal ) ? $(this).attr('data-percent') : percent;
         });
         percent = parseInt(percent);
-        discountTable.find('tr[data-from="' + percent + '"]').addClass('current_discount');
+        discountTable.find('tr[data-percent="' + percent + '"]').addClass('current_discount');
         span_percent.html(percent);
     }
     span_total_amount.html(current);
