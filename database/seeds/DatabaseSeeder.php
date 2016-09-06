@@ -360,7 +360,7 @@ class DatabaseSeeder extends Seeder{
             'company_id' => $this->company->id,
         ]);
         $this->discount = DiscountAccumulativ::create([
-            'from'       => 100,
+            'from'       => 1000,
             'percent'    => 3,
             'company_id' => $this->company->id,
         ]);
