@@ -159,18 +159,18 @@
         <!-- BEGIN CONTENT BODY -->
         <div class="page-content">
             <!-- END THEME PANEL -->
-            <h3 class="page-title"> Пользователи
+            <h3 class="page-title"> Путь
                 <small></small>
             </h3>
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
                         <i class="icon-home"></i>
-                        <a href="/admin/user">пользователи</a>
+                        <a href="/admin/user">путь1</a>
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li>
-                        <span>пользователи</span>
+                        <span>путь2</span>
                     </li>
                 </ul>
 

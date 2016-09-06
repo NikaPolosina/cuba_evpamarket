@@ -85,18 +85,18 @@
             <li class="nav-item  ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-settings"></i>
-                    <span class="title">Настройки</span>
+                    <span class="title">Локализация</span>
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item  ">
-                        <a href="" class="nav-link ">
-                            <span class="title">настройка 1</span>
+                        <a href="/admin/region-list" class="nav-link ">
+                            <span class="title">Регионы</span>
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="" class="nav-link ">
-                            <span class="title">настройка 2</span>
+                        <a href="/admin/cities-list" class="nav-link ">
+                            <span class="title">Города</span>
                         </a>
                     </li>
                 </ul>

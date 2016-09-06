@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md-6 col-sm-6">
         <!-- BEGIN PORTLET-->
-        <div class="portlet light ">
+       {{-- <div class="portlet light ">
             <div class="portlet-title">
                 <div class="caption">
                     <i class="icon-bubble font-hide hide"></i>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
         <!-- END PORTLET-->
     </div>
 </div>

@@ -13,14 +13,14 @@
                                 <i class="icon-settings font-dark"></i>
                                 <span class="caption-subject bold uppercase"> Список Пользователей</span>
                             </div>
-                            <div class="actions">
+                      {{--      <div class="actions">
                                 <div class="btn-group btn-group-devided" data-toggle="buttons">
                                     <label class="btn btn-transparent dark btn-outline btn-circle btn-sm active">
                                         <input type="radio" name="options" class="toggle" id="option1">Действия</label>
                                     <label class="btn btn-transparent dark btn-outline btn-circle btn-sm">
                                         <input type="radio" name="options" class="toggle" id="option2">Настройки</label>
                                 </div>
-                            </div>
+                            </div>--}}
                         </div>
                         <div class="portlet-body">
 
@@ -81,14 +81,14 @@
                                                 <i class="fa fa-angle-down"></i>
                                             </button>
                                             <ul class="dropdown-menu" role="menu">
-                                                <li>
+                                             {{--   <li>
                                                     <a href="javascript:;">
                                                         <i class="icon-docs"></i> Профиль </a>
                                                 </li>
                                                 <li>
                                                     <a href="javascript:;">
                                                         <i class="icon-tag"></i> Коментарий </a>
-                                                </li>
+                                                </li>--}}
 
                                                 @if($item->block == 1)
                                                 <li class="block">
@@ -102,12 +102,12 @@
                                                     </li>
                                                 @endif
                                                 <li class="divider"> </li>
-                                                <li>
+                                             {{--   <li>
                                                     <a href="javascript:;">
                                                         <i class="icon-flag"></i> Коментариев
                                                         <span class="badge badge-success">4</span>
                                                     </a>
-                                                </li>
+                                                </li>--}}
                                             </ul>
                                         </div>
                                     </td>

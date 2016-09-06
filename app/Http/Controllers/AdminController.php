@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\City;
 use App\Http\Requests;
+use App\Region;
 use Illuminate\Http\Request;
 use App\User;
 use App\UserInformation;
@@ -114,7 +116,7 @@ class AdminController extends Controller{
     }
     
     public function categoryUpdate(Request $request){
- 
+
 
         $category = Category::findOrFail($request['id']);
         $updateCategory = [
@@ -139,6 +141,18 @@ class AdminController extends Controller{
         return response()->json([
             'block'  => $block
         ]);
+    }
+
+    public function regionList(){
+        $region = Region::all();
+        return view('admin.region.list')->with('region', $region);
+    }
+    public function citiesList(){
+        $cities = City::all();
+        foreach($cities as $city){
+            $city['region'] = Region::where('id', $city->region_id)->get();
+        }
+        return view('admin.city.list')->with('cities', $cities);
     }
 
 }

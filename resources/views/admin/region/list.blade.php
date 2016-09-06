@@ -10,9 +10,9 @@
                 <div class="portlet-title">
                     <div class="caption font-dark">
                         <i class="icon-settings font-dark"></i>
-                        <span class="caption-subject bold uppercase"> Список Магазинов</span>
+                        <span class="caption-subject bold uppercase"> Список Регионов</span>
                     </div>
-                   {{-- <div class="actions">
+                  {{--  <div class="actions">
                         <div class="btn-group btn-group-devided" data-toggle="buttons">
                             <label class="btn btn-transparent dark btn-outline btn-circle btn-sm active">
                                 <input type="radio" name="options" class="toggle" id="option1">Действия</label>
@@ -34,15 +34,12 @@
                             </th>
                             <th> # </th>
                             <th> Имя </th>
-                            <th> Описание </th>
-                            <th> Арес </th>
-                            <th> Статус </th>
                             <th> Действия </th>
                         </tr>
                         </thead>
                         <tbody>
                         {{-- */$x=0;/* --}}
-                        @foreach($shop as $item)
+                        @foreach($region as $item)
                             {{-- */$x++;/* --}}
                             <tr class="odd gradeX">
                                 <td>
@@ -53,13 +50,9 @@
                                 </td>
                                 <td> {{ $x }} </td>
 
-                                <td> {{$item->company_name}}</td>
+                                <td> {{$item->title}}</td>
 
-                                <td class="center"> {{$item->company_description}} </td>
-                                <td class="center"> ул. {{$item->street}} дом. {{$item->address}}  </td>
-                                <td>
-                                    <span class="label label-sm label-success"> подтв. </span>
-                                </td>
+
                                 <td>
                                     <div class="btn-group">
                                         <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Действия
@@ -68,10 +61,12 @@
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
                                                 <a href="javascript:;">
-                                                    <i class="icon-user"></i> Заблокировать </a>
+                                                    <i class="icon-docs"></i> Редактировать </a>
                                             </li>
-                                            <li class="divider"> </li>
-
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <i class="icon-tag"></i> Удалить </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </td>
