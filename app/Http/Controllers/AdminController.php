@@ -9,6 +9,7 @@ use App\User;
 use App\UserInformation;
 use App\Company;
 use Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller{
 
@@ -55,6 +56,7 @@ class AdminController extends Controller{
         return view('admin.category.show')->with('category', $category);
     }
     public function categoryAdd(){
+
         $category = Category::all();
         $category_parent = Category::where('parent_id', 0)->get();
         $child_category = Category::where('parent_id', $category_parent[0]->id)->get();
@@ -101,6 +103,27 @@ class AdminController extends Controller{
 
 
 
+    }
+    public function categoryDestroy($id){
+
+        if(Auth::user()->hasRole('admin')){
+            Category::destroy($id);
+        }
+        return redirect()->back();
+
+    }
+    
+    public function categoryUpdate(Request $request){
+ 
+
+        $category = Category::findOrFail($request['id']);
+        $updateCategory = [
+            'title'         => $request['title'],
+
+        ];
+        $category->update($updateCategory);
+
+        return redirect()->back();
     }
     public function userBlock(Request $request){
         $user = User::find($request['id']);

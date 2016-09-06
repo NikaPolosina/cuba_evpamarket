@@ -45,7 +45,7 @@
         <div class="page-top">
             <!-- BEGIN HEADER SEARCH BOX -->
             <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
-            <form class="search-form search-form-expanded" action="" method="GET">
+            {{--<form class="search-form search-form-expanded" action="" method="GET">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Поиск..." name="query">
                         <span class="input-group-btn">
@@ -54,7 +54,7 @@
                             </a>
                         </span>
                 </div>
-            </form>
+            </form>--}}
             <!-- END HEADER SEARCH BOX -->
             <!-- BEGIN TOP NAVIGATION MENU -->
             <div class="top-menu">
@@ -63,7 +63,7 @@
                     <!-- END NOTIFICATION DROPDOWN -->
                     <!-- BEGIN INBOX DROPDOWN -->
                     <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                    <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+                 {{--   <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                             <i class="icon-envelope-open"></i>
                             <span class="badge badge-default"> 4 </span>
@@ -112,7 +112,7 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
+                    </li>--}}
 
                     <li class="dropdown dropdown-user">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
@@ -121,7 +121,7 @@
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
-                            <li>
+                         {{--   <li>
                                 <a href="">
                                     <i class="icon-user"></i>Мой профиль </a>
                             </li>
@@ -134,7 +134,7 @@
                                     <i class="icon-envelope-open"></i> Мои собщения
                                     <span class="badge badge-danger"> 3 </span>
                                 </a>
-                            </li>
+                            </li>--}}
 
                             <li>
                                 <a href="{{ url('/logout') }}">
