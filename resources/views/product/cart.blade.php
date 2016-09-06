@@ -4,7 +4,7 @@
 
     <link rel="stylesheet" type="text/css" href="../css/show_cart_like.css"/>
     <div class="row">
-        {!! HTML::script('/js/caunt_product.js') !!}
+        {!! HTML::script('/js/count_product.js') !!}
         @if(count($companies))
             @foreach($companies as $value)
                 <div class="company_block_cart">
@@ -247,7 +247,7 @@
                                                                 <th>Скидка</th>
                                                             </tr>
                                                             @foreach($value['company']->getDiscountAccumulativ as $val)
-                                                                <tr data-from="{{$val['from']}}" class=" <?=($value['discount']['id'] == $val->id)? 'current_discount':'' ?>" ><td><span style="color: #2a62bc;">{{$val->from}} руб.</span></td><td><span style="color: indianred;">{{$val->percent}} %</span></td></tr>
+                                                                <tr data-from="{{$val['from']}}" data-percent="{{$val->percent}}" class=" <?=($value['discount']['id'] == $val->id)? 'current_discount':'' ?>" ><td><span style="color: #2a62bc;">{{$val->from}} руб.</span></td><td><span style="color: indianred;">{{$val->percent}} %</span></td></tr>
                                                             @endforeach
 
                                                         </table>
