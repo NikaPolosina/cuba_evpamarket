@@ -7,6 +7,7 @@ $(document).ready(function(){
     selectorScope['advanced_search_action_button']     = $('.advanced_search_action_button');
     selectorScope['advanced_search_progress']          = $('.advanced_search_progress');
     selectorScope['advanced_search_error']             = $('.advanced_search_error');
+    selectorScope['advanced_search_result_txt']             = $('.advanced_search_result_txt');
 
     var ageFrom = $('.advanced_search_age_from');
     var ageTo = $('.advanced_search_age_to');
@@ -87,11 +88,12 @@ $(document).ready(function(){
                     selectorScope['advanced_search_progress'].hide();
                     selectorScope['advanced_search_result_data'].html('');
                     selectorScope['advanced_search_result'].show();
+
                     if(response.data.length > 0){
+                        selectorScope['advanced_search_result_txt'].html('По Вашему запросу было найдено');
                         current = '';
                         for(var index in response.data){
                             current = response.data[index];
-
                             selectorScope['advanced_search_result_data'].append('' +
                                 '<div class="single_people_css single_person_holder" style="display: table; width: 100%">'+
                                 '<div style="display: table-cell; vertical-align: middle">'+
@@ -101,15 +103,17 @@ $(document).ready(function(){
                                 '</div>'+
                                 '</div>'+
                                 '<div class="css_peo">'+
-                                '<p style="display: inline-block;">'+current.get_user_information.name+' '+current.get_user_information.surname+'</p>'+
+                                '<p style="display: inline-block;">'+current.get_user_information.name+'   '+current.get_user_information.surname+'</p>'+
                                 '</div>'+
-                                '<div class="css_peo">'+
+                                '<div class="css_peo po_button">'+
                                 '<button class="btn-primary invite_to_group_search" data-user="'+current.id+'" data-group="'+currentGroup+'">Пригласить</button>'+
                                 '</div>'+
                                 '</div>'+
                                 '</div>'+
                             '');
                         }
+                    }else{
+                        selectorScope['advanced_search_result_txt'].html('По Вашему запросу ничего не найдено');
                     }
 
                     },

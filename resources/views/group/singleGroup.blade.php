@@ -122,7 +122,7 @@
 
                         <div class="people_group_css advanced_search_result">
                             <div class="people_find">
-                                <h4>По Вашему запрсу ничего не найдено</h4>
+                                <span class="advanced_search_result_txt"></span>
                                 <div>
                                     <div class="progress" style="display: none">
                                         <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
@@ -246,6 +246,13 @@
 
 @endsection
 <style>
+    .po_button{
+        float: right;
+        margin: 10px 0px 10px 0px!important;
+    }
+
+
+
     .btn-primary{
        padding: 2px;
         border-radius: 4px;
@@ -254,7 +261,7 @@
         height: 30px!important;
     }
     .css_peo {
-        margin: 0 10px !important;
+
         padding: 0 !important;
         vertical-align: middle;
         display: inline-block;
@@ -263,7 +270,7 @@
     }
 
     .css_peo p {
-        margin: 0 !important;
+        margin: 0px 0px 0px 10px !important;
     }
 
     .find_group_css label {

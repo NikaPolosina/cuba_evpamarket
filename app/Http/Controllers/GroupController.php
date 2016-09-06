@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\MemberGroupHistory;
+use App\Models\Message;
 use App\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -179,8 +180,22 @@ class GroupController extends Controller{
             'user' => 'required'
         ]);
         try{
-            $this->_prepareInviteMsg();
-            $this->_msg->sendMsg();
+            $user = User::find($this->_request->input('user'));
+
+            $a = $user->getGroup()->where('id', $this->_request->input('group'))->count();
+            $b = Message::where('connected_id', $this->_request->input('group'))->where('to', $this->_request->input('user'))->where('status', 0)->count();
+//         dd($a);
+//            die('Surprise, you are here !!!');
+
+            if(!$a && !$b){
+                $this->_prepareInviteMsg();
+                $this->_msg->sendMsg();
+            }
+            // проверяем есть ли он в группе
+            // есть ли у него не прочитанные собщения с этой группы
+
+
+
             return response()->json([ 'success' => true ], 200);
         }catch(\Exception $e){
             return response()->json([ 'error' => $e->getMessage() ], 422);
