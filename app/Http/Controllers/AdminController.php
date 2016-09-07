@@ -45,14 +45,29 @@ class AdminController extends Controller{
         $user = User::where('block', 1)->get();
         return view('admin.user.show')->with('user', $user);
     }
+    
     public function shopAll(){
         $shop = Company::all();
         return view('admin.company.show')->with('shop', $shop);
     }
+    
     public function shopBlocked(){
         $shop = Company::where('block', 1)->get();
         return view('admin.company.show')->with('shop', $shop);
     }
+    
+    public function shopStatistic($id){
+
+
+        $company = Company::find($id);
+
+        $company->perDayAmount = OrderController::getAmount($company->id, 0);
+        $company->perWeekAmount = OrderController::getAmount($company->id, 7);
+        $company->totalAmount = OrderController::getAmount($company->id, 365);
+
+        return view('admin.company.aboutSingleShop')->with('company', $company);
+    }
+    
     public function category(){
         $category = Category::all();
         return view('admin.category.show')->with('category', $category);
@@ -147,6 +162,7 @@ class AdminController extends Controller{
         $region = Region::all();
         return view('admin.region.list')->with('region', $region);
     }
+    
     public function citiesList(){
         $cities = City::all();
         foreach($cities as $city){

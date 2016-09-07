@@ -120,6 +120,7 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::get('/category-destroy/{id}', ['as' => 'admin', 'uses'=>'AdminController@categoryDestroy']);
     Route::get('/region-list', ['as' => 'admin', 'uses'=>'AdminController@regionList']);
     Route::get('/cities-list', ['as' => 'admin', 'uses'=>'AdminController@citiesList']);
+    Route::get('/company_statistic/{id}', ['as' => 'admin', 'uses'=>'AdminController@shopStatistic']);
     Route::post('/category-update', ['as' => 'admin', 'uses'=>'AdminController@categoryUpdate']);
     Route::post('/add-category-list', ['as' => 'admin', 'uses'=>'AdminController@categoryAddList']);
     Route::post('/add-item', ['as' => 'admin', 'uses'=>'AdminController@categoryAddItem']);
