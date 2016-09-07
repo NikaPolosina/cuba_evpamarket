@@ -80,7 +80,7 @@
                                     }
 
                                     .current_discount{
-                                        background: green;
+                                        background: #a7eea7;
                                         font-weight: bold;
                                         color: black;
                                     }
@@ -271,7 +271,7 @@
                                             </h3>
 
                                             <h3  class="total">
-                                                <div class="a col-sm-9">Ощая сумма для учёта скидки :</div>
+                                                <div class="a col-sm-9">Общая сумма для учёта скидки :</div>
                                                 <div class="b col-sm-3"> <b><span class="total">{{$value['total']}}</span></b> руб.</div>
                                                 <input type="hidden" class="total" value="{{$value['total']}}"/>
                                             </h3>

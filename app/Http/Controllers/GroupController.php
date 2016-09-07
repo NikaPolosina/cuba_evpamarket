@@ -118,7 +118,9 @@ class GroupController extends Controller{
         
         $region = Region::all();
 
-        return view('group.singleGroup')->with('group', $group)->with('discount', $discount)->with('allUser', $allUser)->with('users', $users)->with('region', $region);
+        $msg = Message::where('to', Auth::user()->id)->where('connected_id', $group->id)->where('status', 0)->first();
+        
+        return view('group.singleGroup')->with('group', $group)->with('discount', $discount)->with('allUser', $allUser)->with('users', $users)->with('region', $region)->with('msg', $msg);
     }
   
 

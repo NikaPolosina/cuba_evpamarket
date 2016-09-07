@@ -190,6 +190,13 @@
             </div>
             <div class="col-sm-2">
 
+            @if($msg)
+                    <a href="{{route('enable_group_invite', [$msg->id])}}">
+                        <button type="button" class="btn btn-success">Вступить</button>
+                    </a>
+                @endif
+
+
             </div>
         </div>
     </div>
