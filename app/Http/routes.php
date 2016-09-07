@@ -119,6 +119,7 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::get('/category-add', ['as' => 'admin', 'uses'=>'AdminController@categoryAdd']);
     Route::get('/category-destroy/{id}', ['as' => 'admin', 'uses'=>'AdminController@categoryDestroy']);
     Route::get('/region-list', ['as' => 'admin', 'uses'=>'AdminController@regionList']);
+    Route::get('/single-region/{id}', ['as' => 'admin', 'uses'=>'AdminController@regionSingle']);
     Route::get('/cities-list', ['as' => 'admin', 'uses'=>'AdminController@citiesList']);
     Route::get('/company_statistic/{id}', ['as' => 'admin', 'uses'=>'AdminController@shopStatistic']);
     Route::post('/category-update', ['as' => 'admin', 'uses'=>'AdminController@categoryUpdate']);
@@ -154,7 +155,6 @@ Route::get('/show-list-order-simple', ['as'=>'show-list-order-simple', 'uses'=>'
 /*---------------------------------------Status----------------------------------*/
 Route::get('/change-order-status/{order}/{status}', ['as'=>'change_order_status', 'uses'=>'OrderController@changStatus']);
 Route::any('/order-by-status/{company}/{status}', ['as'=>'order-by-status', 'uses'=>'OrderController@showOrder']);
-
 
 // Groups
 Route::get('/show-group-list', ['as'=>'show-group-list', 'uses'=>'GroupController@showGroupList']);

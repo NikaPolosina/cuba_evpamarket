@@ -163,6 +163,12 @@ class AdminController extends Controller{
         return view('admin.region.list')->with('region', $region);
     }
     
+    public function regionSingle($id){
+        $region = Region::find($id);
+        return view('admin.region.addRegionCity')->with('region', $region);
+        
+    }
+    
     public function citiesList(){
         $cities = City::all();
         foreach($cities as $city){
