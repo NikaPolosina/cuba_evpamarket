@@ -23,7 +23,7 @@ class BaseStructure extends Migration{
             $table->integer('region_id')->unsigned();
             $table->string('title_cities');
             $table->timestamps();
-            $table->foreign('region_id')->references('id_region')->on('regions');
+            $table->foreign('region_id')->references('id_region')->on('regions')->onUpdate('cascade')->onDelete('cascade');;
         });
         //Create table for category
         Schema::create('category', function (Blueprint $table){

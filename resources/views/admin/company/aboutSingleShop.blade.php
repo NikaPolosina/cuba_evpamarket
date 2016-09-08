@@ -1,7 +1,8 @@
 @extends('..admin.header_footer_layout')
 
 @section('content')
-    <link href="/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+
+
     <link href="/assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css" />
 
     <div class="row">
@@ -50,6 +51,24 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-6">
+                                <!-- BEGIN CHART PORTLET-->
+                                <div class="portlet light ">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class="icon-bar-chart font-green-haze"></i>
+                                            <span class="caption-subject bold uppercase font-green-haze"> Статистика</span>
+                                            <span class="caption-helper">сдесь можно наглядно увидить статистику</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div id="chart_2" class="chart" style="height: 400px;"> </div>
+                                    </div>
+                                </div>
+                                <!-- END CHART PORTLET-->
+                            </div>
+
                         </div>
                     </div>
 
@@ -60,5 +79,29 @@
     </div>
 
 
-@endsection
 
+
+
+
+
+
+
+
+<script src="/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+
+
+<script src="/assets/global/plugins/amcharts/amcharts/amcharts.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/amcharts/amcharts/serial.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/amcharts/amcharts/pie.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/amcharts/amcharts/radar.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/amcharts/amcharts/themes/light.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/amcharts/amcharts/themes/patterns.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/amcharts/amcharts/themes/chalk.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/amcharts/ammap/ammap.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/amcharts/ammap/maps/js/worldLow.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/amcharts/amstockcharts/amstock.js" type="text/javascript"></script>
+
+
+<script src="/assets/pages/scripts/charts-amcharts.js" type="text/javascript"></script>
+
+@endsection

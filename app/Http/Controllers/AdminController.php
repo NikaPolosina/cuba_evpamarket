@@ -158,7 +158,9 @@ class AdminController extends Controller{
         if(Auth::user()->hasRole('admin')){
 
             $city = City::where('id_cities', $id)->get();
-dd($city[0]['id']);
+
+           //dd($city[0]['id']);
+
             City::destroy($city[0]['id']);
         }
         return redirect()->back();
