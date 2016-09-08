@@ -41,27 +41,23 @@ class DatabaseSeeder extends Seeder{
 
     public function createCity(){
         $city['1'] = City::create([
-            'id'           => 47160,
             'id_cities'    => 1000095,
-            'region_id'    => $this->region['1']->id,
+            'region_id'    => $this->region['1']->id_region,
             'title_cities' => '17 лет Октября'
         ]);
         $city['2'] = City::create([
-            'id'           => 47161,
-            'id_cities'    => 1000095,
-            'region_id'    => $this->region['1']->id,
+            'id_cities'    => 1000096,
+            'region_id'    => $this->region['1']->id_region,
             'title_cities' => 'Абадзехская'
         ]);
         $city['3'] = City::create([
-            'id'           => 49380,
             'id_cities'    => 1003245,
-            'region_id'    => $this->region['2']->id,
+            'region_id'    => $this->region['2']->id_region,
             'title_cities' => 'Андреев Починок'
         ]);
         $city['4'] = City::create([
-            'id'           => 49624,
             'id_cities'    => 1001120,
-            'region_id'    => $this->region['2']->id,
+            'region_id'    => $this->region['2']->id_region,
             'title_cities' => 'Большой Халуй'
         ]);
         $this->city = $city;
@@ -69,12 +65,10 @@ class DatabaseSeeder extends Seeder{
 
     public function createRegion(){
         $region['1'] = Region::create([
-            'id'        => 255,
             'title'     => 'Адыгея',
             'id_region' => 1000001,
         ]);
         $region['2'] = Region::create([
-            'id'        => 259,
             'title'     => 'Архангельская область',
             'id_region' => 1000236,
         ]);

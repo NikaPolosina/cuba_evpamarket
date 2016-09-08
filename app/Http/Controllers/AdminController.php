@@ -142,6 +142,28 @@ class AdminController extends Controller{
 
         return redirect()->back();
     }
+
+    public function cityUpdate(Request $request){
+
+        $city = City::where('id_cities', $request['id_cities'])->get();
+        $updateCity = [
+            'title_cities' =>$request['title'],
+        ];
+
+        $city['0']->update($updateCity);
+        return redirect()->back();
+    }
+
+    public function cityDestroy($id){
+        if(Auth::user()->hasRole('admin')){
+
+            $city = City::where('id_cities', $id)->get();
+dd($city[0]['id']);
+            City::destroy($city[0]['id']);
+        }
+        return redirect()->back();
+    }
+
     public function userBlock(Request $request){
         $user = User::find($request['id']);
         if($user['block'] == 1){
@@ -164,17 +186,16 @@ class AdminController extends Controller{
     }
     
     public function regionSingle($id){
-        $region = Region::find($id);
-        return view('admin.region.addRegionCity')->with('region', $region);
+        $region = Region::where('id_region', $id)->get()->toArray();
+        $city = City::where('region_id', $id)->get();
+
+        return view('admin.region.addRegionCity')
+            ->with('region', $region)
+            ->with('city', $city);
         
     }
+
     
-    public function citiesList(){
-        $cities = City::all();
-        foreach($cities as $city){
-            $city['region'] = Region::where('id', $city->region_id)->get();
-        }
-        return view('admin.city.list')->with('cities', $cities);
-    }
+   
 
 }

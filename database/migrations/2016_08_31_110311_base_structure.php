@@ -13,7 +13,7 @@ class BaseStructure extends Migration{
         Schema::create('regions', function (Blueprint $table){
             $table->increments('id');
             $table->string('title');
-            $table->integer('id_region')->unsigned();
+            $table->integer('id_region')->unsigned()->unique();
             $table->timestamps();
         });
         //Create table for cities
@@ -23,7 +23,7 @@ class BaseStructure extends Migration{
             $table->integer('region_id')->unsigned();
             $table->string('title_cities');
             $table->timestamps();
-            $table->foreign('region_id')->references('id')->on('regions');
+            $table->foreign('region_id')->references('id_region')->on('regions');
         });
         //Create table for category
         Schema::create('category', function (Blueprint $table){

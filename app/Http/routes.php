@@ -118,11 +118,12 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::get('/category', ['as' => 'admin', 'uses'=>'AdminController@category']);
     Route::get('/category-add', ['as' => 'admin', 'uses'=>'AdminController@categoryAdd']);
     Route::get('/category-destroy/{id}', ['as' => 'admin', 'uses'=>'AdminController@categoryDestroy']);
+    Route::get('/city-destroy/{id}', ['as' => 'admin', 'uses'=>'AdminController@cityDestroy']);
     Route::get('/region-list', ['as' => 'admin', 'uses'=>'AdminController@regionList']);
     Route::get('/single-region/{id}', ['as' => 'admin', 'uses'=>'AdminController@regionSingle']);
-    Route::get('/cities-list', ['as' => 'admin', 'uses'=>'AdminController@citiesList']);
     Route::get('/company_statistic/{id}', ['as' => 'admin', 'uses'=>'AdminController@shopStatistic']);
     Route::post('/category-update', ['as' => 'admin', 'uses'=>'AdminController@categoryUpdate']);
+    Route::post('/city-update', ['as' => 'admin', 'uses'=>'AdminController@cityUpdate']);
     Route::post('/add-category-list', ['as' => 'admin', 'uses'=>'AdminController@categoryAddList']);
     Route::post('/add-item', ['as' => 'admin', 'uses'=>'AdminController@categoryAddItem']);
     Route::post('/user-block', ['as' => 'admin', 'uses'=>'AdminController@userBlock']);

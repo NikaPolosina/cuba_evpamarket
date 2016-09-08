@@ -94,11 +94,6 @@
                             <span class="title">Регионы</span>
                         </a>
                     </li>
-                    <li class="nav-item  ">
-                        <a href="/admin/cities-list" class="nav-link ">
-                            <span class="title">Города</span>
-                        </a>
-                    </li>
                 </ul>
             </li>
 

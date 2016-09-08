@@ -43,7 +43,7 @@
                                 </td>
                                 <td> {{ $x }} </td>
 
-                                <td><a href="/admin/single-region/{{$item->id}}">{{$item->title}}</a></td>
+                                <td><a href="/admin/single-region/{{$item->id_region}}">{{$item->title}}</a></td>
 
 
                                 <td>
