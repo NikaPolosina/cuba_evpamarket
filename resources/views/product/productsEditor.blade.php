@@ -2,6 +2,9 @@
 
 @section('content')
     @include('layouts.header_menu')
+    <link href="/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css"/>
+    <link href="/assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css"/>
+
 
     <div style="border: solid 2px darkgrey; padding: 10px;">
         <div class="table-responsive">
@@ -25,7 +28,7 @@
 
             <div class="col-sm-10">
                 <div class="table" id="product_list">
-                    @include('product.products.productEditorList', array(
+                    @include('product.productListBody', array(
                                     'products' => $company->getProducts()->paginate($paginCnt),
                                     'category' => false
                                      ))
@@ -33,7 +36,7 @@
             </div>
         </div>
 
-        @include('product.products.productModalEdit')
+        @include('product.productModalEdit')
         @include('file_upload')
         <script>
            var file_uploader = '{{route('file_uploader')}}';

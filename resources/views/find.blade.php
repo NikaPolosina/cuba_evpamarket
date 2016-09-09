@@ -13,7 +13,7 @@
                 <div class="panel-body">
 
 
-                    @include('product.products.showAllProduct', ['productAll', $productAll])
+                    @include('product.showAllProduct', ['productAll', $productAll])
 
                 </div>
             </div>

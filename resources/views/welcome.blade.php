@@ -16,7 +16,7 @@
 
                     @include('company.showCompany', ['companyAll', $companyAll])
 
-                    @include('product.products.showAllProduct', ['productAll', $productAll])
+                    @include('product.showAllProduct', ['productAll', $productAll])
                     {{$productAll->render()}}
 
                 </div>

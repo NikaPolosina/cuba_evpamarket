@@ -4,7 +4,7 @@
     @include('layouts.header_menu')
     <link rel="stylesheet" type="text/css" href="../css/show_cart_like.css"/>
 
-    @include('product.products.modalAddProductCart')
+    @include('product.modalAddProductCart')
     <div class="row_row">
 
     <div class="row item_class_4">

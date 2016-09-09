@@ -39,13 +39,13 @@ class ProductsController extends Controller{
 
     public function index(){
         $products = Product::paginate($this->paginCnt);
-        return view('product.products.index', compact('products'));
+        return view('product.index', compact('products'));
     }
 
     public function create(Request $request, CategoryController $category){
         if($request->route('company_id') && self::hasCompany($request->route('company_id'))){
             $company = Company::find($request->route('company_id'));
-            return view('product.products.create')->with('company', $company)->with([ 'category' => json_encode($category->getAllCategoris()) ]);
+            return view('product.create')->with('company', $company)->with([ 'category' => json_encode($category->getAllCategoris()) ]);
         }
         return redirect()->intended('home');
     }
@@ -81,7 +81,6 @@ class ProductsController extends Controller{
         }else{
             $image = imagecreatefromwbmp($file);
         }
-
         If($width / $height > 1){
             $a = $width - $height;
             $new_img = imagecreatetruecolor($height, $height);
@@ -120,7 +119,6 @@ class ProductsController extends Controller{
     }
 
     public function storeCategory(Request $request){
-
         $validator = Validator::make(
             $request->input('product'),
             array(
@@ -129,21 +127,16 @@ class ProductsController extends Controller{
                 'price' => 'required|integer|min:1'
             )
         );
-
         $validator->setAttributeNames([
-
             'name'=> 'Имя товара',
             'description'=> 'Описание',
             'price'=> 'Цена',
-
         ]);
-
         if($validator->fails()){
 
             return response()->json([
                 'error'  => $validator->errors() ], 200);
         }
-
         $newProduct = new Product([
             'product_name'        => $request['product']['name'],
             'product_description' => $request['product']['description'],
@@ -165,7 +158,7 @@ class ProductsController extends Controller{
                 File::deleteDirectory($originPath);
             }
 
-            return view('product.products.singleProductTr')->with([ 'item' => $newProduct ])->with(['x'=>$request->x+1]);;
+            return view('product.singleProductTr')->with([ 'item' => $newProduct ])->with(['x'=>$request->x+1]);;
         }
         return response()->json([ 'success' => false ]);
     }
@@ -206,7 +199,7 @@ class ProductsController extends Controller{
 
     public function edit(Request $request, $id){
         $product = Product::findOrFail($id);
-        return view('product.products.edit', compact('product'));
+        return view('product.edit', compact('product'));
     }
 
     public function editCategory(Request $request){
@@ -301,7 +294,7 @@ class ProductsController extends Controller{
                 $firstFile = '/img/custom/files/thumbnail/plase.jpg';
             }
         }
-        return view('product.products'.$wey)
+        return view('product'.$wey)
             ->with('singleProduct', $singleProduct)
             ->with('firstFile', $firstFile)
             ->with('singleFile', $singleFile)
@@ -322,24 +315,21 @@ class ProductsController extends Controller{
     }
 
     public function productEditor(CategoryController $category, $id){
-
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
-        $status = StatusOwner::get();
         $company = Company::find($id);
-
+        
         $company->perDayAmount = OrderController::getAmount($company->id, 0);
         $company->perWeekAmount = OrderController::getAmount($company->id, 7);
         $company->totalAmount = OrderController::getAmount($company->id, 365);
-
-
+        
         $order  = $company->getOrder()->get();
         foreach($order as $item){
             $item->getStatusOwner->where('key', 'not_processed')->get();
         }
 
 
-        return view('product.products.productsEditor')->with([
+        return view('product.productsEditor')->with([
             'category'     => json_encode($currentCompanyCategoriesSorted),
             'company'      => $company,
             'myCategories' => $currentCompanyCategories,
@@ -361,48 +351,38 @@ class ProductsController extends Controller{
             $products = $company->getProducts()->paginate($this->paginCnt);
         }
 
-        if(count($products)){
-            return view('product.products.productEditorList')->with('products', $products)->with('category', $this->nCategory);
-        }
-        /* return '';*/
-        return view('product.products.productEditorList')->with('products', $products)->with('category', $this->nCategory);
+        $company->perDayAmount = OrderController::getAmount($companyId, 0);
+        $company->perWeekAmount = OrderController::getAmount($companyId, 7);
+        $company->totalAmount = OrderController::getAmount($companyId, 365);
+
+
+
+        return view('product.productListBody')->with('products', $products)
+            ->with( 'company' , $company)
+            ->with('category', $this->nCategory);
     }
 
     public function productAjaxUpdate(Request $request){
-
-
-
-        $validator = Validator::make(
-            $request->input('product'),
-            array(
-                'name' => 'required|max:255|min:2',
+        $validator = Validator::make($request->input('product'), array(
+                'name'        => 'required|max:255|min:2',
                 'description' => 'required|min:2',
-                'price' => 'required|integer|min:1'
-            )
-        );
-
+                'price'       => 'required|integer|min:1'
+            ));
         $validator->setAttributeNames([
-
-            'name'=> 'Имя товара',
-            'description'=> 'Описание',
-            'price'=> 'Цена',
-
+            'name'        => 'Имя товара',
+            'description' => 'Описание',
+            'price'       => 'Цена',
         ]);
-
         if($validator->fails()){
-
             return response()->json([
-                'error'  => $validator->errors() ], 200);
+                'error' => $validator->errors()
+            ], 200);
         }
         $data = $request->all();
         if($request->input('product')['product_id']){
-
             $product = Product::findOrFail($request->input('product')['product_id']);
-
             $result = $product->update(array(
-
-
-            'product_name'        => $request->input('product')['name'],
+                'product_name'        => $request->input('product')['name'],
                 'product_description' => $request->input('product')['description'],
                 'content'             => $request->input('product')['content'],
                 'product_image'       => $request->input('product')['photo'],
@@ -410,7 +390,7 @@ class ProductsController extends Controller{
                 'category_id'         => $request->input('product')['category_name'],
             ));
             if($result){
-                return view('product.products.singleProductTr')->with([ 'item' => $product ])->with(['x'=>$request->x]);
+                return view('product.singleProductTr')->with([ 'item' => $product ])->with([ 'x' => $request->x ]);
             }
             return '';
         }

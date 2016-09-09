@@ -38,7 +38,7 @@
 
     @foreach ($products as $item)
 
-        @include('product.products.singleProductTr', array('item' => $item))
+        @include('product.singleProductTr', array('item' => $item))
 
     @endforeach
 

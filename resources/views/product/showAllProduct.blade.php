@@ -3,8 +3,8 @@
     <h3>Товары</h3>
     <hr/>
 </div>
-@include('product.products.modalAddProductCart')
-@include('product.products.modalAddProductLike')
+@include('product.modalAddProductCart')
+@include('product.modalAddProductLike')
 <div class="row row_row">
     <div class="item_class_3">
         <div class="item_product item_class_4">

@@ -94,8 +94,11 @@ class AuthController extends Controller{
     }*/
 
     public function registerAditional(Request $request){
+
+
         $userinfo =  Auth::user()->getUserInformation;
        if(!Auth::user()->getUserInformation){
+
            $v = $this->myValidator($request->all());
 
             $v->setAttributeNames([
@@ -113,6 +116,7 @@ class AuthController extends Controller{
                
                $userinfo = UserInformation::create([
                    'name'       => $request->input('name'),
+                   'user_id'       => Auth::user()->id,
                    'surname'    => $request->input('surname'),
                    'date_birth' => Carbon::createFromFormat('Y.m.d', $request->input('date_birth')),
                    'gender'     => $request->input('gender'),
@@ -122,6 +126,8 @@ class AuthController extends Controller{
                    'address'    => $request->input('address'),
                    'country'    => 'Росcия',
                ]);
+die('Surprise, you are here !!!');
+
 
                Auth::user()->getUserInformation()->save($userinfo);
            }

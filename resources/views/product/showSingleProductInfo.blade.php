@@ -4,8 +4,8 @@
             <link rel="stylesheet" type="text/css" href="/css/single_product_info.css"/>
             <link rel="stylesheet" type="text/css" href="/css/show_product.css"/>
             <link href="../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
-            @include('product.products.modalAddProductCart')
-            @include('product.products.modalAddProductLike')
+            @include('product.modalAddProductCart')
+            @include('product.modalAddProductLike')
             <div class="row row_row">
                 <div class="item_class_3">
                     <div class="item_class_4 item_1">

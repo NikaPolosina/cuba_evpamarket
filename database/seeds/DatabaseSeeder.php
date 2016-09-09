@@ -379,8 +379,8 @@ class DatabaseSeeder extends Seeder{
             'avatar'     => '',
             'date_birth' => '1990-07-12',
             'country'    => 'Россия',
-            'region_id'  => $this->region['1']->id,
-            'city_id'    => $this->city['1']->id,
+            'region_id'  => $this->region['1']->id_region,
+            'city_id'    => $this->city['1']->id_cities,
             'street'     => 'ул. Липовая',
             'address'    => '34',
         ]);
@@ -391,8 +391,8 @@ class DatabaseSeeder extends Seeder{
             'avatar'     => '',
             'date_birth' => '1991-03-22',
             'country'    => 'Россия',
-            'region_id'  => $this->region['1']->id,
-            'city_id'    => $this->city['2']->id,
+            'region_id'  => $this->region['1']->id_region,
+            'city_id'    => $this->city['2']->id_cities,
             'street'     => 'ул. Роговца',
             'address'    => '8',
         ]);
@@ -403,8 +403,8 @@ class DatabaseSeeder extends Seeder{
             'avatar'     => '',
             'date_birth' => '1992-04-09',
             'country'    => 'Россия',
-            'region_id'  => $this->region['2']->id,
-            'city_id'    => $this->city['3']->id,
+            'region_id'  => $this->region['2']->id_region,
+            'city_id'    => $this->city['3']->id_cities,
             'street'     => 'ул. Парковая',
             'address'    => '12',
         ]);
@@ -415,8 +415,8 @@ class DatabaseSeeder extends Seeder{
             'avatar'     => '',
             'date_birth' => '1986-01-12',
             'country'    => 'Россия',
-            'region_id'  => $this->region['2']->id,
-            'city_id'    => $this->city['4']->id,
+            'region_id'  => $this->region['2']->id_region,
+            'city_id'    => $this->city['4']->id_cities,
             'street'     => 'ул. Гаупа',
             'address'    => '6',
         ]);

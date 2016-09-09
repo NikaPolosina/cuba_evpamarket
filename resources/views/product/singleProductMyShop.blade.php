@@ -11,12 +11,12 @@
 
             </div>
             <div class="col-xs-11 col-sm-11">
-                @include('product.products.showSingleProductInfo')
+                @include('product.showSingleProductInfo')
             </div>
         </div>
     </div>
 
-    @include('product.products.productModalEdit')
+    @include('product.productModalEdit')
     @include('file_upload')
 
     <script>

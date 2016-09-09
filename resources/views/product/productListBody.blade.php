@@ -1,5 +1,3 @@
-<link href="../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css"/>
-<link href="../assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css"/>
 <div class="row">
     <div class="col-sm-12">
 
@@ -7,9 +5,6 @@
             <div class="portlet sale-summary">
                 <div class="portlet-title">
                     <div class="caption font-red sbold"> Продано Товаров</div>
-                    {{--   <div class="tools">
-                           <a class="reload" href="javascript:;"> </a>
-                       </div>--}}
                 </div>
                 <div class="portlet-body">
                     <ul class="list-unstyled">
@@ -51,7 +46,6 @@ if(isset($company)){
 }
 
 ?>
-
 
 <table class="table table-bordered table-striped table-hover" style="display: <?=(isset($hide)) ? 'none' : '' ?>;">
     <thead>
@@ -109,7 +103,7 @@ if(isset($company)){
     {{-- */$x=0;/* --}}
     @foreach ($products as $item)
         {{-- */$x++;/* --}}
-        @include('product.products.singleProductTr', array('item' => $item))
+        @include('product.singleProductTr', array('item' => $item))
     @endforeach
     </tbody>
 </table>
