@@ -58,12 +58,12 @@
                                         <div class="caption">
                                             <i class="icon-bar-chart font-green-haze"></i>
                                             <span class="caption-subject bold uppercase font-green-haze"> Статистика</span>
-                                            <span class="caption-helper">сдесь можно наглядно увидить статистику</span>
+                                            <span class="caption-helper"> за текущий месяц.</span>
                                         </div>
 
                                     </div>
                                     <div class="portlet-body">
-                                        <div id="chart_2" class="chart" style="height: 400px;"> </div>
+                                        <div id="chart_2" class="chart" style="height: 300px;"> </div>
                                     </div>
                                 </div>
                                 <!-- END CHART PORTLET-->
@@ -80,16 +80,7 @@
 
 
 
-
-
-
-
-
-
-
 <script src="/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-
-
 <script src="/assets/global/plugins/amcharts/amcharts/amcharts.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/amcharts/amcharts/serial.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/amcharts/amcharts/pie.js" type="text/javascript"></script>
@@ -101,6 +92,16 @@
 <script src="/assets/global/plugins/amcharts/ammap/maps/js/worldLow.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/amcharts/amstockcharts/amstock.js" type="text/javascript"></script>
 
+    <script>
+        var data = [
+            @foreach($chart as $r)
+                {"date": "{{$r['data']}}", "money": "{{$r['money']}}"},
+            @endforeach
+        ];
+        console.log($chart);
+
+
+    </script>
 
 <script src="/assets/pages/scripts/charts-amcharts.js" type="text/javascript"></script>
 

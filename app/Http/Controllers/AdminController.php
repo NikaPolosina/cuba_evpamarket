@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use App\Category;
 use App\City;
 use App\Http\Requests;
@@ -12,6 +12,7 @@ use App\UserInformation;
 use App\Company;
 use Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller{
 
@@ -64,10 +65,43 @@ class AdminController extends Controller{
         $company->perDayAmount = OrderController::getAmount($company->id, 0);
         $company->perWeekAmount = OrderController::getAmount($company->id, 7);
         $company->totalAmount = OrderController::getAmount($company->id, 365);
-
-        return view('admin.company.aboutSingleShop')->with('company', $company);
+        $chData =  $this->chData($id);
+        
+        return view('admin.company.aboutSingleShop')->with('company', $company)->with('chart', $chData);
     }
-    
+    public function chData($id){
+        $monthStart = Carbon::now()->startOfMonth();
+        $monthEnd = Carbon::now()->endOfMonth();
+
+        $orsders = Company::find($id)
+            ->getOrder()
+            ->select([DB::raw('sum(order.total_price) AS total_sales'), 'order.updated_at'])
+            ->where('status', 16)
+            ->whereBetween('updated_at', [
+                $monthStart,
+                $monthEnd
+            ])
+            ->groupBy('updated_at')
+            ->get();
+        $chartData = array();
+        foreach ($orsders as $day) {
+            $chartData[$day->updated_at->format('Y-m-d')] = $day->total_sales;
+        }
+        $days = Carbon::today()->daysInMonth;
+
+        $chData = array();
+        for($i = 0; $i < $days; $i++){
+            $date = Carbon::now()->startOfMonth()->addDay($i)->format('Y-m-d');
+            $money = 0;
+            if(array_key_exists($date, $chartData)){
+                $money = $chartData[$date];
+            }
+
+            $chData[] = array('data'=>Carbon::now()->startOfMonth()->addDay($i)->format('Y-m-d'), 'money'=>$money);
+        }
+        return $chData;
+
+    }
     public function category(){
         $category = Category::all();
         return view('admin.category.show')->with('category', $category);

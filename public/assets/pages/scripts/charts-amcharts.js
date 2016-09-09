@@ -1,5 +1,6 @@
-var ChartsAmcharts = function() {
 
+
+var ChartsAmcharts = function() {
     var initChartSample2 = function() {
         var chart = AmCharts.makeChart("chart_2", {
             "type": "serial",
@@ -12,47 +13,7 @@ var ChartsAmcharts = function() {
                 "valueAlign": "left",
                 "valueWidth": 120
             },
-            "dataProvider": [{
-                "date": "2012-01-01",
-                "money": 643,
-            }, {
-                "date": "2012-01-02",
-                "money": 371,
-            }, {
-                "date": "2012-01-03",
-                "money": 433,
-            }, {
-                "date": "2012-01-04",
-                "money": 345,
-            }, {
-                "date": "2012-01-05",
-                "money": 480,
-            }, {
-                "date": "2012-01-06",
-                "money": 386,
-            }, {
-                "date": "2012-01-07",
-                "money": 348,
-            }, {
-                "date": "2012-01-08",
-                "money": 238,
-            }, {
-                "date": "2012-01-09",
-                "money": 218,
-            }, {
-                "date": "2012-01-10",
-                "money": 349,
-            }, {
-                "date": "2012-01-11",
-                "money": 603,
-            }, {
-                "date": "2012-01-12",
-                "money": 534,
-            }, {
-                "date": "2012-01-13",
-            }, {
-                "date": "2012-01-14",
-            }],
+            "dataProvider": data,
             "valueAxes": [{
                 "id": "moneyAxis",
                 "axisAlpha": 0,

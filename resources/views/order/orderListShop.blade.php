@@ -3,7 +3,7 @@
 @section('content')
 
     @include('layouts.header_menu')
-    <link href="/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css"/>
 
     <div class="row">
         <div class="col-sm-12">
@@ -17,10 +17,14 @@
         </div>
         <div class="col-md-2">
             <div class="list-group-item list-group-item-info" style="text-align: center">Статусы</div>
-            <a class="list-group-item" href="/order-by-status/{{$company->id}}/0"><div>Все заказы</div></a>
-        @foreach($myStatus as $val)
-                <a class="list-group-item" href="/order-by-status/{{$company->id}}/{{$val->getStatusOwner->id}}"><div>{{$val->getStatusOwner->title}}</div></a>
-                @endforeach
+            <a class="list-group-item" href="/order-by-status/{{$company->id}}/0">
+                <div>Все заказы</div>
+            </a>
+            @foreach($myStatus as $val)
+                <a class="list-group-item" href="/order-by-status/{{$company->id}}/{{$val->getStatusOwner->id}}">
+                    <div>{{$val->getStatusOwner->title}}</div>
+                </a>
+            @endforeach
 
         </div>
         <div class="col-md-10">
@@ -29,17 +33,18 @@
 
                 <div class="portlet-body">
 
-                    <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                    <table class="table table-striped table-bordered table-hover table-checkable order-column"
+                           id="sample_1">
                         <thead>
                         <tr>
-                            <th> # </th>
-                            <th> Покупатель </th>
-                            <th> Номер телефона </th>
-                            <th> Адресс доставки </th>
-                            <th> Сумма заказа </th>
-                            <th> Сумма заказа с учётом скидки </th>
-                            <th> Скидка в процентах </th>
-                            <th> Статус </th>
+                            <th> #</th>
+                            <th> Покупатель</th>
+                            <th> Номер телефона</th>
+                            <th> Адресс доставки</th>
+                            <th> Сумма заказа</th>
+                            <th> Сумма заказа с учётом скидки</th>
+                            <th> Скидка в процентах</th>
+                            <th> Статус</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -51,25 +56,30 @@
                             {{-- */$x++;/* --}}
                             <tr class="odd gradeX">
                                 <td> {{ $x }} </td>
-                                <td><a href="/show-simple-order/{{$item->id}}"> {{$item->name}} {{$item->surname}}</a></td>
+                                <td><a href="/show-simple-order/{{$item->id}}"> {{$item->name}} {{$item->surname}}</a>
+                                </td>
                                 <td> {{$item->order_phone}}</td>
 
-                                <td> Регион: {{$item->region}}, г. {{$item->city}}, {{$item->street}} {{$item->address}} </td>
-                                <td style="text-align: center"> {{$item->total_price}} <span> руб.</span> </td>
-                                <td style="color: red; text-align: center"> {{$item->discount_price}} <span> руб.</span> </td>
-                                <td style="color: red; text-align: center"> {{$item->percent}} <span> %</span> </td>
+                                <td> Регион: {{$item->region}}, г. {{$item->city}}
+                                    , {{$item->street}} {{$item->address}} </td>
+                                <td style="text-align: center"> {{$item->total_price}} <span> руб.</span></td>
+                                <td style="color: red; text-align: center"> {{$item->discount_price}} <span> руб.</span>
+                                </td>
+                                <td style="color: red; text-align: center"> {{$item->percent}} <span> %</span></td>
 
                                 <td>
 
                                     <div class="btn-group">
-                                        <button class="btn btn-xs dropdown-toggle {{$item->getStatusOwner->key}}" type="button" data-toggle="dropdown" aria-expanded="false"> {{$item->getStatusOwner->title}}
+                                        <button class="btn btn-xs dropdown-toggle {{$item->getStatusOwner->key}}"
+                                                type="button" data-toggle="dropdown"
+                                                aria-expanded="false"> {{$item->getStatusOwner->title}}
                                             @if($item->getStatusOwner->key !== 'sending_buyer')
 
-                                            <i class="fa fa-angle-down"></i>
+                                                <i class="fa fa-angle-down"></i>
                                         </button>
 
 
-                                        <ul class="dropdown-menu" role="menu">
+                                        <ul class="dropdown-menu" style="left: -135px;" role="menu">
                                             @foreach($status as $st)
                                                 <li>
                                                     <a href="{{route('change_order_status', [$item->id, $st->id])}}">
@@ -78,7 +88,7 @@
                                             @endforeach
 
                                         </ul>
-                                            @endif
+                                        @endif
                                     </div>
                                 </td>
 
@@ -97,52 +107,68 @@
             margin-right: 0px;
             margin-left: 0px;
         }
-        .badge{
+
+        .badge {
             background-color: red
         }
-        .not_processed{
+
+        .not_processed {
             background-color: green;
         }
-        .call{
+
+        .call {
             background-color: #0b94ea;
         }
-        .refusal_payment{
+
+        .refusal_payment {
             background-color: red;
         }
-        .details{
+
+        .details {
             background-color: gold;
         }
-        .verification{
+
+        .verification {
             background-color: yellow;
         }
-        .delivery_warehouse{
+
+        .delivery_warehouse {
             background-color: #00c4ff;
         }
-        .no_answer{
+
+        .no_answer {
             background-color: orange;
         }
-        .available{
+
+        .available {
             background-color: #2ae0bb;
         }
-        .waiting_payment{
+
+        .waiting_payment {
             background-color: #4d9200;
         }
-        .waiting_confirmation_payment{
+
+        .waiting_confirmation_payment {
             background-color: burlywood;
         }
-        .payment_successful{
+
+        .payment_successful {
             background-color: deeppink;
         }
-        .formation_order{
+
+        .formation_order {
             background-color: mediumpurple;
         }
-        .packaging{
+
+        .packaging {
             background-color: salmon;
         }
-        .send_intermediate_storage{
+
+        .send_intermediate_storage {
             background-color: lightpink;
         }
-        .sending_buyer{
+
+        .sending_buyer {
             background-color: lawngreen;
         }
 
