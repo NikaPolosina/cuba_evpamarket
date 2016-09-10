@@ -55,8 +55,8 @@ class OrderController extends Controller{
 
         $user = Auth::user();
         $info_user =  $user->getUserInformation;
-        $region = Region::find($info_user['region_id']);
-        $city = City::find($info_user['city_id']);
+        $region = Region::where('id_region', $info_user['region_id'])->first();
+        $city = City::where('id_cities', $info_user['city_id'])->first();
 
         $owner = $company->getUser;
         $status = StatusOwner::where('key','sending_buyer')->get();
