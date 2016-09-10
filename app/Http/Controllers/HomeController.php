@@ -23,10 +23,12 @@ use Illuminate\Support\Facades\Cookie;
 class HomeController extends Controller{
 
     protected $_msg;
+    protected $_companyController;
 
-    public function __construct(MessageController $messageController){
+    public function __construct(MessageController $messageController, CompanyController $companyController){
         $this->middleware('auth');
         $this->_msg = $messageController;
+        $this->_companyController = $companyController;
     }
 
     public function Index(){
@@ -67,11 +69,11 @@ class HomeController extends Controller{
         return view('user.simple_user.home')->with('userInfo', $userInfo)->with('order', $order)->with('user', $curentUser)->with('groupInvites', $groupInvites);
     }
 
-    public function registerOwner(CompanyController $companyController){
+    public function registerOwner(){
         if(Auth::check()){
             $curentUser = Auth::user();
             foreach($curentUser->getCompanies as $value){
-                $value->company_logo = $companyController->showCompanyLogo($value->id);
+                $value->company_logo = $this->_companyController->showCompanyLogo($value->id);
             }
             $userInfo = $curentUser->getUserInformation;
 

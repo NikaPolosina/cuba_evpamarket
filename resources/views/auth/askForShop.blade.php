@@ -7,7 +7,7 @@
 
         <div class="row margin-bottom-40 stories-header" data-auto-height="true">
             <div class="col-md-12">
-                <h1>Привет {{$userInfo->name}} !!!</h1>
+                {{--<h1>Привет {{$userInfo->name}} !!!</h1>--}}
                 <h2>Выбери род своей деятельности</h2>
             </div>
         </div>

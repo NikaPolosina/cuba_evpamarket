@@ -189,13 +189,13 @@ class UserController extends Controller{
 
         if($request->input('role') == 'simple_user'){
             $curentUser->detachRoles($curentUser->roles);
-            $curentUser->attachRole(Role::findOrFail(2));
+            $curentUser->attachRole(Role::where('name', 'simple_user')->first());
             return $homeController->registerSimple();
         }
 
         if($request->input('role') == 'company_owner'){
             $curentUser->detachRoles($curentUser->roles);
-            $curentUser->attachRole(Role::findOrFail(1));
+            $curentUser->attachRole(Role::where('name', 'company_owner')->first());
             return $homeController->registerOwner();
         }
     }

@@ -98,16 +98,18 @@ class BaseStructure extends Migration{
             $table->string('company_logo');
             $table->text('company_content');
             $table->text('country');
-            $table->integer('region_id')->unsigned();
-            $table->integer('city_id')->unsigned();
+            $table->integer('region_id')->unsigned()->nullable();
+            $table->integer('city_id')->unsigned()->nullable();
             $table->string('street');
             $table->string('address');
             $table->text('company_contact_info');
             $table->longText('company_additional_info');
             $table->boolean('block')->default(0);
             $table->timestamps();
-            $table->foreign('region_id')->references('id')->on('regions');
-            $table->foreign('city_id')->references('id')->on('cities');
+            //$table->foreign('region_id')->references('id')->on('regions');
+            //$table->foreign('city_id')->references('id')->on('cities');
+            $table->foreign('region_id')->references('id_region')->on('regions');//->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('city_id')->references('id_cities')->on('cities')->onUpdate('cascade')->onDelete('set null');
         });
         //Create table for company_user
         Schema::create('company_user', function (Blueprint $table) {
@@ -160,9 +162,8 @@ class BaseStructure extends Migration{
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
 
-//            $table->foreign('region_id')->references('id_region')->on('regions')->onUpdate('cascade')->onDelete('cascade');
-//            $table->foreign('region_id')->references('id_region')->on('regions');
-//            $table->foreign('city_id')->references('id_cities')->on('cities');
+            $table->foreign('region_id')->references('id_region')->on('regions')->onUpdate('cascade')->onDelete('set null');
+            $table->foreign('city_id')->references('id_cities')->on('cities')->onUpdate('cascade')->onDelete('set null');
         });
         //Create table for category_company
         Schema::create('category_company', function (Blueprint $table){
@@ -301,7 +302,7 @@ class BaseStructure extends Migration{
             $table->integer('group_id')->unsigned();
             $table->float('money')->nullable();
             $table->timestamps();
-            
+
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('group_id')->references('id')->on('groups');
         });
@@ -341,35 +342,5 @@ class BaseStructure extends Migration{
         Schema::drop('category');
         Schema::drop('cities');
         Schema::drop('regions');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

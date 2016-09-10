@@ -40,28 +40,23 @@ class CompanyController extends Controller{
             ->with('user', $user);
     }
 
-    public function store(Request $request){
+    public function store(Request $request, Company $company){
+
+        $company->company_name = $request['company_name'];
+        $company->company_description = $request['company_description'];
+        $company->company_logo = $request['company_logo'];
+        /* 'company_content'     => $request['company_content'],*/
+        $company->company_contact_info = $request['company_contact_info'];
+        $company->region_id = $request->input('region');
+        $company->city_id = $request->input('city');
+        $company->street = $request->input('street');
+        $company->address = $request->input('address');
+        $company->country = 'Росcия';
 
 
-        $company = Company::create([
-            'company_name'         => $request['company_name'],
-            'company_description'  => $request['company_description'],
-            'company_logo'         => $request['company_logo'],
-            /* 'company_content'     => $request['company_content'],*/
-            'company_contact_info' => $request['company_contact_info'],
-            'region_id'            => $request->input('region'),
-            'city_id'              => $request->input('city'),
-            'street'               => $request->input('street'),
-            'address'              => $request->input('address'),
-            'country'              => 'Росcия',
-        ]);
 
-
-        $company->save();
-        if($company){
-            $curentUser = Auth::user();
-            $curentUser->getCompanies()->save($company);
-        }
+        $curentUser = Auth::user();
+        $curentUser->getCompanies()->save($company);
 
        if(!empty($request['company_logo'])){
            $dir = public_path().'/img/custom/companies/'.$company['id'];
@@ -92,7 +87,8 @@ class CompanyController extends Controller{
             'company_content' => $request['company_content']
         ];
         $company->update($company_content);
-        return redirect()->intended('homeOwnerUser');
+
+        return redirect()->route('homeOwnerUser');
     }
 
     public function createCompany(array $company){

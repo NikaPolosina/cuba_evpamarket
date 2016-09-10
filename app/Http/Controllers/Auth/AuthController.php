@@ -93,7 +93,7 @@ class AuthController extends Controller{
 
     }*/
 
-    public function registerAditional(Request $request){
+    public function registerAditional(Request $request, UserInformation $userInformation){
 
 
         $userinfo =  Auth::user()->getUserInformation;
@@ -113,26 +113,21 @@ class AuthController extends Controller{
            }
 
            if(Auth::user()){
-               
-               $userinfo = UserInformation::create([
-                   'name'       => $request->input('name'),
-                   'user_id'       => Auth::user()->id,
-                   'surname'    => $request->input('surname'),
-                   'date_birth' => Carbon::createFromFormat('Y.m.d', $request->input('date_birth')),
-                   'gender'     => $request->input('gender'),
-                   'region_id'  => $request->input('region'),
-                   'city_id'    => $request->input('city'),
-                   'street'     => $request->input('street'),
-                   'address'    => $request->input('address'),
-                   'country'    => 'Росcия',
-               ]);
-die('Surprise, you are here !!!');
 
+               $userInformation->name = $request->input('name');
+               $userInformation->surname    = $request->input('surname');
+               $userInformation->date_birth = Carbon::createFromFormat('Y.m.d', $request->input('date_birth'));
+               $userInformation->gender     = $request->input('gender');
+               $userInformation->region_id  = $request->input('region');
+               $userInformation->city_id    = $request->input('city');
+               $userInformation->street     = $request->input('street');
+               $userInformation->address    = $request->input('address');
+               $userInformation->country    = 'Росcия';
+               Auth::user()->getUserInformation()->save($userInformation);
 
-               Auth::user()->getUserInformation()->save($userinfo);
            }
        }
-        return view('auth/askForShop')->with('userInfo', $userinfo);
+        return view('auth/askForShop')->with('userInfo', Auth::user()->getUserInformation);
     }
 
     public function registerC(){
