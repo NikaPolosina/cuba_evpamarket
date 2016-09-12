@@ -13,7 +13,7 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail</label>
+                            <label class="col-md-4 control-label">E-Mail <span class="required_css">*</span></label>
 
                             <div class="col-md-6">
                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}">
@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Телефон</label>
+                            <label class="col-md-4 control-label">Телефон <span class="required_css">*</span></label>
 
                             <div class="col-md-6">
                                 <input type="phone" class="form-control" name="phone" value="{{ old('phone') }}">
@@ -44,7 +44,7 @@
 
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Пароль</label>
+                            <label class="col-md-4 control-label">Пароль <span class="required_css">*</span></label>
 
                             <div class="col-md-6">
                                 <input type="password" class="form-control" name="password">
@@ -58,7 +58,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Подтвердите свой пароль</label>
+                            <label class="col-md-4 control-label">Подтвердите свой пароль <span class="required_css">*</span></label>
 
                             <div class="col-md-6">
                                 <input type="password" class="form-control" name="password_confirmation">
@@ -87,3 +87,9 @@
 </div>
     {!! HTML::script('/js/registerList.js') !!}
 @endsection
+
+<style>
+    .required_css{
+        color: red;
+    }
+</style>

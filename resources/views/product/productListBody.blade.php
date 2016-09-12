@@ -84,8 +84,9 @@ if(isset($company)){
 
 
     <div class="button_holder" style="display: <?=(isset($hide)) ? 'none' : 'block' ?>;">
-        <span class="open btn btn-success btn-sm">Добавить продукт</span>
-        <a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">Удалить продукт</a>
+        <a href="" id="destroycheck" class="destroycheck btn btn-danger  btn-sm">Удалить продукт</a>
+        <span class="open btn btn-success btn-sm pull-left">Добавить продукт</span>
+
     </div>
     <tr style="background-color: #e6f9eb">
         <th></th>
@@ -108,8 +109,8 @@ if(isset($company)){
     </tbody>
 </table>
 <div class="button_holder" style="display: <?=(isset($hide)) ? 'none' : 'block' ?>;">
-    <span class="open btn btn-success btn-sm">Добавить продукт</span>
-    <a href="" id="destroycheck" class="destroycheck btn btn-danger pull-left btn-sm">Удалить продукт</a>
+    <a href="" id="destroycheck" class="destroycheck btn btn-danger  btn-sm">Удалить продукт</a>
+    <span class="open btn btn-success btn-sm pull-left">Добавить продукт</span>
 </div>
 <div class="paginate">
     <?php echo $products->render(); ?>

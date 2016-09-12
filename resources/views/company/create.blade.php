@@ -36,7 +36,7 @@
                         <div class="col-lg-7">
                                 <span class="btn btn-success fileinput-button">
                                     <i class="glyphicon glyphicon-plus"></i>
-                                    <span>Выбрать файл...</span>
+                                    <span>Выбрать картинку...</span>
                                     <input type="file" name="files[]">
                                 </span>
                             <button type="button" class="btn btn-danger delete">

@@ -1,6 +1,6 @@
 {{----------------------------------------------------------------------------------------------------------------------------}}
 <div  class="form-group{{ $errors->has('region') ? ' has-error' : '' }}">
-    <label class="col-md-4 control-label">Регион</label>
+    <label class="col-md-4 control-label">Регион <span class="required_css">*</span></label>
     <div class="col-md-6">
         <div class="form-group" style="margin: 0px">
             <select class="chosen-select" name="region" id="sel1">
@@ -75,7 +75,7 @@
 </script>
 {{----------------------------------------------------------------------------------------------------------------------------}}
 <div style="display: none" id="sel2_holder" class="form-group{{ $errors->has('city_id') ? ' has-error' : '' }}">
-    <label class="col-md-4 control-label">Город</label>
+    <label class="col-md-4 control-label">Город <span class="required_css">*</span></label>
     <div class="col-md-6">
         <div {{--class="form-group"--}}>
             <select class="chosen"  name="city" id="sel2">

@@ -75,7 +75,7 @@
                     <select class="chosen-select" name="region" id="sel1">
                         {{--<option value="{{$user->region_id}}">{{$region_tile->title}}</option>--}}
                         @foreach($region as $value)
-                            <option value="{{$value->id}}">{{$value->title}}</option>
+                            <option value="{{$value->id_region}}">{{$value->title}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -104,7 +104,7 @@
 
                                 $.each(data, function(index, value) {
 
-                                    selector.append('<option value="'+value.id+'">'+value.title_cities+'</option>');
+                                    selector.append('<option value="'+value.id_cities+'">'+value.title_cities+'</option>');
                                 });
 
                                 $('.chosen').chosen({no_results_text: "Oops, nothing found!"}).trigger("chosen:updated")
@@ -127,7 +127,7 @@
 
                     <select class="chosen-select"  name="city" id="sel2">
                         @foreach($city as $value)
-                            <option value="{{$value->id}}">{{$value->title_cities}}</option>
+                            <option value="{{$value->id_cities}}">{{$value->title_cities}}</option>
                         @endforeach
                     </select>
                 </div>

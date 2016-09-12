@@ -14,7 +14,7 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Имя</label>
+                            <label class="col-md-4 control-label">Имя <span class="required_css">*</span></label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="name" value="{{ old('name') }}">
@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('surname') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Фамилия</label>
+                            <label class="col-md-4 control-label">Фамилия <span class="required_css">*</span></label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="surname" value="{{ old('surname') }}">
@@ -49,7 +49,7 @@
 
 
                         <div class="form-group{{ $errors->has('date_birth') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Дата рождения</label>
+                            <label class="col-md-4 control-label">Дата рождения <span class="required_css">*</span></label>
 
                             <div class="col-md-6">
 
@@ -65,7 +65,7 @@
 
 
                         <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Пол</label>
+                            <label class="col-md-4 control-label">Пол <span class="required_css">*</span></label>
 
                             <div class="col-md-6">
 
@@ -147,3 +147,8 @@
 
 
 @endsection
+<style>
+    .required_css{
+        color: red;
+    }
+</style>

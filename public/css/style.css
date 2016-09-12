@@ -1,3 +1,6 @@
+.required_css{
+    color: red;
+}
 
 .nav_li_menu>li a{
   float: left!important;

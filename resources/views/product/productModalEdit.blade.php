@@ -94,7 +94,7 @@
                                     <div class="col-sm-4 col-sm-offset-4">
                                                 <span class="btn btn-success fileinput-button">
                                                     <i class="glyphicon glyphicon-plus"></i>
-                                                    <span>Добавить файл..</span>
+                                                    <span>Добавить картинку..</span>
                                                     <input type="file" name="files[]" multiple>
                                                 </span>
                                     </div>

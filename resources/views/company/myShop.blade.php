@@ -48,7 +48,19 @@
                                 <td> {{$item->company_description}} </td>
                                 <td> {{$item->street}} {{$item->address}}</td>
                                 <td align="center">
-                                     <span class="badge">@if(count($item->getOrder) > 0){{count($item->getOrder)}}@endif</span>
+
+                                    @if(count($item->getOrder) > 0)
+                                        <a href="order-by-status/{{$item->id}}/1"> <span class="badge">@if(count($item->getOrder) > 0){{count($item->getOrder)}}@endif</span></a>
+                                    @else
+                                        <a href="/show-order/{{$item->id}}"><span class="badge">@if(count($item->getOrder) > 0){{count($item->getOrder)}}@endif</span></a>
+
+                                    @endif
+
+
+
+
+
+
                                 </td>
 
                             </tr>

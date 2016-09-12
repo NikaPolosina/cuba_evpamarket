@@ -277,7 +277,7 @@
                                             </h3>
 
                                             @if($value['discount'])
-                                                <h3>Ваша скидка :  <b><span class="percent">{{$value['discount']['percent']}}</span> %</b></h3>
+                                                <h3>Ваша скидка :  <b><span class="percent">{{$value['discount']['percent']}}</span> %</b> <span style="color: red;">( {{($value['totalAmount']*$value['discount']['percent']/100)}} рублей )</span></h3>
                                             @endif
                                         </div>
                                 </div>
