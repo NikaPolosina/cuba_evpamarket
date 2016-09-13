@@ -1,5 +1,4 @@
-@extends('...layouts.app')
-
+@extends('layouts.app')
 @section('content')
     @include('layouts.header_menu')
 
@@ -32,7 +31,7 @@
         </div>
     </div>
 
-@endsection
+
 <style>
     .ara{
         padding: 20px!important;
@@ -40,3 +39,42 @@
 
 
 </style>
+
+<script>
+    $('div.ara').find('button.tut').on('click', function (e) {
+
+        var c_modal = new CModal({
+            title: 'Подтвердите Ваше действие',
+            body:'<h3>Вы уверены, что хотите удалить?</h3>',
+            confirmBtn:'Удалить',
+            cancelBtn:'Отменить',
+            action: function(){
+                var button = $(e.currentTarget);
+
+                $.ajax({
+                    type    : "POST",
+                    url     :       '/company-destroy-discount/'+button.data('id-company')+'/'+button.data('id-item'),
+                    headers : {
+                        'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data    : {
+
+                    },
+                    success : function(response){
+                        $('form[data-id='+button.data('id-item')+']').remove();
+
+                    },
+                    error   : function(response){
+                        console.log('ajax went wrong');
+                    }
+                });
+
+
+            }
+        });
+        c_modal.show();
+    })
+
+</script>
+
+@endsection

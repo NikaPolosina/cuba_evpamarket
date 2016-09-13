@@ -1,5 +1,5 @@
 
-{{ Form::open(array(  'method' => 'post', 'url' => '/company-create-discount/'.$company->id , 'class' => 'form-inline' )) }}
+{{ Form::open(array(  'method' => 'post', 'url' => '/company-create-discount/'.$company->id , 'class' => 'form-inline', 'data-id' =>(isset($item->id)) ? $item->id : null )) }}
 {!! csrf_field() !!}
 
 {!! Form::hidden('id', (isset($item->id)) ? $item->id : null, ['class' => 'form-control', 'required' => 'required',  'min' => '0']) !!}
@@ -65,9 +65,17 @@
 
     <button type="submit" class="btn btn-primary bt_t"><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span></button>
     @if(isset($item->id))
-        <a href="/company-destroy-discount/{{$company->id}}/{{$item->id}}"> <button type="button"  class="btn btn-danger bt_t"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></a>
+       <button type="button" data-id-company="{{$company->id}}" data-id-item="{{$item->id}}" class="btn btn-danger bt_t tut"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
     @endif
 {{ Form::close() }}
+
+
+
+
+
+
+
+
 <style>
     .form-group>p{
         font-size: 14px;

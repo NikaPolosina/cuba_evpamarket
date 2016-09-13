@@ -32,7 +32,7 @@ Route::any('/company-content', ['as' => 'company-content', 'uses' => 'CompanyCon
 Route::get('/my_shops', ['as' => 'my_shops', 'uses' => 'CompanyController@getMyShop']);
 Route::get('/company-discount-setup/{id}', ['as' => 'company-discount-setup', 'uses' => 'CompanyController@setupDiscount']);
 Route::post('/company-create-discount/{id}', ['as' => 'company-create-discount', 'uses' => 'CompanyController@createDiscount']);
-Route::get('/company-destroy-discount/{company_id}/{discount_id}', ['as' => 'company-destroy-discount', 'uses' => 'CompanyController@destroyDiscount']);
+Route::post('/company-destroy-discount/{company_id}/{discount_id}', ['as' => 'company-destroy-discount', 'uses' => 'CompanyController@destroyDiscount']);
 /*
 Route::get('/company-create-view', ['as' => 'company-create-view', 'uses' => 'CompanyController@create']);*/
 Route::get('company/{id}/edit', 'CompanyController@edit');
