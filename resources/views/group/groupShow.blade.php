@@ -23,7 +23,7 @@
 
             <div class="tab-content">
 
-                <div class="tab-pane active" id="tab_1_1">
+                <div class="tab-pane active list" id="tab_1_1">
                     @include('group.list')
                 </div>
 
@@ -144,6 +144,66 @@
 
             }
         });
+
+        $('div.list').find('.destroy').on('click', function (e) {
+            var c_modal = new CModal({
+                title: 'Подтвердите Ваше действие',
+                body:'<h3>Вы уверены, что хотите удалить этоту группу?</h3>',
+                confirmBtn:'Удалить',
+                cancelBtn:'Отменить',
+                action: function(){
+                    var button = $(e.currentTarget);
+                    $.ajax({
+                        type    : "POST",
+                        url     :       '/group-destroy/'+button.data('id'),
+                        headers : {
+                            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data    : {
+
+                        },
+                        success : function(response){
+                            $('tr[data-id='+button.data('id')+']').remove();
+
+                        },
+                        error   : function(response){
+                            console.log('ajax went wrong');
+                        }
+                    });
+                }
+            });
+            c_modal.show();
+        })
+        $('div.list').find('.left').on('click', function (e) {
+            var c_modal = new CModal({
+                title: 'Подтвердите Ваше действие',
+                body:'<h3>Вы уверены, что хотите покинуть эту группу?</h3>',
+                confirmBtn:'Покинуть',
+                cancelBtn:'Отменить',
+                action: function(){
+                    var button = $(e.currentTarget);
+                    $.ajax({
+                        type    : "POST",
+                        url     :       '/group-left/'+button.data('id'),
+                        headers : {
+                            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data    : {
+
+                        },
+                        success : function(response){
+                            $('tr[data-id='+button.data('id')+']').remove();
+
+                        },
+                        error   : function(response){
+                            console.log('ajax went wrong');
+                        }
+                    });
+                }
+            });
+            c_modal.show();
+        })
+
     </script>
 
 

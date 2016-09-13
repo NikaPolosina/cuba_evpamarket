@@ -28,7 +28,7 @@
     @foreach($my_group as $item)
 
         {{-- */$x++;/* --}}
-        <tr class="odd gradeX">
+        <tr class="odd gradeX" data-id="{{$item->id}}">
             <td>
                 <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
                     <input type="checkbox" class="checkboxes" value="1" />
@@ -48,9 +48,9 @@
             </td>
             <td>
                 @if($item->pivot->is_admin)
-                    <a href="/group-destroy/{{$item->id}}"><button type="button" class="btn btn-danger">Удалить</button></a>
+                    {{--<a href="/group-destroy/{{$item->id}}">--}}<button data-id="{{$item->id}}" type="button" class="btn btn-danger destroy">Удалить</button>{{--</a>--}}
                 @else
-                    <a href="/group-left/{{$item->id}}"><button type="button" class="btn btn-primary">Покинуть</button></a>
+                    {{--<a href="/group-left/{{$item->id}}">--}}<button data-id="{{$item->id}}" type="button" class="btn btn-primary left">Покинуть</button>{{--</a>--}}
                 @endif
             </td>
         </tr>
@@ -62,7 +62,6 @@
         <h2>У Вас нет ни одной группы.</h2>
 
     @endif
-
 
 
 
