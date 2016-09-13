@@ -15,14 +15,14 @@
     {!! Form::open(['url' => 'company-done-create', 'class' => 'form-horizontal company_form', 'id'=>'fileupload']) !!}
 
                 <div class="form-group {{ $errors->has('company_name') ? 'has-error' : ''}}">
-                {!! Form::label('company_name', 'Название магазина: ', ['class' => 'col-sm-2 control-label']) !!}
+                    <label class="col-sm-2  control-label" for="company_name">Название магазина: <span class="required_css">*</span> </label>
                 <div class="col-sm-4">
                     {!! Form::text('company_name', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('company_name', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('company_description') ? 'has-error' : ''}}">
-                {!! Form::label('company_description', 'Описание магазина: ', ['class' => 'col-sm-2 control-label']) !!}
+                <label class="col-sm-2  control-label" for="company_description">Описание магазина: <span class="required_css">*</span> </label>
                 <div class="col-sm-4">
                     {!! Form::text('company_description', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('company_description', '<p class="help-block">:message</p>') !!}
@@ -30,6 +30,7 @@
             </div>
 
             <div class="form-group">
+
                 {!! Form::label('company_logo', 'Логотип: ', ['class' => 'col-sm-2 control-label']) !!}
                 <div class="col-sm-4">
                     <div class="row fileupload-buttonbar">
@@ -60,7 +61,7 @@
                 </div>
             </div>
             <div  style="padding: 0px 15px 0px 15px;" class="form-group{{ $errors->has('region') ? ' has-error' : '' }}">
-                <label class="col-md-2 control-label">Регион</label>
+                <label class="col-sm-2  control-label" for="region">Регион: <span class="required_css">*</span> </label>
                 <div class="col-md-4">
                     <div class="form-group">
                         <select class="chosen-select" name="region" id="sel1">
@@ -113,7 +114,8 @@
         </script>
 
             <div style="padding: 0px 15px 0px 15px;" id="sel2_holder" class="form-group{{ $errors->has('city_id') ? ' has-error' : '' }}">
-                <label class="col-md-2 control-label">Город</label>
+
+                <label class="col-sm-2  control-label" for="city">Город: <span class="required_css">*</span> </label>
                 <div class="col-md-4">
                     <div class="form-group">
 
@@ -128,7 +130,7 @@
             </div>
 
             <div class="form-group{{ $errors->has('street') ? ' has-error' : '' }}">
-                <label class="col-md-2 control-label">Улица</label>
+                <label class="col-md-2 control-label">Улица: </label>
                 <div class="col-md-4">
                     <input type="text" class="form-control" name="street" value="{{--{{ old('street') }}--}}{{$user->street}}">
                     @if ($errors->has('street'))
@@ -140,7 +142,7 @@
             </div>
 
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-                <label class="col-md-2 control-label">Дом</label>
+                <label class="col-md-2 control-label">Дом: </label>
                 <div class="col-md-1">
                     <input type="text" class="form-control" name="address" value="{{--{{ old('address') }}--}} {{$user->address}}">
 

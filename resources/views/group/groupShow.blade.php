@@ -36,16 +36,18 @@
 
 
                     <div class="form-group {{ $errors->has('group_name') ? 'has-error' : ''}}">
-                        {!! Form::label('group_name', 'Имя группы: ', ['class' => 'col-sm-4 control-label']) !!}
+                        <label class="col-md-4 control-label" for="group_name">'Имя группы: <span class="required_css">*</span> </label>
+                     {{--   {!! Form::label('group_name', 'Имя группы: ', ['class' => 'col-sm-4 control-label']) !!}--}}
                         <div class="col-sm-6">
-                            {!! Form::text('group_name', NULL, ['class' => 'form-control', 'required' => 'required']) !!}
+                            {!! Form::text('group_name', NULL, ['class' => 'form-control group_name', 'required' => 'required']) !!}
                             {!! $errors->first('group_name', '<p class="help-block">:message</p>') !!}
                         </div>
                     </div>
 
 
                     <div class="form-group{{ $errors->has('my_company') ? ' has-error' : '' }}">
-                        <label class="col-md-4 control-label">Компании</label>
+                      {{--  <label class="col-md-4 control-label">Компании</label>--}}
+                        <label class="col-md-4 control-label" for="">Компании:<span class="required_css">*</span> </label>
                         <div class="col-md-6">
                             <div class="form-group" style="margin: 0px">
 
@@ -116,7 +118,10 @@
         }
         $('.chosen-select').change(function(){
             var val = $(this).find('option:selected').text();
-            $('.chosen-select').parents('.form-inline').find('input#group_name').val(val);
+            if($('.chosen-select').parents('.form-inline').find('input.group_name').val() == ''){
+                $('.chosen-select').parents('.form-inline').find('input.group_name').val(val);
+
+            }
         });
 
 

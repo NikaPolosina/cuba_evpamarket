@@ -30,7 +30,7 @@
                                 </div>
 
                                 <div class="form-group {{ $errors->has('category_name') ? 'has-error' : ''}}">
-                                    {!! Form::label('category_name', 'Категория: ', ['class' => 'col-sm-3 control-label']) !!}
+                                    <label class="col-sm-3 control-label" for="category_name">Категория: <span class="required_css">*</span> </label>
                                     <select name="category_name" data-name="category_name">
                                             @if(count($myCategories))
                                                 <option value="">Выбирите категорию</option>
@@ -47,7 +47,8 @@
                                 </div>
 
                                 <div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
-                                    {!! Form::label('product_name', 'Товар: ', ['class' => 'col-sm-3 control-label']) !!}
+
+                                    <label class="col-sm-3 control-label" for="product_name">Товар: <span class="required_css">*</span> </label>
                                     {!! Form::text('product_name', NULL, ['class' => 'form-control', 'data-name' =>'name']) !!}
 
                                     <div style="display: none" class="error" data-id="name">
@@ -57,7 +58,7 @@
 
 
                                 <div class="form-group {{ $errors->has('product_description') ? 'has-error' : ''}}">
-                                    {!! Form::label('product_description', 'Краткое описание: ', ['class' => 'col-sm-3 control-label']) !!}
+                                    <label class="col-sm-3 control-label" for="product_description">Краткое описание: <span class="required_css">*</span> </label>
                                     {!! Form::text('product_description', NULL, ['class' => 'form-control', 'required' => 'required', 'data-name' =>'description']) !!}
 
                                     <div style="display: none" class="error" data-id="description">
@@ -74,7 +75,8 @@
                                 {!! Form::hidden('product_image', NULL, ['class' => 'form-control', 'data-name' =>'photo']) !!}
 
                                 <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
-                                    {!! Form::label('product_price', 'Цена: ', ['class' => 'col-sm-3 control-label']) !!}
+                                    <label class="col-sm-3 control-label" for="product_price">Цена: <span class="required_css">*</span> </label>
+
                                     {!! Form::number('product_price', NULL, ['class' => 'form-control', 'data-name' =>'price', 'min'=>0]) !!}
 
                                     <div style="display: none"class="error" data-id="price">
@@ -125,3 +127,8 @@
 
     </div>
 </div>
+<style>
+    .required_css{
+        color: red;
+    }
+</style>

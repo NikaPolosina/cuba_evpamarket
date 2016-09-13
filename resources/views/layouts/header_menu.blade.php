@@ -148,4 +148,11 @@
             transform: rotateY(360deg);
         }
     }
+
+
+     .required_css{
+         color: red;
+     }
+
+
 </style>
