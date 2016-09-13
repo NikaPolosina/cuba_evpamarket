@@ -116,12 +116,12 @@ if(isset($company)){
     <?php echo $products->render(); ?>
 </div>
 
-{{--<div class="product_info" style="display: none">
+<div class="product_info" style="display: none">
     <div class="row">
         <div class="col-sm-12">
             <div class="col-sm-5">
                 <div style="margin: 3px 0 0 0;">
-                    --}}{{-- <span>Наименование товара:</span>--}}{{--
+                    {{-- <span>Наименование товара:</span>--}}
                     <p style="font-weight: bolder; font-size: 20px;" class="name"></p>
                 </div>
                 <div style=" margin: 3px 0 0 0;">
@@ -143,7 +143,7 @@ if(isset($company)){
             </div>
         </div>
     </div>
-</div>--}}
+</div>
 
 
 

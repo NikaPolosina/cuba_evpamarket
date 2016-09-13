@@ -389,7 +389,7 @@
             $('.tut').on('click', function (e) {
                 var c_modal = new CModal({
                     title: 'Подтвердите Ваше действие',
-                    body:'<h3>Вы уверен, что хотите удалить этот магазин?</h3>',
+                    body:'<h3>Вы уверены, что хотите удалить этот магазин?</h3>',
                     confirmBtn:'Удалить',
                     cancelBtn:'Отменить',
                     action: function(){

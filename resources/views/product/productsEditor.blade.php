@@ -169,22 +169,40 @@
                     inputs.each(function(){
                         selected.push($(this).val());
                     });
-                    $.ajax({
-                        type    : "POST",
-                        url     : "/products/destroy-check",
-                        headers : {
-                            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data    : {
-                            id      : '<?=$company?>',
-                            checkId : selected
-                        },
-                        success : function(msg){
-                            inputs.each(function(){
-                                $(this).parents('tr').eq(0).remove();
+
+
+
+                    var c_modal = new CModal({
+                        title: 'Подтвердите Ваше действие',
+                        body:'<h3>Вы уверены, что хотите удалить этот продукт?</h3>',
+                        confirmBtn:'Удалить',
+                        cancelBtn:'Отменить',
+                        action: function(){
+
+
+                            $.ajax({
+                                type    : "POST",
+                                url     : "/products/destroy-check",
+                                headers : {
+                                    'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                                },
+                                data    : {
+                                    id      : '<?=$company?>',
+                                    checkId : selected
+                                },
+                                success : function(msg){
+                                    inputs.each(function(){
+                                        $(this).parents('tr').eq(0).remove();
+                                    });
+                                }
                             });
+
                         }
                     });
+                    c_modal.show();
+
+
+
                 });
 
                 $('#product_list').delegate('.deleteCategoryButton', 'click', function(){
@@ -194,7 +212,7 @@
 
                     var c_modal = new CModal({
                         title: 'Подтвердите Ваше действие',
-                        body:'<h3>Вы уверен, что хотите удалить этот продукт?</h3>',
+                        body:'<h3>Вы уверены, что хотите удалить этот продукт?</h3>',
                         confirmBtn:'Удалить',
                         cancelBtn:'Отменить',
                         action: function(){
