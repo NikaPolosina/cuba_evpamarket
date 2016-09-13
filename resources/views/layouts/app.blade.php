@@ -16,6 +16,10 @@
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="/plugins/chosen_v1.5.1/chosen.jquery.js"></script>
     <script src="/js/bootstrap-treeview.js"></script>
+
+
+    <script src="/js/modal-manager.js"></script>
+
     {{--<script src="/plugins/jquery-cookie-master/src/jquery.cookie.js"></script>--}}
 
 

@@ -40,7 +40,7 @@ Route::patch('company-create-single/{id}', 'CompanyController@update');
 Route::get('/company/create', ['as' => 'company-create', 'uses' => 'CompanyController@create']);
 Route::get('/company-done-create', ['as' => 'company-done-create', 'uses' => 'CompanyController@store']);
 Route::post('/company-done-create', ['as' => 'company-done-create', 'uses' => 'CompanyController@store']);
-Route::delete('company-delete/{id}', 'CompanyController@destroy');
+Route::post ('company-delete/{id}', 'CompanyController@destroy');
 
 /*------------------------------------------ProductController---------------------------------------------*/
 Route::group(['middleware' => ['web']], function () {

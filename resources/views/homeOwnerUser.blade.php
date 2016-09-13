@@ -142,7 +142,7 @@
                                                     {{-- */$x=0;/* --}}
                                                     @foreach($curentUser->getCompanies as $item)
                                                         {{-- */$x++;/* --}}
-                                                        <tr>
+                                                        <tr data-id="{{$item->id}}">
                                                             <td>{{ $x }}</td>
                                                             <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="{{$item->company_logo}}"></td><td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td>{{--<td width="200">{!!$item->company_content!!}</td>--}}
 
@@ -152,13 +152,12 @@
                                                                         <span class="glyphicon  glyphicon-pencil" aria-hidden="true"></span>
                                                                     </button>
                                                                 </a>
-                                                                {!! Form::open([
-                                                                'method'=>'DELETE',
-                                                                'url' => ['company-delete', $item->id],
-                                                                'style' => 'display:inline'
-                                                                ]) !!}
-                                                                {{Form::button('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>', ['type'=>'submit', 'class' => 'btn btn-danger btn-xs'])}}
-                                                                {!! Form::close() !!}
+                                                                <button data-id="{{$item->id}}" type="" class="btn btn-danger btn-xs tut">
+                                                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                                                </button>
+
+                                                         
+
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -384,6 +383,43 @@
         </div>
     </div>
     </div>
+
+
+        <script>
+            $('.tut').on('click', function (e) {
+                var c_modal = new CModal({
+                    title: 'Подтвердите Ваше действие',
+                    body:'Вы уверен, что хотите это сделать?',
+                    confirmBtn:'Удалить',
+                    cancelBtn:'Отменить',
+                    action: function(){
+                        var button = $(e.currentTarget);
+
+                        $.ajax({
+                            type    : "POST",
+                            url     :       '/company-delete/'+ button.data('id'),
+                            headers : {
+                                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data    : {
+                                
+                            },
+                            success : function(response){
+                                $('tr[data-id='+response+']').remove();
+
+                            },
+                            error   : function(response){
+                                console.log('ajax went wrong');
+                            }
+                        });
+
+
+                    }
+                });
+                c_modal.show();
+            })
+
+        </script>
 
     {{------------------------------------------------------------------------------------------------------------------------------}}
 

@@ -162,6 +162,7 @@ class CompanyController extends Controller{
     }
 
     public function destroy($id){
+
         $company = Company::find($id);
         if(count($company->getProducts) > 0){
             Product::destroy($company->getProducts->lists('id'));
@@ -173,6 +174,8 @@ class CompanyController extends Controller{
         Company::destroy($id);
 
         Session::flash('flash_message', 'Company deleted!');
+        return response($id);
+
         return redirect()->intended('homeOwnerUser');
     }
 
