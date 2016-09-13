@@ -191,19 +191,38 @@
                     event.preventDefault();
                     var tr        = $(this).parents('tr');
                     var productId = tr.find('input[name="option"]').val();
-                    $.ajax({
-                        type    : "POST",
-                        url     : "/destroy",
-                        headers : {
-                            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data    : {
-                            id : productId
-                        },
-                        success : function(msg){
-                            tr.remove();
+
+                    var c_modal = new CModal({
+                        title: 'Подтвердите Ваше действие',
+                        body:'Вы уверен, что хотите это сделать?',
+                        confirmBtn:'Удалить',
+                        cancelBtn:'Отменить',
+                        action: function(){
+
+                            $.ajax({
+                                type    : "POST",
+                                url     :       '/product/destroy',
+                                headers : {
+                                    'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                                },
+                                data    : {
+                                    id : productId
+                                },
+                                success : function(msg){
+                                    tr.remove();
+
+                                },
+                                error   : function(response){
+                                    console.log('ajax went wrong');
+                                }
+                            });
+
+
                         }
                     });
+                    c_modal.show();
+
+
                 });
 
             </script>

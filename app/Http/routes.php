@@ -55,7 +55,7 @@ Route::any('/products-category', ['as' => 'products-category', 'uses' => 'Produc
 Route::get('/get-product-paginate', ['as' => 'get-product-paginate', 'uses' => 'ProductsController@productPaginate']);
 Route::get('/product-editor/{id}', 'ProductsController@productEditor');
 Route::post('/products/edit-categoty', 'ProductsController@editCategory');
-Route::post('/destroy', 'ProductsController@destroy');
+Route::post('/product/destroy', 'ProductsController@destroy');
 Route::get('/single-product/{id}', 'ProductsController@singleProduct');
 Route::get('/single-product-my-shop/{id}', 'ProductsController@singleProductMyShop');
 Route::post('/products/ajax-update', ['as'=>'product-ajax-update', 'uses'=>'ProductsController@productAjaxUpdate']);
