@@ -7,6 +7,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="col-sm-4">
+                @include('layouts.breadcrumbs')
                 <div class="group_body">
                     <div class="group_name">
 

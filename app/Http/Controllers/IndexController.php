@@ -17,9 +17,23 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cookie;
+use Creitive\Breadcrumbs\Breadcrumbs;
 
 class IndexController extends Controller{
-    public function test(Request $request){
+   
+
+    public function test(Request $request, Breadcrumbs $breadcrumbs){
+
+
+        $a = $breadcrumbs->addCrumb('Домой', '/login-user');
+        $b = $breadcrumbs->addCrumb('заказы', '/show-list-order-simple');
+       
+
+        $breadcrumbs->setDivider('»');
+
+
+
+        echo $breadcrumbs->render();
       
         return view('test');
 

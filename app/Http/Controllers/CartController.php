@@ -15,6 +15,7 @@ use Session;
 use App\Company;
 use Auth;
 use App\StatusOwner;
+use Creitive\Breadcrumbs\Breadcrumbs;
 
 class CartController extends Controller{
 
@@ -22,11 +23,12 @@ class CartController extends Controller{
     protected $_currentUserKey;
     protected $_totalCnt;
     protected $_totalAmount;
+    protected $_breadcrumbs;
 
     /**
      * Initial setup
      * */
-    public function __construct(Request $request){
+    public function __construct(Request $request, Breadcrumbs $breadcrumbs){
 
         $this->_cart = (($request->cookie('cart'))) ? $request->cookie('cart') : array();
 
@@ -37,6 +39,7 @@ class CartController extends Controller{
         }
         $this->_totalCnt = 0;
         $this->_totalAmount = 0;
+        $this->_breadcrumbs = $breadcrumbs;
     }
 
     /**
@@ -87,8 +90,15 @@ class CartController extends Controller{
 
         }
 
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Корзина', '/cart');
 
-        return view('product.cart')->with('companies', $companies);
+        $this->_breadcrumbs->setDivider(' » ');
+        
+
+        return view('product.cart')
+            ->with('breadcrumbs', $this->_breadcrumbs)
+            ->with('companies', $companies);
     }
 
     public function cart(Request $request){

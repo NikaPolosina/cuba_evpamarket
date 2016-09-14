@@ -19,44 +19,45 @@ use Illuminate\Support\Facades\DB;
 use App\UserInformation;
 use App\Http\Controllers\FileController;
 use Illuminate\Support\Facades\Cookie;
+use Creitive\Breadcrumbs\Breadcrumbs;
 
 class HomeController extends Controller{
-
     protected $_msg;
     protected $_companyController;
+    protected $_breadcrumbs;
 
-    public function __construct(MessageController $messageController, CompanyController $companyController){
+    public function __construct(MessageController $messageController, CompanyController $companyController, Breadcrumbs $breadcrumbs){
         $this->middleware('auth');
         $this->_msg = $messageController;
         $this->_companyController = $companyController;
+        $this->_breadcrumbs = $breadcrumbs;
+
     }
 
-    public function Index(){
-
+    public function Index(Breadcrumbs $breadcrumbs){
         /*Cookie::queue(
             Cookie::forget('cart')
         );*/
-
         if(Auth::user()->hasRole('admin')){
             return redirect()->intended('admin');
         }
         if(Auth::user()->hasRole('company_owner')){
-
             return redirect()->intended('homeOwnerUser');
         }
         if(Auth::user()->hasRole('simple_user')){
+            $this->_breadcrumbs->addCrumb('Домой', '/login-user');
 
-            return redirect()->intended('homeSimpleUser');
+            $this->_breadcrumbs->setDivider(' » ');
+           
+            return redirect()->intended('homeSimpleUser')->with('breadcrumbs', $this->_breadcrumbs);
         }
     }
 
     public function registerSimple(){
         if(!Auth::user()->getUserInformation){
-
             $region = Region::all();
             return view('auth.register_aditional')->with('region', $region);
         }
-
         if(Auth::check()){
             $curentUser = Auth::user();
             $userInfo = $curentUser->getUserInformation;
@@ -66,7 +67,17 @@ class HomeController extends Controller{
             $groupInvites = $this->_msg->getMsg()->count();
         }
 
-        return view('user.simple_user.home')->with('userInfo', $userInfo)->with('order', $order)->with('user', $curentUser)->with('groupInvites', $groupInvites);
+
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        
+        $this->_breadcrumbs->setDivider('»');
+        
+        return view('user.simple_user.home')
+            ->with('userInfo', $userInfo)
+            ->with('order', $order)
+            ->with('user', $curentUser)
+            ->with('groupInvites', $groupInvites)
+            ->with('breadcrumbs', $this->_breadcrumbs);
     }
 
     public function registerOwner(){
@@ -76,7 +87,6 @@ class HomeController extends Controller{
                 $value->company_logo = $this->_companyController->showCompanyLogo($value->id);
             }
             $userInfo = $curentUser->getUserInformation;
-
             $this->_msg->getGroupInvite(Auth::user(), [ 'status' => 0 ]);
             $groupInvites = $this->_msg->getMsg()->count();
         }

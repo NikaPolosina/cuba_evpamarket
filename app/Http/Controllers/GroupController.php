@@ -16,6 +16,7 @@ use App\Http\Controllers\MessageController;
 use Mockery\CountValidator\Exception;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use Creitive\Breadcrumbs\Breadcrumbs;
 
 class GroupController extends Controller{
 
@@ -23,15 +24,17 @@ class GroupController extends Controller{
     protected $_groupModel;
     protected $_request;
     protected $_msg;
+    protected $_breadcrumbs;
 
     /**
      * Class init
      * */
     
-    public function __construct(Group $group, Request $request, MessageController $messageController){
+    public function __construct(Group $group, Request $request, MessageController $messageController,  Breadcrumbs $breadcrumbs){
         $this->_groupModel = $group;
         $this->_request = $request;
         $this->_msg = $messageController;
+        $this->_breadcrumbs = $breadcrumbs;
     }
 
     public function prepareUserAvatar($user){
@@ -60,15 +63,26 @@ class GroupController extends Controller{
             }
         }
 
+
+        $this->_breadcrumbs->setDivider('»');
+
         $my_company = Company::whereNotIn('id', $user_id->getGroup()->having('pivot_is_admin', '=', '1')->get()->lists('company_id'))->get();
 
         $this->_msg->getGroupInvite(Auth::user(), [ 'status' => 0 ]);
 
         $groupInvites = $this->_msg->getMsg();
+
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Группы', '/show-group-list');
+
+        $this->_breadcrumbs->setDivider(' » ');
+
+
         
         return view('group.groupShow')
             ->with('my_group', $my_group)
             ->with('my_company', $my_company)
+            ->with('breadcrumbs', $this->_breadcrumbs)
             ->with('groupInvites', $groupInvites);
     }
 
@@ -119,8 +133,21 @@ class GroupController extends Controller{
         $region = Region::all();
 
         $msg = Message::where('to', Auth::user()->id)->where('connected_id', $group->id)->where('status', 0)->first();
+
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Группы', '/show-group-list');
+        $this->_breadcrumbs->addCrumb($group->group_name, '/single-group'.$group->id);
+
+        $this->_breadcrumbs->setDivider(' » ');
         
-        return view('group.singleGroup')->with('group', $group)->with('discount', $discount)->with('allUser', $allUser)->with('users', $users)->with('region', $region)->with('msg', $msg);
+        return view('group.singleGroup')
+            ->with('group', $group)
+            ->with('discount', $discount)
+            ->with('allUser', $allUser)
+            ->with('users', $users)
+            ->with('region', $region)
+            ->with('breadcrumbs', $this->_breadcrumbs)
+            ->with('msg', $msg);
     }
   
 

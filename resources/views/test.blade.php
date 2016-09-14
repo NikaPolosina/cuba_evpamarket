@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <button type="button" class="btn btn-default tut" data-dismiss="modal">тут</button>
 
 

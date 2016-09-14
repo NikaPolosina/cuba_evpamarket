@@ -125,7 +125,9 @@ return [
 
         /*
          * Laravel Framework Service Providers...
+         *
          */
+
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -166,6 +168,9 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         Appzcoder\CrudGenerator\CrudGeneratorServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        
+        Creitive\Breadcrumbs\BreadcrumbsServiceProvider::class,
+
 
     ],
 
@@ -181,6 +186,7 @@ return [
     */
 
     'aliases' => [
+
 
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
@@ -224,6 +230,7 @@ return [
         'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
         'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
         'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
+        'Breadcrumbs' => Creitive\Breadcrumbs\Facades\Breadcrumbs::class,
     ],
 
 ];

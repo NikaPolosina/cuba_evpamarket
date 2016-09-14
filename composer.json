@@ -10,7 +10,8 @@
         "zizaco/entrust": "5.2.x-dev",
         "appzcoder/crud-generator": "^1.0",
         "laravelcollective/html": "^5.2",
-        "Doctrine/dbal": "^2.5"
+        "Doctrine/dbal": "^2.5",
+        "creitive/laravel5-breadcrumbs": "^2.0"
     },
 
     "require-dev": {

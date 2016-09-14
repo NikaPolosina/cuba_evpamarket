@@ -29,7 +29,10 @@
 
     <div class="container">
         <div class="row">
-                <div class="profile">
+
+            @include('layouts.breadcrumbs')
+
+            <div class="profile">
 
 
                     <div class="tabbable-line tabbable-full-width">
