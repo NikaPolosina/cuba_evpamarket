@@ -93,7 +93,7 @@ class CartController extends Controller{
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Корзина', '/cart');
 
-        $this->_breadcrumbs->setDivider(' » ');
+        
         
 
         return view('product.cart')

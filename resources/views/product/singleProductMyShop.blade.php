@@ -10,6 +10,8 @@
                 </div>
 
             </div>
+            @include('layouts.breadcrumbs')
+
             <div class="col-xs-11 col-sm-11">
                 @include('product.showSingleProductInfo')
             </div>

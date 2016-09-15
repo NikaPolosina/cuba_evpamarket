@@ -11,9 +11,14 @@ use Carbon\Carbon;
 use Session;
 use App\Company;
 use Auth;
+use Creitive\Breadcrumbs\Breadcrumbs;
+
 
 class LikeController extends Controller{
-    public function __construct(Request $request){
+    protected $_breadcrumbs;
+
+    public function __construct(Request $request, Breadcrumbs $breadcrumbs){
+        $this->_breadcrumbs = $breadcrumbs;
     }
 
     public function index(Request $request){
@@ -21,7 +26,11 @@ class LikeController extends Controller{
         $curentUser = Auth::user();
         $product = $curentUser->getProduct;
         $product = IndexController::showProduct($product);
-        return view('product.like')->with('product', $product);
+
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Избранное', '/like');
+
+        return view('product.like')->with('product', $product)->with('breadcrumbs', $this->_breadcrumbs);
     }
 
     public function like(Request $request){

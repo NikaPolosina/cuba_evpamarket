@@ -18,9 +18,16 @@ use Illuminate\Support\Facades\Redirect;
 use App\StatusOwner;
 use App\UserMoney;
 use App\Group;
-
+use Creitive\Breadcrumbs\Breadcrumbs;
 
 class OrderController extends Controller{
+    protected $_breadcrumbs;
+
+
+
+    public function __construct(Request $request, Breadcrumbs $breadcrumbs){
+        $this->_breadcrumbs = $breadcrumbs;
+    }
 
     public function createOrder(Request $request, CartController $cartController){
 
@@ -79,6 +86,14 @@ class OrderController extends Controller{
             $persent = null;
         }
 
+
+
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Корзина', '/cart');
+        $this->_breadcrumbs->addCrumb('Офрмление заказа', '/order');
+
+
+
         return view('order.create')
             ->with('user', $user)
             ->with('info_user', $info_user)
@@ -88,6 +103,7 @@ class OrderController extends Controller{
             ->with('total_price', $total)
             ->with('total_discount', $total_discount)
             ->with('percent', $persent)
+            ->with('breadcrumbs', $this->_breadcrumbs)
             ->with('products', $products);
     }
 

@@ -6,10 +6,13 @@
 
     @include('product.modalAddProductCart')
     <div class="row_row">
+        <div class="col-sm-8 col-sm-offset-2">
+        @include('layouts.breadcrumbs')
+        </div>
 
     <div class="row item_class_4">
 
-        @if(count($product) > 0 )
+    @if(count($product) > 0 )
 
 
                 @foreach($product as $v)

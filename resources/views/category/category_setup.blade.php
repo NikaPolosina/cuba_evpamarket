@@ -5,17 +5,14 @@
 
 
     <div class="col-sm-10 col-md-offset-1">
-
+        @include('layouts.breadcrumbs')
         <div class="company_tile_category">
-            <h2 style="text-align: center">Редактор категорий магазина</h2>
-            <h2>Магазин {{$company->company_name}}</h2>
-            <div class="col-sm-12">
-                        <hr/>
+            <div style="text-align: center; font-size: 30px;">Редактор категорий магазина - {{$company->company_name}}</div>
+
                         <div class="footer_button" style="float: right;">
                             <a href="/product-editor/{{$company->id}}" class="btn btn-primary to_shop">Перейти в магазин</a>
                         </div>
-                    </div>
-        </div>
+
 
         <div class="col-sm-10 col-md-offset-1">
 

@@ -64,7 +64,7 @@ class GroupController extends Controller{
         }
 
 
-        $this->_breadcrumbs->setDivider('»');
+     
 
         $my_company = Company::whereNotIn('id', $user_id->getGroup()->having('pivot_is_admin', '=', '1')->get()->lists('company_id'))->get();
 
@@ -75,7 +75,6 @@ class GroupController extends Controller{
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Группы', '/show-group-list');
 
-        $this->_breadcrumbs->setDivider(' » ');
 
 
         
@@ -138,7 +137,6 @@ class GroupController extends Controller{
         $this->_breadcrumbs->addCrumb('Группы', '/show-group-list');
         $this->_breadcrumbs->addCrumb($group->group_name, '/single-group'.$group->id);
 
-        $this->_breadcrumbs->setDivider(' » ');
         
         return view('group.singleGroup')
             ->with('group', $group)

@@ -4,7 +4,10 @@
     <link rel="stylesheet" type="text/css" href="../css/show_cart_like.css"/>
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1" style="    border: 3px solid #eee;">
+                @include('layouts.breadcrumbs')
+
                 <div class="col-sm-10 col-sm-offset-1">
+
                     <h1 style="text-align: center">Оформление заказа</h1>
                 </div>
 

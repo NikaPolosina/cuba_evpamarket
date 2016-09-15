@@ -19,14 +19,16 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cookie;
 use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Validator;
+use Creitive\Breadcrumbs\Breadcrumbs;
 
 class ProductsController extends Controller{
 
     public $paginCnt = 5;
     private $_product;
+    protected $_breadcrumbs;
 
-    public function __construct(Request $request){
-
+    public function __construct(Request $request,  Breadcrumbs $breadcrumbs){
+        $this->_breadcrumbs = $breadcrumbs;
     }
 
     public function destroyProductDir($id){
@@ -308,13 +310,22 @@ class ProductsController extends Controller{
     }
 
     public function singleProductMyShop(CategoryController $category, $id){
-        $companyId = Product::find($id)->getCompany[0]['id'];
-        $currentCompanyCategories = $category->getCompanyCategorySorted($companyId);
 
-        return $this->way($category, '.singleProductMyShop', $id)->with('myCategories', $currentCompanyCategories);
+        $companyId = Product::find($id)->getCompany[0]['id'];
+        $company = Company::find($companyId);
+        $product = Product::find($id);
+       
+        $currentCompanyCategories = $category->getCompanyCategorySorted($companyId);
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Магазин - '.$company->company_name, '/product-editor/'.$companyId);
+        $this->_breadcrumbs->addCrumb($product->product_name, '/single-product-my-shop/'.$id);
+
+
+        return $this->way($category, '.singleProductMyShop', $id)->with('myCategories', $currentCompanyCategories) ->with('breadcrumbs', $this->_breadcrumbs);
     }
 
     public function productEditor(CategoryController $category, $id){
+
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
         $company = Company::find($id);
@@ -328,6 +339,8 @@ class ProductsController extends Controller{
             $item->getStatusOwner->where('key', 'not_processed')->get();
         }
 
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Магазин - '.$company->company_name, '/product-editor/'.$company->id);
 
         return view('product.productsEditor')->with([
             'category'     => json_encode($currentCompanyCategoriesSorted),
@@ -335,7 +348,8 @@ class ProductsController extends Controller{
             'myCategories' => $currentCompanyCategories,
             'paginCnt'     => $this->paginCnt,
             'categories'   => json_encode($category->getAllCategoris())
-        ]);
+        ])
+            ->with('breadcrumbs', $this->_breadcrumbs);
     }
 
     public function getProductList(Request $request, CategoryController $category){

@@ -12,8 +12,14 @@ use Session;
 use App\Company;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Creitive\Breadcrumbs\Breadcrumbs;
 
 class CategoryController extends Controller{
+    protected $_breadcrumbs;
+
+    public function __construct(Request $request,  Breadcrumbs $breadcrumbs){
+        $this->_breadcrumbs = $breadcrumbs;
+    }
 
     public function checkCat($search, $arr){
         foreach($arr as $value){
@@ -95,12 +101,17 @@ class CategoryController extends Controller{
 
         $company = Company::find($id);
 
+
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Магазин - '.$company->company_name, '/product-editor/'.$company->id);
+        $this->_breadcrumbs->addCrumb('Установка категорий', '/category/category-setup/'.$company->id);
         
         return view('category.category_setup')
             ->with('categories', $categories)
             ->with('default_company_categories', json_encode($company->getCategoryCompany()->get()->lists('id')))
             ->with('company', $company)
-            ->with('category', json_encode($currentCompanyCategoriesSorted));
+            ->with('category', json_encode($currentCompanyCategoriesSorted))
+            ->with('breadcrumbs', $this->_breadcrumbs);
     }
 
     public function getCompanyActiveCategory($categoriId){

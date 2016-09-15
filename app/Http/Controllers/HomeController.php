@@ -35,6 +35,8 @@ class HomeController extends Controller{
     }
 
     public function Index(Breadcrumbs $breadcrumbs){
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+
         /*Cookie::queue(
             Cookie::forget('cart')
         );*/
@@ -42,13 +44,9 @@ class HomeController extends Controller{
             return redirect()->intended('admin');
         }
         if(Auth::user()->hasRole('company_owner')){
-            return redirect()->intended('homeOwnerUser');
+            return redirect()->intended('homeOwnerUser')->with('breadcrumbs', $this->_breadcrumbs);
         }
         if(Auth::user()->hasRole('simple_user')){
-            $this->_breadcrumbs->addCrumb('Домой', '/login-user');
-
-            $this->_breadcrumbs->setDivider(' » ');
-           
             return redirect()->intended('homeSimpleUser')->with('breadcrumbs', $this->_breadcrumbs);
         }
     }
@@ -70,7 +68,7 @@ class HomeController extends Controller{
 
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         
-        $this->_breadcrumbs->setDivider('»');
+
         
         return view('user.simple_user.home')
             ->with('userInfo', $userInfo)
@@ -90,7 +88,13 @@ class HomeController extends Controller{
             $this->_msg->getGroupInvite(Auth::user(), [ 'status' => 0 ]);
             $groupInvites = $this->_msg->getMsg()->count();
         }
-        return view('homeOwnerUser')->with('userInfo', $userInfo)->with('curentUser', $curentUser)->with('groupInvites', $groupInvites);
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+
+        return view('homeOwnerUser')
+            ->with('userInfo', $userInfo)
+            ->with('curentUser', $curentUser)
+            ->with('groupInvites', $groupInvites)
+            ->with('breadcrumbs', $this->_breadcrumbs);
     }
 
     public function test(){

@@ -10,11 +10,14 @@
             @foreach($companies as $value)
                 <div class="company_block_cart">
 
-                <div class="col-md-12 cart_name">
+                <div class="col-md-8 col-md-offset-2 cart_name">
+
+
                     <h3 style="    font-family: sans-serif; text-transform: uppercase; text-align: center; font-weight: 700;">Магазин: <sapn style="color: darkblue;">{{$value['company']->company_name}}</sapn></h3>
                 </div>
 
                 <div class="col-md-8 col-md-offset-2" style="border: 1px solid #c1c1c1; background-color: #f5f5f5; margin-bottom: 25px;">
+
                     <div class="" style="margin-top: 25px">
 
                         {{ Form::open(array('url' => '/order',  'method' => 'post')) }}

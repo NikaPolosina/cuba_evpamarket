@@ -1,5 +1,5 @@
 
-<div class="bread" style="width: 100%;    border: solid 1px #cccacb;
+<div class="bread" style="width: 100%;        border-bottom: 1px solid #e9e9e9;
     background-color: #f8f8f8; margin-bottom: 3px;">
     {!! $breadcrumbs!!}
 
@@ -16,7 +16,15 @@
         float: left;
     }
 
-    .brread ol, ul {
-        margin: 3px!important;
-
+    .bread>ul {
+        line-height: 30px;
+    }
+    .bread{
+        position: relative;
+        height: 30px;
+        width: 100%;
+        border: 1px solid #e9e9e9;
+        background-color: #f8f8f8;
+        font-size: 12px;
+    }
 </style>

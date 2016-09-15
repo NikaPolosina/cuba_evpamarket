@@ -6,7 +6,9 @@
     <link href="/assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css"/>
 
 
-    <div style="border: solid 2px darkgrey; padding: 10px;">
+    <div class="col-sm-12">
+        @include('layouts.breadcrumbs')
+
         <div class="table-responsive">
             <h1 style="text-align: center">{{ $company->company_name }} </h1>
             <hr>

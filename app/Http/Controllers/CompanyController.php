@@ -22,11 +22,17 @@ use App\User;
 use PhpParser\Builder;
 use App\Models\Role;
 use App\Region;
+use Creitive\Breadcrumbs\Breadcrumbs;
 
 use Illuminate\Support\Facades\File;
 class CompanyController extends Controller{
+    protected $_breadcrumbs;
     public $category  = array();
     public $nCategory = array();
+    
+    public function __construct(Request $request,  Breadcrumbs $breadcrumbs){
+        $this->_breadcrumbs = $breadcrumbs;
+    }
 
     public function create(){
         $region = Region::all();
@@ -210,10 +216,15 @@ class CompanyController extends Controller{
         $max['from'] = $company->getDiscountAccumulativ()->max('from')+1;
         $max['percent'] = $company->getDiscountAccumulativ()->max('percent')+1;
 
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Магазин - '.$company->company_name, '/product-editor/'.$company->id);
+        $this->_breadcrumbs->addCrumb('Установка скидок', '/company-discount-setup/'.$company->id);
+
         return view('company.setupDiscount')
             ->with('discount', $discount)
             ->with('max', $max)
-            ->with('company', $company);
+            ->with('company', $company)
+            ->with('breadcrumbs', $this->_breadcrumbs);
     }
 
     public function createDiscount($id, Request $request){

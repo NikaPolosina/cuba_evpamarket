@@ -28,7 +28,9 @@
 
     <div class="container">
         <div class="row">
-{{setlocale(LC_ALL, 'de_RU')}}
+            @include('layouts.breadcrumbs')
+
+        {{--    {{setlocale(LC_ALL, 'de_RU')}}--}}
 
     <div class="profile">
         <div class="tabbable-line tabbable-full-width">
