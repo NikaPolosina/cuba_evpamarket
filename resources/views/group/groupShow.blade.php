@@ -38,7 +38,7 @@
 
 
                     <div class="form-group {{ $errors->has('group_name') ? 'has-error' : ''}}">
-                        <label class="col-md-4 control-label" for="group_name">'Имя группы: <span class="required_css">*</span> </label>
+                        <label class="col-md-4 control-label" for="group_name">Имя группы: <span class="required_css">*</span> </label>
                      {{--   {!! Form::label('group_name', 'Имя группы: ', ['class' => 'col-sm-4 control-label']) !!}--}}
                         <div class="col-sm-6">
                             {!! Form::text('group_name', NULL, ['class' => 'form-control group_name', 'required' => 'required']) !!}

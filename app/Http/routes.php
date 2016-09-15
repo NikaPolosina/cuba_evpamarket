@@ -170,6 +170,9 @@ Route::post('/group-destroy/{id}', ['as'=>'group-destroy', 'uses'=>'GroupControl
 Route::post('/group-left/{id}', ['as'=>'group-left', 'uses'=>'GroupController@left']);
 
 Route::post('/user/advanced_ajax_search', ['as'=>'advanced_ajax_search', 'uses'=>'UserController@ajaxAdvancedSearch']);
+/*---------------------------------------------feedback------------------------------------------------------------------*/
+Route::get('/feedback-view/{id}', ['as'=>'feedback-view', 'uses'=>'FeedbackController@start']);
+
 
 
 

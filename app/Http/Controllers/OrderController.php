@@ -308,23 +308,34 @@ class OrderController extends Controller{
         if(count($products))
             $order->products = IndexController::showProduct($products);
 
-        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
-        $this->_breadcrumbs->addCrumb('Мои магазины', '/my_shops');
-        $this->_breadcrumbs->addCrumb('Мои заказы по магазину - '.$order->products['0']->getCompany['0']->company_name, '/order-by-status/'.$order->products['0']->getCompany['0']->id.'/'.$order->status);
-        $this->_breadcrumbs->addCrumb('Заказ', '/show-simple-order/'.$id);
+        if(Auth::user()->hasRole('company_owner')){
+            $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+            $this->_breadcrumbs->addCrumb('Мои магазины', '/my_shops');
+            $this->_breadcrumbs->addCrumb('Мои заказы по магазину - '.$order->products['0']->getCompany['0']->company_name, '/order-by-status/'.$order->products['0']->getCompany['0']->id.'/'.$order->status);
+            $this->_breadcrumbs->addCrumb('Заказ', '/show-simple-order/'.$id);
+        }
+        if(Auth::user()->hasRole('simple_user')){
+            $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+            $this->_breadcrumbs->addCrumb('Мои заказы', '/show-list-order-simple');
+            $this->_breadcrumbs->addCrumb('Заказ', '/show-simple-order/'.$id);
+        }
+
+
         return view('order.simple')
             ->with('order', $order)
             ->with('breadcrumbs', $this->_breadcrumbs);
 
     }
-    public function showSimpleOrderList(){
-        $order =  Order::where('simple_user_id', '=', Auth::user()->id)->get();
-        $status = StatusSimple::get();
-        
-        return view('order.orderListShopSimple')
-            ->with('order', $order)
-            ->with('status', $status);
 
+    public function showSimpleOrderList(){
+        $order = Order::where('simple_user_id', '=', Auth::user()->id)->get();
+        $status = StatusSimple::get();
+        $st = StatusOwner::where('key', 'sending_buyer')->get();
+        $finishOrder = Order::where('simple_user_id', '=', Auth::user()->id)->where('status', $st['0']->id)->get();
+        $activeOrder = Order::where('simple_user_id', '=', Auth::user()->id)->where('status', '!=', $st['0']->id)->get();
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Мои заказы', '/show-list-order-simple');
+        return view('order.orderListShopSimple')->with('order', $order)->with('finishOrder', $finishOrder)->with('activeOrder', $activeOrder)->with('status', $status)->with('breadcrumbs', $this->_breadcrumbs);
     }
 
     /**
