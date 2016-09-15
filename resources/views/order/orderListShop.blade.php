@@ -7,6 +7,7 @@
 
     <div class="row">
         <div class="col-sm-12">
+            @include('layouts.breadcrumbs')
             <div class="portlet-title">
                 <div class="caption font-dark" style=" text-align: center">
                     <i class="icon-settings font-dark"></i>

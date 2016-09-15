@@ -206,7 +206,12 @@ class CompanyController extends Controller{
                 $query->where('status', StatusOwner::where('key', 'not_processed')->first([ 'id' ])->id);
             }
         ])->get();
-        return view('company.myShop')->with('companys', $companys);
+        
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Мои магазины', '/my_shops');
+
+        
+        return view('company.myShop')->with('companys', $companys)->with('breadcrumbs', $this->_breadcrumbs);
     }
 
     public function setupDiscount($id){

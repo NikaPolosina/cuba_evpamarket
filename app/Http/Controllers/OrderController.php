@@ -226,7 +226,8 @@ class OrderController extends Controller{
     }
 
     public function showOrder($id, $status=0){
-
+        $id_status = $status;
+       
 
         $company = Company::find($id);
 
@@ -249,13 +250,16 @@ class OrderController extends Controller{
             }
 
         }*/
-
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Мои магазины', '/my_shops');
+        $this->_breadcrumbs->addCrumb('Мои заказы по магазину - '.$company->company_name, '/order-by-status/'.$id.'/'.$id_status);
 
         return view('order.orderListShop')
             ->with('company', $company)
             ->with('order', $order)
             ->with('myStatus', $myStatus)
-            ->with('status', $status);
+            ->with('status', $status)
+            ->with('breadcrumbs', $this->_breadcrumbs);
     }
     
 
@@ -303,11 +307,14 @@ class OrderController extends Controller{
 
         if(count($products))
             $order->products = IndexController::showProduct($products);
-   
-        
 
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Мои магазины', '/my_shops');
+        $this->_breadcrumbs->addCrumb('Мои заказы по магазину - '.$order->products['0']->getCompany['0']->company_name, '/order-by-status/'.$order->products['0']->getCompany['0']->id.'/'.$order->status);
+        $this->_breadcrumbs->addCrumb('Заказ', '/show-simple-order/'.$id);
         return view('order.simple')
-            ->with('order', $order);
+            ->with('order', $order)
+            ->with('breadcrumbs', $this->_breadcrumbs);
 
     }
     public function showSimpleOrderList(){

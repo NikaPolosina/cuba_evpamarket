@@ -7,6 +7,7 @@
 
     <div class="row">
         <div class="col-md-10 col-sm-offset-1">
+        @include('layouts.breadcrumbs')
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet light ">
                 <div class="portlet-title">
