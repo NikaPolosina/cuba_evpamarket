@@ -28,25 +28,25 @@
                                 <div class="col-sm-8">
                                     <table class="table_product" border="1" bordercolor="#cecdc9"  width="100%">
                                         <tr>
-                                            <td><span class="option_table_order">Товар:</span></td>
-                                            <td  valign="top"><span class="name">{{$val->product_name}}</span></td>
+                                            <td width="30%" style="text-align: right"><span class="option_table_order">Товар:</span></td>
+                                            <td align="center" valign="top"><span class="name">{{$val->product_name}}</span></td>
                                         </tr>
                                         <tr>
-                                            <td><span class="option_table_order">Краткое описание:</span></td>
-                                            <td valign="top"><span class="product_description"> {{$val->product_description}}</span></td>
+                                            <td width="30%" style="text-align: right"><span class="option_table_order">Краткое описание:</span></td>
+                                            <td align="center" valign="top"><span class="product_description"> {{$val->product_description}}</span></td>
                                         </tr>
                                         <tr>
-                                            <td><span class="option_table_order">Колличество:</span></td>
-                                            <td>
+                                            <td width="30%" style="text-align: right"><span class="option_table_order">Колличество:</span></td>
+                                            <td align="center"  align="center">
                                                 <span>{{$val->cnt}}</span>
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td valign="top">
+                                            <td valign="top" width="30%" style="text-align: right">
                                                 {!! Form::label('price', 'Цена: ', ['class' => 'control-label option_table_order']) !!}
                                             </td>
-                                            <td valign="top">
+                                            <td valign="top" align="center">
                                                 <div class="form-control product_price">
                                                     {{$val->product_price}} <span> руб.</span>
                                                 </div>
@@ -54,10 +54,10 @@
 
                                         </tr>
                                         <tr>
-                                            <td valign="top">
+                                            <td valign="top" width="30%" style="text-align: right">
                                                 {!! Form::label('price_product', 'Вместе: ', ['class' => ' control-label option_table_order']) !!}
                                             </td>
-                                            <td valign="top">
+                                            <td valign="top" align="center">
                                                 <div class="form-control product_price">
                                                     {{$val->product_price*$val->cnt}}<span> руб.</span>
                                                 </div>
@@ -65,10 +65,10 @@
 
                                         </tr>
                                         <tr>
-                                            <td valign="top">
+                                            <td valign="top" width="30%" style="text-align: right">
                                                 {!! Form::label('discount_price', 'С учётом скидки -  '.$order->percent.' %', ['class' => ' control-label option_table_order']) !!}
                                             </td>
-                                            <td valign="top">
+                                            <td valign="top" align="center">
                                                 <div class="form-control product_price" style="color: red;">
                                                     {{$order->discount_price}}<span> руб.</span>
                                                 </div>

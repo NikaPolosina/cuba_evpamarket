@@ -227,14 +227,6 @@
                                     <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
 
 
-                                      {{--  <div class="form-group {{ $errors->has('product_image') ? 'has-error' : ''}}">
-                                            {!! Form::label('product_image', 'фото: ', ['class' => 'col-sm-3 control-label']) !!}
-
-                                                {!! Form::text('product_image', null, ['class' => 'form-control']) !!}
-                                                {!! $errors->first('product_image', '<p class="help-block">:message</p>') !!}
-
-                                        </div>--}}
-
                                         <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
                                             {!! Form::label('product_price', 'Цена: ', ['class' => 'col-sm-3 control-label']) !!}
 
@@ -265,11 +257,6 @@
             <ol class="indicator"></ol>
         </div>
 
-
-                 {{--   {!! Form::open(['url' => 'products', 'class' => 'form-horizontal']) !!}--}}
-
-                  {{--
-                    {!! Form::close() !!}--}}
         </div>
     </div>
 

@@ -1,0 +1,76 @@
+.feed_textarea>textarea{
+    border: 1px solid #ccc;
+}
+
+.feed_star_css:after{
+    content: '';
+    display: table;
+    clear: both;
+}
+.feed_star_css>span{
+    cursor: pointer;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: url(/img/system/star_ali.gif) no-repeat -1px -3px;
+
+}
+.feed_star_css{
+    width: 200px;
+
+}
+.feed_star_hover{
+    background: url(/img/system/star_color_ali.gif) no-repeat -1px -3px!important;
+}
+
+.feed_order_info_css>p>span{
+    margin-left: 10px;
+}
+.feed_img_css{
+    width: 100px;
+    height:100px;
+}
+.feed_img_css>img{
+    margin: auto;
+    height:100%;
+}
+.feed_body_css_info>h3{
+    margin-top: 10px;
+}
+
+.feed_body_css_info{
+    margin-bottom: 20px;
+    padding: 8px;
+}
+.feed_ul{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    list-style-type: none;
+}
+.feed_ul>li{
+    float: left;
+    list-style: none;
+    font-size: 13px;
+    margin: 0 30px 0 0;
+
+}
+.feed_ul>li>span{
+    padding-right: 5px;
+}
+body{
+    background-color: #f2f2f2;
+}
+.feed_row{
+    background-color: #f2f2f2;
+}
+.feed_body_css{
+    border: 1px solid #e8e8e8;
+    background-color: #fff;
+}
+.feed_order_scc{
+    margin: 5px;
+    padding:5px;
+    border: 1px solid #e8e8e8;
+}
