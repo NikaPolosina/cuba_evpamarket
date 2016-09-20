@@ -306,6 +306,22 @@ class BaseStructure extends Migration{
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('group_id')->references('id')->on('groups');
         });
+        //Create table for feedback_product
+        Schema::create('feedback_product', function (Blueprint $table){
+            $table->increments('id');
+            $table->integer('order_id')->unsigned();
+            $table->integer('product_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->string('feedback');
+            $table->float('rating');
+            $table->text('file');
+            $table->timestamps();
+            $table->foreign('order_id')->references('id')->on('order');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('user_id')->references('id')->on('users');
+           
+        });
+
     }
 
     /**
@@ -314,6 +330,7 @@ class BaseStructure extends Migration{
      * @return void
      */
     public function down(){
+        Schema::drop('feedback_product');
         Schema::drop('member_group_history');
         Schema::drop('messages');
         Schema::drop('messages_types');

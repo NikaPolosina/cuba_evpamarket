@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\FeedbackProduct;
+use Validator;
 use App\Category;
 use App\Group;
 use App\Http\Requests;
@@ -27,6 +28,13 @@ class FeedbackController extends Controller{
         $this->_breadcrumbs = $breadcrumbs;
     }
 
+    protected function myValidator(array $data){
+        return Validator::make($data, [
+            'rate'=> 'required',
+            'msg' => 'required'
+        ]);
+    }
+
     public function start($id){
 
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
@@ -48,8 +56,46 @@ class FeedbackController extends Controller{
             ->with('breadcrumbs', $this->_breadcrumbs);
 
     }
+
     public function startSetup(Request $request, $id){
-        dd($request->all());
+        $order = Order::find($id)->with('getProductOrder')->first();
+        $error = array();
+        foreach($request->product as $id => $item){
+            $v = $this->myValidator($item);
+            $v->setAttributeNames([
+                'rate' => 'Рейтинг',
+                'msg'  => 'Отзыв',
+            ]);
+            if($v->fails()){
+                $error[$id] = $v->messages();
+            }
+        }
+        if(count($error) > 0){
+            Session::flash('message', $error);
+            return redirect()->back()->withInput();
+        }
+
+        $order_ids = [];
+        foreach($order->getProductOrder as $or){
+            $order_ids[] = $or->product_id;
+        }
+            foreach($request->product as $id => $item){
+                    if(in_array($id, $order_ids)){
+                        $newFeedback = new FeedbackProduct([
+                            'order_id'   => $order->id,
+                            'product_id' => $id,
+                            'user_id'    => Auth::user()->id,
+                            'rating'     => $item['rate'],
+                            'feedback'   => $item['msg'],
+                        ]);
+                    }else{
+                        return redirect()->back()->with('error', 'Something went wrong.');
+                    }
+                $newFeedback->save();
+            }
+
+        return redirect('/show-list-order-simple');
     }
+
 
 }

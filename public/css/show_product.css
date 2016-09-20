@@ -93,13 +93,27 @@
     border: 1px solid transparent;
     font-size: 1.1em;
 }
-.stars{
-    background-image: url(/img/system/star.png);
-    background-repeat: repeat-x;
-    width: 81px;
-    height: 20px;
+.par{
     display: inline-block;
+    width: 80px;
 }
+.star_feed{
+    display: inline-block;
+    position: relative;
+    background-image: url(/img/system/star.png);
+    width:80px;
+}
+.stars{
+    display: inline-block;
+    /*position: absolute;*/
+    background-image: url(/img/system/star-empty.png);
+    background-repeat: repeat-x;
+    width: 80px;
+    height: 16px;
+
+}
+
+
 .like{
     background-image: url(/img/system/like.png);
     width: 50%;

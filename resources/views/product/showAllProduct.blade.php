@@ -31,9 +31,20 @@
                                     </a>
                                 </div>
                                 <div class="product_price">
-                                    <span class="price">{{$v->product_price}} руб</span>
-                                    <span class="stars"></span>
-                                    <span class="testimonials">нет отзывов</span>
+
+                                    <table align="center">
+                                        <tr>
+                                            <td><span class="price">{{$v->product_price}} руб</span></td>
+                                            <td width="80"><div class="par">
+                                                    <div class="stars">
+                                                        <div class="star_feed">&nbsp;</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><span class="testimonials">нет отзывов</span></td>
+                                        </tr>
+                                    </table>
+
 
                                 </div>
                                 <div class="product_navigation">
@@ -62,6 +73,9 @@
     var getProductUrl = '{{route('ajax_single_product')}}';
     var addToCartUrl = '{{route('ajax_add_to_cart')}}';
     var cartUrl = '{{route('cart')}}';
+    $(function(){
+        $('div.star_feed').width(24);
+    })
 </script>
 
 {!! HTML::script('/js/like_and_cart_add.js') !!}

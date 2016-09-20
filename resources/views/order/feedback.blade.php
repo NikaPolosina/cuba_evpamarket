@@ -34,7 +34,9 @@
 
                 <div class="col-sm-8 col-sm-offset-2 feed_body_css feed_body_css_info">
 
+
                     <h4>Оставьте отзыв по этому заказу</h4>
+
                     {!! Form::open(['class' => 'form-horizontal my_form', 'id'=> 'fileupload']) !!}
 
                     @foreach($order->getProductOrder as $item)
@@ -54,22 +56,40 @@
 
 
                         </div>
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 par">
                             <p>Пожалуйста, оцените этот заказ</p>
                             <div class="feed_star_css">
+
                                 <span class="span_star star_1" data-str="1"></span>
                                 <span class="span_star star_2" data-str="2"></span>
                                 <span class="span_star star_s" data-str="3"></span>
                                 <span class="span_star star_4" data-str="4"></span>
                                 <span class="span_star star_5" data-str="5"></span>
+
                             </div>
+                            @if(Session::has('message') && array_key_exists($item->getProductId->id, Session::get('message')) && Session::get('message')[$item->getProductId->id]->has('rate'))
+                                <div style="display: block"class="error" data-id="msg">
+                                    <strong>Внимание!</strong> <span>{{Session::get('message')[$item->getProductId->id]->first('rate')}}</span>
+                                </div>
+                            @endif
+
+
+
+                            <input class="input_rate" type="hidden" name="product[{{$item->getProductId->id}}][rate]"  @if(count(Request::old('product')[$item->getProductId->id]['rate'])) value="{{Request::old('product')[$item->getProductId->id]['rate']}}"  @endif />
+
+
                             <div class="feed_textarea">
-                                <textarea autofocus maxlength="1000"
-                                          placeholder="Максимальная длина - 1000 символов. По техническим причинам мы не поддерживаем коды HTML."
-                                          name="feed_textarea" id="" cols="80" rows="8"></textarea>
+                                <textarea autofocus maxlength="1000" placeholder="Максимальная длина - 1000 символов. По техническим причинам мы не поддерживаем коды HTML."name="product[{{$item->getProductId->id}}][msg]" id="" cols="80" rows="8">@if(count(Request::old('product')[$item->getProductId->id]['msg'])){{Request::old('product')[$item->getProductId->id]['msg']}}@endif</textarea>
+
+
+                                @if(Session::has('message') &&  array_key_exists($item->getProductId->id, Session::get('message')) &&  Session::get('message')[$item->getProductId->id]->has('msg'))
+                                    <div style="display: block"class="error" data-id="msg">
+                                        <strong>Внимание!</strong> <span>{{Session::get('message')[$item->getProductId->id]->first('msg')}}</span>
+                                    </div>
+                                @endif
                             </div>
 
-                            <div class="row">
+                            {{--<div class="row">
                                 <div class="col-sm-4 col-sm-offset-4">
                                     <span class="btn btn-success fileinput-button">
                                         <i class="glyphicon glyphicon-plus"></i>
@@ -84,7 +104,7 @@
                                     </table>
                                 </div>
 
-                            </div>
+                            </div>--}}
 
                         </div>
 
@@ -101,8 +121,10 @@
     </div>
     {!! HTML::script('/js/feedback/star.js') !!}
 
+
+
     @include('file_upload')
-    <script>
+   {{-- <script>
         var file_uploader = '{{route('file_uploader')}}';
         var nededPath, productId, mainImg, number;
 
@@ -160,6 +182,6 @@
         });
 
 
-    </script>
+    </script>--}}
 
 @endsection
