@@ -328,14 +328,21 @@ class OrderController extends Controller{
     }
 
     public function showSimpleOrderList(){
-        $order = Order::where('simple_user_id', '=', Auth::user()->id)->get();
+        $order = Order::where('simple_user_id', '=', Auth::user()->id)->with('getFeedback')->get();
         $status = StatusSimple::get();
         $st = StatusOwner::where('key', 'sending_buyer')->get();
         $finishOrder = Order::where('simple_user_id', '=', Auth::user()->id)->where('status', $st['0']->id)->get();
         $activeOrder = Order::where('simple_user_id', '=', Auth::user()->id)->where('status', '!=', $st['0']->id)->get();
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Мои заказы', '/show-list-order-simple');
-        return view('order.orderListShopSimple')->with('order', $order)->with('finishOrder', $finishOrder)->with('activeOrder', $activeOrder)->with('status', $status)->with('breadcrumbs', $this->_breadcrumbs);
+    
+
+        return view('order.orderListShopSimple')
+            ->with('order', $order)
+            ->with('finishOrder', $finishOrder)
+            ->with('activeOrder', $activeOrder)
+            ->with('status', $status)
+            ->with('breadcrumbs', $this->_breadcrumbs);
     }
 
     /**

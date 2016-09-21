@@ -110,9 +110,18 @@
                                             <td>
 
                                                     <div class="btn-group">
+
+                                                        @if(count($item->getFeedback))
+                                                            <a href="#">
+                                                                <button class="btn btn-xs default dropdown-toggle" type="button" aria-expanded="false">Просмотреть отзыв</button>
+                                                            </a>
+                                                        @else
+
                                                         <a href="/feedback-view/{{$item->id}}">
                                                         <button class="btn btn-xs red dropdown-toggle" type="button" aria-expanded="false">Оставить отзыв</button>
                                                         </a>
+                                                        @endif
+
                                                     </div>
 
                                             </td>

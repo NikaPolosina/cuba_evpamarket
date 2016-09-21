@@ -24,7 +24,11 @@
                             </li>
                             <li>
                                 <span>Магазин:</span>
-                                <span style="color: #337ab7;">{{$order->getCompany[0]->company_name}}</span>
+                                <span style="color: #337ab7;">
+                                    <a href="/show-company/{{$order->getCompany[0]->id}}">
+                                    {{$order->getCompany[0]->company_name}}
+                                    </a>
+                                </span>
                             </li>
                         </ul>
 

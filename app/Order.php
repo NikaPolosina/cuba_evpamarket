@@ -24,4 +24,7 @@ class Order extends Model{
     public function getCompany(){
         return $this->belongsToMany('App\Company');
     }
+    public function getFeedback(){
+        return $this->hasMany('App\FeedbackProduct', 'order_id', 'id');
+    }
 }

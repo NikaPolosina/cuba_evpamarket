@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
+
 use App\FeedbackProduct;
 use Validator;
 use App\Category;
@@ -23,15 +23,15 @@ use Creitive\Breadcrumbs\Breadcrumbs;
 
 class FeedbackController extends Controller{
     protected $_breadcrumbs;
-    
+
     public function __construct(Request $request, Breadcrumbs $breadcrumbs){
         $this->_breadcrumbs = $breadcrumbs;
     }
 
     protected function myValidator(array $data){
         return Validator::make($data, [
-            'rate'=> 'required',
-            'msg' => 'required'
+            'rate' => 'required',
+            'msg'  => 'required'
         ]);
     }
 
@@ -39,25 +39,20 @@ class FeedbackController extends Controller{
 
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Мои заказы', '/show-list-order-simple');
-        $this->_breadcrumbs->addCrumb('Отзыв', '/feedback-view/'.$id);
-
-
-        $order = Order::find($id)->with(['getProductOrder' => function($query){
-            $query->with('getProductId');
-        }])->with('getCompany')->first();
-
+        $this->_breadcrumbs->addCrumb('Отзыв', '/feedback-view/' . $id);
+        $order = Order::where('id', $id)->with([
+            'getProductOrder' => function ($query){
+                $query->with('getProductId');
+            }
+        ])->with('getCompany')->first();
         foreach($order->getProductOrder as $item){
-            $item->getProductId =  IndexController::showProduct($item->getProductId);
-
+            $item->getProductId = IndexController::showProduct($item->getProductId);
         }
-
-        return view('order.feedback')
-            ->with('order', $order)
-            ->with('breadcrumbs', $this->_breadcrumbs);
-
+        return view('order.feedback')->with('order', $order)->with('breadcrumbs', $this->_breadcrumbs);
     }
 
     public function startSetup(Request $request, $id){
+        $id_order_feed = $id;
         $order = Order::find($id)->with('getProductOrder')->first();
         $error = array();
         foreach($request->product as $id => $item){
@@ -74,28 +69,24 @@ class FeedbackController extends Controller{
             Session::flash('message', $error);
             return redirect()->back()->withInput();
         }
-
-        $order_ids = [];
+        $order_ids = [ ];
         foreach($order->getProductOrder as $or){
             $order_ids[] = $or->product_id;
         }
-            foreach($request->product as $id => $item){
-                    if(in_array($id, $order_ids)){
-                        $newFeedback = new FeedbackProduct([
-                            'order_id'   => $order->id,
-                            'product_id' => $id,
-                            'user_id'    => Auth::user()->id,
-                            'rating'     => $item['rate'],
-                            'feedback'   => $item['msg'],
-                        ]);
-                    }else{
-                        return redirect()->back()->with('error', 'Something went wrong.');
-                    }
-                $newFeedback->save();
+        foreach($request->product as $id => $item){
+            if(in_array($id, $order_ids)){
+                $newFeedback = new FeedbackProduct([
+                    'order_id'   => $id_order_feed,
+                    'product_id' => $id,
+                    'user_id'    => Auth::user()->id,
+                    'rating'     => $item['rate'],
+                    'feedback'   => $item['msg'],
+                ]);
+            }else{
+                return redirect()->back()->with('error', 'Something went wrong.');
             }
-
-        return redirect('/show-list-order-simple');
+            $newFeedback->save();
+        }
+        return redirect ('/show-list-order-simple');
     }
-
-
 }
