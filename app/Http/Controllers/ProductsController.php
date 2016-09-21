@@ -297,13 +297,30 @@ class ProductsController extends Controller{
             }
         }
 
-        $product = Product::where('id', $singleProduct['id'])->first();
+        $product = Product::where('id', $singleProduct['id'])->with([
+            'getFeedback' => function($query){
+                $query->with(['getUser' => function($query){
+                    $query->with('getUserInformation');
+                }]);
+            }
+        ])->first();
+
+
+
+
         $product->raiting = 0;
         $product->count = $product->getFeedback->count();
+
+
+
         if($product->count){
             $product->raiting = (($product->getFeedback()->sum('rating') / $product->count) * 100) / 5;
         }
+
+
+
         $singleProduct = $product->toArray();
+        
 
         return view('product'.$wey)
             ->with('singleProduct', $singleProduct)

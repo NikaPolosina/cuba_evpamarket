@@ -17,7 +17,6 @@
                                         <div class="caption" >
                                             <h1>{{ $singleProduct['product_name'] }}</h1>
 
-
                                         </div>
                                     </div>
                                     <div class="portlet-body">
@@ -144,7 +143,79 @@
                                                             </p>
                                                 </div>
                                                 <div class="tab-pane" id="tab_5_4">
+
+
+
                                                     <p style="font-size: 16px; font-weight: bold">Отзывы</p>
+
+                                                    @if(count($singleProduct['get_feedback']))
+                                                        @foreach($singleProduct['get_feedback'] as $item)
+
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <div class="col-xs-6">
+                                                                        <div class="feedback">
+                                                                            <table class="table_feed" border="0" width="100%">
+                                                                                <tr>
+                                                                                    <td align="right" width="20%">Пользватель:</td>
+                                                                                    <td>{{$item['get_user']['get_user_information']['name']}}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td align="right"  width="20%">Текст:</td>
+                                                                                    <td>
+                                                                                        <div class="feed_content">
+                                                                                            {{$item['feedback']}}
+                                                                                        </div>
+
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td align="right"  width="20%">Оценка твару:</td>
+
+                                                                                    <td>
+
+                                                                                        <div class="par">
+                                                                                            <div class="stars">
+                                                                                                <div style="width:{{($item['rating']*100)/5}}%" class="star_feed">&nbsp;</div>
+                                                                                            </div>
+                                                                                        </div>
+
+
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <style>
+                                                                .feed_content{
+
+                                                                }
+                                                                .feedback{
+                                                                    border: 2px solid #ddd;
+                                                                    border-radius: 5px!important;
+                                                                    margin-bottom: 10px;
+                                                                }
+
+                                                                td{
+                                                                    padding:8px!important;
+                                                                }
+
+                                                            </style>
+
+
+                                                            @endforeach
+                                                        @else
+                                                         Отзывов нет
+
+                                                    @endif
+
+
+
+
+
                                                 </div>
                                                 <div class="tab-pane" id="tab_5_5">
                                                     <p style="font-size: 16px; font-weight: bold">Оформление заказа</p>

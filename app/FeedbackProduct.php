@@ -12,7 +12,7 @@ class FeedbackProduct extends Model{
         return $this->hasMany('App\Product', 'product_id', 'id');
     }
     public function getUser(){
-        return $this->hasMany('App\User', 'user_id', 'id');
+        return $this->hasOne('App\User','id', 'user_id');
     }
     public function getOrder(){
         return $this->hasMany('App\Order', 'order_id', 'id');
