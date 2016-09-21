@@ -296,6 +296,15 @@ class ProductsController extends Controller{
                 $firstFile = '/img/custom/files/thumbnail/plase.jpg';
             }
         }
+
+        $product = Product::where('id', $singleProduct['id'])->first();
+        $product->raiting = 0;
+        $product->count = $product->getFeedback->count();
+        if($product->count){
+            $product->raiting = (($product->getFeedback()->sum('rating') / $product->count) * 100) / 5;
+        }
+        $singleProduct = $product->toArray();
+
         return view('product'.$wey)
             ->with('singleProduct', $singleProduct)
             ->with('firstFile', $firstFile)

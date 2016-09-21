@@ -40,7 +40,8 @@
                                     <table align="center">
                                         <tr>
                                             <td><span class="price">{{$v->product_price}} руб</span></td>
-                                            <td width="80"><div class="par">
+                                            <td width="80">
+                                                <div class="par">
                                                     <div class="stars">
                                                         <div style="width:{{$v->raiting}}%" class="star_feed">&nbsp;</div>
                                                     </div>

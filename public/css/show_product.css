@@ -98,10 +98,11 @@
     width: 80px;
 }
 .star_feed{
-    display: inline-block;
+  /*  display: inline-block;*/
     position: relative;
     background-image: url(/img/system/star.png);
     width:80px;
+    height: 16px;
 }
 .stars{
     display: inline-block;

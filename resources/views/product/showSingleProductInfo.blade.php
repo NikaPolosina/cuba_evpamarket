@@ -16,6 +16,8 @@
                                     <div class="portlet-title">
                                         <div class="caption" >
                                             <h1>{{ $singleProduct['product_name'] }}</h1>
+
+
                                         </div>
                                     </div>
                                     <div class="portlet-body">
@@ -90,8 +92,22 @@
                                                                                 @endif
                                                                             </div>
                                                                             <div class="cont_stars">
-                                                                                <span class="product_stars"></span>
-                                                                                <span class="num_of_rev">нет отзывов</span>
+
+
+                                                                                <div class="par">
+                                                                                    <div class="stars">
+                                                                                        <div style="width:{{$singleProduct['raiting']}}%" class="star_feed">&nbsp;</div>
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                                @if($singleProduct['count'] > 0)
+                                                                                    <span class="num_of_rev">{{$singleProduct['count']}} отзывов</span>
+                                                                                @else
+                                                                                    <span class="num_of_rev"> нет отзывов</span>
+                                                                                @endif
+
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -106,12 +122,6 @@
                                                     <div>
                                                         {!! $singleProduct['content'] !!}
                                                     </div>
-                                                    {{--<h2 class="detail-tabs-i-title"><span style="font-weight: 600">Технические характеристики :</span>
-                                                        <span class="detail-tabs-i-title-inner">{{ $singleProduct['product_name'] }} </span>
-                                                    </h2>
-                                                    <div>
-                                                        <p>Характеристики</p>
-                                                    </div>--}}
 
                                                 </div>
                                                 <div class="tab-pane" id="tab_5_2">
@@ -129,8 +139,8 @@
                                                                     <img class="img-thumbnail" src="{{$val}}" alt="" style="max-height: 100%;">
                                                                 </div>
                                                             </div>
-                                                            @endforeach
-                                                            @endif
+                                                        @endforeach
+                                                    @endif
                                                             </p>
                                                 </div>
                                                 <div class="tab-pane" id="tab_5_4">
