@@ -313,7 +313,7 @@ class BaseStructure extends Migration{
             $table->integer('product_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('feedback');
-            $table->float('rating');
+            $table->integer('rating');
             $table->text('file');
             $table->timestamps();
             $table->foreign('order_id')->references('id')->on('order');

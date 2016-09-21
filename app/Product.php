@@ -30,6 +30,9 @@ class Product extends Model
     public function getCategory(){
         return $this->hasOne('App\Category', 'id', 'category_id');
     }
+    public function getFeedback(){
+        return $this->hasMany('App\FeedbackProduct', 'product_id', 'id');
+    }
 
     protected $searchable = [ 'columns' => ['product_name' => 5,],];
 

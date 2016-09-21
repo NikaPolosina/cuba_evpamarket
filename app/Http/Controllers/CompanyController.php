@@ -124,13 +124,20 @@ class CompanyController extends Controller{
         return $img;
     }
 
-    public function show($id, CategoryController $category){
+    public function show($id, CategoryController $category, IndexController $index){
 
         $company = Company::findOrFail($id);
         $img = $this->showCompanyLogo($company->id);
         $res = $company->getProducts;
         $productAll = IndexController::showProduct($res);
-        return view('company.show')->with('company', $company)->with('img', $img)->with('category', $category->getAllCategoris())->with('productAll', $productAll);
+
+        $productAll = $index->addFeedProduct($productAll);
+
+        return view('company.show')
+            ->with('company', $company)
+            ->with('img', $img)
+            ->with('category', $category->getAllCategoris())
+            ->with('productAll', $productAll);
     }
 
     public function edit($id){

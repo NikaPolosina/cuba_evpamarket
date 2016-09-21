@@ -9,6 +9,11 @@
     <div class="item_class_3">
         <div class="item_product item_class_4">
             @foreach($productAll as $v)
+                <?php
+
+               // dd($v->raiting);
+
+                ?>
                 <div class="col-md-3 tom" style="padding-right: 2px; padding-left: 2px">
                     <div class="single_product_holder">
                         <div class="carentFindProduct carent_my_product">
@@ -37,11 +42,17 @@
                                             <td><span class="price">{{$v->product_price}} руб</span></td>
                                             <td width="80"><div class="par">
                                                     <div class="stars">
-                                                        <div class="star_feed">&nbsp;</div>
+                                                        <div style="width:{{$v->raiting}}%" class="star_feed">&nbsp;</div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td><span class="testimonials">нет отзывов</span></td>
+
+                                            @if($v->count > 0)
+                                                <td><span class="testimonials">{{$v->count}} отзывов</span></td>
+                                            @else
+                                                <td><span class="testimonials">нет отзывов</span></td>
+                                            @endif
+
                                         </tr>
                                     </table>
 
@@ -70,12 +81,13 @@
 </div>
 
 <script>
+
     var getProductUrl = '{{route('ajax_single_product')}}';
     var addToCartUrl = '{{route('ajax_add_to_cart')}}';
     var cartUrl = '{{route('cart')}}';
-    $(function(){
+/*    $(function(){
         $('div.star_feed').width(24);
-    })
+    })*/
 </script>
 
 {!! HTML::script('/js/like_and_cart_add.js') !!}

@@ -11,11 +11,12 @@ use App\Category;
 
 
 class FindController extends Controller{
-    public function findProduct(Request $request, CategoryController $category){
+    public function findProduct(Request $request, CategoryController $category, IndexController $index){
 
         if($request->input('find')){
             $res = Product::search($request->input('find'))->get();
             $productAll = IndexController::showProduct($res);
+            $productAll = $index->addFeedProduct($productAll);
 
             return view('find')
                 ->with('productAll', $productAll)
@@ -25,16 +26,17 @@ class FindController extends Controller{
 
         return view('welcome');
     }
-    public function findByCategory($id, CategoryController $category){
+    public function findByCategory($id, CategoryController $category, IndexController $index){
 
         $data = Product::where('category_id', $id)->paginate(12);
 
         $vip_category = Category::where('parent_id', $id)->get();
-        $data = IndexController::showProduct($data);
+        $productAll = IndexController::showProduct($data);
 
+        $productAll = $index->addFeedProduct($productAll);
 
         return view('category.findByCategory')
-            ->with('data', $data)
+            ->with('productAll', $productAll)
             ->with('category' ,$category->getAllCategoris())
             ->with('vip_category', $vip_category);
     }

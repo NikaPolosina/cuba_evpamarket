@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Category;
@@ -20,37 +19,24 @@ use Illuminate\Support\Facades\Cookie;
 use Creitive\Breadcrumbs\Breadcrumbs;
 
 class IndexController extends Controller{
-   
-
     public function test(Request $request, Breadcrumbs $breadcrumbs){
-
-
         $a = $breadcrumbs->addCrumb('Домой', '/login-user');
         $b = $breadcrumbs->addCrumb('заказы', '/show-list-order-simple');
-       
-
         $breadcrumbs->setDivider('»');
-
-
-
         echo $breadcrumbs->render();
-      
         return view('test');
-
-
-
-
-        $products = Product::with(['getCompany' => function($query){
-            $query->with('getOrder');
-        }])->get();
-            dd($products);
-        foreach ($products as $product) {
+        $products = Product::with([
+            'getCompany' => function ($query){
+                $query->with('getOrder');
+            }
+        ])->get();
+        dd($products);
+        foreach($products as $product){
             $product->company = $product->getCompany()->first()->id;
 //            dd($product->getCompany()->first()->id);
 //            echo $product->getCompany->id;
         }
         die('Surprise, you are here !!!');
-        
     }
 
     /**
@@ -61,8 +47,7 @@ class IndexController extends Controller{
      * @return array
      * */
     public static function showProduct($arr){
-
-        if ($arr instanceof Product) {
+        if($arr instanceof Product){
             $arr = self::getProductImg($arr);
         }else{
             foreach($arr as $v){
@@ -70,12 +55,10 @@ class IndexController extends Controller{
                 $idCompany = $v->getCompany[0]['id'];
                 $directory = public_path() . '/img/custom/companies/' . $idCompany . '/products/' . $idProduct;
                 $directoryMy = '/img/custom/companies/' . $idCompany . '/products/' . $idProduct . '/';
-
                 if(!empty($v['product_image']) && File::exists($directory . '/' . $v['product_image'])){
                     $v->firstFile = $directoryMy . $v['product_image'];
                 }else{
                     if(is_dir($directory)){
-
                         $files = scandir($directory);
                         $v->firstFile = $directoryMy . $files[2];
                         if(is_dir(public_path() . $v->firstFile)){
@@ -85,33 +68,29 @@ class IndexController extends Controller{
                         }
                     }else{
                         $v->firstFile = '/img/custom/files/thumbnail/plase.jpg';
-
                     }
                 }
             }
         }
-
         return $arr;
     }
 
     /**
      * Get single product image
-     * 
+     *
      * @param object $v Instance of model class
-     *                    
-     * @return 
+     *
+     * @return Product
      * */
     private static function getProductImg(Product $product){
         $idProduct = $product['id'];
         $idCompany = $product->getCompany[0]['id'];
         $directory = public_path() . '/img/custom/companies/' . $idCompany . '/products/' . $idProduct;
         $directoryMy = '/img/custom/companies/' . $idCompany . '/products/' . $idProduct . '/';
-
         if(!empty($product['product_image']) && File::exists($directory . '/' . $product['product_image'])){
             $product->firstFile = $directoryMy . $product['product_image'];
         }else{
             if(is_dir($directory)){
-
                 $files = scandir($directory);
                 $product->firstFile = $directoryMy . $files[2];
                 if(is_dir(public_path() . $product->firstFile)){
@@ -121,32 +100,26 @@ class IndexController extends Controller{
                 }
             }else{
                 $product->firstFile = '/img/custom/files/thumbnail/plase.jpg';
-
             }
         }
         return $product;
     }
 
-
     public function Index(ProductsController $product, CompanyController $company, CategoryController $category, Request $request){
-        
         $productAll = Product::paginate(8);
-
         $companyAll = $company->getCompanyAll();
-
         foreach($companyAll['companyAll'] as $value){
-
             $value->company_logo = $company->showCompanyLogo($value->id);
         }
         $dir = 'images/large';
         $vip_category = Category::where('vip', 1)->get();
-
         $slide_img = array_diff(scandir($dir), array(
             '..',
             '.'
         ));
-
         $this->showProduct($productAll);
+
+        $this->addFeedProduct($productAll);
 
 
 
@@ -157,4 +130,15 @@ class IndexController extends Controller{
             ->with('category', $category->getAllCategoris())
             ->with('vip_category', $vip_category);
     }
+    public function addFeedProduct($productAll){
+        foreach($productAll as $product){
+            $product->raiting = 0;
+            $product->count = $product->getFeedback->count();
+            if($product->count){
+                $product->raiting = (($product->getFeedback()->sum('rating') / $product->count) * 100) / 5;
+            }
+        }
+        return $productAll;
+    }
+
 }
