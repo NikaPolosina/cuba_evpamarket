@@ -52,8 +52,9 @@ class FeedbackController extends Controller{
     }
 
     public function startSetup(Request $request, $id){
+
         $id_order_feed = $id;
-        $order = Order::find($id)->with('getProductOrder')->first();
+        $order = Order::where('id', $id)->with('getProductOrder')->first();
         $error = array();
         foreach($request->product as $id => $item){
             $v = $this->myValidator($item);
@@ -70,10 +71,16 @@ class FeedbackController extends Controller{
             return redirect()->back()->withInput();
         }
         $order_ids = [ ];
+
+
         foreach($order->getProductOrder as $or){
             $order_ids[] = $or->product_id;
         }
+
+
+
         foreach($request->product as $id => $item){
+            
             if(in_array($id, $order_ids)){
                 $newFeedback = new FeedbackProduct([
                     'order_id'   => $id_order_feed,
@@ -82,6 +89,7 @@ class FeedbackController extends Controller{
                     'rating'     => $item['rate'],
                     'feedback'   => $item['msg'],
                 ]);
+
             }else{
                 return redirect()->back()->with('error', 'Something went wrong.');
             }
