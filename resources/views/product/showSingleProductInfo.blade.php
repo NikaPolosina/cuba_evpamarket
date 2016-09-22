@@ -156,6 +156,9 @@
                                                                     <div class="col-xs-6">
                                                                         <div class="feedback">
                                                                             <table class="table_feed" border="0" width="100%">
+                                                                                <input value="{{$item['user_id']}}" type="text"/>
+                                                                                <input value="{{$item['order_id']}}" type="text"/>
+
                                                                                 <tr>
                                                                                     <td align="right" width="20%">Пользватель:</td>
                                                                                     <td>{{$item['get_user']['get_user_information']['name']}}</td>

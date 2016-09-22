@@ -100,14 +100,70 @@
                                 </div>
                                 <div class="col-md-9">
                                     <div class="row">
-                                        <div class="col-md-8 profile-info">
+                                        <div class="col-md-12 profile-info">
                                             <h1 class="font-green sbold uppercase">{{$userInfo->name}} {{$userInfo->surname}}</h1>
-                                            <ul class="list-inline">
 
-                                                <a href="/like">
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active" id="li_like">
+                                                        <a href="#tab_1_6" data-toggle="tab">
+                                                            <i class="fa fa-heart"></i> В избранных
+                                                        </a>
+                                                    </li>
+                                                  {{--  <li style="">
+                                                        <a href="#tab_1_7" data-toggle="tab"> Что то 1 </a>
+                                                    </li>
+
+                                                    <li style="">
+                                                        <a href="#tab_1_8" data-toggle="tab">Что то 2 </a>
+                                                    </li>--}}
+                                                </ul>
+
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active" style="display: none" id="tab_1_6">
+                                                        <link rel="stylesheet" type="text/css" href="/css/show_cart_like.css"/>
+                                                        @include('product.modalAddProductCart')
+                                                        <div class="row item_class_4">
+                                                            @if(count($product) > 0 )
+                                                                @foreach($product as $v)
+                                                                    <div class="col-sm-12  product_item_like product_item_p tom" style="padding-right: 2px; padding-left: 2px">
+                                                                            @include('product.likeSingleView')
+
+                                                                    </div>
+
+                                                                @endforeach
+
+
+                                                                <div class="col-sm-12 product_item_like like_empty product_item_p" style="display: none">
+                                                                    <h1>В избранных нет ни одного товара. Вернитесь к сайту, что бы добавить товар в избранное.</h1>
+                                                                </div>
+                                                            @else
+                                                                <div class="col-sm-12 product_item_like like_empty product_item_p">
+                                                                    <h1>В избранных нет ни одного товара. Вернитесь к сайту, что бы добавить товар в избранное.</h1>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                        {!! HTML::script('/js/product/like_delete.js') !!}
+                                                        <script>
+                                                            var getProductUrl = '{{route('ajax_single_product')}}';
+                                                            var addToCartUrl = '{{route('ajax_add_to_cart')}}';
+                                                            var cartUrl = '{{route('cart')}}';
+                                                        </script>
+
+                                                        {!! HTML::script('/js/like_and_cart_add.js') !!}
+
+                                                    </div>
+                                                  {{--  <div class="tab-pane" id="tab_1_7">
+                                                        2
+                                                    </div>
+                                                    <div class="tab-pane" id="tab_1_8">
+                                                        3
+                                                    </div>--}}
+                                                </div>
+
+                                               {{-- <a href="/like">
                                                     <li><i class="fa fa-heart"></i> В избранных</li>
-                                                </a>
-                                            </ul>
+                                                </a>--}}
+
                                         </div>
                                         <!--end col-md-8-->
                                     </div>
@@ -323,6 +379,7 @@
 
                     <!--end tab-pane-->
                 </div>
+
             </div>
         </div>
     </div>
@@ -351,6 +408,21 @@
             <script src="../assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
 
     </div>
+
+    <script>
+        $('#li_like').on('click', function(){
+            $('#tab_1_6').toggle    ();
+        })
+
+
+    </script>
+    <style>
+        .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+            border: none;
+        }
+
+    </style>
+
 @endsection
 
 

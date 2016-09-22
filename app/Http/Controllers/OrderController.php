@@ -222,13 +222,20 @@ class OrderController extends Controller{
         }
 
 
-        return response()->view('order.ready')->withCookie(cookie('cart', $cart));
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Корзина', '/cart');
+        $this->_breadcrumbs->addCrumb('Оформление заказа', '/order-ready');
+
+        return view('order.ready')
+        
+        //return response()->view('order.ready')
+
+            ->with('breadcrumbs', $this->_breadcrumbs)
+            ->withCookie(cookie('cart', $cart));
     }
 
     public function showOrder($id, $status=0){
         $id_status = $status;
-       
-
         $company = Company::find($id);
 
         if(!$status){
@@ -328,14 +335,19 @@ class OrderController extends Controller{
     }
 
     public function showSimpleOrderList(){
-        $order = Order::where('simple_user_id', '=', Auth::user()->id)->with('getFeedback')->get();
+        $order = Order::where('simple_user_id', '=', Auth::user()->id)->with('getFeedback')->with(['getProductOrder' => function($query){
+            $query->with('getProductId');
+        }])->get();
         $status = StatusSimple::get();
         $st = StatusOwner::where('key', 'sending_buyer')->get();
-        $finishOrder = Order::where('simple_user_id', '=', Auth::user()->id)->where('status', $st['0']->id)->get();
+        $finishOrder = Order::where('simple_user_id', '=', Auth::user()->id)->where('status', $st['0']->id)->with(['getProductOrder' => function($query){
+            $query->with('getProductId');
+        }])->get();
         $activeOrder = Order::where('simple_user_id', '=', Auth::user()->id)->where('status', '!=', $st['0']->id)->get();
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Мои заказы', '/show-list-order-simple');
-    
+  
+
 
         return view('order.orderListShopSimple')
             ->with('order', $order)

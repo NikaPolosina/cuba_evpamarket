@@ -28,7 +28,7 @@
                                 <a href="#tab_1_1" data-toggle="tab"> Все заказы </a>
                             </li>
                             <li style="">
-                                <a href="#tab_1_2" data-toggle="tab"> Завершонные </a>
+                                <a href="#tab_1_2" data-toggle="tab"> Ззвершенные  </a>
                             </li>
                             <li style="">
                                 <a href="#tab_1_3" data-toggle="tab"> Активные </a>
@@ -112,9 +112,29 @@
                                                     <div class="btn-group">
 
                                                         @if(count($item->getFeedback))
-                                                            <a href="#">
+
+                                                                <button class="btn btn-xs dropdown-toggle"
+                                                                        type="button" data-toggle="dropdown"
+                                                                        aria-expanded="false"> Просмотреть отзыв
+                                                                        <i class="fa fa-angle-down"></i>
+                                                                </button>
+
+
+                                                                <ul class="dropdown-menu" style="left: -135px;" role="menu">
+                                                                    @foreach($item->getProductOrder as $it)
+                                                                        <li>
+                                                                            <a href="/show-my-feed/{{$it->getProductId->id}}/{{$item->id}}/{{$item->simple_user_id}}">
+                                                                                <i class="icon-docs"></i>{{$it->getProductId->product_name}} </a>
+                                                                        </li>
+                                                                    @endforeach
+
+                                                                </ul>
+
+
+
+                                                            {{--<a href="#">
                                                                 <button class="btn btn-xs default dropdown-toggle" type="button" aria-expanded="false">Просмотреть отзыв</button>
-                                                            </a>
+                                                            </a>--}}
                                                         @else
 
                                                         <a href="/feedback-view/{{$item->id}}">

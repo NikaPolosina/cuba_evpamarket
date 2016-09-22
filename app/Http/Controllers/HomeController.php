@@ -67,14 +67,18 @@ class HomeController extends Controller{
 
 
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
-        
 
+        $product = [ ];
+        $curentUser = Auth::user();
+        $product = $curentUser->getProduct;
+        $product = IndexController::showProduct($product);
         
         return view('user.simple_user.home')
             ->with('userInfo', $userInfo)
             ->with('order', $order)
             ->with('user', $curentUser)
             ->with('groupInvites', $groupInvites)
+            ->with('product', $product)
             ->with('breadcrumbs', $this->_breadcrumbs);
     }
 

@@ -97,4 +97,13 @@ class FeedbackController extends Controller{
         }
         return redirect ('/show-list-order-simple');
     }
+
+    public function showMyFeed($product_id, $order_id, $user_id){
+        echo($product_id);
+        echo($order_id);
+        echo($user_id);
+        die('Surprise, you are here !!!');
+        
+
+    }
 }

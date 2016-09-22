@@ -83,7 +83,7 @@
 
 
                             <div class="feed_textarea">
-                                <textarea autofocus maxlength="1000" placeholder="Максимальная длина - 1000 символов. По техническим причинам мы не поддерживаем коды HTML."name="product[{{$item->getProductId->id}}][msg]" id="" cols="80" rows="8">@if(count(Request::old('product')[$item->getProductId->id]['msg'])){{Request::old('product')[$item->getProductId->id]['msg']}}@endif</textarea>
+                                <textarea autofocus maxlength="1000" placeholder="Максимальная длина - 1000 символов."name="product[{{$item->getProductId->id}}][msg]" id="" cols="80" rows="8">@if(count(Request::old('product')[$item->getProductId->id]['msg'])){{Request::old('product')[$item->getProductId->id]['msg']}}@endif</textarea>
 
 
                                 @if(Session::has('message') &&  array_key_exists($item->getProductId->id, Session::get('message')) &&  Session::get('message')[$item->getProductId->id]->has('msg'))
