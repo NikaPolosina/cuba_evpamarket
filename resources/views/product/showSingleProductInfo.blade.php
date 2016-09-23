@@ -9,20 +9,20 @@
             <div class="row row_row">
                 <div class="item_class_3">
                     <div class="item_class_4 item_1">
-                        <input style="display: none" data-name="product-id" type="text" value="{{ $singleProduct['id']}}"/>
+                        <input style="display: none" data-name="product-id" type="text" value="{{ $singleProduct->id}}"/>
                         <div class="carent_my_product">
                             <div class="col-sm-12">
                                 <div class="portlet box">
                                     <div class="portlet-title">
                                         <div class="caption" >
-                                            <h1>{{ $singleProduct['product_name'] }}</h1>
+                                            <h1>{{ $singleProduct->product_name}}</h1>
 
                                         </div>
                                     </div>
                                     <div class="portlet-body">
                                         <div class="tabbable-custom ">
                                             <ul class="nav nav-tabs ">
-                                                <li class="active" style="border-top: 3px solid #32c5d2!important;">
+                                                <li class=" @if(!isset($scroll_feed))active @endif " style="border-top: 3px solid #32c5d2!important;">
                                                     <a href="#tab_5_1" data-toggle="tab"> Все о товаре </a>
                                                 </li>
                                                 <li>
@@ -31,7 +31,7 @@
                                                 <li>
                                                     <a href="#tab_5_3" data-toggle="tab">Фото</a>
                                                 </li>
-                                                <li>
+                                                <li class="@if(isset($scroll_feed))active @endif">
                                                     <a href="#tab_5_4" data-toggle="tab"> Отзывы </a>
                                                 </li>
                                                 <li>
@@ -39,7 +39,7 @@
                                                 </li>
                                             </ul>
                                             <div class="tab-content" style="min-height: 600px;">
-                                                <div class="tab-pane active" id="tab_5_1">
+                                                <div class="tab-pane @if(!isset($scroll_feed)) active @endif" id="tab_5_1">
                                                     <!-- blueimp Gallery styles -->
                                                     <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
                                                     <!-- blueimp Gallery script -->
@@ -77,10 +77,10 @@
                                                                 <td>
                                                                     <div class = "product_navigation desk">
                                                                         <div class="price">
-                                                                            <span class="desk-price">{{ $singleProduct['product_price'] }} руб.</span>
+                                                                            <span class="desk-price">{{ $singleProduct->product_price}} руб.</span>
                                                                                         <span style="margin: auto;">
 
-                                                                                            <button class=" btn-lg btn-success button_my to_cart"  data-product-id="{{$singleProduct['id']}}" ><img style="display: inline-block;" src="/img/system/cart-white.png" alt=""><span style="font-weight: bold"> Купить</span></button>
+                                                                                            <button class=" btn-lg btn-success button_my to_cart"  data-product-id="{{$singleProduct->id}}" ><img style="display: inline-block;" src="/img/system/cart-white.png" alt=""><span style="font-weight: bold"> Купить</span></button>
                                                                                         </span>
                                                                         </div>
                                                                         <div class="detail-tools">
@@ -100,11 +100,17 @@
                                                                                 </div>
 
 
-                                                                                @if($singleProduct['count'] > 0)
-                                                                                    <span class="num_of_rev">{{$singleProduct['count']}} отзывов</span>
+
+
+                                                                                @if($singleProduct->count > 0)
+
+
+
+                                                                                    <span class="num_of_rev">{{$singleProduct->count}} отзывов</span>
                                                                                 @else
                                                                                     <span class="num_of_rev"> нет отзывов</span>
                                                                                 @endif
+
 
 
                                                                             </div>
@@ -116,18 +122,20 @@
                                                         </table>
                                                     </div>
                                                     <h2 class="detail-tabs-i-title"><span style="font-weight: 600">Описание</span>
-                                                        <span class="detail-tabs-i-title-inner">{{ $singleProduct['product_name'] }} </span>
+                                                        <span class="detail-tabs-i-title-inner">{{ $singleProduct->product_name }} </span>
                                                     </h2>
                                                     <div>
-                                                        {!! $singleProduct['content'] !!}
+                                                        {!! $singleProduct->content !!}
                                                     </div>
+
+
 
                                                 </div>
                                                 <div class="tab-pane" id="tab_5_2">
-                                                    <p style="font-size: 16px; font-weight: bold"> Xарактеристики  {{ $singleProduct['product_name'] }} </p>
+                                                    <p style="font-size: 16px; font-weight: bold"> Xарактеристики  {{ $singleProduct->product_name }} </p>
                                                 </div>
                                                 <div class="tab-pane" id="tab_5_3">
-                                                    <p style="font-size: 16px; font-weight: bold"> Фото  {{ $singleProduct['product_name'] }}
+                                                <p style="font-size: 16px; font-weight: bold"> Фото  {{ $singleProduct->product_name }}
                                                     @if(isset($singleFile) && count($singleFile))
                                                         @foreach($singleFile as $val)
                                                             <?php $all = explode("/", $val);
@@ -140,65 +148,67 @@
                                                             </div>
                                                         @endforeach
                                                     @endif
-                                                            </p>
+                                                </p>
                                                 </div>
-                                                <div class="tab-pane" id="tab_5_4">
-
+                                                <div class="tab-pane @if(isset($scroll_feed)) active @endif" id="tab_5_4">
 
 
                                                     <p style="font-size: 16px; font-weight: bold">Отзывы</p>
 
-                                                    @if(count($singleProduct['get_feedback']))
-                                                        @foreach($singleProduct['get_feedback'] as $item)
+
+                                                    @if($singleProduct->getFeedback)
+                                                        @foreach($singleProduct->getFeedback as $item)
+
 
                                                             <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <div class="col-xs-6">
+                                                                <div class="col-xs-12 @if(isset($scroll_feed)) @if($scroll_feed['order_id'] == $item->order_id && $scroll_feed['user_id'] == $item->user_id) my_feed_back @endif @endif">
+
                                                                         <div class="feedback">
                                                                             <table class="table_feed" border="0" width="100%">
-                                                                                <input value="{{$item['user_id']}}" type="text"/>
-                                                                                <input value="{{$item['order_id']}}" type="text"/>
+                                                                               {{-- <input value="{{$item->user_id}}" type="text"/>
+                                                                                <input value="{{$item->order_id}}" type="text"/>--}}
 
                                                                                 <tr>
-                                                                                    <td align="right" width="20%">Пользватель:</td>
-                                                                                    <td>{{$item['get_user']['get_user_information']['name']}}</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="right"  width="20%">Текст:</td>
+                                                                                    <td width="10%" style="color: #06c;font-weight: 700;">{{$item->getUser->getUserInformation->name}}</td>
                                                                                     <td>
-                                                                                        <div class="feed_content">
-                                                                                            {{$item['feedback']}}
-                                                                                        </div>
-
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td align="right"  width="20%">Оценка твару:</td>
-
-                                                                                    <td>
-
                                                                                         <div class="par">
                                                                                             <div class="stars">
-                                                                                                <div style="width:{{($item['rating']*100)/5}}%" class="star_feed">&nbsp;</div>
+                                                                                                <div style="width:{{($item->rating*100)/5}}%" class="star_feed">&nbsp;</div>
                                                                                             </div>
                                                                                         </div>
-
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td align="right"  class="a"></td>
+                                                                                    <td>
+                                                                                        <div class="feed_content">
+                                                                                            {{$item->feedback}}
+                                                                                        </div>
 
                                                                                     </td>
                                                                                 </tr>
+
+                                                                                <tr>
+                                                                                    <td></td>
+                                                                                    <td style="color: #999;">
+                                                                                        {{ $item->created_at->toDateTimeString()}}
+                                                                                    </td>
+                                                                                </tr>
+
                                                                             </table>
                                                                         </div>
-                                                                    </div>
+
                                                                 </div>
                                                             </div>
 
                                                             <style>
-                                                                .feed_content{
-
+                                                                .my_feed_back{
+                                                                    background-color: #dff0d8;
                                                                 }
+
                                                                 .feedback{
-                                                                    border: 2px solid #ddd;
-                                                                    border-radius: 5px!important;
+                                                                    padding: 10px;
+                                                                    border-top: 1px solid #ddd;
                                                                     margin-bottom: 10px;
                                                                 }
 
@@ -255,6 +265,12 @@
     var getProductUrl = '{{route('ajax_single_product')}}';
     var addToCartUrl = '{{route('ajax_add_to_cart')}}';
     var cartUrl = '{{route('cart')}}';
+
+
+
+
+
+
 </script>
 
 {!! HTML::script('/js/like_and_cart_add.js') !!}

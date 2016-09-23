@@ -261,7 +261,7 @@ class ProductsController extends Controller{
         ]);
     }
 
-    public function way(CategoryController $category, $wey, $id){
+    static function preparationFile($id){
         $singleProduct = Product::find($id)->toArray();
         $companyId = Product::find($id)->getCompany[0]['id'];
         $idProduct = $singleProduct['id'];
@@ -297,7 +297,16 @@ class ProductsController extends Controller{
             }
         }
 
-        $product = Product::where('id', $singleProduct['id'])->with([
+        $file['singleFile'] = $singleFile;
+        $file['firstFile'] = $firstFile;
+        $file['companyId'] = $companyId;
+        $file['singleProduct'] = $singleProduct;
+        return $file;
+    }
+
+    static function preparationRating($id){
+
+        $product = Product::where('id', $id)->with([
             'getFeedback' => function($query){
                 $query->with(['getUser' => function($query){
                     $query->with('getUserInformation');
@@ -305,29 +314,27 @@ class ProductsController extends Controller{
             }
         ])->first();
 
-
-
-
         $product->raiting = 0;
         $product->count = $product->getFeedback->count();
-
-
 
         if($product->count){
             $product->raiting = (($product->getFeedback()->sum('rating') / $product->count) * 100) / 5;
         }
+        return $product;
+    }
 
+    public function way(CategoryController $category, $wey, $id){
 
-
-        $singleProduct = $product->toArray();
-        
-
+        $file = self::preparationFile($id);
+        $product = self::preparationRating($file['singleProduct']['id']);
+       
+       
         return view('product'.$wey)
-            ->with('singleProduct', $singleProduct)
-            ->with('firstFile', $firstFile)
-            ->with('singleFile', $singleFile)
+            ->with('singleProduct', $product)
+            ->with('firstFile', $file['firstFile'])
+            ->with('singleFile', $file['singleFile'])
             ->with('category', $category->getAllCategoris())
-            ->with('companyId', $companyId);
+            ->with('companyId', $file['companyId']);
     }
 
     public function singleProduct(CategoryController $category, $id){

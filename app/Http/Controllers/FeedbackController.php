@@ -98,11 +98,32 @@ class FeedbackController extends Controller{
         return redirect ('/show-list-order-simple');
     }
 
-    public function showMyFeed($product_id, $order_id, $user_id){
-        echo($product_id);
-        echo($order_id);
-        echo($user_id);
-        die('Surprise, you are here !!!');
+    public function showMyFeed(CategoryController $category, $product_id, $order_id, $user_id){
+        $file = ProductsController::preparationFile($product_id);
+        $product = ProductsController::preparationRating($product_id);
+
+
+        $scroll_feed['product_id'] = $product_id;
+        $scroll_feed['order_id'] = $order_id;
+        $scroll_feed['user_id'] = $user_id;
+
+
+
+
+        return view('product.singleProductInfo')
+            ->with('singleProduct', $product)
+            ->with('firstFile', $file['firstFile'])
+            ->with('singleFile', $file['singleFile'])
+            ->with('category', $category->getAllCategoris())
+            ->with('companyId', $file['companyId'])
+            ->with('scroll_feed', $scroll_feed);
+
+
+
+
+
+
+
         
 
     }
