@@ -174,6 +174,8 @@ Route::post('/user/advanced_ajax_search', ['as'=>'advanced_ajax_search', 'uses'=
 Route::get('/feedback-view/{id}', ['as'=>'feedback-view', 'uses'=>'FeedbackController@start']);
 Route::post('/feedback-view/{id}', ['as'=>'feedback-view', 'uses'=>'FeedbackController@startSetup']);
 Route::get('/show-my-feed/{product_id}/{order_id}/{user_id}', ['as'=>'show-my-feed', 'uses'=>'FeedbackController@showMyFeed']);
+Route::post('/add-ajax-change-feed', ['as'=>'add-ajax-change-feed', 'uses'=>'FeedbackController@editFeed']);
+Route::post('/add-ajax-addition-feed', ['as'=>'add-ajax-addition-feed', 'uses'=>'FeedbackController@additionFeed']);
 
 
 

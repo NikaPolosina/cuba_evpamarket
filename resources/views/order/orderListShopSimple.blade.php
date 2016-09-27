@@ -28,7 +28,7 @@
                                 <a href="#tab_1_1" data-toggle="tab"> Все заказы </a>
                             </li>
                             <li style="">
-                                <a href="#tab_1_2" data-toggle="tab"> Ззвершенные  </a>
+                                <a href="#tab_1_2" data-toggle="tab"> Завершенные  </a>
                             </li>
                             <li style="">
                                 <a href="#tab_1_3" data-toggle="tab"> Активные </a>

@@ -165,12 +165,12 @@
 
                                                                         <div class="feedback">
                                                                             <table class="table_feed" border="0" width="100%">
-                                                                               {{-- <input value="{{$item->user_id}}" type="text"/>
-                                                                                <input value="{{$item->order_id}}" type="text"/>--}}
+                                                                                <input class="id_feed" value="{{$item->id}}" type="hidden"/>
+
 
                                                                                 <tr>
                                                                                     <td width="10%" style="color: #06c;font-weight: 700;">{{$item->getUser->getUserInformation->name}}</td>
-                                                                                    <td>
+                                                                                    <td width="60%">
                                                                                         <div class="par">
                                                                                             <div class="stars">
                                                                                                 <div style="width:{{($item->rating*100)/5}}%" class="star_feed">&nbsp;</div>
@@ -182,10 +182,20 @@
                                                                                     <td align="right"  class="a"></td>
                                                                                     <td>
                                                                                         <div class="feed_content">
-                                                                                            {{$item->feedback}}
+                                                                                            {!!$item->feedback!!}
                                                                                         </div>
 
                                                                                     </td>
+
+                                                                                    @if(isset($scroll_feed))
+                                                                                        @if($scroll_feed['order_id'] == $item->order_id && $scroll_feed['user_id'] == $item->user_id)
+                                                                                            <td>
+                                                                                                <button type="submit" class="btn default edit_feed">Редактировать</button>
+                                                                                                <button type="reset" id="feed-edit" class="btn default">Дополнить</button>
+                                                                                            </td>
+                                                                                        @endif
+                                                                                    @endif
+
                                                                                 </tr>
 
                                                                                 <tr>
@@ -196,12 +206,31 @@
                                                                                 </tr>
 
                                                                             </table>
+                                                                            <div class="addit_feed_js">
+                                                                                @if(count($item->getAdditionFeed))
+                                                                                    @foreach($item->getAdditionFeed as $it)
+                                                                                        <div class="it_css_block">
+                                                                                            {!!$it->msg!!}
+                                                                                            <p style="color: #999;">
+                                                                                                <span>Дополнено:</span>    {{ $it->created_at->toDateTimeString()}}
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                            </div>
+
                                                                         </div>
 
                                                                 </div>
                                                             </div>
 
                                                             <style>
+                                                                .it_css_block{
+                                                                    margin-bottom: 3px;
+                                                                    padding: 10px;
+                                                                    background-color: white;
+                                                                    border: solid 2px #ddd;
+                                                                }
                                                                 .my_feed_back{
                                                                     background-color: #dff0d8;
                                                                 }
@@ -260,8 +289,111 @@
         </div>
     </div>
 </div>
+@include('order.modalFeedback')
+<script src="/plugins/tinymce/tinymce.min.js"></script>
+
+
+
 
 <script>
+    tinymce.init({
+        selector: "textarea",theme: "modern",width: '100%' ,height: 150,
+        language: 'ru',
+        verify_html: false,
+        plugins: [
+            "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+            "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+            "table contextmenu directionality emoticons paste textcolor " +
+            "responsivefilemanager" +
+            " code"
+        ],
+        toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
+        toolbar2: "| responsivefilemanager | link unlink anchor | image media | forecolor backcolor  | print preview code ",
+        image_advtab: true ,
+
+        external_filemanager_path:"/plugins/responsive_filemanager/filemanager/",
+        filemanager_title:"Responsive Filemanager" ,
+        external_plugins: { "filemanager" : "/plugins/responsive_filemanager/filemanager/plugin.min.js"}
+    });
+
+
+
+
+    $('.edit_feed').on('click', function () {
+        $('button#feed-change').removeClass('adit_feed');
+        var body = $(this).parents('.feedback').find('.feed_content').html();
+        var id =  $(this).parents('.feedback').find('input.id_feed').val();
+        $('input.input_id_modal_feed').val('');
+        $('input.input_id_modal_feed').val(id);
+        tinymce.activeEditor.setContent('');
+        tinymce.activeEditor.setContent(body);
+        $('#feed_modal').modal();
+    });
+
+    $('button#feed-edit').on('click', function () {
+        var id =  $(this).parents('.feedback').find('input.id_feed').val();
+        $('input.input_id_modal_feed').val(id);
+        $('button#feed-change').addClass('adit_feed');
+        tinymce.activeEditor.setContent('');
+        $('#feed_modal').modal();
+    });
+
+    $('button#feed-change').on('click', function () {
+        var body = tinymce.activeEditor.getContent();
+        var id = $('input.input_id_modal_feed').val();
+        if($(this).hasClass("adit_feed")){
+
+            $.ajax({
+                type    : "POST",
+                url     : '/add-ajax-addition-feed',
+                headers : {
+                    'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                data    : {id : id, body: body},
+                success : function(response){
+                    $.each($('.id_feed'), function( index, value ) {
+
+                        if($(value).val() == id){
+                            $(this).parents('.feedback').find('.addit_feed_js').append( '<div class= "it_css_block">'+ response.msg +
+                                    '<p style="color: #999;"><span>Дополнено:</span>' + response.updated_at + '</p></div>' );
+                        }
+                    });
+
+                    $('#feed_modal').modal('hide');
+                },
+                error   : function(response){
+                    console.log('ajax went wrong');
+                }
+            });
+        }else{
+            $.ajax({
+                type    : "POST",
+                url     : '/add-ajax-change-feed',
+                headers : {
+                    'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                data    : {id : id, body: body},
+                success : function(response){
+                    $.each($('.id_feed'), function( index, value ) {
+
+                        if($(value).val() == id){
+                            $(this).parents('.feedback').find('.feed_content').html(response);
+                        }
+                    });
+
+                    $('#feed_modal').modal('hide');
+                },
+                error   : function(response){
+                    console.log('ajax went wrong');
+                }
+            });
+        }
+
+    });
+
+
+
+
     var getProductUrl = '{{route('ajax_single_product')}}';
     var addToCartUrl = '{{route('ajax_add_to_cart')}}';
     var cartUrl = '{{route('cart')}}';

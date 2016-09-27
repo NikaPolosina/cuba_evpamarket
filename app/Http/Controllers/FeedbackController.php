@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\FeedbackProduct;
 use Validator;
+use App\AdditionFeed;
 use App\Category;
 use App\Group;
 use App\Http\Requests;
@@ -99,16 +100,14 @@ class FeedbackController extends Controller{
     }
 
     public function showMyFeed(CategoryController $category, $product_id, $order_id, $user_id){
+
         $file = ProductsController::preparationFile($product_id);
         $product = ProductsController::preparationRating($product_id);
-
-
+        
         $scroll_feed['product_id'] = $product_id;
         $scroll_feed['order_id'] = $order_id;
         $scroll_feed['user_id'] = $user_id;
-
-
-
+        
 
         return view('product.singleProductInfo')
             ->with('singleProduct', $product)
@@ -119,12 +118,32 @@ class FeedbackController extends Controller{
             ->with('scroll_feed', $scroll_feed);
 
 
-
-
-
-
-
+    }
+    public function editFeed(Request $request){
+        $this->validate($request, [
+            'body' => 'required',
+        ]);
+        $feed = FeedbackProduct::findOrFail($request['id']);
+        $updateFeed = [
+            'feedback'         => $request['body'],
+        ];
+        $feed->update($updateFeed);
+        return response($request['body']);
+    }
+    public function additionFeed(Request $request){
+        $this->validate($request, [
+            'body' => 'required',
+        ]);
         
 
+        $addition =  new AdditionFeed([
+            'feed_id'         => $request['id'],
+            'msg'         => $request['body'],
+        ]);
+
+        $addition->save();
+        
+        return response($addition);
+        
     }
 }

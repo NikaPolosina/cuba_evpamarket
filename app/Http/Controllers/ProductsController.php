@@ -310,7 +310,7 @@ class ProductsController extends Controller{
             'getFeedback' => function($query){
                 $query->with(['getUser' => function($query){
                     $query->with('getUserInformation');
-                }]);
+                }])->with('getAdditionFeed');
             }
         ])->first();
 

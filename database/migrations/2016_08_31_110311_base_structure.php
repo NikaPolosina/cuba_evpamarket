@@ -319,6 +319,14 @@ class BaseStructure extends Migration{
             $table->foreign('order_id')->references('id')->on('order');
             $table->foreign('product_id')->references('id')->on('products');
             $table->foreign('user_id')->references('id')->on('users');
+        });
+        //Create table for addition_feedback
+        Schema::create('addition_feedback', function (Blueprint $table){
+            $table->increments('id');
+            $table->integer('feed_id')->unsigned();
+            $table->text('msg');
+            $table->timestamps();
+            $table->foreign('feed_id')->references('id')->on('feedback_product');
            
         });
 
@@ -330,6 +338,7 @@ class BaseStructure extends Migration{
      * @return void
      */
     public function down(){
+        Schema::drop('addition_feedback');
         Schema::drop('feedback_product');
         Schema::drop('member_group_history');
         Schema::drop('messages');
