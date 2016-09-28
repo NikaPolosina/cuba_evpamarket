@@ -31,7 +31,7 @@ class HomeController extends Controller{
         $this->_msg = $messageController;
         $this->_companyController = $companyController;
         $this->_breadcrumbs = $breadcrumbs;
-
+        $this->_breadcrumbs->setDivider('<img style="display: inline-block;  height: 37px;" src="/img/system/next-bread.png">');
     }
 
     public function Index(Breadcrumbs $breadcrumbs){
@@ -67,6 +67,7 @@ class HomeController extends Controller{
 
 
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+     
 
         $product = [ ];
         $curentUser = Auth::user();

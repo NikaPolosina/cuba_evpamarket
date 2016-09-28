@@ -1,7 +1,9 @@
 
-<div class="bread" style="width: 100%;        border-bottom: 1px solid #e9e9e9;
-    background-color: #f8f8f8; margin-bottom: 3px;">
-    {!! $breadcrumbs!!}
+<div class="bread">
+    <div class="cl-sm-10 col-sm-offset-1 sm">
+        {!! $breadcrumbs!!}
+
+    </div>
 
 </div>
 
@@ -20,11 +22,16 @@
         line-height: 30px;
     }
     .bread{
-        position: relative;
-        height: 30px;
+        overflow: hidden;
         width: 100%;
-        border: 1px solid #e9e9e9;
-        background-color: #f8f8f8;
-        font-size: 12px;
+        margin-bottom: 5px;
+        position: relative;
+        height: 36px;
+        border-bottom: 1px solid #e9e9e9;
+        background-color: rgb(245, 245, 245);
+        font-size: 14px;
+    }
+    .bread .sm>ul>li>span{
+        line-height: 36px;
     }
 </style>

@@ -3,14 +3,12 @@
 @section('content')
 
     @include('layouts.header_menu')
+    @include('layouts.breadcrumbs')
+
     <link href="../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
-
-
-
 
     <div class="row">
         <div class="col-md-10 col-sm-offset-1">
-        @include('layouts.breadcrumbs')
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet light ">
                 <div class="portlet-title">

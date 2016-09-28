@@ -40,6 +40,7 @@ class CartController extends Controller{
         $this->_totalCnt = 0;
         $this->_totalAmount = 0;
         $this->_breadcrumbs = $breadcrumbs;
+        $this->_breadcrumbs->setDivider('<img style="display: inline-block;  height: 37px;" src="/img/system/next-bread.png">');
     }
 
     /**

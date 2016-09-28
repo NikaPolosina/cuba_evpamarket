@@ -1,10 +1,10 @@
 @extends('layouts.app')
     @section('content')
     @include('layouts.header_menu')
+    @include('layouts.breadcrumbs')
 
     <link rel="stylesheet" type="text/css" href="../css/show_cart_like.css"/>
     <div class="row">
-        @include('layouts.breadcrumbs')
         {!! HTML::script('/js/count_product.js') !!}
         @if(count($companies))
             @foreach($companies as $value)

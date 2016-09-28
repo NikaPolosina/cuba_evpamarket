@@ -2,12 +2,13 @@
 @section('content')
 
     @include('layouts.header_menu')
+    @include('layouts.breadcrumbs')
+
     <link rel="stylesheet" type="text/css" href="/css/show_cart_like.css"/>
 
     @include('product.modalAddProductCart')
     <div class="row_row">
         <div class="col-sm-8 col-sm-offset-2">
-        @include('layouts.breadcrumbs')
         </div>
 
         <div class="row item_class_4">

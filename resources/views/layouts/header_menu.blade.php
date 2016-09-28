@@ -109,6 +109,10 @@
 </script>
 
 <style>
+    .navbar{
+        margin-bottom: 0px!important;
+
+    }
     .input-group-addon {
         border-radius: 4px 0px 0px 4px!Important;
     }

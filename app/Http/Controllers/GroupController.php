@@ -35,6 +35,7 @@ class GroupController extends Controller{
         $this->_request = $request;
         $this->_msg = $messageController;
         $this->_breadcrumbs = $breadcrumbs;
+        $this->_breadcrumbs->setDivider('<img style="display: inline-block;  height: 37px;" src="/img/system/next-bread.png">');
     }
 
     public function prepareUserAvatar($user){

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
     @include('layouts.header_menu')
+    @include('layouts.breadcrumbs')
 
 
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
@@ -28,7 +29,6 @@
 
     <div class="container">
         <div class="row">
-            @include('layouts.breadcrumbs')
 
         {{--    {{setlocale(LC_ALL, 'de_RU')}}--}}
 

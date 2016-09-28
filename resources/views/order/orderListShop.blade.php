@@ -3,11 +3,12 @@
 @section('content')
 
     @include('layouts.header_menu')
+    @include('layouts.breadcrumbs')
+
     <link href="/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css"/>
 
     <div class="row">
         <div class="col-sm-12">
-            @include('layouts.breadcrumbs')
             <div class="portlet-title">
                 <div class="caption font-dark" style=" text-align: center">
                     <i class="icon-settings font-dark"></i>
