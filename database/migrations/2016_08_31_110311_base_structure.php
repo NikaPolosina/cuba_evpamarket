@@ -330,6 +330,35 @@ class BaseStructure extends Migration{
            
         });
 
+
+        //Create table for chat_users
+        Schema::create('chat_users', function (Blueprint $table){
+            $table->increments('id');
+            $table->integer('from_id')->unsigned();
+            $table->integer('to_id')->unsigned();
+            $table->text('type');
+            $table->timestamps();
+            $table->foreign('from_id')->references('id')->on('users');
+            $table->foreign('to_id')->references('id')->on('users');
+
+        });
+
+
+        //Create table for chat_msgs
+        Schema::create('chat_msgs', function (Blueprint $table){
+            $table->increments('id');
+            $table->integer('from_id')->unsigned();
+            $table->integer('to_id')->unsigned();
+            $table->text('body');
+            $table->integer('chat_user_id')->unsigned();
+            $table->timestamps();
+            $table->foreign('from_id')->references('id')->on('users');
+            $table->foreign('to_id')->references('id')->on('users');
+            $table->foreign('chat_user_id')->references('id')->on('chat_users');
+
+        });
+
+
     }
 
     /**
@@ -338,6 +367,8 @@ class BaseStructure extends Migration{
      * @return void
      */
     public function down(){
+        Schema::drop('chat_msgs');
+        Schema::drop('chat_users');
         Schema::drop('addition_feedback');
         Schema::drop('feedback_product');
         Schema::drop('member_group_history');

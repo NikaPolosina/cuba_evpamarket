@@ -7,6 +7,8 @@ use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\ChatMsgs;
+use App\ChatUsers;
 
 class MessageController extends Controller{
 
@@ -109,4 +111,48 @@ class MessageController extends Controller{
         $this->_msg->save();
 
     }
+
+    /**
+     * Вытягивает разговор между двумя людьми
+     * */
+    public function getChatBetweenTwoUser($from_id, $to_id){
+       $msg = ChatMsgs::
+            whereIn('from_id', [$from_id, $to_id])
+           ->whereIn('to_id', [$from_id, $to_id])
+           ->with(['getUserTo' => function($q){
+                       $q->with(['getUserInformation']);
+                   }])
+           ->with(['getUserFrom' => function($q){
+                       $q->with(['getUserInformation']);
+                   }])
+           ->orderBy('created_at', 'ASC')->get()->toArray();
+       // dd($msg);
+        return $msg;
+
+    }
+
+    public function getAllUserWhoSendMsg($id){
+
+        $msgAll = ChatUsers::
+        whereIn('from_id', [$id])
+            ->orWhereIn('to_id', [$id])
+            ->orderBy('created_at', 'DESC')->groupBy('to_id')
+            
+            ->with([
+                'getChatMsgs' => function ($query){
+                    $query->with(['getUserTo' => function($q){
+                        $q->with(['getUserInformation']);
+                    }])->with(['getUserFrom' => function($q){
+                        $q->with(['getUserInformation']);
+                    }]);
+
+                }
+            ])
+            
+            ->get()->toArray();
+        
+       // dd($msgAll);
+        return $msgAll;
+    }
+
 }

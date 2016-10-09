@@ -445,6 +445,7 @@
     <script src="../assets/layouts/layout2/scripts/layout.min.js" type="text/javascript"></script>
     <script src="../assets/layouts/layout2/scripts/demo.min.js" type="text/javascript"></script>
     <script src="../assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+    <script src="../assets/pages/scripts/dashboard.min.js" type="text/javascript"></script>
 
 
 

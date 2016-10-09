@@ -74,17 +74,22 @@ class CartController extends Controller{
                     }
                 }
 
+
                 $companies[$key]['totalAmount'] = $this->getTotalAmount($key);
-                $companies[$key]['totalHistoryAmount'] = OrderController::getTotalCompanyAmount($companies[$key]['company'], StatusOwner::where('key','sending_buyer')->first(), Auth::user());
-                $companies[$key]['total'] = $companies[$key]['totalAmount'] + $companies[$key]['totalHistoryAmount'];
+                 if(Auth::user()){
+                     $companies[$key]['totalHistoryAmount'] = OrderController::getTotalCompanyAmount($companies[$key]['company'], StatusOwner::where('key','sending_buyer')->first(), Auth::user());
+                     $companies[$key]['total'] = $companies[$key]['totalAmount'] + $companies[$key]['totalHistoryAmount'];
 
+                     if(Auth::user()->getGroup()->where('company_id', $key)->count()){
 
-                if(Auth::user()->getGroup()->where('company_id', $key)->count()){
-                    $companies[$key]['totalHistoryAmount'] = Auth::user()->getGroup()->where('company_id', $key)->max('money');
-                    $companies[$key]['total'] = $companies[$key]['totalAmount'] + $companies[$key]['totalHistoryAmount'];
-                }
+                         $companies[$key]['totalHistoryAmount'] = Auth::user()->getGroup()->where('company_id', $key)->max('money');
+                         $companies[$key]['total'] = $companies[$key]['totalAmount'] + $companies[$key]['totalHistoryAmount'];
+                     }
+                     
+                     $companies[$key]['discount'] = $companies[$key]['company']->getDiscountAccumulativ()->where('from', '<=', $companies[$key]['total'])->orderBy('from', 'desc')->first();
 
-                $companies[$key]['discount'] = $companies[$key]['company']->getDiscountAccumulativ()->where('from', '<=', $companies[$key]['total'])->orderBy('from', 'desc')->first();
+                 }
+
 
 
             }

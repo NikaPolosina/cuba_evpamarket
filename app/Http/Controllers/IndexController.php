@@ -17,19 +17,36 @@ use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cookie;
 use Creitive\Breadcrumbs\Breadcrumbs;
+use Illuminate\Support\Facades\Artisan;
 
 class IndexController extends Controller{
-    public function test(Request $request, Breadcrumbs $breadcrumbs){
-        $a = $breadcrumbs->addCrumb('Домой', '/login-user');
-        $b = $breadcrumbs->addCrumb('заказы', '/show-list-order-simple');
-        $breadcrumbs->setDivider('»');
-        echo $breadcrumbs->render();
+    
+    public function test(MessageController $mesage){
+
+        $msgAll = $mesage->getAllUserWhoSendMsg(3);
+        $msg = $mesage->getChatBetweenTwoUser(3, 4);
+
+
+            dd($msg);
+
+
+
         return view('test');
-        $products = Product::with([
-            'getCompany' => function ($query){
-                $query->with('getOrder');
-            }
-        ])->get();
+
+
+
+
+
+
+
+        if($run){
+            Artisan::call('chat_server:serve', []);
+        }
+
+
+        return view('test');
+        
+
         dd($products);
         foreach($products as $product){
             $product->company = $product->getCompany()->first()->id;

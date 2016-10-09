@@ -20,7 +20,6 @@ use App\UserInformation;
 use App\Http\Controllers\FileController;
 use Illuminate\Support\Facades\Cookie;
 use Creitive\Breadcrumbs\Breadcrumbs;
-
 class HomeController extends Controller{
     protected $_msg;
     protected $_companyController;
@@ -51,7 +50,26 @@ class HomeController extends Controller{
         }
     }
 
-    public function registerSimple(){
+
+    public function getUserPageWithConversationUsers($from_id, $to_id, MessageController $mesage){
+        $data = $this->prepeareHomeInfo($mesage);
+        $betvin = $mesage->getChatBetweenTwoUser($from_id, $to_id);
+        $data['userInfo']['beetwenTwo'] = $betvin;
+
+       //dd($data['userInfo']['beetwenTwo']);
+
+        return view('user.simple_user.home')
+            ->with('userInfo', $data['userInfo'])
+            ->with('order', $data['order'])
+            ->with('user', $data['user'])
+            ->with('groupInvites', $data['groupInvites'])
+            ->with('product', $data['product'])
+            ->with('breadcrumbs', $this->_breadcrumbs);
+
+    }
+
+    public function prepeareHomeInfo($mesage){
+
         if(!Auth::user()->getUserInformation){
             $region = Region::all();
             return view('auth.register_aditional')->with('region', $region);
@@ -63,23 +81,36 @@ class HomeController extends Controller{
             $order = Order::where('simple_user_id', '=', Auth::user()->id)->get();
             $this->_msg->getGroupInvite(Auth::user(), [ 'status' => 0 ]);
             $groupInvites = $this->_msg->getMsg()->count();
+            $userInfo['msgAll'] = $mesage->getAllUserWhoSendMsg(Auth::user()->id);
         }
 
-
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
-     
-
-        $product = [ ];
+        $product = [];
         $curentUser = Auth::user();
         $product = $curentUser->getProduct;
         $product = IndexController::showProduct($product);
-        
+
+        $data['userInfo'] = $userInfo;
+        $data['order'] = $order;
+        $data['user'] = $curentUser;
+        $data['groupInvites'] = $groupInvites;
+        $data['product'] = $product;
+
+        return $data;
+
+    }
+
+
+    public function registerSimple(MessageController $mesage){
+
+        $data = $this->prepeareHomeInfo($mesage);
+
         return view('user.simple_user.home')
-            ->with('userInfo', $userInfo)
-            ->with('order', $order)
-            ->with('user', $curentUser)
-            ->with('groupInvites', $groupInvites)
-            ->with('product', $product)
+            ->with('userInfo', $data['userInfo'])
+            ->with('order', $data['order'])
+            ->with('user', $data['user'])
+            ->with('groupInvites', $data['groupInvites'])
+            ->with('product', $data['product'])
             ->with('breadcrumbs', $this->_breadcrumbs);
     }
 

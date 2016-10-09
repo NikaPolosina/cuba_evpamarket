@@ -504,7 +504,8 @@ var Dashboard = function() {
             });
         },
 
-        initMorisCharts: function() {
+     /*   initMorisCharts: function() {
+
             if (Morris.EventEmitter && $('#sales_statistics').size() > 0) {
                 // Use Morris.Area instead of Morris.Line
                 dashboardMainChart = Morris.Area({
@@ -547,16 +548,22 @@ var Dashboard = function() {
                 });
 
             }
-        },
+        },*/
 
         initChat: function() {
+
+
             var cont = $('#chats');
             var list = $('.chats', cont);
             var form = $('.chat-form', cont);
             var input = $('input', form);
             var btn = $('.btn', form);
+            var img = $('li.out').find('img').attr('src');
+
+
 
             var handleClick = function(e) {
+
                 e.preventDefault();
 
                 var text = input.val();
@@ -568,11 +575,11 @@ var Dashboard = function() {
                 var time_str = (time.getHours() + ':' + time.getMinutes());
                 var tpl = '';
                 tpl += '<li class="out">';
-                tpl += '<img class="avatar" alt="" src="' + Layout.getLayoutImgPath() + 'avatar1.jpg"/>';
+                tpl += '<img class="avatar" alt="" src="'+img+'"/>';
                 tpl += '<div class="message">';
                 tpl += '<span class="arrow"></span>';
-                tpl += '<a href="#" class="name">Bob Nilson</a>&nbsp;';
-                tpl += '<span class="datetime">at ' + time_str + '</span>';
+                tpl += '<a href="#" class="name">'+maneMyFirst+maneMyLast+'</a>&nbsp;';
+                tpl += '<span class="datetime">' + time_str + '</span>';
                 tpl += '<span class="body">';
                 tpl += text;
                 tpl += '</span>';
@@ -597,6 +604,7 @@ var Dashboard = function() {
             }
 
             $('body').on('click', '.message .name', function(e) {
+
                 e.preventDefault(); // prevent click event
 
                 var name = $(this).text(); // get clicked user's full name
@@ -605,6 +613,8 @@ var Dashboard = function() {
             });
 
             btn.click(handleClick);
+
+            
 
             input.keypress(function(e) {
                 if (e.which == 13) {
@@ -665,6 +675,8 @@ var Dashboard = function() {
                 //"endDate": "11/14/2015",
                 opens: (App.isRTL() ? 'right' : 'left'),
             }, function(start, end, label) {
+           
+                
                 $('#dashboard-report-range span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             });
 
@@ -900,7 +912,7 @@ var Dashboard = function() {
             var map = AmCharts.makeChart("dashboard_amchart_2", {
                 type: "map",
                 "theme": "light",
-                pathToImages: "../assets/global/plugins/amcharts/ammap/images/",
+                pathToImages: "/assets/global/plugins/amcharts/ammap/images/",
 
                 dataProvider: {
                     map: "worldLow",
@@ -1172,7 +1184,7 @@ var Dashboard = function() {
                 "type": "serial",
                 "addClassNames": true,
                 "theme": "light",
-                "path": "../assets/global/plugins/amcharts/ammap/images/",
+                "path": "/assets/global/plugins/amcharts/ammap/images/",
                 "autoMargins": false,
                 "marginLeft": 30,
                 "marginRight": 8,
@@ -1261,7 +1273,7 @@ var Dashboard = function() {
             var chart = AmCharts.makeChart("dashboard_amchart_4", {
                 "type": "pie",
                 "theme": "light",
-                "path": "../assets/global/plugins/amcharts/ammap/images/",
+                "path": "/assets/global/plugins/amcharts/ammap/images/",
                 "dataProvider": [{
                     "country": "Lithuania",
                     "value": 260
@@ -1312,7 +1324,7 @@ var Dashboard = function() {
             }
 
             $('#mapplic').mapplic({
-                source: '../assets/global/plugins/mapplic/world.json',
+                source: '/assets/global/plugins/mapplic/world.json',
                 height: 265,
                 animate: false,
                 sidebar: false,
@@ -1375,7 +1387,7 @@ var Dashboard = function() {
             this.initSparklineCharts();
             this.initChat();
             this.initDashboardDaterange();
-            this.initMorisCharts();
+          /*  this.initMorisCharts();*/
 
             this.initAmChart1();
             this.initAmChart2();

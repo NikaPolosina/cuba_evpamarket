@@ -382,7 +382,9 @@ class OrderController extends Controller{
     }
 
     public static function getTotalCompanyAmount(Company $company, StatusOwner $statusOwner, User $user){
+        
         return $company->getOrder()->where('simple_user_id', $user->id)->where('status', $statusOwner->id)->get()->sum('total_price');
+
     }
 
 }

@@ -244,6 +244,9 @@
                                                             После оформления заказа и подтверждени продавцом о его получении покупателем - эта скидка закрепляется за Вами до тех пор,
                                                             пока Вы не повысите сумму накоплений в этом магазине до следующей болие высокой скидки. </p>
                                                     </td>
+
+
+
                                                     <td>
                                                         <table class="my_table discount_table" border="2" align="center" bordercolor="#ddd">
                                                             <tr>
@@ -251,7 +254,11 @@
                                                                 <th>Скидка</th>
                                                             </tr>
                                                             @foreach($value['company']->getDiscountAccumulativ as $val)
-                                                                <tr data-from="{{$val['from']}}" data-percent="{{$val->percent}}" class=" <?=($value['discount']['id'] == $val->id)? 'current_discount':'' ?>" ><td><span style="color: #2a62bc;">{{$val->from}} руб.</span></td><td><span style="color: indianred;">{{$val->percent}} %</span></td></tr>
+
+                                                                <tr data-from="{{$val['from']}}" data-percent="{{$val->percent}}" class=" @if(array_key_exists("discount", $value)) <?=($value['discount']['id'] == $val->id)? 'current_discount':'' ?> @endif"  >
+                                                                    <td><span style="color: #2a62bc;">{{$val->from}} руб.</span></td>
+                                                                    <td><span style="color: indianred;">{{$val->percent}} %</span></td>
+                                                                </tr>
                                                             @endforeach
 
                                                         </table>
@@ -260,28 +267,37 @@
                                             </div>
                                         @endif
 
-                                        <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p amount_zone" style="background-color: white; padding-bottom: 20px;">
 
+
+                                        <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p amount_zone" style="background-color: white; padding-bottom: 20px;">
+                                            @if(array_key_exists("totalHistoryAmount", $value))
                                             <h3 class="total_history_amount">
                                                <div class="a col-sm-9">Сумма по завершенным заказам в этом магазине :</div>
-                                                <div class="b col-sm-3"> <b><span class="total_history_amount">{{$value['totalHistoryAmount']}}</span></b> руб.</div>
+                                                <div class="b col-sm-3"> <b><span class="total_history_amount"> {{$value['totalHistoryAmount']}}</span> </b> руб.</div>
                                                 <input type="hidden" class="total_history_amount" value="{{$value['totalHistoryAmount']}}"/>
                                             </h3>
+                                            @endif
 
+                                            @if(array_key_exists("totalAmount", $value))
                                             <h3  class="total_amount">
                                                 <div class="a col-sm-9"> Текущая покупка на сумму :</div>
                                                 <div class="b col-sm-3">  <b><span class="total_amount">{{$value['totalAmount']}}</span></b> руб.</div>
                                                 <input type="hidden" class="total_amount" value="{{$value['totalAmount']}}"/>
                                             </h3>
-
+                                            @endif
+                                            @if(array_key_exists("total", $value))
                                             <h3  class="total">
                                                 <div class="a col-sm-9">Общая сумма для учёта скидки :</div>
                                                 <div class="b col-sm-3"> <b><span class="total">{{$value['total']}}</span></b> руб.</div>
                                                 <input type="hidden" class="total" value="{{$value['total']}}"/>
                                             </h3>
+                                            @endif
+                                            @if(array_key_exists("discount", $value))
 
                                             @if($value['discount'])
                                                 <h3>Ваша скидка :  <b><span class="percent">{{$value['discount']['percent']}}</span> %</b> <span style="color: red;">( {{($value['totalAmount']*$value['discount']['percent']/100)}} рублей )</span></h3>
+                                            @endif
+
                                             @endif
                                         </div>
                                 </div>
