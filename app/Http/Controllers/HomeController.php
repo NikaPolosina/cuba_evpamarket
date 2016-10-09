@@ -20,6 +20,7 @@ use App\UserInformation;
 use App\Http\Controllers\FileController;
 use Illuminate\Support\Facades\Cookie;
 use Creitive\Breadcrumbs\Breadcrumbs;
+use App\ChatUsers;
 class HomeController extends Controller{
     protected $_msg;
     protected $_companyController;
@@ -51,12 +52,11 @@ class HomeController extends Controller{
     }
 
 
-    public function getUserPageWithConversationUsers($from_id, $to_id, MessageController $mesage){
+    public function getUserPageWithConversationUsers($from_id, $to_id, MessageController $mesage, ChatUsers $chatUsers){
         $data = $this->prepeareHomeInfo($mesage);
-        $betvin = $mesage->getChatBetweenTwoUser($from_id, $to_id);
-        $data['userInfo']['beetwenTwo'] = $betvin;
-
-       //dd($data['userInfo']['beetwenTwo']);
+        $between = $mesage->getChatBetweenTwoUser($from_id, $to_id);
+        $data['userInfo']['beetwenTwo'] = $between;
+        $conversation = $chatUsers->whereIn('from_id', [$from_id, $to_id])->whereIn('to_id', [$from_id, $to_id])->first();
 
         return view('user.simple_user.home')
             ->with('userInfo', $data['userInfo'])
@@ -64,6 +64,7 @@ class HomeController extends Controller{
             ->with('user', $data['user'])
             ->with('groupInvites', $data['groupInvites'])
             ->with('product', $data['product'])
+            ->with('conversation', $conversation)
             ->with('breadcrumbs', $this->_breadcrumbs);
 
     }

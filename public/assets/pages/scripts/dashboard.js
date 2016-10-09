@@ -14,7 +14,7 @@ var Dashboard = function() {
 
             var setMap = function(name) {
                 var map = jQuery('#vmap_' + name);
-                
+
                 if (map.size() !== 1) {
                     return;
                 }
@@ -50,7 +50,7 @@ var Dashboard = function() {
                 };
 
                 data.map = name + '_en';
-              
+
                 map.width(map.parent().parent().width());
                 map.show();
                 map.vectorMap(data);
@@ -561,20 +561,64 @@ var Dashboard = function() {
             var img = $('li.out').find('img').attr('src');
 
 
+            if(conn && url){
+                conn = new WebSocket(url);
 
-            var handleClick = function(e) {
+                conn.onopen    = function(e){
+                    data                 = {};
+                    data['action']       = 'login';
+                    data['id']           = from_id;
+                    data['email']        = from_email;
+                    data['connected_id'] = connected_id;
+                    conn.send(JSON.stringify(data));
+                };
 
-                e.preventDefault();
+                conn.onclose   = function(event){
+                    if(event.wasClean){
+                        console.log('Соединение закрыто чисто');
+                    }else{
+                        console.log('Обрыв соединения');
+                    }
+                    console.log('Код: ' + event.code + ' причина: ' + event.reason);
+                };
 
-                var text = input.val();
+                conn.onerror   = function(){
+                    console.log('error');
+            };
+
+                conn.onmessage = function(e){
+                    data = JSON.parse(e.data);
+
+                    if(data.success){
+                        var avatar_in = '/img/users/4/avatar.png';
+                        var avatar = $('li.out').find('img.avatar').attr('src');
+                        switch(data.action){
+                            case 'login':
+                                for(var key in data.chat){
+                                    appendMsg(data['chat'][key]['body'], data['chat'][key]['from_id'] == from_id);
+                                }
+                                break;
+                            case 'chat':
+                                appendMsg(data.msg, false);
+                                break;
+                        }
+                    }else{
+                        console.error(data.msg);
+                    }
+                };
+            }
+
+            var appendMsg = function(msg, params){
+                var text = msg;
                 if (text.length == 0) {
                     return;
                 }
+                var side =  params ? 'out':'in';
 
                 var time = new Date();
                 var time_str = (time.getHours() + ':' + time.getMinutes());
                 var tpl = '';
-                tpl += '<li class="out">';
+                tpl += '<li class="'+side+'">';
                 tpl += '<img class="avatar" alt="" src="'+img+'"/>';
                 tpl += '<div class="message">';
                 tpl += '<span class="arrow"></span>';
@@ -601,6 +645,30 @@ var Dashboard = function() {
                 cont.find('.scroller').slimScroll({
                     scrollTo: getLastPostPos()
                 });
+
+            }
+
+            var handleClick = function(e) {
+
+                e.preventDefault();
+
+                var text = input.val();
+                if (text.length == 0) {
+                    return;
+                }
+
+                appendMsg(text, true);
+
+                // send data by ws
+                if(conn){
+                    data                 = {};
+                    data['action']       = 'chat';
+                    data['to']           = to_id;
+                    data['connected_id'] = connected_id;
+                    data['msg']          = text;
+                    conn.send(JSON.stringify(data));
+                }
+
             }
 
             $('body').on('click', '.message .name', function(e) {
@@ -613,8 +681,6 @@ var Dashboard = function() {
             });
 
             btn.click(handleClick);
-
-            
 
             input.keypress(function(e) {
                 if (e.which == 13) {
@@ -675,8 +741,8 @@ var Dashboard = function() {
                 //"endDate": "11/14/2015",
                 opens: (App.isRTL() ? 'right' : 'left'),
             }, function(start, end, label) {
-           
-                
+
+
                 $('#dashboard-report-range span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             });
 

@@ -61,80 +61,14 @@
 
 <script>
     var url = 'ws://<?=$_SERVER['HTTP_HOST']?>:<?=env('PORT', 5000)?>';
-    console.log(url);
-
     var data;
-    var conn = new WebSocket(url);
+    var conn = true;
 
-    conn.onopen    = function(e){
-        console.log("Соединение установлено!");
-        data                 = {};
-        data['action']       = 'login';
-        data['id']           = '{{Auth::user()->id}}';
-        data['email']        = '{{Auth::user()->email}}';
-        data['connected_id'] = 1;
-        console.log(data);
-        conn.send(JSON.stringify(data));
-    };
-    conn.onclose   = function(event){
-        console.log('close');
-        if(event.wasClean){
-            console.log('Соединение закрыто чисто');
-        }else{
-            console.log('Обрыв соединения'); // например, "убит" процесс сервера
-        }
-        console.log('Код: ' + event.code + ' причина: ' + event.reason);
-    };
+    var from_id           = '{{Auth::user()->id}}';
+    var from_email        = '{{Auth::user()->email}}';
 
-    conn.onerror   = function(){
-        console.log('error');
-    };
-
-    // send  msg
-        $('div.btn-cont').on('click', function () {
-            event.preventDefault();
-            var msg    = $(this).parents('.chat-form').find('input.my_input_msg_js').val();
-            if(!msg.length){
-                $(this).parents('.chat-form').find('input.my_input_msg_js').focus()
-                return false;
-            }
-            data                 = {};
-            data['action']       = 'chat';
-            data['to']           = 4;
-            data['connected_id'] = 2;
-            data['msg']          = msg;
-//                console.log(data);
-            conn.send(JSON.stringify(data));
-
-        });
-
-    // response from server
-    conn.onmessage = function(e){
-        data = JSON.parse(e.data);
-       // console.info(data);
-        if(data.success){
-            var avatar_in = '/img/users/4/avatar.png';
-            var avatar = $('li.out').find('img.avatar').attr('src');
-
-
-            switch(data.action){
-                case 'login':
-                    for(var key in data.chat){
-                        console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-                       // $('ul.chats').append('<li class="out"><img class="avatar" alt="" src="/assets/layouts/layout/img/avatar1.jpg"/><div class="message"><span class="arrow"> </span><a href="javascript:;" class="name"> Bob Nilson </a> <span class="datetime"> at 20:30 </span><span class="body">'+ data +'</span></div></li>');
-                        //content.append('<p> -  ('+data.chat[key].created_at+') ->  ' + data.chat[key].body + '</p>');
-                    }
-                    break;
-                case 'chat':
-                        console.log(data);
-                    $('ul.chats').append('<li class="in"><img class="avatar" alt="" src="'+avatar+'"/><div class="message"><span class="arrow"> </span><a href="javascript:;" class="name"> <?=$userInfo->name?><?=$userInfo->surname?> </a> <span class="datetime"> at 20:30 </span><span class="body">'+ data.msg +'</span></div></li>');
-                    break;
-            }
-
-        }else{
-            console.log(data.msg);
-        }
-    };
+    var to_id = '{{($conversation->from_id == Auth::user()->id) ? $conversation->to_id : $conversation->from_id}}';
+    var connected_id = '{{$conversation->id}}';
 
 </script>
 

@@ -22,7 +22,6 @@ class ChatSocket extends BaseSocket{
 
     public function onOpen(ConnectionInterface $conn){
         $this->clients->attach($conn);
-        echo 'New User';
     }
 
     public function onMessage(ConnectionInterface $from, $data){
