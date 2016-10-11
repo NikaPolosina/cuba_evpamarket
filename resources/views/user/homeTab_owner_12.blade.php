@@ -88,15 +88,7 @@
                     </div>
                 </form>
             </div>
-            <script>
-                var src = $('div.fileinput-new').find('img').attr('src');
 
-
-                console.log(src);
-
-
-
-            </script>
 
 
             <div id="tab_3-3" class="tab-pane">

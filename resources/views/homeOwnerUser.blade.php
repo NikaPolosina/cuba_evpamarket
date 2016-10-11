@@ -20,7 +20,7 @@
             <div class="tabbable-line tabbable-full-width">
                 <ul class="nav nav-tabs">
                     <li class="active">
-                        <a href="#tab_1_1" data-toggle="tab"> Мой профиль </a>
+                        <a href="#tab_1_1" data-toggle="tab" id="profile"> Мой профиль </a>
                     </li>
                     <li style="display: none">
                         <a href="#tab_1_2" data-toggle="tab"> Настройки аккаунта </a>
@@ -81,78 +81,98 @@
                             </div>
                             <div class="col-md-9">
 
-
-
-
-                                <div class="row">
-
-
-
-                                    <div class="col-md-8 profile-info">
-                                        <h1 class="font-green sbold uppercase">{{$userInfo->name}} {{$userInfo->surname}}</h1>
-                                        <p>
-                                           {{$userInfo->about_me}}
-                                        </p>
-                                        <p>
-                                            <a href="javascript:;">{{$userInfo->my_site}} </a>
-                                        </p>
-                                        <ul class="list-inline">
-                                            <li>
-                                                <i class="fa fa-briefcase"></i> Отправка </li>
-                                            <li>
-                                                <i class="fa fa-star"></i> Отзывы </li>
-                                            <li>
-                                                <a href="/like">   <li> <i class="fa fa-heart"></i> В избранных </li></a>
-                                        </ul>
+                                @if($userInfo['beetwenTwo'])
+                                    <div class="chat_beet">
+                                        @include('chat.chat')
                                     </div>
 
-                                </div>
-                                <div class="row">
-                                    <div class="panel">
+                                    <div class="chat" style="display: none;">
+                                        @include('chat.chatAll')
+                                    </div>
+                                @else
+                                    <div class="chat" style="display: none;">
+                                        @include('chat.chatAll')
+                                    </div>
+                                @endif
 
-                                        @if(count($curentUser->getCompanies))
-                                        <div class="">
-                                                <h3 class="font-green sbold uppercase">Мои магазины <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Добавить магазин</a></h3>
-                                                <div class="table">
-                                                    <table class="table table-bordered table-striped table-hover">
-                                                        <thead>
-                                                        <tr bgcolor="#FBFBEF">
-                                                            <th>№</th><th>Logo</th><th>Имя магазина</th><th>Описание магазина</th>{{--<th width="350px">Детальное описание</th>--}}<th>Действие</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {{-- */$x=0;/* --}}
-                                                        @foreach($curentUser->getCompanies as $item)
-                                                            {{-- */$x++;/* --}}
-                                                            <tr data-id="{{$item->id}}">
-                                                                <td>{{ $x }}</td>
-                                                                <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="{{$item->company_logo}}"></td><td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td>{{--<td width="200">{!!$item->company_content!!}</td>--}}
+                                    <?php
+                                    $class = '';
+                                    if($userInfo['beetwenTwo']){
+                                        $class = 'style="display: none";';
+                                    }
+                                    ?>
 
-                                                                <td width="165">
-                                                                    <a href="{{ url('company/' . $item->id . '/edit') }}">
-                                                                        <button type="submit" class="btn btn-primary btn-xs">
-                                                                            <span class="glyphicon  glyphicon-pencil" aria-hidden="true"></span>
-                                                                        </button>
-                                                                    </a>
-                                                                    <button data-id="{{$item->id}}" type="" class="btn btn-danger btn-xs tut">
-                                                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                                                    </button>
+                                    <div class="col-md-12 profile-info" <?=$class?> >
+                                        <div class="row">
 
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                    {{--<div class="pagination"> {!! $company->render() !!} </div>--}}
-                                                </div>
+
+
+                                            <div class="col-md-8 profile-info">
+                                                <h1 class="font-green sbold uppercase">{{$userInfo->name}} {{$userInfo->surname}}</h1>
+                                                <p>
+                                                   {{$userInfo->about_me}}
+                                                </p>
+                                                <p>
+                                                    <a href="javascript:;">{{$userInfo->my_site}} </a>
+                                                </p>
+                                                <ul class="list-inline">
+                                                    <li>
+                                                        <i class="fa fa-briefcase"></i> Отправка </li>
+                                                    <li>
+                                                        <i class="fa fa-star"></i> Отзывы </li>
+                                                    <li>
+                                                        <a href="/like">   <li> <i class="fa fa-heart"></i> В избранных </li></a>
+                                                </ul>
                                             </div>
-                                        @else
 
-                                        <div><h3>У вас пока нет ни одного магазина. Воспользуйтесь кнопкой "создать" для того что бы создать магазин.</h3></div>
-                                        <a href="{{ url('company/create') }}" class="btn btn-primary pull-left btn-sm btn green">Создать магазин</a>
-                                       @endif
-                                    </div>
-                                </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="panel">
+
+                                                @if(count($curentUser->getCompanies))
+                                                <div class="">
+                                                        <h3 class="font-green sbold uppercase">Мои магазины <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Добавить магазин</a></h3>
+                                                        <div class="table">
+                                                            <table class="table table-bordered table-striped table-hover">
+                                                                <thead>
+                                                                <tr bgcolor="#FBFBEF">
+                                                                    <th>№</th><th>Logo</th><th>Имя магазина</th><th>Описание магазина</th>{{--<th width="350px">Детальное описание</th>--}}<th>Действие</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                {{-- */$x=0;/* --}}
+                                                                @foreach($curentUser->getCompanies as $item)
+                                                                    {{-- */$x++;/* --}}
+                                                                    <tr data-id="{{$item->id}}">
+                                                                        <td>{{ $x }}</td>
+                                                                        <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="{{$item->company_logo}}"></td><td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td>{{--<td width="200">{!!$item->company_content!!}</td>--}}
+
+                                                                        <td width="165">
+                                                                            <a href="{{ url('company/' . $item->id . '/edit') }}">
+                                                                                <button type="submit" class="btn btn-primary btn-xs">
+                                                                                    <span class="glyphicon  glyphicon-pencil" aria-hidden="true"></span>
+                                                                                </button>
+                                                                            </a>
+                                                                            <button data-id="{{$item->id}}" type="" class="btn btn-danger btn-xs tut">
+                                                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                                                            </button>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                            {{--<div class="pagination"> {!! $company->render() !!} </div>--}}
+                                                        </div>
+                                                    </div>
+                                                @else
+
+                                                <div><h3>У вас пока нет ни одного магазина. Воспользуйтесь кнопкой "создать" для того что бы создать магазин.</h3></div>
+                                                <a href="{{ url('company/create') }}" class="btn btn-primary pull-left btn-sm btn green">Создать магазин</a>
+                                               @endif
+                                            </div>
+                                        </div>
+                                        </div>
                                 <!--end row-->
                             </div>
                         </div>
@@ -172,6 +192,32 @@
             </div>
     </div>
     </div>
+
+
+
+        <script>
+
+            $(document).ready(function () {
+
+                $('#msg').on('click', function (event) {
+
+                    event.preventDefault();
+                    $( ".chat" ).show();
+                    $( ".profile-info" ).hide();
+                    $('.chat_beet').hide();
+                });
+
+                $('#profile').on('click', function (event) {
+                    event.preventDefault();
+                    $('.chat_beet').hide();
+                    $( ".chat" ).hide();
+                    $( ".profile-info" ).show();
+
+                });
+
+            });
+
+        </script>
 
 
         <script>
@@ -224,7 +270,7 @@
     <script src="/assets/layouts/layout2/scripts/layout.min.js" type="text/javascript"></script>
     <script src="/assets/layouts/layout2/scripts/demo.min.js" type="text/javascript"></script>
     <script src="/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
-    <script src="/assets/pages/scripts/dashboard.min.js" type="text/javascript"></script>
+    <script src="/assets/pages/scripts/dashboard.js" type="text/javascript"></script>
 
 
 
