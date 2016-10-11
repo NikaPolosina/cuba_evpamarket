@@ -110,7 +110,7 @@ img, iframe {
     border: 1px solid rgba(255, 255, 255, 0);
     background: azure;
     display: inline-block;
-    width: 190px;
+   /* width: 190px;*/
     height:80px;
     float:none;
     list-style-type:none;
@@ -136,6 +136,20 @@ img, iframe {
     text-align:left;
     height: 100%;
 }
+
+    @media screen and (max-width:950px){
+        .galleryCategoryMenu ul li a{
+            font-size: 9px;
+        }
+        .galleryCategoryMenu ul li{
+            height:60px;
+        }
+        .cn-slideshow{
+            height: 275px!important;
+        }
+    }
+
+
 
 
 .galleryCategoryMenu ul li a:hover{

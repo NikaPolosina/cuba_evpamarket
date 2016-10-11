@@ -18,7 +18,7 @@
                         <div class="col-md-12">
 
                             <div class="form-group myGroup group_holder">
-                                <select data-placeholder="Выбирите пользователя..." class="chosen-select group_selector" style="width:300px;" tabindex="2" name="my_company" required>
+                                <select data-placeholder="Выбирите пользователя..." class="chosen-select group_selector" style="width:65%;" tabindex="2" name="my_company" required>
                                     <option value=""></option>
                                     @foreach($allUser as $value)
                                         <option value="{{$value['id']}}" style="background-image: url('{{$value['getUserInformation']['avatar']}}')">{{$value['getUserInformation']['name']}}</option>
@@ -160,7 +160,7 @@
                 </div>
 
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <div class="group_body">
                     <div class="group_name">
                         <h2 class="name_css name_company">{{$group['group_name']}}</h2>

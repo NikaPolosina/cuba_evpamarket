@@ -14,11 +14,11 @@ class ChatUsers extends Model{
     protected $fillable = ['from_id', 'to_id', 'type'];
 
     public function getUserFrom(){
-        return $this->hasOne('App\User', 'from_id', 'id');
+        return $this->hasOne('App\User', 'id','from_id' );
 
     }
     public function getUserTo(){
-        return $this->hasOne('App\User', 'to_id', 'id');
+        return $this->hasOne('App\User', 'id', 'to_id');
 
     }
 

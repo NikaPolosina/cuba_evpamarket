@@ -5,6 +5,8 @@
     @include('layouts.header_menu')
     @include('layouts.breadcrumbs')
 
+
+
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
     <link href="/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
@@ -47,7 +49,7 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_1_1">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-sm-3 col-md-3">
                                     <ul class="list-unstyled profile-nav">
                                         <li>
                                             <div class="img_avatar_css">
@@ -92,40 +94,32 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-9">
+
+                                <div class="col-sm-9 col-md-9">
                                     <div class="row">
 
-
-
-
-
-                                                @if($userInfo['beetwenTwo'])
-                                            <div class="chat">
+                                        @if($userInfo['beetwenTwo'])
+                                            <div class="chat_beet">
                                                     @include('chat.chat')
                                             </div>
 
-                                                @else
+                                            <div class="chat" style="display: none;">
+                                                @include('chat.chatAll')
+                                            </div>
+                                        @else
                                             <div class="chat" style="display: none;">
                                                     @include('chat.chatAll')
                                             </div>
-                                                @endif
+                                        @endif
 
-                                        <script>
+                                        <?php
+                                            $class = '';
+                                                if($userInfo['beetwenTwo']){
+                                                    $class = 'style="display: none";';
+                                                }
+                                            ?>
 
-                                            $('#msg').on('click', function (event) {
-                                                event.preventDefault();
-                                                $( ".chat" ).toggle();
-                                                $( ".profile-info" ).toggle();
-                                            });
-
-                                            $('#profile').on('click', function (event) {
-                                                event.preventDefault();
-                                                $( ".chat" ).hide();
-                                                $( ".profile-info" ).show();
-                                            });
-
-                                        </script>
-                                        <div class="col-md-12 profile-info">
+                                            <div class="col-md-12 profile-info" <?=$class?> >
                                             <h1 class="font-green sbold uppercase">{{$userInfo->name}} {{$userInfo->surname}}</h1>
 
                                                 <ul class="nav nav-tabs">
@@ -147,10 +141,7 @@
                                                                             @include('product.likeSingleView')
 
                                                                     </div>
-
                                                                 @endforeach
-
-
                                                                 <div class="col-sm-12 product_item_like like_empty product_item_p" style="display: none">
                                                                     <h1>В избранных нет ни одного товара. Вернитесь к сайту, что бы добавить товар в избранное.</h1>
                                                                 </div>
@@ -172,8 +163,34 @@
                                                     </div>
 
                                                 </div>
-
                                         </div>
+
+
+                                                    <script>
+
+                                                        $(document).ready(function () {
+
+                                                            $('#msg').on('click', function (event) {
+
+                                                                event.preventDefault();
+                                                                $( ".chat" ).show();
+                                                                $( ".profile-info" ).hide();
+                                                                $('.chat_beet').hide();
+                                                            });
+
+                                                            $('#profile').on('click', function (event) {
+                                                                event.preventDefault();
+                                                                $('.chat_beet').hide();
+                                                                $( ".chat" ).hide();
+                                                                $( ".profile-info" ).show();
+
+                                                            });
+
+                                                        });
+
+                                                    </script>
+
+
                                         <!--end col-md-8-->
                                     </div>
                                     <!--end row-->
@@ -183,7 +200,6 @@
                         <!--tab_1_2-->
 
                         <div class="tab-pane" id="tab_1_2">
-                            ewrtrewyer4y
                         @include('user.homeTab12')
 
                         </div>
@@ -204,13 +220,15 @@
         $('#li_like').on('click', function(){
             $('#tab_1_6').toggle    ();
         })
-var maneMyFirst = '<?=$userInfo->name?>'
-var maneMyLast = '<?=$userInfo->surname?>'
+
 
     </script>
     <style>
         .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
             border: none;
+        }
+        .tabbable-line>.tab-content {
+            padding: 0px 0;
         }
 
     </style>

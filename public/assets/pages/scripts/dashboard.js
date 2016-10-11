@@ -561,7 +561,8 @@ var Dashboard = function() {
             var img = $('li.out').find('img').attr('src');
 
 
-            if(conn && url){
+
+            if(window.conn){
                 conn = new WebSocket(url);
 
                 conn.onopen    = function(e){
@@ -571,6 +572,16 @@ var Dashboard = function() {
                     data['email']        = from_email;
                     data['connected_id'] = connected_id;
                     conn.send(JSON.stringify(data));
+
+                    $('div.up').on('click', function () {
+                        if(conn){
+                            data                 = {};
+                            data['action']       = 'history';
+                            data['connected_id'] = connected_id;
+                            data['page'] = page;
+                            conn.send(JSON.stringify(data));
+                        }
+                    })
                 };
 
                 conn.onclose   = function(event){
@@ -590,8 +601,8 @@ var Dashboard = function() {
                     data = JSON.parse(e.data);
 
                     if(data.success){
-                        var avatar_in = '/img/users/4/avatar.png';
-                        var avatar = $('li.out').find('img.avatar').attr('src');
+                        // var avatar_in = '/img/users/4/avatar.png';
+                        // var avatar = $('li.out').find('img.avatar').attr('src');
                         switch(data.action){
                             case 'login':
                                 for(var key in data.chat){
@@ -601,6 +612,15 @@ var Dashboard = function() {
                             case 'chat':
                                 appendMsg(data.msg, false);
                                 break;
+                            case 'history':
+                                if(data.chat.data.length){
+                                    data.chat.data.reverse();
+                                    for(var key in data.chat.data){
+                                        appendMsg(data['chat']['data'][key]['body'], data['chat']['data'][key]['from_id'] == from_id, true);
+                                    }
+                                    page++;
+                                }
+                                break;
                         }
                     }else{
                         console.error(data.msg);
@@ -608,21 +628,29 @@ var Dashboard = function() {
                 };
             }
 
-            var appendMsg = function(msg, params){
+            var appendMsg = function(msg, params, before){
                 var text = msg;
                 if (text.length == 0) {
                     return;
                 }
                 var side =  params ? 'out':'in';
+                var img = params ? from_avatar : to_avatar;
+                var name = params ? from_name : to_name;
+                var surname = params ? from_surname : to_surname;
 
                 var time = new Date();
                 var time_str = (time.getHours() + ':' + time.getMinutes());
                 var tpl = '';
                 tpl += '<li class="'+side+'">';
-                tpl += '<img class="avatar" alt="" src="'+img+'"/>';
+                tpl += '<div class="avatar avatar_css">';
+
+                tpl += '<img class="" alt="" src="'+img+'"/>';
+
+                tpl += '</div>';
+
                 tpl += '<div class="message">';
                 tpl += '<span class="arrow"></span>';
-                tpl += '<a href="#" class="name">'+maneMyFirst+maneMyLast+'</a>&nbsp;';
+                tpl += '<a href="#" class="name">'+name+surname+'</a>&nbsp;';
                 tpl += '<span class="datetime">' + time_str + '</span>';
                 tpl += '<span class="body">';
                 tpl += text;
@@ -630,23 +658,40 @@ var Dashboard = function() {
                 tpl += '</div>';
                 tpl += '</li>';
 
-                var msg = list.append(tpl);
-                input.val("");
+                if(before){
+                    var msg = list.prepend(tpl);
+                }else{
+                    var msg = list.append(tpl);
 
-                var getLastPostPos = function() {
-                    var height = 0;
-                    cont.find("li.out, li.in").each(function() {
-                        height = height + $(this).outerHeight();
+                    var getLastPostPos = function() {
+                        var height = 0;
+                        cont.find("li.out, li.in").each(function() {
+                            height = height + $(this).outerHeight();
+                        });
+
+                        return height;
+                    }
+
+                    cont.find('.scroller').slimScroll({
+                        scrollTo: getLastPostPos()
                     });
 
-                    return height;
                 }
+                input.val("");
+            }
 
-                cont.find('.scroller').slimScroll({
-                    scrollTo: getLastPostPos()
+            var getLastPostPos = function() {
+                var height = 0;
+                cont.find("li.out, li.in").each(function() {
+                    height = height + $(this).outerHeight();
                 });
 
+                return height;
             }
+
+            cont.find('.scroller').slimScroll({
+                scrollTo: getLastPostPos()
+            });
 
             var handleClick = function(e) {
 

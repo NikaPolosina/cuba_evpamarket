@@ -19,14 +19,20 @@ use App\UserInformation;
 use Redirect;
 use File;
 use Validator;
+use Creitive\Breadcrumbs\Breadcrumbs;
 
 class UserController extends Controller{
 
     protected $_user;
     protected $_userModel;
     protected $_request;
+    protected $_breadcrumbs;
 
-    public function __construct(User $user, Request $request){
+    public function __construct(User $user, Request $request, Breadcrumbs $breadcrumbs){
+        $this->_breadcrumbs = $breadcrumbs;
+        $this->_breadcrumbs->setDivider('<img style="display: inline-block;  height: 37px;" src="/img/system/next-bread.png">');
+
+
         $this->middleware('auth');
         $menu = array(
             'my_page'  => array(
@@ -184,13 +190,14 @@ class UserController extends Controller{
 
     /* return redirect('/login-user');*/
 
-    public function setRole(Request $request, HomeController $homeController){
+    public function setRole(Request $request, HomeController $homeController,MessageController $mesage){
         $curentUser = Auth::user();
 
         if($request->input('role') == 'simple_user'){
             $curentUser->detachRoles($curentUser->roles);
             $curentUser->attachRole(Role::where('name', 'simple_user')->first());
-            return $homeController->registerSimple();
+          
+            return $homeController->registerSimple($mesage);
         }
 
         if($request->input('role') == 'company_owner'){
@@ -374,5 +381,26 @@ class UserController extends Controller{
         }
 
         return $params;
+    }
+
+
+    public function getUserPage($id){
+        $user = User::where('id', $id)->with('getUserInformation')->get();
+        if(!count($user)){
+          return redirect()->back();
+
+        }
+
+
+
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb($user[0]->getUserInformation->name.' '.$user[0]->getUserInformation->surname, '/show-user/'.$user[0]->id);
+
+        
+        return view('user.simple_page')
+            ->with('breadcrumbs', $this->_breadcrumbs)
+            ->with('user', $user);
+        
+        
     }
 }

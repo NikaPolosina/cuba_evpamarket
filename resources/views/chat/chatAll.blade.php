@@ -2,34 +2,39 @@
     <div class="col-sm-12">
         <div class="container_user_msg">
             @if(count($userInfo['msgAll']))
-                @foreach($userInfo['msgAll'] as $itemMsg)
-                    @foreach($itemMsg['get_chat_msgs'] as $it)
-                        <a href="/get-single-conversation/{{$it['get_user_from']['id']}}/{{$it['get_user_to']['id']}}">
-                        <div class="single_msg">
-                            <div class="single_img col-sm-1">
 
-                                @if(!empty($it['get_user_from']['get_user_information']['avatar']) && file_exists(public_path().$it['get_user_from']['get_user_information']['avatar']))
-                                    <img class="img_sing" src="{{$it['get_user_from']['get_user_information']['avatar']}}" alt="avatar">
+                @foreach($userInfo['msgAll'] as $itemMsg)
+
+                    @if(count($itemMsg['get_chat_msgs']) !== 0)
+                {{--    @foreach($itemMsg['get_chat_msgs'] as $it)--}}
+                    <a href="/get-single-conversation/{{Auth::user()->id}}/{{(Auth::user()->id == $itemMsg['get_chat_msgs'][0]['get_user_to']['id'] )? $itemMsg['get_chat_msgs'][0]['get_user_from']['id']: $itemMsg['get_chat_msgs'][0]['get_user_to']['id']}}">
+                        <div class="single_msg">
+                            <div class="single_img col-sm-2">
+
+                                @if(!empty($itemMsg['get_chat_msgs'][0]['get_user_from']['get_user_information']['avatar']) && file_exists(public_path().$itemMsg['get_chat_msgs'][0]['get_user_from']['get_user_information']['avatar']))
+                                    <img class="img_sing" src="{{$itemMsg['get_chat_msgs'][0]['get_user_from']['get_user_information']['avatar']}}" alt="avatar">
                                 @else
                                     <img class="img_sing" src="/img/placeholder/avatar.jpg" alt="avatar"/>
                                 @endif
 
                             </div>
-                            <div class="single_body col-sm-11">
+                            <div class="single_body col-sm-10">
                                 <div class="user_name">
-                                   <span>от кого </span> <input class="id_from" value="{{$it['get_user_from']['id']}}" type="text"/>
-                                   <span>кому </span> <input  class="id_to" value="{{$it['get_user_to']['id']}}" type="text"/>
-                                   {{$it['get_user_to']['get_user_information']['name']}} {{$it['get_user_to']['get_user_information']['surname']}}
+                                 {{--  <span>от кого </span>--}} <input class="id_from" value="{{$itemMsg['get_chat_msgs'][0]['get_user_from']['id']}}" type="hidden"/>
+                                  {{-- <span>кому </span> --}}<input  class="id_to" value="{{$itemMsg['get_chat_msgs'][0]['get_user_to']['id']}}" type="hidden"/>
+                                   {{$itemMsg['get_chat_msgs'][0]['get_user_to']['get_user_information']['name']}} {{$itemMsg['get_chat_msgs'][0]['get_user_to']['get_user_information']['surname']}}
                                 </div>
                                 <div class="body_sm">
-                                    {{$it['body']}}
-                                    <span class="time">{{ date('d.m.Y', strtotime($it['created_at'])) }}</span>
+                                    {{$itemMsg['get_chat_msgs'][0]['body']}}
+                                    <span class="time">{{ date('d.m.Y', strtotime($itemMsg['get_chat_msgs'][0]['created_at'])) }}</span>
                                 </div>
                             </div>
                         </div>
                         </a>
+                    @endif
                     @endforeach
-                @endforeach
+         {{--       @endforeach--}}
+
             @endif
         </div>
     </div>
@@ -68,7 +73,19 @@
 
 </script>--}}
 
+
+
 <style>
+
+/*
+    @media screen and (max-width:950px){
+        img.img_sing{
+            height: 100px!important;
+            width: 100px!important;
+        }
+    }
+*/
+
     .body_sm{
         font-weight: 300;
     }

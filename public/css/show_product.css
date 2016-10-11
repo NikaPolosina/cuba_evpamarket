@@ -1,4 +1,11 @@
-
+@media screen and (max-width:950px){
+    .item {
+        height: 300px!important;
+    }
+    .product_img{
+        height: 114px!important;
+    }
+}
 
 .product_img{
     height: 228px;

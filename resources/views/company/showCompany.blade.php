@@ -1,10 +1,10 @@
 <link rel="stylesheet" type="text/css" href="/css/show_company.css" />
-<div class="col-sm-12"><h3>Магазины</h3></div>
+<div class="col-xs-12 col-sm-12"><h3>Магазины</h3></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12">
 
     @foreach($companyAll as $valueCompany)
-        <div class="col-md-3 carentFindCompany">
+        <div class="col-xs-5 col-md-3 carentFindCompany">
             <div class="item_company">
                 <div class="company_img">
                     <a href="/show-company/{{$valueCompany->id}}">

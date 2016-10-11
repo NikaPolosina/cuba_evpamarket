@@ -4,7 +4,7 @@
         <div class="portlet-title">
             <div class="caption">
                 <i class="icon-bubble font-hide hide"></i>
-                <span class="caption-subject font-hide bold uppercase">Chats</span>
+                <span class="caption-subject font-hide bold uppercase">Переписка</span>
             </div>
            {{-- <div class="actions">
                 <div class="portlet-input input-inline">
@@ -15,15 +15,24 @@
             </div>--}}
         </div>
 
+        <div class="up">
+            ещё.....
+        </div>
+        <div class="portlet-body" id="chats" style=" /* border: 1px green solid;*/">
+            <div class="scroller" style="height: 500px;" data-always-visible="1" data-rail-visible1="1">
 
-        <div class="portlet-body" id="chats">
-            <div class="scroller" style="height: 525px;" data-always-visible="1" data-rail-visible1="1">
+
                 <ul class="chats">
-                    @foreach($userInfo['beetwenTwo'] as $val)
 
+                @if(count($userInfo['beetwenTwo']['data']))
+                    @foreach(array_reverse($userInfo['beetwenTwo']['data']) as $val)
                         <li class="@if($val['from_id'] == Auth::user()->id) out @else in @endif">
                             @if(!empty($val['get_user_from']['get_user_information']['avatar']) && file_exists(public_path().$val['get_user_from']['get_user_information']['avatar']))
-                                <img class="avatar" src="{{$val['get_user_from']['get_user_information']['avatar']}}" alt="avatar">
+                                <div class="avatar avatar_css">
+
+                                    <img class="" src="{{$val['get_user_from']['get_user_information']['avatar']}}" alt="avatar">
+
+                                </div>
                             @else
                                 <img class="avatar" src="/img/placeholder/avatar.jpg" alt="avatar"/>
                             @endif
@@ -38,7 +47,13 @@
                         </li>
 
                     @endforeach
+                @endif
 
+<?php
+
+
+
+                    ?>
                 </ul>
             </div>
             <div class="chat-form">
@@ -59,16 +74,48 @@
 
 
 
+
+
+<style>
+    .avatar_css{
+        width: 45px;
+        height: 45px;
+        overflow: hidden;
+    }
+    .up{
+        cursor: pointer;
+        width: 100%;
+        color: grey;
+        background-color: rgba(128, 128, 128, 0.15);
+        text-align: center;
+        /*border: 1px red solid;*/
+    }
+    .up:hover{
+        background-color: rgba(128, 128, 128, 0.31);
+        color: darkblue;
+    }
+</style>
+
 <script>
     var url = 'ws://<?=$_SERVER['HTTP_HOST']?>:<?=env('PORT', 5000)?>';
     var data;
     var conn = true;
-
-    var from_id           = '{{Auth::user()->id}}';
-    var from_email        = '{{Auth::user()->email}}';
-
-    var to_id = '{{($conversation->from_id == Auth::user()->id) ? $conversation->to_id : $conversation->from_id}}';
     var connected_id = '{{$conversation->id}}';
+
+
+    var from_id           = '{{$from->id}}';
+    var from_email        = '{{$from->email}}';
+    var from_avatar = '{{$from->getUserInformation->avatar}}';
+    var from_name = '{{$from->getUserInformation->name}}';
+    var from_surname = '{{$from->getUserInformation->surname}}';
+
+
+    var to_id = '{{$to->id}}';
+    var to_avatar = '{{$to->getUserInformation->avatar}}';
+    var to_name = '{{$to->getUserInformation->name}}';
+    var to_surname = '{{$to->getUserInformation->surname}}';
+
+    var page = 2;
 
 </script>
 

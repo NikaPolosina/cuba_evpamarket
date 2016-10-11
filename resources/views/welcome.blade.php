@@ -6,7 +6,7 @@
 
         @include('layouts.category_menu', $category)
 
-        <div class="col-md-8 item_class">
+        <div class="col-xs-7 col-md-8 item_class">
             <div class="panel panel-default item_class_2">
                 <div class="panel-body item_class_3">
 
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div class="col-md-2" style="border: solid 1px red;">
+        <div class="col-xs-2 col-md-2" style="border: solid 1px red;">
             Новости о акциях
         </div>
     </div>

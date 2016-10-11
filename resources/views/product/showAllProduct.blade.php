@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/css/show_product.css"/>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12">
     <h3>Товары</h3>
     <hr/>
 </div>
@@ -14,7 +14,7 @@
                // dd($v->raiting);
 
                 ?>
-                <div class="col-md-3 tom" style="padding-right: 2px; padding-left: 2px">
+                <div class="col-xs-5 col-md-3 tom" style="padding-right: 2px; padding-left: 2px">
                     <div class="single_product_holder">
                         <div class="carentFindProduct carent_my_product">
                             <div class="item item_1">

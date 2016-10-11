@@ -125,8 +125,8 @@ class MessageController extends Controller{
            ->with(['getUserFrom' => function($q){
                        $q->with(['getUserInformation']);
                    }])
-           ->orderBy('created_at', 'ASC')->get()->toArray();
-       // dd($msg);
+           ->orderBy('created_at', 'DESC')->paginate(10)->toArray();
+    
         return $msg;
 
     }
@@ -148,10 +148,10 @@ class MessageController extends Controller{
 
                 }
             ])
-            
+
             ->get()->toArray();
         
-       // dd($msgAll);
+
         return $msgAll;
     }
 

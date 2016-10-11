@@ -27,6 +27,7 @@ class HomeController extends Controller{
     protected $_breadcrumbs;
 
     public function __construct(MessageController $messageController, CompanyController $companyController, Breadcrumbs $breadcrumbs){
+
         $this->middleware('auth');
         $this->_msg = $messageController;
         $this->_companyController = $companyController;
@@ -53,10 +54,87 @@ class HomeController extends Controller{
 
 
     public function getUserPageWithConversationUsers($from_id, $to_id, MessageController $mesage, ChatUsers $chatUsers){
-        $data = $this->prepeareHomeInfo($mesage);
+
+
+        if(!Auth::user()->getUserInformation){
+            $region = Region::all();
+
+            return view('auth.register_aditional')->with('region', $region);
+
+
+        }
+        if(Auth::check()){
+            $curentUser = Auth::user();
+            $userInfo = $curentUser->getUserInformation;
+            $companies = $curentUser->getCompanies;
+            $order = Order::where('simple_user_id', '=', Auth::user()->id)->get();
+            $this->_msg->getGroupInvite(Auth::user(), [ 'status' => 0 ]);
+            $groupInvites = $this->_msg->getMsg()->count();
+            $userInfo['msgAll'] = $mesage->getAllUserWhoSendMsg(Auth::user()->id);
+        }
+
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $product = [];
+        $curentUser = Auth::user();
+        $product = $curentUser->getProduct;
+        $product = IndexController::showProduct($product);
+
+        $data['userInfo'] = $userInfo;
+        $data['order'] = $order;
+        $data['user'] = $curentUser;
+        $data['groupInvites'] = $groupInvites;
+        $data['product'] = $product;
+
+
+
         $between = $mesage->getChatBetweenTwoUser($from_id, $to_id);
         $data['userInfo']['beetwenTwo'] = $between;
-        $conversation = $chatUsers->whereIn('from_id', [$from_id, $to_id])->whereIn('to_id', [$from_id, $to_id])->first();
+
+        $conversation = $chatUsers->whereIn('from_id', [$from_id, $to_id])
+            ->whereIn('to_id', [$from_id, $to_id])
+            ->with([
+                'getUserFrom' => function($query){
+                   $query->with('getUserInformation');
+                },
+                'getUserTo' => function($query){
+                    $query->with('getUserInformation');
+                }
+            ])->first();
+
+        if(!$conversation){
+            $conversation = $chatUsers;
+            $conversation->from_id = Auth::user()->id;
+            $conversation->to_id = $to_id;
+            $conversation->save();
+        }
+
+        if($conversation){
+            if($conversation->from_id == $data['userInfo']->id){
+                $to = $conversation->getUserTo;
+                $from = $conversation->getUserFrom;
+            }else{
+                $to = $conversation->getUserFrom;
+                $from = $conversation->getUserTo;
+            }
+        }
+
+
+        if(!$to->getUserInformation->avatar){
+            $to->getUserInformation->avatar = '/img/placeholder/avatar.jpg';
+        }else{
+            if(!file_exists(public_path().$to->getUserInformation->avatar)){
+                $to->getUserInformation->avatar = '/img/placeholder/avatar.jpg';
+            }
+        }
+        if(!$from->getUserInformation->avatar){
+            $from->getUserInformation->avatar = '/img/placeholder/avatar.jpg';
+        }else{
+            if(!file_exists(public_path().$from->getUserInformation->avatar)){
+                $from->getUserInformation->avatar = '/img/placeholder/avatar.jpg';
+            }
+        }
+        
+        // avatar check
 
         return view('user.simple_user.home')
             ->with('userInfo', $data['userInfo'])
@@ -65,15 +143,20 @@ class HomeController extends Controller{
             ->with('groupInvites', $data['groupInvites'])
             ->with('product', $data['product'])
             ->with('conversation', $conversation)
+            ->with('from', $from)
+            ->with('to', $to)
             ->with('breadcrumbs', $this->_breadcrumbs);
 
     }
 
-    public function prepeareHomeInfo($mesage){
+/*    public function prepeareHomeInfo($mesage){
 
         if(!Auth::user()->getUserInformation){
             $region = Region::all();
+
             return view('auth.register_aditional')->with('region', $region);
+            
+            
         }
         if(Auth::check()){
             $curentUser = Auth::user();
@@ -99,12 +182,49 @@ class HomeController extends Controller{
 
         return $data;
 
-    }
+    }*/
 
 
-    public function registerSimple(MessageController $mesage){
+        public function registerSimple(MessageController $mesage){
 
-        $data = $this->prepeareHomeInfo($mesage);
+            if(!Auth::user()->getUserInformation){
+                $region = Region::all();
+
+                return view('auth.register_aditional')->with('region', $region);
+
+
+            }
+            if(Auth::check()){
+                $curentUser = Auth::user();
+                $userInfo = $curentUser->getUserInformation;
+                $companies = $curentUser->getCompanies;
+                $order = Order::where('simple_user_id', '=', Auth::user()->id)->get();
+                $this->_msg->getGroupInvite(Auth::user(), [ 'status' => 0 ]);
+                $groupInvites = $this->_msg->getMsg()->count();
+                $userInfo['msgAll'] = $mesage->getAllUserWhoSendMsg(Auth::user()->id);
+            }
+
+           /* foreach($userInfo['msgAll'] as $e){
+                if(count($e['get_chat_msgs']) !== 0){
+                    die('Surprise, you are here !!!');
+
+                }
+
+            }*/
+
+            $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+            $product = [];
+            $curentUser = Auth::user();
+            $product = $curentUser->getProduct;
+            $product = IndexController::showProduct($product);
+
+            $data['userInfo'] = $userInfo;
+            $data['order'] = $order;
+            $data['user'] = $curentUser;
+            $data['groupInvites'] = $groupInvites;
+            $data['product'] = $product;
+
+
 
         return view('user.simple_user.home')
             ->with('userInfo', $data['userInfo'])

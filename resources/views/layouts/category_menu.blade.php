@@ -15,7 +15,7 @@ function sho($data, $parent, $none = 'none'){?>
 <link rel="stylesheet" type="text/css" href="/css/category_menu.css"/>
 
 
-<div class="col-md-2" style="  padding-right: 0px;">
+<div class="col-xs-3 col-md-2" style="  padding-right: 0px;">
     <div class="category_title"><span>Каталог товаров</span></div>
     <div class="menu_holder">
         <div class="category_list_navigation" data-index="1">

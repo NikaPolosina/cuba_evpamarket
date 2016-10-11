@@ -9,6 +9,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\ChatMsgs;
+use \Illuminate\Pagination\Paginator;
+
 
 class ChatController{
 
@@ -34,11 +36,18 @@ class ChatController{
     /**
      * Get history of conversation
      * */
-    public function getHistory($id, $connectedId){
+    public function getHistory($chat_id, $currentPage){
         $this->initDependency();
-        return array();
-        // uncoment if need send history of converation
-        //return $this->chat->where('chat_user_id', $connectedId)->get()->toArray();
+        
+        Paginator::currentPageResolver(function () use ($currentPage) {
+            return $currentPage;
+        });
+        
+        return $this->chat
+            ->where('chat_user_id', $chat_id)
+            ->orderBy('created_at', 'ASC')
+            ->paginate(10)
+            ->toArray();
     }
 
     /**

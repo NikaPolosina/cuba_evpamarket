@@ -6,7 +6,7 @@
     @include('layouts.breadcrumbs')
 
     <div class="row">
-        <div class="col-sm-10 col-sm-offset-1">
+        <div class="col-xs-12 col-md-10 col-md-offset-1">
             <ul class="nav nav-tabs">
                 <li class="active">
                     <a href="#tab_1_1" data-toggle="tab"> Мои группы </a>

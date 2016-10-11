@@ -109,7 +109,7 @@ class ChatSocket extends BaseSocket{
         if(!$user){
             $this->_errorResponse($from, [ 'msg' => 'User not found' ]);
         }else{
-            $this->_response['chat'] = $this->_chatController->getHistory($user['id'], $this->_data->connected_id);
+            $this->_response['chat'] = array();
             if(!array_key_exists($from->resourceId, $this->confirmed)){
                 $this->confirmed[$from->resourceId]['user'] = $user;
                 $this->confirmed[$from->resourceId]['resource'] = $from;
@@ -134,10 +134,23 @@ class ChatSocket extends BaseSocket{
                 $getter = $this->confirmed[$this->keys[$this->_data->to]];
                 $this->_successResponse($getter['resource'], [ 'msg' => $this->_data->msg ]);
             }
+            
+            echo '<pre>';
+            var_dump($sender['user']['id'], $this->_data);
+            echo '</pre>';
+            
             $this->_chatController->sendMsg($sender['user']['id'], $this->_data);
             //$this->_successResponse($from, [ 'msg' => $this->_data->msg ]);
         }else{
             $this->_errorResponse($from, [ 'msg' => 'You should login first' ]);
         }
+    }
+
+    /**
+     * History
+     * */
+    private function _onHistory(ConnectionInterface $from){
+        $this->_response['chat'] = $this->_chatController->getHistory($this->_data->connected_id, $this->_data->page);
+        $this->_successResponse($from);
     }
 }
