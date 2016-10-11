@@ -27,7 +27,6 @@ class HomeController extends Controller{
     protected $_breadcrumbs;
 
     public function __construct(MessageController $messageController, CompanyController $companyController, Breadcrumbs $breadcrumbs){
-
         $this->middleware('auth');
         $this->_msg = $messageController;
         $this->_companyController = $companyController;
@@ -55,13 +54,9 @@ class HomeController extends Controller{
 
     public function getUserPageWithConversationUsers($from_id, $to_id, MessageController $mesage, ChatUsers $chatUsers){
 
-
         if(!Auth::user()->getUserInformation){
             $region = Region::all();
-
             return view('auth.register_aditional')->with('region', $region);
-
-
         }
         if(Auth::check()){
             $curentUser = Auth::user();
@@ -72,6 +67,8 @@ class HomeController extends Controller{
             $groupInvites = $this->_msg->getMsg()->count();
             $userInfo['msgAll'] = $mesage->getAllUserWhoSendMsg(Auth::user()->id);
         }
+
+        //dd($userInfo);
 
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $product = [];
@@ -84,7 +81,6 @@ class HomeController extends Controller{
         $data['user'] = $curentUser;
         $data['groupInvites'] = $groupInvites;
         $data['product'] = $product;
-
 
 
         $between = $mesage->getChatBetweenTwoUser($from_id, $to_id);
@@ -136,6 +132,25 @@ class HomeController extends Controller{
         
         // avatar check
 
+
+        if(Auth::user()->hasRole('company_owner')){
+            
+            foreach(Auth::user()->getCompanies as $value){
+                $value->company_logo = $this->_companyController->showCompanyLogo($value->id);
+            }
+
+            return view('homeOwnerUser')
+                ->with('userInfo', $userInfo)
+                ->with('curentUser', Auth::user())
+                ->with('groupInvites', $this->_msg->getMsg()->count())
+                ->with('breadcrumbs', $this->_breadcrumbs)
+                ->with('conversation', $conversation)
+                ->with('from', $from)
+                ->with('to', $to);
+        }
+
+
+
         return view('user.simple_user.home')
             ->with('userInfo', $data['userInfo'])
             ->with('order', $data['order'])
@@ -149,50 +164,10 @@ class HomeController extends Controller{
 
     }
 
-/*    public function prepeareHomeInfo($mesage){
-
-        if(!Auth::user()->getUserInformation){
-            $region = Region::all();
-
-            return view('auth.register_aditional')->with('region', $region);
-            
-            
-        }
-        if(Auth::check()){
-            $curentUser = Auth::user();
-            $userInfo = $curentUser->getUserInformation;
-            $companies = $curentUser->getCompanies;
-            $order = Order::where('simple_user_id', '=', Auth::user()->id)->get();
-            $this->_msg->getGroupInvite(Auth::user(), [ 'status' => 0 ]);
-            $groupInvites = $this->_msg->getMsg()->count();
-            $userInfo['msgAll'] = $mesage->getAllUserWhoSendMsg(Auth::user()->id);
-        }
-
-        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
-        $product = [];
-        $curentUser = Auth::user();
-        $product = $curentUser->getProduct;
-        $product = IndexController::showProduct($product);
-
-        $data['userInfo'] = $userInfo;
-        $data['order'] = $order;
-        $data['user'] = $curentUser;
-        $data['groupInvites'] = $groupInvites;
-        $data['product'] = $product;
-
-        return $data;
-
-    }*/
-
-
         public function registerSimple(MessageController $mesage){
-
             if(!Auth::user()->getUserInformation){
                 $region = Region::all();
-
                 return view('auth.register_aditional')->with('region', $region);
-
-
             }
             if(Auth::check()){
                 $curentUser = Auth::user();
@@ -203,14 +178,6 @@ class HomeController extends Controller{
                 $groupInvites = $this->_msg->getMsg()->count();
                 $userInfo['msgAll'] = $mesage->getAllUserWhoSendMsg(Auth::user()->id);
             }
-
-           /* foreach($userInfo['msgAll'] as $e){
-                if(count($e['get_chat_msgs']) !== 0){
-                    die('Surprise, you are here !!!');
-
-                }
-
-            }*/
 
             $this->_breadcrumbs->addCrumb('Домой', '/login-user');
             $product = [];
@@ -225,7 +192,6 @@ class HomeController extends Controller{
             $data['product'] = $product;
 
 
-
         return view('user.simple_user.home')
             ->with('userInfo', $data['userInfo'])
             ->with('order', $data['order'])
@@ -235,26 +201,23 @@ class HomeController extends Controller{
             ->with('breadcrumbs', $this->_breadcrumbs);
     }
 
-    public function registerOwner(){
+    public function registerOwner(MessageController $mesage ){
         if(Auth::check()){
-            $curentUser = Auth::user();
-            foreach($curentUser->getCompanies as $value){
+            foreach(Auth::user()->getCompanies as $value){
                 $value->company_logo = $this->_companyController->showCompanyLogo($value->id);
             }
-            $userInfo = $curentUser->getUserInformation;
+            $userInfo = Auth::user()->getUserInformation;
             $this->_msg->getGroupInvite(Auth::user(), [ 'status' => 0 ]);
-            $groupInvites = $this->_msg->getMsg()->count();
+            $userInfo['msgAll'] = $mesage->getAllUserWhoSendMsg(Auth::user()->id);
         }
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        //dd($userInfo);
 
         return view('homeOwnerUser')
             ->with('userInfo', $userInfo)
-            ->with('curentUser', $curentUser)
-            ->with('groupInvites', $groupInvites)
+            ->with('curentUser', Auth::user())
+            ->with('groupInvites', $this->_msg->getMsg()->count())
             ->with('breadcrumbs', $this->_breadcrumbs);
     }
 
-    public function test(){
-        return view('test');
-    }
 }

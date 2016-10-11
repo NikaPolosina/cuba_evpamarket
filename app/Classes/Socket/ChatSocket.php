@@ -135,10 +135,6 @@ class ChatSocket extends BaseSocket{
                 $this->_successResponse($getter['resource'], [ 'msg' => $this->_data->msg ]);
             }
             
-            echo '<pre>';
-            var_dump($sender['user']['id'], $this->_data);
-            echo '</pre>';
-            
             $this->_chatController->sendMsg($sender['user']['id'], $this->_data);
             //$this->_successResponse($from, [ 'msg' => $this->_data->msg ]);
         }else{

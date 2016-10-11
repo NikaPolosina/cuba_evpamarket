@@ -32,7 +32,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_1_1">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-sm-3 col-md-3">
                                 <ul class="list-unstyled profile-nav">
                                     <li>
                                         <div class="img_avatar_css">
@@ -79,7 +79,7 @@
                                 </ul>
 
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-sm-9 col-md-9">
 
                                 @if($userInfo['beetwenTwo'])
                                     <div class="chat_beet">
