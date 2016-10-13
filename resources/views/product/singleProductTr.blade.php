@@ -7,7 +7,16 @@
 
     <td style="text-align: center;">{{ $item->product_price }}</td>
     <td>
-        <span class="open btn edit btn-primary btn-xs"><span class="glyphicon  glyphicon-pencil" aria-hidden="true"></span></span>
-        <button type="submit" class="deleteCategoryButton btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <span  data-toggle="tooltip" data-placement="top" title="Редактировать"  class="open btn edit btn-primary btn-xs" ><span class="glyphicon  glyphicon-pencil" aria-hidden="true"></span></span>
+        <button  data-toggle="tooltip" data-placement="top" title="Удалить" type="submit" class="deleteCategoryButton btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
     </td>
 </tr>
+
+
+
+<script>
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>

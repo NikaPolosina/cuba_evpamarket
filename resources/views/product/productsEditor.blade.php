@@ -10,7 +10,7 @@
         @include('layouts.breadcrumbs')
 
         <div class="table-responsive">
-            <h1 style="text-align: center">{{ $company->company_name }} </h1>
+            <h1 style="text-align: center">{{ $company->company_name }}</h1>
             <hr>
         </div>
 

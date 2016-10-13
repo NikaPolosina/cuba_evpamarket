@@ -19,7 +19,7 @@ use App\StatusOwner;
 use App\UserMoney;
 use App\Group;
 use Creitive\Breadcrumbs\Breadcrumbs;
-
+use Illuminate\Support\Facades\Cookie;      
 class OrderController extends Controller{
     protected $_breadcrumbs;
 
@@ -109,6 +109,7 @@ class OrderController extends Controller{
     }
 
     public function ready(Request $request){
+
 
         $this->validate($request, [ 'company_id' => 'required',
                                     'name' => 'required',
@@ -201,8 +202,11 @@ class OrderController extends Controller{
             if($request->cookie('cart')){
                 $cart = $request->cookie('cart');
             }
+
             $k = (Auth::user()) ? Auth::user()->id.'_id' : '0_id';
             $cart[$k] =  (isset($cart[$k])) ? $cart[$k] : array();
+
+//            dd($cart);
 
             if(array_key_exists($company['id'], $cart[$k]) && count($cart[$k][$company['id']]['products'])){
                 foreach($products as $currentProduct){
@@ -216,7 +220,7 @@ class OrderController extends Controller{
                 }
             }
 
-
+//    dd($cart);
         }catch(\Exception $e){
                 DB::rollback();
                 return Redirect::back();
@@ -227,12 +231,11 @@ class OrderController extends Controller{
         $this->_breadcrumbs->addCrumb('Корзина', '/cart');
         $this->_breadcrumbs->addCrumb('Оформление заказа', '/order-ready');
 
-        return view('order.ready')
-        
-        //return response()->view('order.ready')
+        Cookie::queue('cart', $cart);
 
-            ->with('breadcrumbs', $this->_breadcrumbs)
-            ->withCookie(cookie('cart', $cart));
+        return view('order.ready')
+            ->with('breadcrumbs', $this->_breadcrumbs);
+//            ->withCookie('cart', $cart);
     }
 
     public function showOrder($id, $status=0){

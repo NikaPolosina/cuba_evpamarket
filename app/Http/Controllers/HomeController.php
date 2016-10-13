@@ -21,6 +21,7 @@ use App\Http\Controllers\FileController;
 use Illuminate\Support\Facades\Cookie;
 use Creitive\Breadcrumbs\Breadcrumbs;
 use App\ChatUsers;
+use App\StatusOwner;
 class HomeController extends Controller{
     protected $_msg;
     protected $_companyController;
@@ -134,9 +135,22 @@ class HomeController extends Controller{
 
 
         if(Auth::user()->hasRole('company_owner')){
-            
             foreach(Auth::user()->getCompanies as $value){
                 $value->company_logo = $this->_companyController->showCompanyLogo($value->id);
+            }
+
+            $ya = User::where('id', Auth::user()->id )->with(['getCompanies' => function($query){
+                $query->with(['getOrder' => function ($query){
+                    $query->where('status', StatusOwner::where('key', 'not_processed')->first([ 'id' ])->id);
+                }
+                ]);
+            }])->first()->toArray();
+
+
+            $count = 0;
+            foreach($ya['get_companies'] as $it){
+                $count = $count + count($it['get_order']);
+
             }
 
             return view('homeOwnerUser')
@@ -145,6 +159,7 @@ class HomeController extends Controller{
                 ->with('groupInvites', $this->_msg->getMsg()->count())
                 ->with('breadcrumbs', $this->_breadcrumbs)
                 ->with('conversation', $conversation)
+                ->with('count', $count)
                 ->with('from', $from)
                 ->with('to', $to);
         }
@@ -191,7 +206,6 @@ class HomeController extends Controller{
             $data['groupInvites'] = $groupInvites;
             $data['product'] = $product;
 
-
         return view('user.simple_user.home')
             ->with('userInfo', $data['userInfo'])
             ->with('order', $data['order'])
@@ -202,6 +216,8 @@ class HomeController extends Controller{
     }
 
     public function registerOwner(MessageController $mesage ){
+
+
         if(Auth::check()){
             foreach(Auth::user()->getCompanies as $value){
                 $value->company_logo = $this->_companyController->showCompanyLogo($value->id);
@@ -211,12 +227,29 @@ class HomeController extends Controller{
             $userInfo['msgAll'] = $mesage->getAllUserWhoSendMsg(Auth::user()->id);
         }
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
-        //dd($userInfo);
+
+        $ya = User::where('id', Auth::user()->id )->with(['getCompanies' => function($query){
+            $query->with(['getOrder' => function ($query){
+                $query->where('status', StatusOwner::where('key', 'not_processed')->first([ 'id' ])->id);
+            }
+            ]);
+        }])->first()->toArray();
+
+
+        $count = 0;
+        foreach($ya['get_companies'] as $it){
+            $count = $count + count($it['get_order']);
+
+        }
+
+
+
 
         return view('homeOwnerUser')
             ->with('userInfo', $userInfo)
             ->with('curentUser', Auth::user())
             ->with('groupInvites', $this->_msg->getMsg()->count())
+            ->with('count', $count)
             ->with('breadcrumbs', $this->_breadcrumbs);
     }
 

@@ -329,8 +329,6 @@ class BaseStructure extends Migration{
             $table->foreign('feed_id')->references('id')->on('feedback_product');
            
         });
-
-
         //Create table for chat_users
         Schema::create('chat_users', function (Blueprint $table){
             $table->increments('id');
@@ -342,8 +340,6 @@ class BaseStructure extends Migration{
             $table->foreign('to_id')->references('id')->on('users');
 
         });
-
-
         //Create table for chat_msgs
         Schema::create('chat_msgs', function (Blueprint $table){
             $table->increments('id');
@@ -357,7 +353,6 @@ class BaseStructure extends Migration{
             $table->foreign('chat_user_id')->references('id')->on('chat_users');
 
         });
-
 
     }
 

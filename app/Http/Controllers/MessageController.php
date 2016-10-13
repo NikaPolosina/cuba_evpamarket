@@ -133,11 +133,11 @@ class MessageController extends Controller{
 
     public function getAllUserWhoSendMsg($id){
 
+
         $msgAll = ChatUsers::
-        whereIn('from_id', [$id])
+             whereIn('from_id', [$id])
             ->orWhereIn('to_id', [$id])
-            ->orderBy('created_at', 'DESC')->groupBy('to_id')
-            
+
             ->with([
                 'getChatMsgs' => function ($query){
                     $query->with(['getUserTo' => function($q){
@@ -151,7 +151,7 @@ class MessageController extends Controller{
 
             ->get()->toArray();
         
-
+//dd($msgAll);
         return $msgAll;
     }
 

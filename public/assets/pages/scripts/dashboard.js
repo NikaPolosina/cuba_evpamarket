@@ -677,7 +677,8 @@ var Dashboard = function() {
                     });
 
                 }
-                input.val("");
+                if(params)
+                    input.val("");
             }
 
             var getLastPostPos = function() {

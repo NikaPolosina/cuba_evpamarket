@@ -4,7 +4,7 @@
         <div class="col-md-4">
             <div class="portlet sale-summary">
                 <div class="portlet-title">
-                    <div class="caption font-red sbold"> Продано Товаров</div>
+                    <div class="caption font-red sbold"> Продано товаров</div>
                 </div>
                 <div class="portlet-body">
                     <ul class="list-unstyled">
@@ -40,7 +40,7 @@ if(isset($company)){
             $hide = true;
             echo '<h1>У Вас нет пока категорий. Добавьте </h1>';
         }else{
-            echo '<h1>У Вас нет пока продуктоов. Добавте продукты</h1>';
+            echo '<h1>У Вас нет пока товаров. Добавьте товары</h1>';
         }
     }
 }
@@ -58,7 +58,7 @@ if(isset($company)){
                 $categoryID = $mainCategory[0]['id'];
                 $categoryTitle = $mainCategory[0]['title'];
             }else{
-                echo 'Все продукты магазина';
+                echo 'Все товары магазина';
             }
             ?>
         </th>
@@ -84,8 +84,8 @@ if(isset($company)){
 
 
     <div class="button_holder" style="display: <?=(isset($hide)) ? 'none' : 'block' ?>;">
-        <a href="" id="destroycheck" class="destroycheck btn btn-danger  btn-sm">Удалить продукт</a>
-        <span class="open btn btn-success btn-sm pull-left">Добавить продукт</span>
+        <a href="" id="destroycheck" class="destroycheck btn btn-danger  btn-sm">Удалить товар</a>
+        <span class="open btn btn-success btn-sm pull-left">Добавить товар</span>
 
     </div>
     <tr style="background-color: #e6f9eb">
@@ -93,7 +93,7 @@ if(isset($company)){
         <th>№</th>
         <th width="120">Товар</th>
         <th width="400">Описание товара</th>
-        <th>Описание расширеное</th>
+        <th>Описание расширенное</th>
         <th width="80">Цена</th>
         <th>Действие</th>
     </tr>
@@ -109,8 +109,8 @@ if(isset($company)){
     </tbody>
 </table>
 <div class="button_holder" style="display: <?=(isset($hide)) ? 'none' : 'block' ?>;">
-    <a href="" id="destroycheck" class="destroycheck btn btn-danger  btn-sm">Удалить продукт</a>
-    <span class="open btn btn-success btn-sm pull-left">Добавить продукт</span>
+    <a href="" id="destroycheck" class="destroycheck btn btn-danger  btn-sm">Удалить товар</a>
+    <span class="open btn btn-success btn-sm pull-left">Добавить товар</span>
 </div>
 <div class="paginate">
     <?php echo $products->render(); ?>

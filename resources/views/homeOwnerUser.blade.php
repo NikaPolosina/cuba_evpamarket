@@ -45,7 +45,7 @@
                                     </li>
                                     <li>
                                         <a href="/my_shops"> Заказы
-                                            {{--<span> {{count($curentUser->getCompanies)}} </span>--}}
+                                            <span> {{$count}} </span>
                                         </a>
                                     </li>
                                     <li>
@@ -149,11 +149,11 @@
 
                                                                         <td width="165">
                                                                             <a href="{{ url('company/' . $item->id . '/edit') }}">
-                                                                                <button type="submit" class="btn btn-primary btn-xs">
+                                                                                <button   data-toggle="tooltip" data-placement="top" title="Редактировать" type="submit" class="btn btn-primary btn-xs">
                                                                                     <span class="glyphicon  glyphicon-pencil" aria-hidden="true"></span>
                                                                                 </button>
                                                                             </a>
-                                                                            <button data-id="{{$item->id}}" type="" class="btn btn-danger btn-xs tut">
+                                                                            <button  data-toggle="tooltip" data-placement="top" title="Удалить" data-id="{{$item->id}}" type="" class="btn btn-danger btn-xs tut">
                                                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                                                             </button>
 
@@ -196,6 +196,11 @@
 
 
         <script>
+
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
+
 
             $(document).ready(function () {
 

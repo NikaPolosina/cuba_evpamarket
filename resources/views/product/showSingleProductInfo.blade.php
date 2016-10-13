@@ -3,7 +3,7 @@
         <div class="panel-body item_class_3">
             <link rel="stylesheet" type="text/css" href="/css/single_product_info.css"/>
             <link rel="stylesheet" type="text/css" href="/css/show_product.css"/>
-            <link href="../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+            <link href="/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
             @include('product.modalAddProductCart')
             @include('product.modalAddProductLike')
             <div class="row row_row">
@@ -22,7 +22,7 @@
                                     <div class="portlet-body">
                                         <div class="tabbable-custom ">
                                             <ul class="nav nav-tabs ">
-                                                <li class=" @if(!isset($scroll_feed))active @endif " style="border-top: 3px solid #32c5d2!important;">
+                                                <li class="@if(!isset($scroll_feed))active @endif" style="border-top: 3px solid #32c5d2!important;">
                                                     <a href="#tab_5_1" data-toggle="tab"> Все о товаре </a>
                                                 </li>
                                                 <li>
@@ -290,33 +290,8 @@
     </div>
 </div>
 @include('order.modalFeedback')
-<script src="/plugins/tinymce/tinymce.min.js"></script>
-
-
-
 
 <script>
-    tinymce.init({
-        selector: "textarea",theme: "modern",width: '100%' ,height: 150,
-        language: 'ru',
-        verify_html: false,
-        plugins: [
-            "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-            "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-            "table contextmenu directionality emoticons paste textcolor " +
-            "responsivefilemanager" +
-            " code"
-        ],
-        toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
-        toolbar2: "| responsivefilemanager | link unlink anchor | image media | forecolor backcolor  | print preview code ",
-        image_advtab: true ,
-
-        external_filemanager_path:"/plugins/responsive_filemanager/filemanager/",
-        filemanager_title:"Responsive Filemanager" ,
-        external_plugins: { "filemanager" : "/plugins/responsive_filemanager/filemanager/plugin.min.js"}
-    });
-
-
 
 
     $('.edit_feed').on('click', function () {

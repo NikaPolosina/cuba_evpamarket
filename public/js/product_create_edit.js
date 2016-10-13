@@ -68,6 +68,9 @@ $(document).ready(function() {
         $('.mod').find('.form-group').find('input[data-name="price"]').val('');
         $('.files').html('');
 
+
+
+
         if($(this).hasClass('edit')){
             var categoryId = '';
         }else{
@@ -93,6 +96,7 @@ $(document).ready(function() {
         }
 
         if ($(this).hasClass('edit')) {
+            
             number = $(this).parents('tr').eq(0).attr('data-number');
 
 
@@ -103,7 +107,7 @@ $(document).ready(function() {
 
             }
 
-            
+
             $.ajax({
                 type: "POST",
                 url: "/products/edit-categoty",
@@ -113,6 +117,7 @@ $(document).ready(function() {
                 data: {productId: id},
                 success: function (msg) {
 
+                    
                     mainImg = msg.product.product_image;
 
 
@@ -124,10 +129,19 @@ $(document).ready(function() {
                     $('.mod').find('.form-group').find('input[data-name="product_id"]').val(msg.product.id);
                     $('.mod').find('.form-group').find('input[data-name="name"]').val(msg.product.product_name);
                     $('.mod').find('.form-group').find('input[data-name="description"]').val(msg.product.product_description);
+
                     tinyMCE.activeEditor.setContent(msg.product.content);
+
+                    console.log(tinyMCE.activeEditor.getContent());
+                    console.log(tinyMCE.activeEditor);
+                    
+
+
                     $('.mod').find('.form-group').find('input[data-name="photo"]').val(msg.product.product_image);
                     $('.mod').find('.form-group').find('input[data-name="price"]').val(msg.product.product_price);
                     $('.mod').find('#product_form').find('input[type="text"]').eq(0).focus();
+
+
 
                     
                     productId = msg.product.id;
@@ -162,6 +176,7 @@ $(document).ready(function() {
 
 
                     });
+
 
                     $('.mod').modal();
 

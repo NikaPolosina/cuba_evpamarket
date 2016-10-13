@@ -1,31 +1,27 @@
-@extends('layouts.app')
-
-@section('content')
-
-
-    {!! HTML::script('/js/test.js') !!}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 
-    {{--<div class="button">
-        <button onclick="send();">Send</button>
-    </div>
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 
-    <script>
-       // var conn = new WebSocket('ws://<?=$_SERVER['HTTP_HOST']?>:3042');
-        var conn = new WebSocket('ws://185.68.16.7:3045');
-        conn.onopen = function (e) {
-            console.log('Соединение установлено!');
-        }
-        conn.onmessage = function (e) {
-            console.log('Получено данные ' +e.data);
-        }
-        function send() {
-            var data = 'Данные для отправки: ' +Math.random();
-            conn.send(data);
-            console.log('Отправлено: '+data);
-        }
-    </script>
---}}
+<hr>
+<hr>
+<hr>
+<hr>
+<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Tooltip on left</button>
 
-@endsection
+<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Tooltip on top</button>
+
+<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">Tooltip on bottom</button>
+
+<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Tooltip on right">Tooltip on right</button>
+
+<script>
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>

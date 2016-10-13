@@ -48,6 +48,7 @@ class CartController extends Controller{
      * */
     public function index(Request $request){
 
+
         $product = '';
         $companies = array();
 
@@ -55,14 +56,17 @@ class CartController extends Controller{
             $cart = $request->cookie('cart');
         }
 
+//        dd($cart);
+
         $k = (Auth::user()) ? Auth::user()->id.'_id' : '0_id';
 
         $cart[$k] = (isset($cart[$k])) ? $cart[$k] : array();
-
+     
         if($cart[$k]){
             foreach($cart[$k] as $key => $company){
                 $companies[$key]['company'] = Company::find($key);
-                $companies[$key]['products'] = $companies[$key]['company']->getProducts()->whereIn('id', array_keys($company['products']))->get();
+
+                 $companies[$key]['products'] = $companies[$key]['company']->getProducts()->whereIn('id', array_keys($company['products']))->get();
 
                 $companies[$key]['products'] = IndexController::showProduct($companies[$key]['products']);
 
@@ -195,6 +199,8 @@ class CartController extends Controller{
     }
 
     public function cartAddCnt(Request $request){
+    
+
 
         $cnt = 0;
 

@@ -130,7 +130,7 @@ class ChatSocket extends BaseSocket{
     private function _onChat(ConnectionInterface $from){
         if(array_key_exists($from->resourceId, $this->confirmed)){
             $sender = $this->confirmed[$from->resourceId];
-            if(array_key_exists($this->_data->to, $this->keys)){
+            if(array_key_exists($this->_data->to, $this->keys) && array_key_exists($this->keys[$this->_data->to], $this->confirmed)){
                 $getter = $this->confirmed[$this->keys[$this->_data->to]];
                 $this->_successResponse($getter['resource'], [ 'msg' => $this->_data->msg ]);
             }

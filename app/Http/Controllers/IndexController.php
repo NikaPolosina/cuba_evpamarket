@@ -22,38 +22,7 @@ use Illuminate\Support\Facades\Artisan;
 class IndexController extends Controller{
     
     public function test(MessageController $mesage){
-
-        $msgAll = $mesage->getAllUserWhoSendMsg(3);
-        $msg = $mesage->getChatBetweenTwoUser(3, 4);
-
-
-            dd($msg);
-
-
-
-        return view('test');
-
-
-
-
-
-
-
-        if($run){
-            Artisan::call('chat_server:serve', []);
-        }
-
-
-        return view('test');
         
-
-        dd($products);
-        foreach($products as $product){
-            $product->company = $product->getCompany()->first()->id;
-//            dd($product->getCompany()->first()->id);
-//            echo $product->getCompany->id;
-        }
-        die('Surprise, you are here !!!');
     }
 
     /**

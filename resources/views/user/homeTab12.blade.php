@@ -8,7 +8,7 @@
             </li>
             <li>
                 <a data-toggle="tab" href="#tab_2-2">
-                    <i class="fa fa-picture-o"></i> Сменить Аватар </a>
+                    <i class="fa fa-picture-o"></i> Сменить Фото </a>
             </li>
             <li>
                 <a data-toggle="tab" href="#tab_3-3">

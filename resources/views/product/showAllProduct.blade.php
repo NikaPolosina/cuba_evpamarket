@@ -97,6 +97,8 @@
     var carentFindProduct = $('.carentFindProduct');
     carentFindProduct.on({
         mouseenter : function(){
+
+
             $(this).addClass('activ');
         },
         mouseleave : function(){

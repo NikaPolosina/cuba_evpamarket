@@ -8,7 +8,7 @@
             </li>
             <li>
                 <a data-toggle="tab" href="#tab_2-2">
-                    <i class="fa fa-picture-o"></i> Сменить Аватар </a>
+                    <i class="fa fa-picture-o"></i> Сменить фото </a>
             </li>
             <li>
                 <a data-toggle="tab" href="#tab_3-3">
@@ -34,7 +34,7 @@
                         <label class="control-label">Фамилия</label>
                         <input type="text" value="{{$userInfo->surname}}" class="form-control"  name="surname" required /> </div>
                     <div class="form-group">
-                        <label class="control-label">Номер Телефона</label>
+                        <label class="control-label">Номер телефона</label>
                         <input type="text" value="{{$userInfo->getUser->phone}}" class="form-control" name="phone" required/> </div>
                     <div class="form-group">
                         <label class="control-label">Email</label>
@@ -44,7 +44,7 @@
                         <textarea  class="form-control" rows="3" name="about_me">{{$userInfo->about_me}}</textarea>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Веб. сайт</label>
+                        <label class="control-label">Веб-сайт</label>
                         <input type="text" value="{{$userInfo->my_site}}" class="form-control" name="my_site" /> </div>
                     <div class="form-group">
                         <label class="control-label">Улица</label>
