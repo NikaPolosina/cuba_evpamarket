@@ -81,8 +81,6 @@ Route::post('/user/simple_user/setting/security/edit-owner', 'UserController@set
 Route::get('/show-user/{id}', 'UserController@getUserPage');
 
 
-
-
 /*-------------------------------------------Category----------------------------------------------*/
 Route::any('category/category-setup/{id}', 'CategoryController@categorySetup');
 Route::post('/category/edit-categoty', ['as' => 'attach_categories', 'uses'=>'CategoryController@attachCategoriesToCompany']);
@@ -99,8 +97,6 @@ Route::any('/cart/destroy-product', 'CartController@destroy');
 Route::post('/products/cart', 'CartController@cart');
 
 Route::post('/products/ajax_cart', ['as'=>'ajax_add_to_cart', 'uses'=>'CartController@ajaxCart']);
-
-
 
 Route::post('/products/cart-update-cnt', 'CartController@cartAddCnt');
 

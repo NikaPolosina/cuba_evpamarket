@@ -503,65 +503,15 @@ var Dashboard = function() {
                 lineColor: '#ffb848'
             });
         },
-
-     /*   initMorisCharts: function() {
-
-            if (Morris.EventEmitter && $('#sales_statistics').size() > 0) {
-                // Use Morris.Area instead of Morris.Line
-                dashboardMainChart = Morris.Area({
-                    element: 'sales_statistics',
-                    padding: 0,
-                    behaveLikeLine: false,
-                    gridEnabled: false,
-                    gridLineColor: false,
-                    axes: false,
-                    fillOpacity: 1,
-                    data: [{
-                        period: '2011 Q1',
-                        sales: 1400,
-                        profit: 400
-                    }, {
-                        period: '2011 Q2',
-                        sales: 1100,
-                        profit: 600
-                    }, {
-                        period: '2011 Q3',
-                        sales: 1600,
-                        profit: 500
-                    }, {
-                        period: '2011 Q4',
-                        sales: 1200,
-                        profit: 400
-                    }, {
-                        period: '2012 Q1',
-                        sales: 1550,
-                        profit: 800
-                    }],
-                    lineColors: ['#399a8c', '#92e9dc'],
-                    xkey: 'period',
-                    ykeys: ['sales', 'profit'],
-                    labels: ['Sales', 'Profit'],
-                    pointSize: 0,
-                    lineWidth: 0,
-                    hideHover: 'auto',
-                    resize: true
-                });
-
-            }
-        },*/
-
+/*---------------------------------------------------------CHAT------------------------------------------------*/
         initChat: function() {
-
-
+            var text_my = $('.emojionearea-editor');
             var cont = $('#chats');
             var list = $('.chats', cont);
             var form = $('.chat-form', cont);
-            //vera
-            var input = $('input', form);
             var btn = $('.btn', form);
             var img = $('li.out').find('img').attr('src');
-
-
+            
 
             if(window.conn){
                 conn = new WebSocket(url);
@@ -614,7 +564,9 @@ var Dashboard = function() {
                                 appendMsg(data.msg, false);
                                 break;
                             case 'history':
+
                                 if(data.chat.data.length){
+
                                     data.chat.data.reverse();
                                     for(var key in data.chat.data){
                                         appendMsg(data['chat']['data'][key]['body'], data['chat']['data'][key]['from_id'] == from_id, true);
@@ -653,6 +605,7 @@ var Dashboard = function() {
                 tpl += '<span class="arrow"></span>';
                 tpl += '<a href="#" class="name">'+name+surname+'</a>&nbsp;';
                 tpl += '<span class="datetime">' + time_str + '</span>';
+                tpl += '<style>.body>img{display:inline-block;with:24px;height:24px;}.body>div>img{display: inline-block;width: 24px;height: 24px;}</style>';
                 tpl += '<span class="body">';
                 tpl += text;
                 tpl += '</span>';
@@ -679,7 +632,7 @@ var Dashboard = function() {
 
                 }
                 if(params)
-                    input.val("");
+                    $('.emojionearea-editor').html("");
             }
 
             var getLastPostPos = function() {
@@ -695,19 +648,25 @@ var Dashboard = function() {
                 scrollTo: getLastPostPos()
             });
 
-            var handleClick = function(e) {
 
+            var handleClick = function(e) {
                 e.preventDefault();
 
-                var text = input.val();
+                var text = $('.emojionearea-editor').html();
+
+
                 if (text.length == 0) {
                     return;
                 }
 
+               /* text=text.replace(/<[^\/>][^>]*><\/[^>]+>/gim, "");*/
+                text=text.replace(/<div><br><\/div>/g,'');
+                
+
                 appendMsg(text, true);
 
                 // send data by ws
-                if(conn){
+                if(window.conn){
                     data                 = {};
                     data['action']       = 'chat';
                     data['to']           = to_id;
@@ -719,24 +678,38 @@ var Dashboard = function() {
             }
 
             $('body').on('click', '.message .name', function(e) {
-
                 e.preventDefault(); // prevent click event
-
                 var name = $(this).text(); // get clicked user's full name
-                input.val('@' + name + ':'); // set it into the input field
-                App.scrollTo(input); // scroll to input if needed
+                text.html('@' + name + ':'); // set it into the textarea field
+                App.scrollTo(text_my); // scroll to textarea if needed
             });
 
             btn.click(handleClick);
 
-            input.keypress(function(e) {
+
+
+
+            text_my.keypress(function(e){
+                console.log('jjjjj');
+
+            });
+
+
+
+            text_my.keypress(function(e) {
+                console.log('text');
                 //vera
+                console.log('sssssssssssssss');
+
                 if (e.which == 13) {
                     handleClick(e);
                     return false; //<---- Add this line
                 }
             });
         },
+
+
+        /*----------------------------------------------CHAT------------------------------------*/
 
         initDashboardDaterange: function() {
             if (!jQuery().daterangepicker) {
@@ -1417,8 +1390,8 @@ var Dashboard = function() {
                     "enabled": true
                 }
             });
-            jQuery('.chart-input').off().on('input change', function() {
-                
+            jQuery('.chart-textarea').off().on('textarea change', function() {
+
                 var property = jQuery(this).data('property');
                 var target = chart;
                 var value = Number(this.value);

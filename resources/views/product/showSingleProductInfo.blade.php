@@ -6,8 +6,24 @@
             <link href="/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
             @include('product.modalAddProductCart')
             @include('product.modalAddProductLike')
+
             <div class="row row_row">
                 <div class="item_class_3">
+
+                    <div class="seller" style="margin: 6px 6px 6px 30px">
+                        <span>Продавец:</span> <a href="/show-user/{{$singleProduct->getCompany[0]->getUser[0]->id}}">{{$singleProduct->getCompany[0]->getUser[0]->getUserInformation->name}}{{$singleProduct->getCompany[0]->getUser[0]->getUserInformation->surname}}</a>
+                    </div>
+
+                    <style>
+                        .seller{
+                            font-size: 16px;
+                        }
+                        .seller>a{
+                            font-weight: bold;
+                        }
+
+                    </style>
+
                     <div class="item_class_4 item_1">
                         <input style="display: none" data-name="product-id" type="text" value="{{ $singleProduct->id}}"/>
                         <div class="carent_my_product">

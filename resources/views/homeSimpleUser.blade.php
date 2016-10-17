@@ -12,7 +12,7 @@
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <link href="/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="/assets/global/css/components.css" rel="stylesheet" id="style_components" type="text/css" />
     <link href="/assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/layouts/layout2/css/layout.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/layouts/layout2/css/custom.min.css" rel="stylesheet" type="text/css" />

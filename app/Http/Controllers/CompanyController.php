@@ -127,9 +127,13 @@ class CompanyController extends Controller{
 
     public function show($id, CategoryController $category, IndexController $index){
 
-        $company = Company::findOrFail($id);
+        $company = Company::where('id',$id)->with(['getUser'=>function($query){
+            $query->with('getUserInformation')->first();
+        }])->first();
+        
         $img = $this->showCompanyLogo($company->id);
         $res = $company->getProducts;
+
         $productAll = IndexController::showProduct($res);
 
         $productAll = $index->addFeedProduct($productAll);

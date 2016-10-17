@@ -8,10 +8,14 @@
     <link rel="stylesheet" type="text/css" href="../css/welcome.css"/>
     <div class="row">
         @include('layouts.category_menu', $category)
+
         <div class="row_row">
             <div class="row item_class_4">
 
                 <div class="table-responsive">
+                    <div class="seller" style="margin: 6px 6px 6px 30px">
+                        <span>Продавец:</span> <a href="/show-user/{{$company->getUser[0]->id}}">{{$company->getUser[0]->getUserInformation->name}}{{$company->getUser[0]->getUserInformation->surname}}</a>
+                    </div>
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
                         <tr>
@@ -62,3 +66,12 @@
     </div>
 @endsection
 
+<style>
+    .seller{
+        font-size: 16px;
+    }
+    .seller>a{
+        font-weight: bold;
+    }
+
+</style>

@@ -328,8 +328,10 @@ class ProductsController extends Controller{
 
         $file = self::preparationFile($id);
         $product = self::preparationRating($file['singleProduct']['id']);
-       
-       
+
+      // dd($product->getCompany[0]->getUser[0]->getUserInformation->name);
+
+
         return view('product'.$wey)
             ->with('singleProduct', $product)
             ->with('firstFile', $file['firstFile'])
