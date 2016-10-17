@@ -556,6 +556,7 @@ var Dashboard = function() {
             var cont = $('#chats');
             var list = $('.chats', cont);
             var form = $('.chat-form', cont);
+            //vera
             var input = $('input', form);
             var btn = $('.btn', form);
             var img = $('li.out').find('img').attr('src');
@@ -729,6 +730,7 @@ var Dashboard = function() {
             btn.click(handleClick);
 
             input.keypress(function(e) {
+                //vera
                 if (e.which == 13) {
                     handleClick(e);
                     return false; //<---- Add this line
@@ -1416,6 +1418,7 @@ var Dashboard = function() {
                 }
             });
             jQuery('.chart-input').off().on('input change', function() {
+                
                 var property = jQuery(this).data('property');
                 var target = chart;
                 var value = Number(this.value);

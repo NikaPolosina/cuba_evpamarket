@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Artisan;
 class IndexController extends Controller{
     
     public function test(MessageController $mesage){
-        
+        return view('test_s');
     }
 
     /**
