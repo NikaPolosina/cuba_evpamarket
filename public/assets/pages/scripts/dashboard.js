@@ -564,69 +564,44 @@ var Dashboard = function() {
 
 
             if(window.conn){
-                conn = new WebSocket(url);
 
-                conn.onopen    = function(e){
-                    data                 = {};
-                    data['action']       = 'login';
-                    data['id']           = from_id;
-                    data['email']        = from_email;
-                    data['connected_id'] = connected_id;
-                    conn.send(JSON.stringify(data));
+                conn = io(url);
 
-                    $('div.up').on('click', function () {
-                        if(conn){
-                            data                 = {};
-                            data['action']       = 'history';
-                            data['connected_id'] = connected_id;
-                            data['page'] = page;
-                            conn.send(JSON.stringify(data));
-                        }
-                    })
-                };
-
-                conn.onclose   = function(event){
-                    if(event.wasClean){
-                        console.log('Соединение закрыто чисто');
-                    }else{
-                        console.log('Обрыв соединения');
+                $('div.up').on('click', function () {
+                    if(conn){
+                        data                 = {};
+                        data['page']      = page;
+                        data['chat_user_id'] = connected_id;
+                        conn.emit('history', data);
                     }
-                    console.log('Код: ' + event.code + ' причина: ' + event.reason);
-                };
+                })
 
-                conn.onerror   = function(){
-                    console.log('error');
-            };
+                conn.on('server_info', function(data){
+                    console.info(data);
+                });
 
-                conn.onmessage = function(e){
-                    data = JSON.parse(e.data);
+                conn.on('disconnect', function(data){
+                    console.info('disconnect');
+                });
 
-                    if(data.success){
-                        // var avatar_in = '/img/users/4/avatar.png';
-                        // var avatar = $('li.out').find('img.avatar').attr('src');
-                        switch(data.action){
-                            case 'login':
-                                for(var key in data.chat){
-                                    appendMsg(data['chat'][key]['body'], data['chat'][key]['from_id'] == from_id);
-                                }
-                                break;
-                            case 'chat':
-                                appendMsg(data.msg, false);
-                                break;
-                            case 'history':
-                                if(data.chat.data.length){
-                                    data.chat.data.reverse();
-                                    for(var key in data.chat.data){
-                                        appendMsg(data['chat']['data'][key]['body'], data['chat']['data'][key]['from_id'] == from_id, true);
-                                    }
-                                    page++;
-                                }
-                                break;
+                conn.on('error', function(error){
+                    console.error(error);
+                });
+
+                conn.on('message', function(data){
+                    appendMsg(data.body, false);
+                });
+
+                conn.on('history', function(data){
+                    if(data.data.length){
+                        data.data.reverse();
+                        for(var key in data.data){
+                            appendMsg(data['data'][key]['body'], data['data'][key]['from_id'] == from_id, true);
                         }
-                    }else{
-                        console.error(data.msg);
+                        page++;
                     }
-                };
+                });
+
             }
 
             var appendMsg = function(msg, params, before){
@@ -706,14 +681,14 @@ var Dashboard = function() {
 
                 appendMsg(text, true);
 
-                // send data by ws
+                // send data by ws-io
                 if(conn){
                     data                 = {};
-                    data['action']       = 'chat';
-                    data['to']           = to_id;
-                    data['connected_id'] = connected_id;
-                    data['msg']          = text;
-                    conn.send(JSON.stringify(data));
+                    data['from_id']      = from_id;
+                    data['to_id']        = to_id;
+                    data['chat_user_id'] = connected_id;
+                    data['body']         = text;
+                    conn.emit('chat', data);
                 }
 
             }

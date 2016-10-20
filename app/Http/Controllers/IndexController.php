@@ -19,8 +19,10 @@ use Illuminate\Support\Facades\Cookie;
 use Creitive\Breadcrumbs\Breadcrumbs;
 use Illuminate\Support\Facades\Artisan;
 
+use App\ChatMsgs;
+
 class IndexController extends Controller{
-    
+
     public function test(MessageController $mesage){
         return view('test_s');
     }
@@ -39,18 +41,20 @@ class IndexController extends Controller{
             foreach($arr as $v){
                 $idProduct = $v['id'];
                 $idCompany = $v->getCompany[0]['id'];
-                $directory = public_path() . '/img/custom/companies/' . $idCompany . '/products/' . $idProduct;
-                $directoryMy = '/img/custom/companies/' . $idCompany . '/products/' . $idProduct . '/';
-                if(!empty($v['product_image']) && File::exists($directory . '/' . $v['product_image'])){
-                    $v->firstFile = $directoryMy . $v['product_image'];
+                $directory = public_path().'/img/custom/companies/'.$idCompany.'/products/'.$idProduct;
+                $directoryMy = '/img/custom/companies/'.$idCompany.'/products/'.$idProduct.'/';
+                if(!empty($v['product_image']) && File::exists($directory.'/'.$v['product_image'])){
+                    $v->firstFile = $directoryMy.$v['product_image'];
                 }else{
                     if(is_dir($directory)){
                         $files = scandir($directory);
-                        $v->firstFile = $directoryMy . $files[2];
-                        if(is_dir(public_path() . $v->firstFile)){
-                            if(isset($files[3]))
-                                $v->firstFile = $directoryMy . $files[3];else
+                        $v->firstFile = $directoryMy.$files[2];
+                        if(is_dir(public_path().$v->firstFile)){
+                            if(isset($files[3])){
+                                $v->firstFile = $directoryMy.$files[3];
+                            }else{
                                 $v->firstFile = '/img/custom/files/thumbnail/plase.jpg';
+                            }
                         }
                     }else{
                         $v->firstFile = '/img/custom/files/thumbnail/plase.jpg';
@@ -71,18 +75,20 @@ class IndexController extends Controller{
     private static function getProductImg(Product $product){
         $idProduct = $product['id'];
         $idCompany = $product->getCompany[0]['id'];
-        $directory = public_path() . '/img/custom/companies/' . $idCompany . '/products/' . $idProduct;
-        $directoryMy = '/img/custom/companies/' . $idCompany . '/products/' . $idProduct . '/';
-        if(!empty($product['product_image']) && File::exists($directory . '/' . $product['product_image'])){
-            $product->firstFile = $directoryMy . $product['product_image'];
+        $directory = public_path().'/img/custom/companies/'.$idCompany.'/products/'.$idProduct;
+        $directoryMy = '/img/custom/companies/'.$idCompany.'/products/'.$idProduct.'/';
+        if(!empty($product['product_image']) && File::exists($directory.'/'.$product['product_image'])){
+            $product->firstFile = $directoryMy.$product['product_image'];
         }else{
             if(is_dir($directory)){
                 $files = scandir($directory);
-                $product->firstFile = $directoryMy . $files[2];
-                if(is_dir(public_path() . $product->firstFile)){
-                    if(isset($files[3]))
-                        $product->firstFile = $directoryMy . $files[3];else
+                $product->firstFile = $directoryMy.$files[2];
+                if(is_dir(public_path().$product->firstFile)){
+                    if(isset($files[3])){
+                        $product->firstFile = $directoryMy.$files[3];
+                    }else{
                         $product->firstFile = '/img/custom/files/thumbnail/plase.jpg';
+                    }
                 }
             }else{
                 $product->firstFile = '/img/custom/files/thumbnail/plase.jpg';
@@ -107,15 +113,9 @@ class IndexController extends Controller{
 
         $this->addFeedProduct($productAll);
 
-
-
-        return view('welcome')
-            ->with('productAll', $productAll)
-            ->with('companyAll', $companyAll['companyAll'])
-            ->with('slide_img', $slide_img)
-            ->with('category', $category->getAllCategoris())
-            ->with('vip_category', $vip_category);
+        return view('welcome')->with('productAll', $productAll)->with('companyAll', $companyAll['companyAll'])->with('slide_img', $slide_img)->with('category', $category->getAllCategoris())->with('vip_category', $vip_category);
     }
+
     public function addFeedProduct($productAll){
         foreach($productAll as $product){
             $product->raiting = 0;
@@ -127,4 +127,37 @@ class IndexController extends Controller{
         return $productAll;
     }
 
+    public function whoAmI(){
+        if(Auth::user()){
+            return response()->json(Auth::user(), 200);
+        }else{
+            return response()->json([ 'msg' => 'Auth Error' ], 422);
+        }
+    }
+
+    public function saveChat(Request $request, ChatMsgs $chatMsgs){
+        $this->validate($request,[
+            'from_id'      => 'required',
+            'to_id'        => 'required|exists:users,id',
+            'body'         => 'required',
+            'chat_user_id' => 'required|exists:chat_users,id'
+        ]);
+
+        $chatMsgs->create([
+            'from_id'      => $request->from_id,
+            'to_id'        => $request->to_id,
+            'body'         => $request->body,
+            'chat_user_id' => $request->chat_user_id
+        ]);
+
+        return response()->json([ 'success' => true ], 200);
+    }
+
+    public function chatHistory(ChatController $chatController, $conversation, $page){
+        try{
+            return response()->json($chatController->getHistory($conversation, $page), 200);
+        }catch(\Exception $e){
+            return response()->json([ 'errors' => $e->getMessage() ], 422);
+        }
+    }
 }
