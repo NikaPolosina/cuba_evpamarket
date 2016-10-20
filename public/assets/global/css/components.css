@@ -4582,8 +4582,8 @@ Chats
 .chat-form {
   margin-top: 15px;
   padding: 10px;
-  background-color: #e9eff3;
-  overflow: hidden;
+/*  background-color: #e9eff3;*/
+  /*overflow: hidden;*/
   clear: both; }
   .chat-form .input-cont {
     margin-right: 40px; }
