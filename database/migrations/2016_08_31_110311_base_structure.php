@@ -136,6 +136,34 @@ class BaseStructure extends Migration{
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('category');
         });
+        /*-------additional_param------*/
+        //Create table for additional_param
+        Schema::create('additional_param', function (Blueprint $table){
+            $table->increments('id');
+            $table->string('title');
+            $table->string('description');
+            $table->string('placeholder');
+            $table->string('type');
+            $table->boolean('required');
+            $table->integer('sort');
+            $table->string('default');
+            $table->text('value');
+            $table->timestamps();
+        });
+        //Create table for product_additional_param
+        Schema::create('additional_param_category', function (Blueprint $table){
+            $table->integer('category_id')->unsigned();
+            $table->integer('additional_param_id')->unsigned();
+            $table->foreign('category_id')
+                ->references('id')->on('category')
+                ->onDelete('cascade');
+            $table->foreign('additional_param_id')
+                ->references('id')->on('additional_param')
+                ->onDelete('cascade');
+        });
+
+        /*-------additional_param------*/
+
         //Create table for company-product
         Schema::create('company_product', function (Blueprint $table){
             $table->integer('company_id')->unsigned();
@@ -391,6 +419,11 @@ class BaseStructure extends Migration{
         Schema::drop('roles');
         Schema::drop('password_resets');
         Schema::drop('users');
+
+        Schema::drop('additional_param_category');
+        Schema::drop('additional_param');
+
+
         Schema::drop('category');
         Schema::drop('cities');
         Schema::drop('regions');

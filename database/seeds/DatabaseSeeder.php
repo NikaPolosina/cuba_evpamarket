@@ -12,12 +12,14 @@ use App\Product;
 use App\Category;
 use App\DiscountAccumulativ;
 use App\Group;
+use App\AdditionParam;
 
 class DatabaseSeeder extends Seeder{
     public $region   = array();
     public $city     = array();
     public $company;
     public $category = array();
+    public $additionParam =array();
     public $discount;
     public $group;
 
@@ -34,9 +36,9 @@ class DatabaseSeeder extends Seeder{
         $this->createGroup();
         $this->createUserInformation();
         $this->createCategory();
+        $this->createAdditionParam();
         $this->createProduct();
         $this->createDiscountAccumulative();
-
     }
 
     public function createCity(){
@@ -316,8 +318,30 @@ class DatabaseSeeder extends Seeder{
             'icon'      => '',
             'img'       => 'music',
         ]);
-
         $this->company->getCategoryCompany()->attach($this->category[1]->id);
+    }
+
+    public function createAdditionParam(){
+        $this->additionParam['1'] = AdditionParam::create([
+            'title'       => 'Размер',
+            'description' => 'Указание размера товара',
+            'placeholder' => 'Выбирте размер...',
+            'type'        => 'select',
+            'required'    => 0,
+            'sort'        => 1,
+            'default'     => '',
+            'value'       => '{XS:{name:xs}, S:{name:s}, M:{name:m}, L:{name:l}, XL:{name:xl}, XXL:{name:xxl}, XXL:{name:xxl}}',
+        ]);
+        $this->additionParam['2'] = AdditionParam::create([
+            'title'       => 'Цвет',
+            'description' => 'Выбор цвета товара',
+            'placeholder' => 'Выбирте цвет...',
+            'type'        => 'select',
+            'required'    => 0,
+            'sort'        => 2,
+            'default'     => '',
+            'value'       => '{red:{name:красный, css:#FF0000}, black:{name:чёрный, css:#000000}, blue:{name:синий, css:#0000FF}, gold:{name:золотой, css:#FFD700}, green :{name:зелеый, css:#008000}, XXL:{name:xxl}, yellow :{name:жолтый, css:	#FFFF00}}',
+        ]);
     }
 
     public function createProduct(){
@@ -330,7 +354,6 @@ class DatabaseSeeder extends Seeder{
             'product_price'       => 500,
         ]);
         $this->company->getProducts()->attach($this->product);
-
         $this->product = Product::create([
             'product_name'        => 'Платья Красне',
             'category_id'         => $this->category[1]->id,
@@ -366,8 +389,6 @@ class DatabaseSeeder extends Seeder{
             'group_name' => 'Скидки по магазину Asos',
             'money'      => '',
         ]);
-        
-
     }
 
     public function createUserInformation(){
@@ -425,7 +446,6 @@ class DatabaseSeeder extends Seeder{
     public function createUser(){
         $role = $this->createRole();
         $data = array();
-
         $user = User::create([
             'email'    => 'admin@admin.com',
             'phone'    => '11111111111',
@@ -435,7 +455,6 @@ class DatabaseSeeder extends Seeder{
         ]);
         $user->attachRole($role['admin']);
         $data[] = $user;
-
         $user = User::create([
             'email'    => 'nika@nika.com',
             'phone'    => '222222222',
@@ -446,7 +465,6 @@ class DatabaseSeeder extends Seeder{
         $user->attachRole($role['company_owner']);
         $this->company->getUser()->attach($user);
         $data[] = $user;
-
         $user = User::create([
             'email'    => 'simple1@simple1.com',
             'phone'    => '33333333333',
@@ -455,9 +473,8 @@ class DatabaseSeeder extends Seeder{
             'password' => bcrypt(123456),
         ]);
         $user->attachRole($role['simple_user']);
-        $this->group->getUser()->attach($user, ['is_admin' => 1]);
+        $this->group->getUser()->attach($user, [ 'is_admin' => 1 ]);
         $data[] = $user;
-
         $user = User::create([
             'email'    => 'simple2@simple2.com',
             'phone'    => '44444444444444444',
