@@ -142,8 +142,7 @@
 
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script>
-    var url = 'http://<?=$_SERVER['HTTP_HOST']?>:<?=env('PORT', 5000)?>';
-    //var url = 'https://cuba-io-chat.herokuapp.com/';
+    var url = '{{env('SOCKET_URL')}}';
     var data;
     var conn = true;
     var connected_id = '{{$conversation->id}}';
@@ -162,13 +161,17 @@
     var to_surname = '{{$to->getUserInformation->surname}}';
 
     var page = 2;
-
 </script>
 
 
 <script src="/js/emojionearea.min.js"></script>
 
+
+
 <script>
+
+
+
 
     $(document).ready(function() {
         $("#emojionearea1").emojioneArea({

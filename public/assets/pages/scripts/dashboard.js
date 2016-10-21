@@ -515,7 +515,11 @@ var Dashboard = function() {
 
             if(window.conn){
 
-                conn = io(url);
+                conn = io(url, {
+                    query: "key="+from_id
+                });
+                console.log(url);
+                
 
                 $('div.up').on('click', function () {
                     if(conn){

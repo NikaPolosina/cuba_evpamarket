@@ -185,9 +185,12 @@ Route::post('/add-ajax-addition-feed', ['as'=>'add-ajax-addition-feed', 'uses'=>
 Route::get('/get-single-conversation/{id_from}/{id_to}', ['as'=>'get-single-conversation', 'uses'=>'HomeController@getUserPageWithConversationUsers']);
 
 
-Route::get('/who-am-i', ['as'=>'who_am_i', 'uses'=>'IndexController@whoAmI']);
-Route::post('/save-chat', ['as'=>'save_chat', 'uses'=>'IndexController@saveChat']);
-Route::get('/chat-history/{conversation}/{page}', ['as'=>'chat_history', 'uses'=>'IndexController@chatHistory']);
+Route::group(['middleware' => 'cors'], function(){
+    Route::get('/who-am-i/{id}', ['as'=>'who_am_i', 'uses'=>'IndexController@whoAmI']);
+    Route::post('/save-chat', ['as'=>'save_chat', 'uses'=>'IndexController@saveChat']);
+    Route::get('/chat-history/{conversation}/{page}', ['as'=>'chat_history', 'uses'=>'IndexController@chatHistory']);
+});
+
 
 
 

@@ -12,7 +12,8 @@
         "laravelcollective/html": "^5.2",
         "Doctrine/dbal": "^2.5",
         "creitive/laravel5-breadcrumbs": "^2.0",
-        "cboden/ratchet": "0.3.*"
+        "cboden/ratchet": "0.3.*",
+        "barryvdh/laravel-cors": "^0.8.2"
     },
 
     "require-dev": {

@@ -20,7 +20,7 @@ use Creitive\Breadcrumbs\Breadcrumbs;
 use Illuminate\Support\Facades\Artisan;
 
 use App\ChatMsgs;
-
+use App\User;
 class IndexController extends Controller{
 
     public function test(MessageController $mesage){
@@ -127,9 +127,10 @@ class IndexController extends Controller{
         return $productAll;
     }
 
-    public function whoAmI(){
-        if(Auth::user()){
-            return response()->json(Auth::user(), 200);
+    public function whoAmI($id){
+        $user = User::find($id);
+        if($user){
+            return response()->json($user, 200);
         }else{
             return response()->json([ 'msg' => 'Auth Error' ], 422);
         }
