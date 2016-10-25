@@ -236,6 +236,9 @@ $(document).ready(function() {
                 path = '/products/ajax-update';
                 update = true;
             }
+            
+            
+console.log(data);
 
             if(!productId)
                 data.filesPath = nededPath;

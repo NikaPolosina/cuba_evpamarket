@@ -161,6 +161,8 @@
     var to_surname = '{{$to->getUserInformation->surname}}';
 
     var page = 2;
+    
+
 </script>
 
 

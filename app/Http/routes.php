@@ -16,6 +16,9 @@
 Route::any('/test/{run?}', 'IndexController@test');
 
 
+Route::any('/test-my', 'TestController@myTest');
+
+
 
 /*-------------------------------------------Index----------------------------------------------*/
 Route::get('/', 'IndexController@Index');

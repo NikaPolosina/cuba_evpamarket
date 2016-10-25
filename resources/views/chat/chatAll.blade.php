@@ -25,7 +25,7 @@
                                    {{$itemMsg['get_chat_msgs'][0]['get_user_to']['get_user_information']['name']}} {{$itemMsg['get_chat_msgs'][0]['get_user_to']['get_user_information']['surname']}}
                                 </div>
                                 <div class="body_sm">
-                                    {{$itemMsg['get_chat_msgs'][0]['body']}}
+                                    {!!$itemMsg['get_chat_msgs'][0]['body']  !!}
                                     <span class="time">{{ date('d.m.Y', strtotime($itemMsg['get_chat_msgs'][0]['created_at'])) }}</span>
                                 </div>
                             </div>

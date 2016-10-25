@@ -122,6 +122,9 @@ class ProductsController extends Controller{
     }
 
     public function storeCategory(Request $request){
+
+
+        //dd($request->all());
         $validator = Validator::make(
             $request->input('product'),
             array(

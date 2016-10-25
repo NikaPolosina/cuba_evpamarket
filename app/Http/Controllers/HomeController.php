@@ -55,6 +55,15 @@ class HomeController extends Controller{
 
     public function getUserPageWithConversationUsers($from_id, $to_id, MessageController $mesage, ChatUsers $chatUsers){
 
+
+        $from = User::find($from_id);
+        if(Auth::user()->id != $from_id){
+            return redirect()->back();
+            die('Surprise, you are here !!!');
+        }
+        $to = User::find($to_id);
+
+
         if(!Auth::user()->getUserInformation){
             $region = Region::all();
             return view('auth.register_aditional')->with('region', $region);
@@ -105,15 +114,15 @@ class HomeController extends Controller{
             $conversation->save();
         }
 
-        if($conversation){
-            if($conversation->from_id == $data['userInfo']->id){
-                $to = $conversation->getUserTo;
-                $from = $conversation->getUserFrom;
-            }else{
-                $to = $conversation->getUserFrom;
-                $from = $conversation->getUserTo;
-            }
-        }
+//        if($conversation){
+//            if($conversation->from_id == $data['userInfo']->id){
+//                $to = $conversation->getUserTo;
+//                $from = $conversation->getUserFrom;
+//            }else{
+//                $to = $conversation->getUserFrom;
+//                $from = $conversation->getUserTo;
+//            }
+//        }
 
 
         if(!$to->getUserInformation->avatar){

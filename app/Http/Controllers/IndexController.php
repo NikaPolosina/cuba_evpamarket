@@ -143,15 +143,15 @@ class IndexController extends Controller{
             'body'         => 'required',
             'chat_user_id' => 'required|exists:chat_users,id'
         ]);
-
-        $chatMsgs->create([
+    
+        $r = $chatMsgs->create([
             'from_id'      => $request->from_id,
             'to_id'        => $request->to_id,
             'body'         => $request->body,
             'chat_user_id' => $request->chat_user_id
         ]);
 
-        return response()->json([ 'success' => true ], 200);
+        return response()->json([ 'success' => $r->toArray() ], 200);
     }
 
     public function chatHistory(ChatController $chatController, $conversation, $page){

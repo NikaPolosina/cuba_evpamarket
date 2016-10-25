@@ -519,7 +519,8 @@ var Dashboard = function() {
                     query: "key="+from_id
                 });
                 console.log(url);
-                
+                console.log(from_id);
+
 
                 $('div.up').on('click', function () {
                     if(conn){
@@ -544,6 +545,8 @@ var Dashboard = function() {
                 });
 
                 conn.on('message', function(data){
+                    console.log(data);
+                    
                     appendMsg(data.body, false);
                 });
 
@@ -637,9 +640,11 @@ var Dashboard = function() {
                 if (text.length == 0) {
                     return;
                 }
+                console.log(text);
+                
 
                /* text=text.replace(/<[^\/>][^>]*><\/[^>]+>/gim, "");*/
-                text=text.replace(/<div><br><\/div>/g,'');
+                 text=text.replace(/<div><br><\/div>/g,'');
                 
 
                 appendMsg(text, true);
@@ -652,6 +657,8 @@ var Dashboard = function() {
                     data['to_id']        = to_id;
                     data['chat_user_id'] = connected_id;
                     data['body']         = text;
+                    console.log(data);
+                    
                     conn.emit('chat', data);
                 }
 
