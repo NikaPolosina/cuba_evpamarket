@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" media="screen" type="text/css" href="/colorPicker/css/colorpicker.css" />
+    <script type="text/javascript" src="/colorPicker/js/colorpicker.js"></script>
+
+</head>
+
+<body>
+
+<button id="add_color">Add color</button>
+<div id="list"></div>
+
+    <script>
+
+        var randomId, currentSelector;
+        var ids = [];
+        $(document).ready(function(){
+            $('#add_color').on('click', function(){
+                randomId = Math.random().toString(36).substring(7);
+                ids.push(randomId);
+                $('#list').append(
+                        '<div>' +
+                        'Color: <input size="8" type="text" maxlength="6" size="6" id="' + randomId + '" value="">' +
+                        '<div style="width: 45px; height: 20px; outline: solid black 1px; display: inline-block;"></div>' +
+                        '</div>'
+                );
+                randomId          = '';
+                var colorSelector = ids.forEach(function(element, index){
+                    if(index == 0){
+                        randomId += '#' + element + ' ';
+                    }else{
+                        randomId += ', #' + element;
+                    }
+                });
+                $(randomId).ColorPicker({
+                    onChange : function(hsb, hex, rgb){
+                        currentSelector.next().css('backgroundColor', '#' + hex);
+                        currentSelector.val('#' + hex);
+                    }
+                }).bind('keyup', function(){
+                    console.log('asda');
+                    if(Number.isInteger(this.value)){
+                        $(this).ColorPickerSetColor('#' + this.value);
+                    }else{
+                        $(this).ColorPickerSetColor(this.value);
+                    }
+                });
+                randomId = null;
+            });
+            $('#list').delegate('input', 'focus', function(){
+                currentSelector = $(this);
+            });
+        });
+
+    </script>
+
+
+</body>
+</html>

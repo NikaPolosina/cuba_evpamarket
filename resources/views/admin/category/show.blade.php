@@ -12,14 +12,6 @@
                         <i class="icon-settings font-dark"></i>
                         <span class="caption-subject bold uppercase"> Список Категорий</span>
                     </div>
-                   {{-- <div class="actions">
-                        <div class="btn-group btn-group-devided" data-toggle="buttons">
-                            <label class="btn btn-transparent dark btn-outline btn-circle btn-sm active">
-                                <input type="radio" name="options" class="toggle" id="option1">Действия</label>
-                            <label class="btn btn-transparent dark btn-outline btn-circle btn-sm">
-                                <input type="radio" name="options" class="toggle" id="option2">Настройки</label>
-                        </div>
-                    </div>--}}
                 </div>
                 <div class="portlet-body">
 
@@ -65,6 +57,10 @@
                                             <li>
                                                 <a  class="tut" href="javascript:;">
                                                     <i class="icon-docs"></i> Редактировать </a>
+                                            </li>
+                                            <li>
+                                                <a  class="" href="/admin/category-param/{{$item->id}}">
+                                                    <i class="icon-docs"></i> Дополнительные параметры товара </a>
                                             </li>
                                             <li>
                                                 <a href="/admin/category-destroy/{{$item->id}}">

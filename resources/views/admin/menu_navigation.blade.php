@@ -62,6 +62,28 @@
                     </li>
                 </ul>
             </li>
+
+
+            <li class="nav-item  ">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-social-dribbble"></i>
+                    <span class="title">Товары</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="/admin/addition-param-list" class="nav-link ">
+                            <span class="title">Дополнительные параметры</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="/admin/addition-param-add" class="nav-link ">
+                            <span class="title">Добавить дополнительный параметр</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
             <li class="nav-item  ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-diamond"></i>

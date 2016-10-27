@@ -13,6 +13,7 @@ use App\Company;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\AdditionParam;
 
 class AdminController extends Controller{
 
@@ -25,6 +26,42 @@ class AdminController extends Controller{
 
     public function index(){
         return view('admin.home');
+    }
+    
+    
+    public function AdditionParamList(){
+        $param = AdditionParam::all();
+        return view('admin.addParam.list')->with('param', $param);
+    }
+    public function AdditionParamShowItem($id){
+        $param = AdditionParam::where('id', $id)->first();
+        $param->value = json_decode($param->value, true);
+        return view('admin.addParam.show')->with('param', $param);
+    }
+    public function AdditionParamAdd(){
+        return view('admin.addParam.add');
+    }
+
+     public function createAddParam(Request $request){
+        // dd($request->all());
+
+
+         $addParam = new AdditionParam([
+             'title'         => $request['title'],
+             'description'  => $request['description'],
+             'placeholder'         => $request['placeholder'],
+             'type'         => $request['type'],
+             'required'      => $request['required'],
+             'sort'      => $request['sort'],
+             'default'      => $request['default'],
+             'value'      => json_encode($request['value'])
+
+         ]);
+         $addParam->save();
+
+         //dd($addParam);
+
+        return view('admin.addParam.add');
     }
 
     public function allUser(){
@@ -50,6 +87,21 @@ class AdminController extends Controller{
     public function shopAll(){
         $shop = Company::all();
         return view('admin.company.show')->with('shop', $shop);
+    }
+    /*
+     * Просмотр дополнительных параметров товара по данной категории. Принимаем $id;
+     * */
+    public function addCategoryAddParam($id){
+        $category = Category::where('id',$id)->with('getAddParam')->get();
+
+
+        foreach($category[0]->getAddParam as $item){
+            $item->value = json_decode($item->value, true);
+        }
+       $addParam = AdditionParam::all();
+       
+
+        return view('admin.category.showAddParam')->with('category', $category)->with('addParam', $addParam);
     }
     
     public function shopBlocked(){

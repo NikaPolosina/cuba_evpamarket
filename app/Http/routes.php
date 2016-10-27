@@ -133,6 +133,13 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::post('/add-category-list', ['as' => 'admin', 'uses'=>'AdminController@categoryAddList']);
     Route::post('/add-item', ['as' => 'admin', 'uses'=>'AdminController@categoryAddItem']);
     Route::post('/user-block', ['as' => 'admin', 'uses'=>'AdminController@userBlock']);
+    Route::get('/addition-param-list', ['as' => 'admin', 'uses'=>'AdminController@AdditionParamList']);
+    Route::get('/show-add-param/{id}', ['as' => 'admin', 'uses'=>'AdminController@AdditionParamShowItem']);
+    Route::get('/addition-param-add', ['as' => 'admin', 'uses'=>'AdminController@AdditionParamAdd']);
+    //Переход на страницу создания дополнительного параметра по товару.
+    Route::post('/create-add-param', ['as' => 'admin', 'uses'=>'AdminController@createAddParam']);
+    //Переход на страницу просмотра и добавления дополнительных параметров описания товара по категории.
+    Route::get('/category-param/{id}', ['as' => 'admin', 'uses'=>'AdminController@addCategoryAddParam']);
 });
 
 /*-------------------------------------------Home--------------------------------------------*/

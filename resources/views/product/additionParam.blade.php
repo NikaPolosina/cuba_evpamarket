@@ -18,19 +18,11 @@ $ar = array();
 
 
 
-
-    <style>
-        /*div{
-            outline: solid 1px black;
-        }*/
-    </style>
-
-
 <div class="row">
 
     @foreach($addParam as $item)
 
-        <div class="div_container col-sm-8 col-sm-offset-2" style="margin-bottom: 30px;">
+        <div class="div_container col-sm-8 col-sm-offset-2" style="margin-bottom: 30px; ">
             <div class="col-sm-2">
                 {{$item['title']}}:
             </div>
@@ -60,6 +52,7 @@ $ar = array();
 
 
             </div>
+
 
         </div>
 

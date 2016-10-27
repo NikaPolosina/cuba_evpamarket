@@ -43,76 +43,10 @@
         <!-- END RESPONSIVE MENU TOGGLER -->
         <!-- BEGIN PAGE TOP -->
         <div class="page-top">
-            <!-- BEGIN HEADER SEARCH BOX -->
-            <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
-            {{--<form class="search-form search-form-expanded" action="" method="GET">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Поиск..." name="query">
-                        <span class="input-group-btn">
-                            <a href="javascript:;" class="btn submit">
-                                <i class="icon-magnifier"></i>
-                            </a>
-                        </span>
-                </div>
-            </form>--}}
-            <!-- END HEADER SEARCH BOX -->
-            <!-- BEGIN TOP NAVIGATION MENU -->
+
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
 
-                    <!-- END NOTIFICATION DROPDOWN -->
-                    <!-- BEGIN INBOX DROPDOWN -->
-                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                 {{--   <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <i class="icon-envelope-open"></i>
-                            <span class="badge badge-default"> 4 </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="external">
-                                <h3>У вас
-                                    <span class="bold">7 Новых</span>Соб.</h3>
-                                <a href="">смотреть все</a>
-                            </li>
-                            <li>
-                                <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-                                    <li>
-                                        <a href="#">
-                                                    <span class="photo">
-                                                        <img src="../assets/layouts/layout3/img/avatar2.jpg" class="img-circle" alt=""> </span>
-                                                    <span class="subject">
-                                                        <span class="from"> Елена Ильинская </span>
-                                                        <span class="time">только что </span>
-                                                    </span>
-                                            <span class="message"> Ку... </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                                    <span class="photo">
-                                                        <img src="../assets/layouts/layout3/img/avatar3.jpg" class="img-circle" alt=""> </span>
-                                                    <span class="subject">
-                                                        <span class="from"> Richard Doe </span>
-                                                        <span class="time">16 минут </span>
-                                                    </span>
-                                            <span class="message"> Ну привет... </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                                    <span class="photo">
-                                                        <img src="../assets/layouts/layout3/img/avatar1.jpg" class="img-circle" alt=""> </span>
-                                                    <span class="subject">
-                                                        <span class="from">Артем Познанский </span>
-                                                        <span class="time">2 часа </span>
-                                                    </span>
-                                            <span class="message"> Как дела... </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>--}}
 
                     <li class="dropdown dropdown-user">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
@@ -121,20 +55,6 @@
                             <i class="fa fa-angle-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
-                         {{--   <li>
-                                <a href="">
-                                    <i class="icon-user"></i>Мой профиль </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="icon-calendar"></i> Мой календарь</a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="icon-envelope-open"></i> Мои собщения
-                                    <span class="badge badge-danger"> 3 </span>
-                                </a>
-                            </li>--}}
 
                             <li>
                                 <a href="{{ url('/logout') }}">
@@ -194,16 +114,19 @@
 </div>
 
 </body>
+<script src="/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 
 <script src="/assets/global/plugins/respond.min.js"></script>
 <script src="/assets/global/plugins/excanvas.min.js"></script>
-<script src="/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+
+
+
 <script src="/assets/global/scripts/datatable.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
 <script src="/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
@@ -214,8 +137,13 @@
 <script src="/assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
 <script src="/assets/global/scripts/app.min.js" type="text/javascript"></script>
 <script src="/assets/pages/scripts/table-datatables-managed.min.js" type="text/javascript"></script>
-<script src="/assets/pages/scripts/dashboard.min.js" type="text/javascript"></script>
+<script src="/assets/pages/scripts/dashboard.js" type="text/javascript"></script>
 <script src="/assets/layouts/layout2/scripts/layout.min.js" type="text/javascript"></script>
 <script src="/assets/layouts/layout2/scripts/demo.min.js" type="text/javascript"></script>
 <script src="/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+
+<link rel="stylesheet" media="screen" type="text/css" href="/plugins/colorPicker/css/colorpicker.css" />
+<script type="text/javascript" src="/plugins//colorPicker/js/colorpicker.js"></script>
+
+
 </html>
