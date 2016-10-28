@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Carbon\Carbon;
 use App\Category;
 use App\City;
@@ -17,51 +18,90 @@ use App\AdditionParam;
 
 class AdminController extends Controller{
 
+    /**
+     * Current parameter obj
+     * */
+    protected $_param;
+
     protected function validatorCategory(array $data){
         return Validator::make($data, [
             'parent_id' => 'required|integer',
-            'title' => 'required|string|max:40'
+            'title'     => 'required|string|max:40'
         ]);
     }
 
     public function index(){
         return view('admin.home');
     }
-    
-    
+
     public function AdditionParamList(){
         $param = AdditionParam::all();
         return view('admin.addParam.list')->with('param', $param);
     }
+
     public function AdditionParamShowItem($id){
         $param = AdditionParam::where('id', $id)->first();
         $param->value = json_decode($param->value, true);
         return view('admin.addParam.show')->with('param', $param);
     }
-    public function AdditionParamAdd(){
-        return view('admin.addParam.add');
+
+    /**
+     * Add / Edit additional param
+     *
+     * @param integer $id
+     *
+     * @return View
+     * */
+    public function additionParamAdd($id = NULL){
+        if($id){
+            $this->_param = AdditionParam::find($id);
+            $this->_param->value = json_decode($this->_param->value, true);
+        }
+        return view('admin.addParam.add')->with('param', $this->_param);
     }
 
-     public function createAddParam(Request $request){
-        // dd($request->all());
+    /**
+     * Create / Edit param
+     * */
+    public function createAddParam(Request $request){
 
+        if($request->has('id')){
+            $this->_param = AdditionParam::find($request['id']);
+        }else{
+            $this->_param = new AdditionParam();
+        }
 
-         $addParam = new AdditionParam([
-             'title'         => $request['title'],
-             'description'  => $request['description'],
-             'placeholder'         => $request['placeholder'],
-             'type'         => $request['type'],
-             'required'      => $request['required'],
-             'sort'      => $request['sort'],
-             'default'      => $request['default'],
-             'value'      => json_encode($request['value'])
+        $this->_param->title = $request['title'];
+        $this->_param->description = $request['description'];
+        $this->_param->placeholder = $request['placeholder'];
+        $this->_param->type = $request['type'];
+        $this->_param->required = $request['required'];
+        $this->_param->sort = $request['sort'];
+        $this->_param->default = $request['default'];
 
-         ]);
-         $addParam->save();
+        if(is_array($request->input('value'))){
+            $value = $request->input('value');
 
-         //dd($addParam);
+            foreach($value as $key => $item){
 
-        return view('admin.addParam.add');
+                if(empty($item['css'])){
+                    unset($value[$key]['css']);
+                }
+
+                if(empty($item['name'])){
+                    unset($value[$key]);
+                }
+            }
+
+            $this->_param->value = json_encode($value);
+            unset($value);
+        }else{
+            $this->_param->value = '';
+        }
+
+        $this->_param->save();
+
+        return redirect(route('addition_param_list'));
     }
 
     public function allUser(){
@@ -83,7 +123,7 @@ class AdminController extends Controller{
         $user = User::where('block', 1)->get();
         return view('admin.user.show')->with('user', $user);
     }
-    
+
     public function shopAll(){
         $shop = Company::all();
         return view('admin.company.show')->with('shop', $shop);
@@ -112,47 +152,43 @@ class AdminController extends Controller{
         return view('admin.category.showAddParam')->with('category', $category)->with('addParam', $addParam);
     }
 
-
     public function destroyAddParam($id){
         if(Auth::user()->hasRole('admin')){
             AdditionParam::destroy($id);
         }
         return redirect()->back();
     }
-    
+
     public function shopBlocked(){
         $shop = Company::where('block', 1)->get();
         return view('admin.company.show')->with('shop', $shop);
     }
-    
-    public function shopStatistic($id){
 
+    public function shopStatistic($id){
 
         $company = Company::find($id);
 
         $company->perDayAmount = OrderController::getAmount($company->id, 0);
         $company->perWeekAmount = OrderController::getAmount($company->id, 7);
         $company->totalAmount = OrderController::getAmount($company->id, 365);
-        $chData =  $this->chData($id);
-        
+        $chData = $this->chData($id);
+
         return view('admin.company.aboutSingleShop')->with('company', $company)->with('chart', $chData);
     }
+
     public function chData($id){
         $monthStart = Carbon::now()->startOfMonth();
         $monthEnd = Carbon::now()->endOfMonth();
 
-        $orsders = Company::find($id)
-            ->getOrder()
-            ->select([DB::raw('sum(order.total_price) AS total_sales'), 'order.updated_at'])
-            ->where('status', 16)
-            ->whereBetween('updated_at', [
-                $monthStart,
-                $monthEnd
-            ])
-            ->groupBy('updated_at')
-            ->get();
+        $orsders = Company::find($id)->getOrder()->select([
+            DB::raw('sum(order.total_price) AS total_sales'),
+            'order.updated_at'
+        ])->where('status', 16)->whereBetween('updated_at', [
+            $monthStart,
+            $monthEnd
+        ])->groupBy('updated_at')->get();
         $chartData = array();
-        foreach ($orsders as $day) {
+        foreach($orsders as $day){
             $chartData[$day->updated_at->format('Y-m-d')] = $day->total_sales;
         }
         $days = Carbon::today()->daysInMonth;
@@ -165,33 +201,36 @@ class AdminController extends Controller{
                 $money = $chartData[$date];
             }
 
-            $chData[] = array('data'=>Carbon::now()->startOfMonth()->addDay($i)->format('Y-m-d'), 'money'=>$money);
+            $chData[] = array(
+                'data'  => Carbon::now()->startOfMonth()->addDay($i)->format('Y-m-d'),
+                'money' => $money
+            );
         }
         return $chData;
-
     }
+
     public function category(){
         $category = Category::all();
         return view('admin.category.show')->with('category', $category);
     }
+
     public function categoryAdd(){
 
         $category = Category::all();
         $category_parent = Category::where('parent_id', 0)->get();
         $child_category = Category::where('parent_id', $category_parent[0]->id)->get();
 
-        return view('admin.category.add')
-            ->with('category', $category)
-            ->with('category_parent', $category_parent)
-            ->with('child_category', $child_category);
+        return view('admin.category.add')->with('category', $category)->with('category_parent', $category_parent)->with('child_category', $child_category);
     }
+
     public function categoryAddList(Request $request){
         $id = $request['id'];
         $category_child = Category::where('parent_id', $id)->get();
         return response()->json([
-            'category_child'  => $category_child
+            'category_child' => $category_child
         ]);
     }
+
     public function categoryAddItem(Request $request){
         $response = json_decode($request['arr'], true);
 
@@ -199,45 +238,35 @@ class AdminController extends Controller{
             $v = $this->validatorCategory($val);
             if($v->fails()){
                 return response()->json([
-                    'errors'  => $v->messages()
+                    'errors' => $v->messages()
                 ]);
             }
 
-            if( $val['title'] == ''){
-
+            if($val['title'] == ''){
             }else{
                 $newCategory = new Category([
-                    'parent_id'        => $val['parent_id'],
-                    'title'            => $val['title']
+                    'parent_id' => $val['parent_id'],
+                    'title'     => $val['title']
                 ]);
 
                 $newCategory->save();
             }
-
-
-
         }
-
-
-
-
-
     }
+
     public function categoryDestroy($id){
 
         if(Auth::user()->hasRole('admin')){
             Category::destroy($id);
         }
         return redirect()->back();
-
     }
-    
-    public function categoryUpdate(Request $request){
 
+    public function categoryUpdate(Request $request){
 
         $category = Category::findOrFail($request['id']);
         $updateCategory = [
-            'title'         => $request['title'],
+            'title' => $request['title'],
 
         ];
         $category->update($updateCategory);
@@ -249,7 +278,7 @@ class AdminController extends Controller{
 
         $city = City::where('id_cities', $request['id_cities'])->get();
         $updateCity = [
-            'title_cities' =>$request['title'],
+            'title_cities' => $request['title'],
         ];
 
         $city['0']->update($updateCity);
@@ -261,7 +290,7 @@ class AdminController extends Controller{
 
             $city = City::where('id_cities', $id)->get();
 
-           //dd($city[0]['id']);
+            //dd($city[0]['id']);
 
             City::destroy($city[0]['id']);
         }
@@ -277,10 +306,10 @@ class AdminController extends Controller{
         }
 
         $user['block'] = $block;
-            $user->save();
-        
+        $user->save();
+
         return response()->json([
-            'block'  => $block
+            'block' => $block
         ]);
     }
 
@@ -288,18 +317,11 @@ class AdminController extends Controller{
         $region = Region::all();
         return view('admin.region.list')->with('region', $region);
     }
-    
+
     public function regionSingle($id){
         $region = Region::where('id_region', $id)->get()->toArray();
         $city = City::where('region_id', $id)->get();
 
-        return view('admin.region.addRegionCity')
-            ->with('region', $region)
-            ->with('city', $city);
-        
+        return view('admin.region.addRegionCity')->with('region', $region)->with('city', $city);
     }
-
-    
-   
-
 }
