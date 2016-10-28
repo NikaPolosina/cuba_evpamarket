@@ -136,11 +136,13 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::get('/addition-param-list', ['as' => 'admin', 'uses'=>'AdminController@AdditionParamList']);
     Route::get('/show-add-param/{id}', ['as' => 'admin', 'uses'=>'AdminController@AdditionParamShowItem']);
     Route::get('/addition-param-add', ['as' => 'admin', 'uses'=>'AdminController@AdditionParamAdd']);
+
     //Переход на страницу создания дополнительного параметра по товару.
     Route::post('/create-add-param', ['as' => 'admin', 'uses'=>'AdminController@createAddParam']);
 
     //Удаление дополнительного параметра по товару.
     Route::get('/add-param-destroy/{id}', ['as' => 'admin', 'uses'=>'AdminController@destroyAddParam']);
+
     //Переход на страницу просмотра и добавления дополнительных параметров описания товара по категории.
     Route::match(['get', 'post'], '/category-param/{id}', ['as' => 'admin', 'uses'=>'AdminController@addCategoryAddParam']);
 
@@ -175,7 +177,9 @@ Route::get('/change-order-status/{order}/{status}', ['as'=>'change_order_status'
 Route::any('/order-by-status/{company}/{status}', ['as'=>'order-by-status', 'uses'=>'OrderController@showOrder']);
 
 // Groups
+//Список групп пользователя
 Route::get('/show-group-list', ['as'=>'show-group-list', 'uses'=>'GroupController@showGroupList']);
+
 Route::post('/group-create', ['as'=>'group-create', 'uses'=>'GroupController@createGroup']);
 Route::get('/single-group/{id}', 'GroupController@showSingleGroup');
 Route::post('/group/send-invite', ['as'=>'group_invite_action', 'uses'=>'GroupController@ajaxInviteToGroup']);
