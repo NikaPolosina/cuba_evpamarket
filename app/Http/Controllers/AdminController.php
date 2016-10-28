@@ -114,8 +114,10 @@ class AdminController extends Controller{
 
 
     public function destroyAddParam($id){
-        die('Surprise, you are here !!!');
-
+        if(Auth::user()->hasRole('admin')){
+            AdditionParam::destroy($id);
+        }
+        return redirect()->back();
     }
     
     public function shopBlocked(){
