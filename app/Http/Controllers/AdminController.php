@@ -92,14 +92,14 @@ class AdminController extends Controller{
      * Просмотр дополнительных параметров товара по данной категории. Принимаем $id;
      * */
     public function addCategoryAddParam($id){
-        $category = Category::where('id',$id)->with('getAddParam')->get();
+        $category = Category::where('id',$id)->with('getAddParam')->first();
 
 
-        foreach($category[0]->getAddParam as $item){
+
+       $addParam = AdditionParam::all();
+        foreach($addParam as $item){
             $item->value = json_decode($item->value, true);
         }
-       $addParam = AdditionParam::all();
-       
 
         return view('admin.category.showAddParam')->with('category', $category)->with('addParam', $addParam);
     }
