@@ -138,8 +138,12 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::get('/addition-param-add', ['as' => 'admin', 'uses'=>'AdminController@AdditionParamAdd']);
     //Переход на страницу создания дополнительного параметра по товару.
     Route::post('/create-add-param', ['as' => 'admin', 'uses'=>'AdminController@createAddParam']);
+
+    //Удаление дополнительного параметра по товару.
+    Route::get('/add-param-destroy/{id}', ['as' => 'admin', 'uses'=>'AdminController@destroyAddParam']);
     //Переход на страницу просмотра и добавления дополнительных параметров описания товара по категории.
     Route::match(['get', 'post'], '/category-param/{id}', ['as' => 'admin', 'uses'=>'AdminController@addCategoryAddParam']);
+
 });
 
 /*-------------------------------------------Home--------------------------------------------*/

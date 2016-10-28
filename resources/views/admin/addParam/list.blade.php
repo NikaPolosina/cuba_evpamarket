@@ -65,7 +65,7 @@
                                                     <i class="icon-docs"></i> Редактировать </a>
                                             </li>
                                             <li>
-                                                <a href="javascript:;">
+                                                <a href="/admin/add-param-destroy/{{$item->id}}">
                                                     <i class="icon-tag"></i> Удалить </a>
                                             </li>
                                             <li class="divider"> </li>

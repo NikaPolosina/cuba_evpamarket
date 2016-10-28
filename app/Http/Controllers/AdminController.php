@@ -111,6 +111,12 @@ class AdminController extends Controller{
 
         return view('admin.category.showAddParam')->with('category', $category)->with('addParam', $addParam);
     }
+
+
+    public function destroyAddParam($id){
+        die('Surprise, you are here !!!');
+
+    }
     
     public function shopBlocked(){
         $shop = Company::where('block', 1)->get();

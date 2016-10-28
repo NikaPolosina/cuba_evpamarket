@@ -28,7 +28,7 @@
                 {{ Form::label('sort', 'Сортировка: ', ['class' => 'col-md-2 control-label'])}}
                 <div class="col-sm-10">
                     <div class="col-sm-12">
-                        {!! Form::number('sort', null, ['class' => 'form-control my_form_add_param ']) !!}
+                        {!! Form::number('sort', null, ['class' => 'form-control my_form_add_param ', 'min' => 0]) !!}
                         {!! $errors->first('sort', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
@@ -65,19 +65,21 @@
                         </div>
                     </div>
 
+                            {!! Form::button('Добавить значение', ['class' => 'btn btn-default add addButt pull-right']) !!}
+
+
+                        <div class="clearfix">
+
+
+                        </div>
+
 
                 <div id="list">
 
                 </div>
 
             </div>
-            <div class="col-sm-3 addButt">
-                <div id="colorSelectoro">
-                    <div style="background-color: #0000ff"></div>
-                </div>
-                <hr>
-             {!! Form::button('Добавить', ['class' => 'btn btn-default add']) !!}
-            </div>
+
 
 
 
@@ -91,13 +93,14 @@
 </div>
 
     <style>
+
         .my_form_add_param{
             margin-bottom: 10px;
         }
         .addButt{
-            box-shadow: 0 1px 10px 0 rgba(50,50,50,.2);
-            background: #fff;
-            padding: 10px 25px 10px;
+
+            margin-bottom: 10px;
+
         }
         .backColor{
             margin-left: 3px;
@@ -134,7 +137,7 @@
                 ids.push(randomId);
 
                 tpl_b = '';
-                tpl_b += '<label class="col-sm-2 control-label" for="value">Значение: </label>';
+                tpl_b += '<div class="value_holder"><label class="col-sm-2 control-label" for="value">Значение: </label>';
                 tpl_b += '<div class="col-sm-10">';
                 tpl_b  += '<div class="col-sm-8">';
                 tpl_b += ' <input class="form-control my_form_add_param" type="text" value="" name="value['+randomId+'][name]" />';
@@ -143,8 +146,9 @@
                 tpl_b += ' {!! Form::button('Цвет', ['class' => 'btn btn-success']) !!}';
                 tpl_b += '<div class="backColor" id="'+randomId+'" ></div>';
                 tpl_b += ' <input class="css_input" type="hidden" value="" name="value['+randomId+'][css]" />';
-                tpl_b += ' {!! Form::button('x', ['class' => 'btn btn-danger']) !!}';
+                tpl_b += ' {!! Form::button('x', ['class' => 'btn btn-danger delete_value']) !!}';
 
+                tpl_b += '</div>';
                 tpl_b += '</div>';
                 tpl_b += '</div>';
 
@@ -172,10 +176,13 @@
             }
 
             document.addEventListener("DOMContentLoaded", function() {
-                addValueHolder();
 
-                $('.addButt').find('button.add').on('click', function () {
+                $('.addButt').on('click', function () {
                     addValueHolder();
+                });
+
+                $('#list').delegate('.delete_value', 'click', function(){
+                    $(this).parents('.value_holder').eq(0).remove();
                 });
 
             });
