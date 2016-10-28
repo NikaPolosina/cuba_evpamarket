@@ -112,19 +112,25 @@ class AdminController extends Controller{
         return view('admin.category.showAddParam')->with('category', $category)->with('addParam', $addParam);
     }
 
-
+    /*
+     * Метод удаление дополнитеьного параметра по товару.
+     * */
     public function destroyAddParam($id){
         if(Auth::user()->hasRole('admin')){
             AdditionParam::destroy($id);
         }
         return redirect()->back();
     }
-    
+    /*
+     * Метод который выводит список заблокированых магазинов.
+     * */
     public function shopBlocked(){
         $shop = Company::where('block', 1)->get();
         return view('admin.company.show')->with('shop', $shop);
     }
-    
+    /*
+     * Метод вывода статистики по каждому магазину.
+     * */
     public function shopStatistic($id){
 
 
@@ -137,6 +143,7 @@ class AdminController extends Controller{
         
         return view('admin.company.aboutSingleShop')->with('company', $company)->with('chart', $chData);
     }
+    
     public function chData($id){
         $monthStart = Carbon::now()->startOfMonth();
         $monthEnd = Carbon::now()->endOfMonth();

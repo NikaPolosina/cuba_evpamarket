@@ -98,7 +98,10 @@
 
             <div class="clearfix"></div>
 
-                @yield('content')
+            <script src="/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+
+
+            @yield('content')
 
             <a href="javascript:;" class="page-quick-sidebar-toggler">
                 <i class="icon-login"></i>
@@ -114,7 +117,7 @@
 </div>
 
 </body>
-<script src="/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+
 
 <script src="/assets/global/plugins/respond.min.js"></script>
 <script src="/assets/global/plugins/excanvas.min.js"></script>
@@ -144,6 +147,5 @@
 
 <link rel="stylesheet" media="screen" type="text/css" href="/plugins/colorPicker/css/colorpicker.css" />
 <script type="text/javascript" src="/plugins//colorPicker/js/colorpicker.js"></script>
-
 
 </html>

@@ -8,7 +8,7 @@
                 <h3>{{$category->title}}</h3>
                 <div class="col-sm-6">
                     @foreach($addParam as $item)
-                        <div style="margin-bottom: 30px;  box-shadow: 0 1px 10px 0 rgba(50,50,50,.2); background: #fff; padding: 5px;">
+                        <div style="margin-bottom: 10px;  box-shadow: 0 1px 10px 0 rgba(50,50,50,.2); background: #fff; padding: 5px;">
                             <div>
                                 <input type="checkbox" name="param_id[]" value="{{$item->id}}" {{ (in_array($item->id, $category->getAddParam)) ? 'checked' : '' }} />
                                 {{$item->title}}
