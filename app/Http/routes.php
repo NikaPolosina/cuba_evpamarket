@@ -139,7 +139,7 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     //Переход на страницу создания дополнительного параметра по товару.
     Route::post('/create-add-param', ['as' => 'admin', 'uses'=>'AdminController@createAddParam']);
     //Переход на страницу просмотра и добавления дополнительных параметров описания товара по категории.
-    Route::get('/category-param/{id}', ['as' => 'admin', 'uses'=>'AdminController@addCategoryAddParam']);
+    Route::match(['get', 'post'], '/category-param/{id}', ['as' => 'admin', 'uses'=>'AdminController@addCategoryAddParam']);
 });
 
 /*-------------------------------------------Home--------------------------------------------*/

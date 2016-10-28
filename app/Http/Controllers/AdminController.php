@@ -88,15 +88,23 @@ class AdminController extends Controller{
         $shop = Company::all();
         return view('admin.company.show')->with('shop', $shop);
     }
-    /*
+
+    /**
      * Просмотр дополнительных параметров товара по данной категории. Принимаем $id;
+     *
+     * @param int $id - id категории
+     *
+     * @return View
      * */
-    public function addCategoryAddParam($id){
-        $category = Category::where('id',$id)->with('getAddParam')->first();
-
-
-
-       $addParam = AdditionParam::all();
+    public function addCategoryAddParam($id, Request $request){
+        if($request->isMethod('post')){
+            $category = Category::find($request->input('category_id'));
+            $category->getAddParam()->sync($request->input('param_id', array()));
+        }else{
+            $category = Category::where('id', $id)->with('getAddParam')->first();
+        }
+        $category->getAddParam = $category->getAddParam->lists('id')->toArray();
+        $addParam = AdditionParam::all();
         foreach($addParam as $item){
             $item->value = json_decode($item->value, true);
         }
