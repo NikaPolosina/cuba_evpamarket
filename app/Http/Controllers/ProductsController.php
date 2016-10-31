@@ -26,6 +26,7 @@ class ProductsController extends Controller{
     public $paginCnt = 5;
     private $_product;
     protected $_breadcrumbs;
+    protected $_user;
 
     public function __construct(Request $request,  Breadcrumbs $breadcrumbs){
         $this->_breadcrumbs = $breadcrumbs;
@@ -368,7 +369,7 @@ class ProductsController extends Controller{
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
         $company = Company::find($id);
-        
+
         $company->perDayAmount = OrderController::getAmount($company->id, 0);
         $company->perWeekAmount = OrderController::getAmount($company->id, 7);
         $company->totalAmount = OrderController::getAmount($company->id, 365);
@@ -496,6 +497,40 @@ class ProductsController extends Controller{
      * */
     public static function getSingleProduct($id){
         return IndexController::showProduct(Product::findOrFail($id));
+    }
+
+    /**
+     * Product form builder
+     *
+     * @param int $shopId
+     * @param int $categoryId
+     * @param Request Request
+     *
+     * @return Response json
+     * */
+    public function productForm($companyId, $categoryId = null, Request $request, CategoryController $category){
+        $validator = Validator::make(
+            [
+                'companyId'=>$companyId,
+                'categoryId'=>$categoryId
+            ],
+            array(
+                'companyId'=>'required|exists:companies,id',
+                'categoryId'=>'sometimes|required|exists:category,id'
+            )
+        );
+
+        if($validator->fails()){
+            return response()->json([
+                'error'  => $validator->errors() ], 422);
+        }
+
+        $this->_user = Auth::user();
+
+        return view('product.form')->with([
+            'product', $this->_product,
+            'myCategories' => $category->getCompanyCategorySorted($companyId)
+        ]);
     }
 
 }

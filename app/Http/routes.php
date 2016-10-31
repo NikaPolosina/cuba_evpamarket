@@ -70,6 +70,10 @@ Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 
 Route::post('/products/ajax-single-product',['as'=>'ajax_single_product', 'uses'=>'ProductsController@ajaxSingleProduct']);
 
 
+Route::get('/product-form/{companyId}/{categoryId?}', ['as'=>'product_form', 'uses'=>'ProductsController@productForm']);
+
+
+
 /*-------------------------------------------User----------------------------------------------*/
 Route::any('/user/simple_user/message', 'UserController@message');
 Route::any('/user/simple_user/payments', 'UserController@payments');
