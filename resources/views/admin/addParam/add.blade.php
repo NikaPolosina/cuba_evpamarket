@@ -10,6 +10,7 @@
         {!! Form::open(['url' => route('admin_create_additional_param'), 'class' => 'form-horizontal']) !!}
     @endif
 
+    {{Form::hidden('key', isset($param) ? $param->key: str_random(9))}}
 
     <div class="form-group {{ $errors->has('title') ? 'has-error' : ''}}">
         <div class="col-sm-12">

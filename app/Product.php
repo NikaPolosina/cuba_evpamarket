@@ -21,7 +21,7 @@ class Product extends Model
      *
      * @var array
      */
-    protected $fillable = ['product_name', 'category_id',  'product_description', 'content', 'product_image', 'product_price'];
+    protected $fillable = ['product_name', 'category_id',  'product_description', 'content', 'product_image', 'product_price', 'value'];
 
     public function getCompany(){
         return $this->belongsToMany('App\Company');

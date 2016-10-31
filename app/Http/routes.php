@@ -70,7 +70,11 @@ Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 
 Route::post('/products/ajax-single-product',['as'=>'ajax_single_product', 'uses'=>'ProductsController@ajaxSingleProduct']);
 
 
-Route::get('/product-form/{companyId}/{categoryId?}', ['as'=>'product_form', 'uses'=>'ProductsController@productForm']);
+Route::get('/product-form/{companyId}/{categoryId?}/{productId?}', ['as'=>'product_form', 'uses'=>'ProductsController@productForm']);
+
+
+Route::match(['post', 'patch'], '/save-product', ['as'=>'save_product_form', 'uses'=>'ProductsController@saveProductForm']);
+
 
 
 

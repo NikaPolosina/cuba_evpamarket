@@ -94,9 +94,6 @@ $(document).ready(function() {
             var categoryId = $('.table').find('.companyIdClass').val();
         }
 
-        console.log(categoryId);
-
-
         if(!categoryTitle){
             var categoryTitle = $('.table').find('.companyTitleClass').val();
         }
@@ -225,16 +222,19 @@ $(document).ready(function() {
 
     });
 
-
     /* Выбор главной картинки (чекпоинт)*/
     $('body').delegate('.product_image', 'change', function(){
         $('.mod').find('form').find('input[name="product_image"]').val($(this).val());
     });
+
     /* Сохранение (кнопка сохранить изминения) изменения товаров при нажатии на кнопку (изменить)*/
     $('.submit_modal_form').on('click', function(){
+        
         var modForm = $('.mod').find('form');
         if(modForm.length){
+
             var data = {};
+            
             var inputs    = $('.mod').find('[data-name]');
 
             inputs.each(function(){
@@ -266,12 +266,44 @@ $(document).ready(function() {
                 path = '/products/ajax-update';
                 update = true;
             }
-            
-            
-console.log(data);
 
             if(!productId)
                 data.filesPath = nededPath;
+            
+            var add_holder = modForm.find('.addParam');
+            
+            if(add_holder.find('.param_holder').length){
+                data['value'] = {};
+                add_holder.find('.param_holder').each(function(index, item){
+                    item = $(item);
+                    if(item.attr('data-key').length){
+                        switch (item.attr('data-type')){
+                            case 'checkbox':
+                                if(item.find('input:checked').length){
+                                    data['value'][item.attr('data-key')] = [];
+                                    item.find('input:checked').each(function(k, i){
+                                        data['value'][item.attr('data-key')].push($(i).val());
+                                    });
+                                }
+                                break;
+                            case 'radio':
+                                if(item.find('input:checked').length){
+                                    data['value'][item.attr('data-key')] = item.find('input:checked').val();
+                                }
+                                break;
+                            case 'select':
+                                if(item.find('select').length){
+                                    data['value'][item.attr('data-key')] = item.find('select').val();
+                                }
+                                break;
+                        }
+                    }
+                });
+                data['value'] = JSON.stringify(data['value']);
+            }else{
+                data['value'] = '';
+            }
+            
             $.ajax({
                 type    : "POST",
                 url     : path,

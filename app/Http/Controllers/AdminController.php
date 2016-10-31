@@ -74,6 +74,7 @@ class AdminController extends Controller{
         }
 
         $this->_param->title = $request['title'];
+        $this->_param->key = $request['key'];
         $this->_param->description = $request['description'];
         $this->_param->placeholder = $request['placeholder'];
         $this->_param->type = $request['type'];

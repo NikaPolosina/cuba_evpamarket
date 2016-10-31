@@ -15,11 +15,12 @@ use App\Group;
 use App\AdditionParam;
 
 class DatabaseSeeder extends Seeder{
-    public $region   = array();
-    public $city     = array();
+
+    public $region        = array();
+    public $city          = array();
     public $company;
-    public $category = array();
-    public $additionParam =array();
+    public $category      = array();
+    public $additionParam = array();
     public $discount;
     public $group;
 
@@ -324,6 +325,7 @@ class DatabaseSeeder extends Seeder{
     public function createAdditionParam(){
         $this->additionParam['1'] = AdditionParam::create([
             'title'       => 'Размер',
+            'key'         => 'size',
             'description' => 'Указание размера товара',
             'placeholder' => 'Выбирте размер...',
             'type'        => 'checkbox',
@@ -335,6 +337,7 @@ class DatabaseSeeder extends Seeder{
 
         $this->additionParam['2'] = AdditionParam::create([
             'title'       => 'Цвет',
+            'key'         => 'color',
             'description' => 'Выбор цвета товара',
             'placeholder' => 'Выбирте цвет...',
             'type'        => 'checkbox',
@@ -345,6 +348,7 @@ class DatabaseSeeder extends Seeder{
         ]);
         $this->additionParam['3'] = AdditionParam::create([
             'title'       => 'Диагонали экранов телевизоров',
+            'key'         => 'inch',
             'description' => 'Диагонали экранов телевизоров (дюйм)',
             'placeholder' => 'Выбирте диагональ...',
             'type'        => 'checkbox',

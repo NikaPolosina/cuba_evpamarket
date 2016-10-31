@@ -133,7 +133,7 @@ class BaseStructure extends Migration{
             $table->text('content');
             $table->string('product_image');
             $table->integer('product_price');
-            $table->string('value')->default('');
+            $table->text('value')->default('');
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('category');
         });
@@ -142,6 +142,7 @@ class BaseStructure extends Migration{
         Schema::create('additional_param', function (Blueprint $table){
             $table->increments('id');
             $table->string('title');
+            $table->string('key');
             $table->string('description');
             $table->string('placeholder');
             $table->string('type');

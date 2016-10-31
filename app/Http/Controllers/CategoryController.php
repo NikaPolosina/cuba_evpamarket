@@ -253,10 +253,9 @@ class CategoryController extends Controller{
      * Метод для получения всех дополнительных праметров товаров прикрепленных к данной категории. Передаем $id.
      * */
     public function getAddParamFromCategory($id, Request $request){
-        $value = null;
+        $value = array();
         if($request->has('value')){
             $value = json_decode($request->input('value'), true);
-
         }
 
         $addParam = Category::where('id',$id)->with('getAddParam')->first();

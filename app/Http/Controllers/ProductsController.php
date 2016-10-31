@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Order;
 use App\Http\Requests;
+use Doctrine\DBAL\Schema\View;
 use Illuminate\Http\Request;
 use App\StatusOwner;
 use App\Http\Controllers\Controller;
@@ -24,13 +25,17 @@ use Creitive\Breadcrumbs\Breadcrumbs;
 class ProductsController extends Controller{
 
     public $paginCnt = 5;
-    private $_product;
     protected $_breadcrumbs;
+    private $_product;
     protected $_user;
+    protected $_company;
+    protected $_category;
+    protected $_request;
 
     public function __construct(Request $request,  Breadcrumbs $breadcrumbs){
         $this->_breadcrumbs = $breadcrumbs;
         $this->_breadcrumbs->setDivider('<img style="display: inline-block;  height: 37px;" src="/img/system/next-bread.png">');
+        $this->_request = $request;
     }
 
     public function destroyProductDir($id){
@@ -124,8 +129,6 @@ class ProductsController extends Controller{
 
     public function storeCategory(Request $request){
 
-
-        //dd($request->all());
         $validator = Validator::make(
             $request->input('product'),
             array(
@@ -151,6 +154,7 @@ class ProductsController extends Controller{
             'product_image'       => $request['product']['photo'],
             'product_price'       => $request['product']['price'],
             'category_id'         => $request['product']['category_name'],
+            'value'               => $request['product']['value'],
         ]);
 
         $companyId = $request['company_id'];
@@ -361,7 +365,7 @@ class ProductsController extends Controller{
         $this->_breadcrumbs->addCrumb($product->product_name, '/single-product-my-shop/'.$id);
 
 
-        return $this->way($category, '.singleProductMyShop', $id)->with('myCategories', $currentCompanyCategories) ->with('breadcrumbs', $this->_breadcrumbs);
+        return $this->way($category, '.singleProductMyShop', $id)->with('myCategories', $currentCompanyCategories)->with('breadcrumbs', $this->_breadcrumbs);
     }
 
     public function productEditor(CategoryController $category, $id){
@@ -442,6 +446,7 @@ class ProductsController extends Controller{
                 'product_image'       => $request->input('product')['photo'],
                 'product_price'       => $request->input('product')['price'],
                 'category_id'         => $request->input('product')['category_name'],
+                'value'               => $request->input('product')['value'],
             ));
             if($result){
                 return view('product.singleProductTr')->with([ 'item' => $product ])->with([ 'x' => $request->x ]);
@@ -502,37 +507,66 @@ class ProductsController extends Controller{
     /**
      * Product form builder
      *
-     * @param int $shopId
-     * @param int $categoryId
-     * @param Request Request
+     * @param int                $companyId
+     * @param int                $categoryId
+     * @param int                $productId
+     * @param CategoryController $categoryController
+     * @param Company            $company
+     * @param Category           $category
      *
-     * @return Response json
+     * @return View json
      * */
-    public function productForm($companyId, $categoryId = null, Request $request, CategoryController $category){
-        $validator = Validator::make(
-            [
-                'companyId'=>$companyId,
-                'categoryId'=>$categoryId
-            ],
-            array(
-                'companyId'=>'required|exists:companies,id',
-                'categoryId'=>'sometimes|required|exists:category,id'
-            )
-        );
+    public function productForm($companyId, $categoryId = NULL, $productId = NULL, CategoryController $categoryController, Company $company, Category $category){
+
+        $validator = Validator::make([
+            'companyId'  => $companyId,
+            'categoryId' => $categoryId,
+            'productId'  => $productId
+        ], array(
+                'companyId'  => 'required|exists:companies,id',
+                'categoryId' => 'sometimes|required|exists:category,id',
+                'productId'  => 'sometimes|required|exists:products,id'
+            ));
 
         if($validator->fails()){
             return response()->json([
-                'error'  => $validator->errors() ], 422);
+                'error' => $validator->errors()
+            ], 422);
         }
 
         $this->_user = Auth::user();
 
+        if($productId){
+            $this->_product = $this->_getModel()->find($productId);
+            $this->_company = $this->_product->getCompany()->first();
+            $this->_category = $this->_product->getCategory;
+        }else{
+            $this->_company = $company->find($companyId);
+            if($categoryId){
+                $this->_category = $category->find($categoryId);
+            }
+        }
+
         return view('product.form')->with([
-            'product', $this->_product,
-            'myCategories' => $category->getCompanyCategorySorted($companyId)
+            'product'        => $this->_product,
+            'userCategories' => $categoryController->getCompanyCategorySorted($companyId),
+            'company'        => $this->_company,
+            'category'       => $this->_category,
         ]);
     }
 
+    /**
+     * Get product model Instance
+     *
+     * @return Product
+     * */
+    private function _getModel(){
+        return new Product();
+    }
+
+    public function saveProductForm(){
+        die('Surprise, you are here !!!');
+    }
 }
 
 
