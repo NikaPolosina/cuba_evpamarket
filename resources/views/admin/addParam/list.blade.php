@@ -58,7 +58,7 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a href="javascript:;">
+                                                <a href="{{route('additional_param', $item->id)}}">
                                                     <i class="icon-docs"></i> Редактировать </a>
                                             </li>
                                             <li>

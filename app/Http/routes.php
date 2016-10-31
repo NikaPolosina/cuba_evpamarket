@@ -90,6 +90,12 @@ Route::post('/category/edit-categoty', ['as' => 'attach_categories', 'uses'=>'Ca
 Route::post('/category/edit-categoty_two', ['as' => 'attach_categories_two', 'uses'=>'CategoryController@attachCategoriesToCompanyTwo']);
 Route::post('/category/remove-categoty', ['as' => 'remove_categories', 'uses'=>'CategoryController@detachCategoriesToCompany']);
 
+
+Route::any('/get-add-param/{id}', ['as' => 'get-add-param', 'uses'=>'CategoryController@getAddParamFromCategory']);
+
+
+
+
 /*-------------------------------------------File--Uploader--------------------------------------------*/
 Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);
 Route::any('/avatar-uploader', 'UserController@createAvatar');
@@ -133,12 +139,13 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::post('/add-category-list', ['as' => 'admin', 'uses'=>'AdminController@categoryAddList']);
     Route::post('/add-item', ['as' => 'admin', 'uses'=>'AdminController@categoryAddItem']);
     Route::post('/user-block', ['as' => 'admin', 'uses'=>'AdminController@userBlock']);
-    Route::get('/addition-param-list', ['as' => 'admin', 'uses'=>'AdminController@AdditionParamList']);
+    Route::get('/addition-param-list', ['as' => 'admin', 'as'=>'addition_param_list', 'uses'=>'AdminController@AdditionParamList']);
     Route::get('/show-add-param/{id}', ['as' => 'admin', 'uses'=>'AdminController@AdditionParamShowItem']);
-    Route::get('/addition-param-add', ['as' => 'admin', 'uses'=>'AdminController@AdditionParamAdd']);
+
+    Route::get('/addition-param-add/{id?}', ['as' => 'additional_param', 'uses'=>'AdminController@additionParamAdd']);
 
     //Переход на страницу создания дополнительного параметра по товару.
-    Route::post('/create-add-param', ['as' => 'admin', 'uses'=>'AdminController@createAddParam']);
+    Route::match(['post', 'patch'], '/create-add-param', ['as' => 'admin_create_additional_param', 'uses'=>'AdminController@createAddParam']);
 
     //Удаление дополнительного параметра по товару.
     Route::get('/add-param-destroy/{id}', ['as' => 'admin', 'uses'=>'AdminController@destroyAddParam']);

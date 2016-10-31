@@ -46,14 +46,29 @@ $(function(){
         })
         .on('fileuploadfail', function(e, data){});
 });
+        /*
+        * Функция для получения дополнительных параметров товарав при выборе категории.
+        * */
+        function getBlockWithadParam(id, data) {
+            $.ajax({
+                type    : "POST",
+                url     : '/get-add-param/'+id,
+                headers : {
+                    'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+                },
+                data    : {'value':data},
+                success : function(response){
+                    $('.addParam').html(response);
 
-
+                }
+             
+            });
+            
+        }
 
 $(document).ready(function() {
     /* Нажатие на кнопку изменить и создать новый*/
     $('#product_list').delegate('.open', 'click', function () {
-
-
         
         nededPath = 'temp/' + Date.now() + '/';
         productId = false;
@@ -66,7 +81,9 @@ $(document).ready(function() {
         tinyMCE.activeEditor.setContent('');
         $('.mod').find('.form-group').find('input[data-name="photo"]').val('');
         $('.mod').find('.form-group').find('input[data-name="price"]').val('');
-        $('.files').html('');
+        $('.files').html('')
+        $('.mod').find('.addParam').html('');
+
 
 
 
@@ -76,8 +93,10 @@ $(document).ready(function() {
         }else{
             var categoryId = $('.table').find('.companyIdClass').val();
         }
-        
-        
+
+        console.log(categoryId);
+
+
         if(!categoryTitle){
             var categoryTitle = $('.table').find('.companyTitleClass').val();
         }
@@ -85,11 +104,17 @@ $(document).ready(function() {
         var modalSelect = $('.mod').find('select[data-name="category_name"]');
         var modalSpan = $('.mod').find('.modalSpan');
 
+        modalSelect.on('change', function () {
+           if($(this).val().length) {
+               getBlockWithadParam($(this).val(), []);
+           }
+        });
 
         if (categoryId.length && modalSelect.find('option[value="' + categoryId + '"]').length) {
             modalSelect.val(categoryId);
             modalSelect.hide();
             modalSpan.html(categoryTitle).show();
+
         } else {
             modalSelect.show();
             modalSpan.html('').hide();
@@ -132,9 +157,11 @@ $(document).ready(function() {
 
                     tinyMCE.activeEditor.setContent(msg.product.content);
 
-                    console.log(tinyMCE.activeEditor.getContent());
-                    console.log(tinyMCE.activeEditor);
-                    
+
+
+                    getBlockWithadParam(msg.productCategory.id, msg.product.value);
+
+
 
 
                     $('.mod').find('.form-group').find('input[data-name="photo"]').val(msg.product.product_image);
@@ -192,6 +219,9 @@ $(document).ready(function() {
                 number = 1;
             }
         }
+
+        modalSelect.trigger('change');
+        
 
     });
 
