@@ -47,7 +47,10 @@ class GroupController extends Controller{
         return $user;
     }
 
-
+/*
+ * Список групп пльзователя
+ *
+ * */
     public function showGroupList(){
         $user_id = Auth::user();
         $my_group = $user_id->getGroup()->with([ 'getCompany', 'getUser' ])->get();

@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     @if(isset($param))
         {!! Form::model($param, ['method' => 'PATCH', 'url' => route('admin_create_additional_param'), 'class' => 'form-horizontal']) !!}
         {{Form::hidden('id')}}
@@ -73,12 +74,11 @@
 
                 <div class="clearfix">
 
-
                 </div>
 
 
                 <div id="list">
-                    @if(is_array($param->value) && count($param->value))
+                    @if(isset($param) && is_array($param->value) && count($param->value))
                         @foreach($param->value as $key=>$item)
                             <div class="value_holder"><label class="col-sm-2 control-label" for="value">Значение: </label>
                                 <div class="col-sm-10">

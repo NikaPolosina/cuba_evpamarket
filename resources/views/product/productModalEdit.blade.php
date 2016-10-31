@@ -65,7 +65,11 @@
                                         <strong>Внимание!</strong> <span></span>
                                     </div>
                                 </div>
+                                {{-------------------------------------Блок с доплнительной информацией------------------------------------------}}
+                                <div class="form-group addParam">
 
+                                </div>
+                                {{-------------------------------------Блок с доплнительной информацией------------------------------------------}}
 
                                 <div class="">Полное описание:  <span class="required_css">*</span> </div>
 
@@ -73,11 +77,7 @@
                                     {!! Form::label('', 'Полное описание: ', ['class' => 'col-sm-3 control-label']) !!}
                                     {!! Form::textarea('content', NULL, ['class' => 'form-control tiny', 'data-name' =>'content']) !!}
                                 </div>
-{{--
-                                <div class="form-group">
-                                    {!! Form::label('', 'ZGSRGREGYR: ', ['class' => 'col-sm-3 control-label']) !!}
-                                    {!! Form::text('ERTETR', NULL, ['class' => 'form-control tiny', 'data-name' =>'ERTETR']) !!}
-                                </div>--}}
+
 
                                 {!! Form::hidden('product_image', NULL, ['class' => 'form-control', 'data-name' =>'photo']) !!}
 

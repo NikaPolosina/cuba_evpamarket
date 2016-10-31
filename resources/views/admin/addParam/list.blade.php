@@ -1,8 +1,5 @@
-@extends('..admin.header_footer_layout')
-
+@extends('admin.header_footer_layout')
 @section('content')
-
-
 
     <div class="row">
         <div class="col-md-12">
@@ -65,7 +62,7 @@
                                                     <i class="icon-docs"></i> Редактировать </a>
                                             </li>
                                             <li>
-                                                <a href="/admin/add-param-destroy/{{$item->id}}">
+                                                <a class="confirm" href="/admin/add-param-destroy/{{$item->id}}">
                                                     <i class="icon-tag"></i> Удалить </a>
                                             </li>
                                             <li class="divider"> </li>
@@ -82,4 +79,14 @@
             <!-- END EXAMPLE TABLE PORTLET-->
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $('.confirm').on('click', function () {
+                if(!confirm(('Вы уверены ?'))){
+                    return false;
+                }
+            });
+        });
+    </script>
 @endsection

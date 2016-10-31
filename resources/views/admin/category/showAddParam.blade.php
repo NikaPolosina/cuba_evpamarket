@@ -2,6 +2,7 @@
 
 @section('content')
     {{ Form::open(array('method' => 'POST')) }}
+
     {{Form::hidden('category_id', $category->id)}}
     <div class="row">
         <div class="col-sm-12">
@@ -13,6 +14,7 @@
                             <input type="checkbox" name="param_id[]" value="{{$item->id}}" {{ (in_array($item->id, $category->getAddParam)) ? 'checked' : '' }} />
                             {{$item->title}}
                             <span data-id="{{$item->id}}" class="glyphicon glyphicon-triangle-bottom show_more" aria-hidden="true" style="cursor: pointer"></span>
+
                         </div>
                         <div id="{{$item->id}}" style="display: none">
                             <hr />

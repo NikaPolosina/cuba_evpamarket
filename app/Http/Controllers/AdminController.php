@@ -53,10 +53,12 @@ class AdminController extends Controller{
      * @return View
      * */
     public function additionParamAdd($id = NULL){
-        if($id){
+        if($id){  
             $this->_param = AdditionParam::find($id);
             $this->_param->value = json_decode($this->_param->value, true);
         }
+    
+
         return view('admin.addParam.add')->with('param', $this->_param);
     }
 
@@ -145,12 +147,18 @@ class AdminController extends Controller{
         }
         $category->getAddParam = $category->getAddParam->lists('id')->toArray();
         $addParam = AdditionParam::all();
+        
         foreach($addParam as $item){
             $item->value = json_decode($item->value, true);
         }
 
         return view('admin.category.showAddParam')->with('category', $category)->with('addParam', $addParam);
     }
+
+
+    /*
+     * Метод удаление дополнитеьного параметра по товару.
+     * */
 
     public function destroyAddParam($id){
         if(Auth::user()->hasRole('admin')){
@@ -159,10 +167,19 @@ class AdminController extends Controller{
         return redirect()->back();
     }
 
+    /*
+     * Метод который выводит список заблокированых магазинов.
+     * */
+    
     public function shopBlocked(){
         $shop = Company::where('block', 1)->get();
         return view('admin.company.show')->with('shop', $shop);
     }
+
+    /*
+     * Метод вывода статистики по каждому магазину.
+     * */
+
 
     public function shopStatistic($id){
 
@@ -176,6 +193,7 @@ class AdminController extends Controller{
         return view('admin.company.aboutSingleShop')->with('company', $company)->with('chart', $chData);
     }
 
+    
     public function chData($id){
         $monthStart = Carbon::now()->startOfMonth();
         $monthEnd = Carbon::now()->endOfMonth();

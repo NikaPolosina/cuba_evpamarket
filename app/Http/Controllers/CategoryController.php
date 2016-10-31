@@ -248,4 +248,25 @@ class CategoryController extends Controller{
 
         return response()->json([ 'categories' => $currentCompanyCategoriesSorted ], 200);
     }
+
+    /*
+     * Метод для получения всех дополнительных праметров товаров прикрепленных к данной категории. Передаем $id.
+     * */
+    public function getAddParamFromCategory($id, Request $request){
+        $value = null;
+        if($request->has('value')){
+            $value = json_decode($request->input('value'), true);
+
+        }
+
+        $addParam = Category::where('id',$id)->with('getAddParam')->first();
+
+        foreach($addParam->getAddParam as $item){
+            $item->value = json_decode($item->value, true);
+        }
+
+        return view('product.additionParam')->with('addParam', $addParam->getAddParam)->with('value', $value);
+
+
+    }
 }

@@ -133,6 +133,7 @@ class BaseStructure extends Migration{
             $table->text('content');
             $table->string('product_image');
             $table->integer('product_price');
+            $table->string('value')->default('');
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('category');
         });

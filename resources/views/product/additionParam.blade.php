@@ -1,8 +1,4 @@
-@extends('layouts.app')
 
-@section('content')
-
-    @include('layouts.header_menu')
 
 <?php
 
@@ -16,13 +12,12 @@ $ar = array();
 ?>
 
 
-
-
-<div class="row">
+<div class="row" style=" border: 1px solid rgba(0, 0, 0, 0.09);; text-align: center">
+    <h4>Дополнительные параметры</h4>
 
     @foreach($addParam as $item)
 
-        <div class="div_container col-sm-8 col-sm-offset-2" style="margin-bottom: 30px; ">
+        <div class="div_container col-sm-12" style="margin-bottom: 30px; ">
             <div class="col-sm-2">
                 {{$item['title']}}:
             </div>
@@ -56,25 +51,12 @@ $ar = array();
 
         </div>
 
-
-
-
     @endforeach
-
-
-
 
 
 </div>
 
 
-
-
-
-
-
-
-        @endsection
 
 
 
