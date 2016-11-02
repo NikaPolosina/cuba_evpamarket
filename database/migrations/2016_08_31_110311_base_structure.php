@@ -137,6 +137,7 @@ class BaseStructure extends Migration{
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('category');
         });
+        
         /*-------additional_param------*/
         //Create table for additional_param
         Schema::create('additional_param', function (Blueprint $table){
@@ -146,9 +147,11 @@ class BaseStructure extends Migration{
             $table->string('description');
             $table->string('placeholder');
             $table->string('type');
+            $table->string('type_for_by');
             $table->boolean('required');
-            $table->integer('sort');
+            $table->float('sort');
             $table->string('default');
+            $table->boolean('request');
             $table->text('value');
             $table->timestamps();
         });

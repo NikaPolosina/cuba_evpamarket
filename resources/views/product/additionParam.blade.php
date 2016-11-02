@@ -34,7 +34,7 @@ $ar = array();
                                 <?php foreach($item['value'] as $key => $val){ ?>
                                     <?php $b++; ?>
                                     @if($b==1)<div class="col-sm-4"> @endif
-                                        <div>
+                                        <div style="text-align: left;">
                                             <div style="min-width: 90px; display: inline-block;">
                                                 <input type="checkbox" name="{{$key}}" value="{{$key}}" <?=(in_array($key, $value[$item['key']]))?'checked':'' ?>>
                                                 {{$val['name']}}

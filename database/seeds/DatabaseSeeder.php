@@ -329,22 +329,25 @@ class DatabaseSeeder extends Seeder{
             'description' => 'Указание размера товара',
             'placeholder' => 'Выбирте размер...',
             'type'        => 'checkbox',
+            'type_for_by' => 'checkbox',
             'required'    => 0,
             'sort'        => 1,
             'default'     => '',
+            'request'     => 0,
             'value'       => '{"XS":{"name":"xs"},"S":{"name":"s"},"L":{"name":"l"},"XL":{"name":"xl"},"XXL":{"name":"xxl"}}',
         ]);
-
         $this->additionParam['2'] = AdditionParam::create([
             'title'       => 'Цвет',
             'key'         => 'color',
             'description' => 'Выбор цвета товара',
             'placeholder' => 'Выбирте цвет...',
             'type'        => 'checkbox',
+            'type_for_by' => 'checkbox',
             'required'    => 0,
             'sort'        => 2,
             'default'     => '',
-            'value'       => '{"red":{"name":"красный", "css":"#FF0000"}, "black":{"name":"чёрный", "css":"#000000"}, "blue":{"name":"синий", "css":"#0000FF"}, "gold":{"name":"золотой", "css":"#FFD700"}, "green" :{"name":"зелеый", "css":"#008000"}, "yellow" :{"name":"жолтый", "css":	"#FFFF00"}}',
+            'request'     => 1,
+            'value'       => '{"red":{"name":"красный", "css":"#FF0000"}, "black":{"name":"чёрный", "css":"#000000"}, "blue":{"name":"синий", "css":"#0000FF"}, "gold":{"name":"золотой", "css":"#FFD700"}, "green" :{"name":"зелеый", "css":"#008000"}, "yellow" :{"name":"желтый", "css":	"#FFFF00"}}',
         ]);
         $this->additionParam['3'] = AdditionParam::create([
             'title'       => 'Диагонали экранов телевизоров',
@@ -352,9 +355,11 @@ class DatabaseSeeder extends Seeder{
             'description' => 'Диагонали экранов телевизоров (дюйм)',
             'placeholder' => 'Выбирте диагональ...',
             'type'        => 'checkbox',
+            'type_for_by' => 'checkbox',
             'required'    => 0,
             'sort'        => 1,
             'default'     => '',
+            'request'     => 0,
             'value'       => '{"22":{"name":"22"},"26":{"name":"26"},"32":{"name":"32"},"37":{"name":"37"},"40":{"name":"40"},"42":{"name":"42"},"46":{"name":"46"},"50":{"name":"50"},"60":{"name":"60"},"65":{"name":"65"}}',
         ]);
     }

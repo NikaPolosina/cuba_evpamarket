@@ -63,10 +63,10 @@ class AdminController extends Controller{
     }
 
     /**
-     * Create / Edit param
+     * Create / Edit param Создание дополнительного параметра.
      * */
     public function createAddParam(Request $request){
-
+       // dd($request->all());
         if($request->has('id')){
             $this->_param = AdditionParam::find($request['id']);
         }else{
@@ -78,9 +78,11 @@ class AdminController extends Controller{
         $this->_param->description = $request['description'];
         $this->_param->placeholder = $request['placeholder'];
         $this->_param->type = $request['type'];
+        $this->_param->type_for_by = $request['type_for_by'];
         $this->_param->required = $request['required'];
         $this->_param->sort = $request['sort'];
         $this->_param->default = $request['default'];
+        $this->_param->request = $request['request'];
 
         if(is_array($request->input('value'))){
             $value = $request->input('value');

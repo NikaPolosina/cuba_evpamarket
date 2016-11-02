@@ -18,7 +18,7 @@
                 {{ Form::label('title', 'Имя: ', ['class' => 'col-sm-2 control-label'])}}
                 <div class="col-sm-10">
                     <div class="col-sm-12">
-                        {!! Form::text('title', NULL, ['class' => 'form-control my_form_add_param']) !!}
+                        {!! Form::text('title', NULL, ['class' => 'form-control my_form_add_param', 'required' => 'required']) !!}
                         {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
                     </div>
 
@@ -26,14 +26,14 @@
                 {{ Form::label('description', 'Описание: ', ['class' => 'col-md-2 control-label'])}}
                 <div class="col-sm-10">
                     <div class="col-sm-12">
-                        {!! Form::textarea('description', NULL, ['class' => 'form-control my_form_add_param my_textarea', 'rows' => '3']) !!}
+                        {!! Form::textarea('description', NULL, ['class' => 'form-control my_form_add_param my_textarea', 'rows' => '3',  'required' => 'required'  ]) !!}
                         {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
                 {{ Form::label('sort', 'Сортировка: ', ['class' => 'col-md-2 control-label'])}}
                 <div class="col-sm-10">
                     <div class="col-sm-12">
-                        {!! Form::number('sort', NULL, ['class' => 'form-control my_form_add_param ', 'min' => 0]) !!}
+                        {!! Form::number('sort', NULL, ['class' => 'form-control my_form_add_param ', 'min' => 0, 'step' => '0.1' ]) !!}
                         {!! $errors->first('sort', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
@@ -44,6 +44,7 @@
                         {!! $errors->first('placeholder', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
+
                 {{ Form::label('required', 'Обязательно: ', ['class' => 'col-md-2 control-label'])}}
                 <div class="col-sm-10">
                     <div class="col-sm-12">
@@ -51,22 +52,44 @@
                         {!! $errors->first('required', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-5 value">
-
-                {{ Form::label('type', 'Тип : ', ['class' => 'col-sm-2 control-label'])}}
+                {{ Form::label('request', 'Запрашивать наличие: ', ['class' => 'col-md-2 control-label'])}}
                 <div class="col-sm-10">
-                    <div class="col-sm-8">
-                        {!! Form::select('type', array('checkbox' => 'checkbox', 'radio' => 'radio', 'select' =>'select'), NULL, ['class' => 'form-control my_form_add_param ']) !!}
-                        {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
+                    <div class="col-sm-12">
+                        {!! Form::select('request', array('0' => 'НЕТ', '1' => 'ДА'), NULL, ['class' => 'form-control my_form_add_param ']) !!}
+                        {!! $errors->first('request', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
 
-                {{ Form::label('default', 'По умолчанию: ', ['class' => 'col-sm-2 control-label'])}}
-                <div class="col-sm-10">
-                    <div class="col-sm-8">
-                        {!! Form::text('default', NULL, ['class' => 'form-control my_form_add_param ']) !!}
-                        {!! $errors->first('default', '<p class="help-block">:message</p>') !!}
+            </div>
+            <div class="col-sm-5 value">
+                <div class="col-sm-12">
+                    {{ Form::label('type', 'Тип : ', ['class' => 'col-sm-2 control-label'])}}
+                    <div class="col-sm-10">
+                        <div class="col-sm-8">
+                            {!! Form::select('type', array('checkbox' => 'checkbox', 'radio' => 'radio', 'select' =>'select'), NULL, ['class' => 'form-control my_form_add_param ']) !!}
+                            {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    {{ Form::label('type_for_by', 'Тип при покупке: ', ['class' => 'col-sm-2 control-label'])}}
+                    <div class="col-sm-10">
+                        <div class="col-sm-8">
+                            {!! Form::select('type_for_by', array('checkbox' => 'checkbox', 'radio' => 'radio', 'select' =>'select'), NULL, ['class' => 'form-control my_form_add_param ']) !!}
+                            {!! $errors->first('type_for_by', '<p class="help-block">:message</p>') !!}
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-sm-12">
+                    {{ Form::label('default', 'По умолчанию: ', ['class' => 'col-sm-2 control-label'])}}
+                    <div class="col-sm-10">
+                        <div class="col-sm-8">
+                            {!! Form::text('default', NULL, ['class' => 'form-control my_form_add_param ']) !!}
+                            {!! $errors->first('default', '<p class="help-block">:message</p>') !!}
+                        </div>
                     </div>
                 </div>
 
