@@ -1,5 +1,5 @@
 
-@extends('..admin.header_footer_layout')
+@extends('admin.header_footer_layout')
 
 @section('content')
 
@@ -15,12 +15,7 @@
             <label class="control-label col-md-3">Родительская категория</label>
             <div class="col-md-4">
                 <select class="bs-select form-control parent-control">
-
-
                     @foreach($category_parent as $item)
-
-
-
                         <option value="{{$item->id}}">{{$item->title}}</option>
                     @endforeach
                 </select>
@@ -114,7 +109,15 @@
 
             }
         });
-    })
+    });  
+    
+    $('.child-control').on('change', function(){
+        var id = $(this).val();
+        event.preventDefault();
+        $('input[data-name="data_child_3"]').attr('data-parent', id);
+    });
+
+
     $('button.green').on('click', function () {
 
         var arr = [];

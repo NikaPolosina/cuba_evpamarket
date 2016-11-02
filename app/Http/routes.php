@@ -128,38 +128,66 @@ Route::get('/find/category/{id}', 'FindController@findByCategory');
 
 /*-------------------------------------------Admin----------------------------------------------*/
 Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function (){
+    
+    //Переход на домашнюю сраницу админа.
     Route::get('/', ['as' => 'admin', 'uses'=>'AdminController@index']);
+    //Список всех пользователей зарегестрированных в системе.
     Route::get('/user', ['as' => 'admin', 'uses'=>'AdminController@allUser']);
+    //Список всех поьзователей мужского пола.
     Route::get('/user-man', ['as' => 'admin', 'uses'=>'AdminController@userMan']);
+    //Список всех поьзователей женского пола.
     Route::get('/user-women', ['as' => 'admin', 'uses'=>'AdminController@userWomen']);
-    Route::get('/user-blocked', ['as' => 'admin', 'uses'=>'AdminController@userBlocked']);
-    Route::get('/shop-all', ['as' => 'admin', 'uses'=>'AdminController@shopAll']);
-    Route::get('/shop-block', ['as' => 'admin', 'uses'=>'AdminController@shopBlocked']);
-    Route::get('/category', ['as' => 'admin', 'uses'=>'AdminController@category']);
-    Route::get('/category-add', ['as' => 'admin', 'uses'=>'AdminController@categoryAdd']);
-    Route::get('/category-destroy/{id}', ['as' => 'admin', 'uses'=>'AdminController@categoryDestroy']);
-    Route::get('/city-destroy/{id}', ['as' => 'admin', 'uses'=>'AdminController@cityDestroy']);
-    Route::get('/region-list', ['as' => 'admin', 'uses'=>'AdminController@regionList']);
-    Route::get('/single-region/{id}', ['as' => 'admin', 'uses'=>'AdminController@regionSingle']);
-    Route::get('/company_statistic/{id}', ['as' => 'admin', 'uses'=>'AdminController@shopStatistic']);
-    Route::post('/category-update', ['as' => 'admin', 'uses'=>'AdminController@categoryUpdate']);
-    Route::post('/city-update', ['as' => 'admin', 'uses'=>'AdminController@cityUpdate']);
-    Route::post('/add-category-list', ['as' => 'admin', 'uses'=>'AdminController@categoryAddList']);
-    Route::post('/add-item', ['as' => 'admin', 'uses'=>'AdminController@categoryAddItem']);
+    //Блокирование юзера.
     Route::post('/user-block', ['as' => 'admin', 'uses'=>'AdminController@userBlock']);
+    //Список всех поьзователей которые были заблокированные.
+    Route::get('/user-blocked', ['as' => 'admin', 'uses'=>'AdminController@userBlocked']);
+    //Спысок всех магазинов зарегестрированных в системе.
+    Route::get('/shop-all', ['as' => 'admin', 'uses'=>'AdminController@shopAll']);
+    //Список всех заблокированных магазинов.
+    Route::get('/shop-block', ['as' => 'admin', 'uses'=>'AdminController@shopBlocked']);
+    //Список дополнительных параметров товаров.
     Route::get('/addition-param-list', ['as' => 'admin', 'as'=>'addition_param_list', 'uses'=>'AdminController@AdditionParamList']);
-    Route::get('/show-add-param/{id}', ['as' => 'admin', 'uses'=>'AdminController@AdditionParamShowItem']);
-
+    //Форма создания нового дополнительного параметра.
     Route::get('/addition-param-add/{id?}', ['as' => 'additional_param', 'uses'=>'AdminController@additionParamAdd']);
-
-    //Переход на страницу создания дополнительного параметра по товару.
+    //Создания дополнительного параметра по товару.
     Route::match(['post', 'patch'], '/create-add-param', ['as' => 'admin_create_additional_param', 'uses'=>'AdminController@createAddParam']);
-
+    //Просмотра дополнительного параметра. Принимает $id.
+    Route::get('/show-add-param/{id}', ['as' => 'admin', 'uses'=>'AdminController@AdditionParamShowItem']);
     //Удаление дополнительного параметра по товару.
     Route::get('/add-param-destroy/{id}', ['as' => 'admin', 'uses'=>'AdminController@destroyAddParam']);
-
     //Переход на страницу просмотра и добавления дополнительных параметров описания товара по категории.
     Route::match(['get', 'post'], '/category-param/{id}', ['as' => 'admin', 'uses'=>'AdminController@addCategoryAddParam']);
+    //Список всех категорий.
+    Route::get('/category', ['as' => 'admin', 'uses'=>'AdminController@category']);
+    //Переход на форму создания новой категории товара.
+    Route::get('/category-add', ['as' => 'admin', 'uses'=>'AdminController@categoryAdd']);
+    //Создание категории.
+    Route::post('/add-item', ['as' => 'admin', 'uses'=>'AdminController@categoryAddItem']);
+    //Удаление категори.
+    Route::get('/category-destroy/{id}', ['as' => 'admin', 'uses'=>'AdminController@categoryDestroy']);
+    //Редактирование категории.
+    Route::post('/category-update', ['as' => 'admin', 'uses'=>'AdminController@categoryUpdate']);
+    //При изменении родительской категории идет перезапрос в базу для того что бы вять детей категории.
+    Route::post('/add-category-list', ['as' => 'admin', 'uses'=>'AdminController@categoryAddList']);
+    //Список всех регионов.
+    Route::get('/region-list', ['as' => 'admin', 'uses'=>'AdminController@regionList']);
+    //Просмотр региона.
+    Route::get('/single-region/{id}', ['as' => 'admin', 'uses'=>'AdminController@regionSingle']);
+    //Удаление города.
+    Route::get('/city-destroy/{id}', ['as' => 'admin', 'uses'=>'AdminController@cityDestroy']);
+    //Редактирование города.
+    Route::post('/city-update', ['as' => 'admin', 'uses'=>'AdminController@cityUpdate']);
+
+
+    Route::get('/company_statistic/{id}', ['as' => 'admin', 'uses'=>'AdminController@shopStatistic']);
+
+
+
+
+
+
+
+
 
 });
 

@@ -82,19 +82,10 @@
             <h3 class="page-title"> Путь
                 <small></small>
             </h3>
-            <div class="page-bar">
-                <ul class="page-breadcrumb">
-                    <li>
-                        <i class="icon-home"></i>
-                        <a href="/admin/user">путь1</a>
-                        <i class="fa fa-angle-right"></i>
-                    </li>
-                    <li>
-                        <span>путь2</span>
-                    </li>
-                </ul>
 
-            </div>
+
+            @include('/admin/breadcrumbs')
+
 
             <div class="clearfix"></div>
 

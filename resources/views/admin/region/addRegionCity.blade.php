@@ -1,4 +1,4 @@
-@extends('..admin.header_footer_layout')
+@extends('admin.header_footer_layout')
 
 @section('content')
 
@@ -11,7 +11,7 @@
                     <div class="caption font-dark">
                         <i class="icon-settings font-dark"></i>
 
-                        <span class="caption-subject bold uppercase"> Регион {{$region['0']['title']}}</span>
+                        <span class="caption-subject bold uppercase"> Регион {{$region->title}}</span>
                     </div>
 
                 </div>
@@ -48,7 +48,7 @@
                                 </td>
                                 <td> {{ $x }} </td>
 
-                                <td> {{$region['0']['title']}}</td>
+                                <td> {{$region->title}}</td>
 
                                 <td class="title">{{$item->title_cities}}</td>
 
