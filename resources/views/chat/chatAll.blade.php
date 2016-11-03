@@ -85,7 +85,10 @@
         }
     }
 */
-
+.body_sm>img{
+    display: inline-block;
+    width: 30px;
+}
     .body_sm{
         font-weight: 300;
     }

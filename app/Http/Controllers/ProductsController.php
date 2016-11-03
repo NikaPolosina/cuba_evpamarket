@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AdditionParam;
 use App\Category;
 use App\Order;
 use App\Http\Requests;
@@ -322,7 +323,6 @@ class ProductsController extends Controller{
                 }])->with('getAdditionFeed');
             }
         ])->first();
-
         $product->raiting = 0;
         $product->count = $product->getFeedback->count();
 
@@ -336,36 +336,44 @@ class ProductsController extends Controller{
 
         $file = self::preparationFile($id);
         $product = self::preparationRating($file['singleProduct']['id']);
-
-      // dd($product->getCompany[0]->getUser[0]->getUserInformation->name);
-
+        $param = null;
+        //Для того что бы взять дполнительные параметры.
+          if($product->value){
+              $product->value =  json_decode($product->value, true);
+              $param = AdditionParam::whereIn('key', array_keys($product->value))->get();
+              foreach($param as  $key=>$val){
+                  $val->value = json_decode($val->value, true);
+              }
+          }
 
         return view('product'.$wey)
             ->with('singleProduct', $product)
             ->with('firstFile', $file['firstFile'])
             ->with('singleFile', $file['singleFile'])
             ->with('category', $category->getAllCategoris())
+            ->with('addParam', $param)
             ->with('companyId', $file['companyId']);
     }
 
+    //Метод для просмотра одного товара.
     public function singleProduct(CategoryController $category, $id){
 
         return $this->way($category, '.singleProductInfo', $id);
     }
 
     public function singleProductMyShop(CategoryController $category, $id){
-
         $companyId = Product::find($id)->getCompany[0]['id'];
         $company = Company::find($companyId);
         $product = Product::find($id);
-       
         $currentCompanyCategories = $category->getCompanyCategorySorted($companyId);
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Магазин - '.$company->company_name, '/product-editor/'.$companyId);
         $this->_breadcrumbs->addCrumb($product->product_name, '/single-product-my-shop/'.$id);
 
 
-        return $this->way($category, '.singleProductMyShop', $id)->with('myCategories', $currentCompanyCategories)->with('breadcrumbs', $this->_breadcrumbs);
+        return $this->way($category, '.singleProductMyShop', $id)
+            ->with('myCategories', $currentCompanyCategories)
+            ->with('breadcrumbs', $this->_breadcrumbs);
     }
 
     public function productEditor(CategoryController $category, $id){

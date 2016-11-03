@@ -46,11 +46,14 @@
 
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
-
-
                     <li class="dropdown dropdown-user">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <img alt="" class="img-circle" src="/assets/layouts/layout2/img/avatar3_small.jpg" />
+                            {{--<img alt="" class="img-circle" src="/assets/layouts/layout2/img/avatar3_small.jpg" />--}}
+                           @if(file_exists(public_path().Auth::user()->getUserInformation->avatar) && !is_dir(public_path().Auth::user()->getUserInformation->avatar))
+                                <img alt="" class="img-circle" src="{{Auth::user()->getUserInformation->avatar}}" />
+                            @else
+                                <img alt="" class="img-circle" src="/img/placeholder/avatar.jpg" />
+                            @endif
                             <span class="username username-hide-on-mobile"> Admin </span>
                             <i class="fa fa-angle-down"></i>
                         </a>
@@ -76,19 +79,11 @@
     @include('/admin/menu_navigation')
 
     <div class="page-content-wrapper">
-        <!-- BEGIN CONTENT BODY -->
+
         <div class="page-content">
-            <!-- END THEME PANEL -->
-            <h3 class="page-title"> Путь
-                <small></small>
-            </h3>
-
-
+            <h3 class="page-title"> {{$way}} </h3>
             @include('/admin/breadcrumbs')
-
-
             <div class="clearfix"></div>
-
             <script src="/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 
 

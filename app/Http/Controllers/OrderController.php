@@ -37,7 +37,6 @@ class OrderController extends Controller{
         }
 
 
-
         $company = Company::find($request['company_id']);
         $keys = array();
         foreach($request['product'] as $id=>$product){
@@ -50,6 +49,7 @@ class OrderController extends Controller{
 
         //$total = $cartController->getTotalAmount($company->id);
 
+
         $total = 0;
         foreach($products as $currentProduct){
             $currentProduct->cnt = 1;
@@ -59,13 +59,12 @@ class OrderController extends Controller{
             $currentProduct->total = $currentProduct->product_price*$currentProduct->cnt;
             $total = $total+$currentProduct->total;
         }
-
-
+        
         $user = Auth::user();
         $info_user =  $user->getUserInformation;
         $region = Region::where('id_region', $info_user['region_id'])->first();
         $city = City::where('id_cities', $info_user['city_id'])->first();
-
+        
         $owner = $company->getUser;
         $status = StatusOwner::where('key','sending_buyer')->get();
 
@@ -78,7 +77,6 @@ class OrderController extends Controller{
 
         $discount = $company->getDiscountAccumulativ()->where('from', '<=', $t)->orderBy('from', 'desc')->first();
 
-
         if($discount){
             $total_discount = ($total*$discount['percent'])/100;
             $persent = $discount['percent'];
@@ -86,14 +84,10 @@ class OrderController extends Controller{
             $total_discount = 0;
             $persent = null;
         }
-
-
-
+        
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Корзина', '/cart');
         $this->_breadcrumbs->addCrumb('Офрмление заказа', '/order');
-
-
 
         return view('order.create')
             ->with('user', $user)

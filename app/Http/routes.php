@@ -62,8 +62,11 @@ Route::get('/get-product-paginate', ['as' => 'get-product-paginate', 'uses' => '
 Route::get('/product-editor/{id}', 'ProductsController@productEditor');
 Route::post('/products/edit-categoty', 'ProductsController@editCategory');
 Route::post('/product/destroy', 'ProductsController@destroy');
+//Просмотр товара пользователем (описание товара);
 Route::get('/single-product/{id}', 'ProductsController@singleProduct');
+//Просмотр соьственного товара продавцом.
 Route::get('/single-product-my-shop/{id}', 'ProductsController@singleProductMyShop');
+
 Route::post('/products/ajax-update', ['as'=>'product-ajax-update', 'uses'=>'ProductsController@productAjaxUpdate']);
 Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 'uses'=>'ProductsController@attachCategoryToCompany']);
 
@@ -177,8 +180,7 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::get('/city-destroy/{id}', ['as' => 'admin', 'uses'=>'AdminController@cityDestroy']);
     //Редактирование города.
     Route::post('/city-update', ['as' => 'admin', 'uses'=>'AdminController@cityUpdate']);
-
-
+    //Статистика по компании.
     Route::get('/company_statistic/{id}', ['as' => 'admin', 'uses'=>'AdminController@shopStatistic']);
 
 

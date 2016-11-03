@@ -139,6 +139,9 @@
                                                     </div>
                                                     <h2 class="detail-tabs-i-title"><span style="font-weight: 600">Описание</span>
                                                         <span class="detail-tabs-i-title-inner">{{ $singleProduct->product_name }} </span>
+                                                        @if(isset($addParam))
+                                                            @include('product.additionParamShow')
+                                                        @endif
                                                     </h2>
                                                     <div>
                                                         {!! $singleProduct->content !!}
@@ -149,6 +152,8 @@
                                                 </div>
                                                 <div class="tab-pane" id="tab_5_2">
                                                     <p style="font-size: 16px; font-weight: bold"> Xарактеристики  {{ $singleProduct->product_name }} </p>
+
+
                                                 </div>
                                                 <div class="tab-pane" id="tab_5_3">
                                                 <p style="font-size: 16px; font-weight: bold"> Фото  {{ $singleProduct->product_name }}

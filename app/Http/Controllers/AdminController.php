@@ -23,11 +23,12 @@ class AdminController extends Controller{
      * */
     protected $_param;
     protected $_breadcrumbs;
+    protected $_way;
 
     //Конструктор. Выполняется всегда первым.
-    public function __construct( Breadcrumbs $breadcrumbs){
+    public function __construct(Breadcrumbs $breadcrumbs){
         $this->_breadcrumbs = $breadcrumbs;
-        $this->_breadcrumbs->setDivider(' <i class="fa fa-angle-right"></i>');
+        $this->_breadcrumbs->setDivider('<i class="fa fa-angle-right"></i>');
     }
 
     //Валиация категорий
@@ -40,32 +41,36 @@ class AdminController extends Controller{
     
     //Домашняя страница администратора.
     public function index(){
+        $this->_way = 'Домой';
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
-        return view('admin.home')->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.home')->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
     
     //Выводит список юзеров всех.
     public function allUser(){
+        $this->_way = 'Пользователи';
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
         $this->_breadcrumbs->addCrumb('Все пользователи', '/admin/user');
         $user = User::all();
-        return view('admin.user.show')->with('user', $user)->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.user.show')->with('user', $user)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
     
     //Метод для вывода пользователей мужского пола.
     public function userMan(){
+        $this->_way = 'Пользователи';
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
         $this->_breadcrumbs->addCrumb('Мужчины', '/admin/user-man');
         $user = User::whereIn('id', UserInformation::where('gender', '1')->lists('user_id'))->get();
-        return view('admin.user.show')->with('user', $user)->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.user.show')->with('user', $user)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
     
     //Метод для вывода пользователей женского пола.
     public function userWomen(){
+        $this->_way = 'Пользователи';
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
         $this->_breadcrumbs->addCrumb('Женщины', '/admin/user-women');
         $user = User::whereIn('id', UserInformation::where('gender', '0')->lists('user_id'))->get();
-        return view('admin.user.show')->with('user', $user)->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.user.show')->with('user', $user)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
     
     //Метод для блокировки пользователя.
@@ -87,34 +92,38 @@ class AdminController extends Controller{
     
     //Метод для вывода всех заблокированных пользователей.
     public function userBlocked(){
+        $this->_way = 'Пользователи';
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
         $this->_breadcrumbs->addCrumb('Заблокированные пользователи', '/admin/user-blocked');
         $user = User::where('block', 1)->get();
-        return view('admin.user.show')->with('user', $user)->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.user.show')->with('user', $user)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
     
     //Метод для вывода всех магазинов зарегестрированных в системе.
     public function shopAll(){
+        $this->_way = 'Магазины';
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
         $this->_breadcrumbs->addCrumb('Все магазины', '/admin/shop-all');
         $shop = Company::all();
-        return view('admin.company.show')->with('shop', $shop)->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.company.show')->with('shop', $shop)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
     
     //Метод который выводит список заблокированых магазинов.
     public function shopBlocked(){
+        $this->_way = 'Магазины';
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
         $this->_breadcrumbs->addCrumb('Заблокированные магазины', '/admin/shop-block');
         $shop = Company::where('block', 1)->get();
-        return view('admin.company.show')->with('shop', $shop)->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.company.show')->with('shop', $shop)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
     
     //Метод для вывода списка дополнительных параметров при содании товара.
     public function AdditionParamList(){
+        $this->_way = 'Товары';
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
         $this->_breadcrumbs->addCrumb('Дополнительные параметры', '/admin/addition-param-list');
         $param = AdditionParam::all();
-        return view('admin.addParam.list')->with('param', $param)->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.addParam.list')->with('param', $param)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
     /**
      * Add / Edit additional param
@@ -125,13 +134,15 @@ class AdminController extends Controller{
      * */
     //Метод направляет на страницу создания дополнительного параметра.
     public function additionParamAdd($id = NULL){
+        $this->_way = 'Товары';
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
+        $this->_breadcrumbs->addCrumb('Дополнительные параметры', '/admin/addition-param-list');
         $this->_breadcrumbs->addCrumb('Форма создания дополнитеьного параметра', '/admin/addition-param-add/{id?}');
         if($id){
             $this->_param = AdditionParam::find($id);
             $this->_param->value = json_decode($this->_param->value, true);
         }
-        return view('admin.addParam.add')->with('param', $this->_param)->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.addParam.add')->with('param', $this->_param)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
     /**
      * Create / Edit param Создание дополнительного параметра.
@@ -182,9 +193,13 @@ class AdminController extends Controller{
 
     //Метод для просмотра дополнительного параметра.
     public function AdditionParamShowItem($id){
+        $this->_way = 'Товары';
         $param = AdditionParam::where('id', $id)->first();
         $param->value = json_decode($param->value, true);
-        return view('admin.addParam.show')->with('param', $param);
+        $this->_breadcrumbs->addCrumb('Домой', '/admin/');
+        $this->_breadcrumbs->addCrumb('Дополнительные параметры', '/admin/addition-param-list');
+        $this->_breadcrumbs->addCrumb($param->title, '/admin/show-add-param/'.$id);
+        return view('admin.addParam.show')->with('param', $param)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
     /**
      * Просмотр дополнительных параметров товара по данной категории. Принимаем $id;
@@ -207,8 +222,12 @@ class AdminController extends Controller{
         foreach($addParam as $item){
             $item->value = json_decode($item->value, true);
         }
+        $this->_way = 'Товары';
+        $this->_breadcrumbs->addCrumb('Домой', '/admin/');
+        $this->_breadcrumbs->addCrumb('Список категорий', '/admin/category');
+        $this->_breadcrumbs->addCrumb('Дополнительные параметры по категории - '.$category->title, '/admin//category-param/'.$id);
 
-        return view('admin.category.showAddParam')->with('category', $category)->with('addParam', $addParam);
+        return view('admin.category.showAddParam')->with('category', $category)->with('addParam', $addParam)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
 
     //Метод удаление дополнитеьного параметра по товару.
@@ -221,8 +240,10 @@ class AdminController extends Controller{
 
     //Метод вывода статистики по каждому магазину.
     public function shopStatistic($id){
+        $this->_way = 'Магазины';
         $company = Company::find($id);
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
+        $this->_breadcrumbs->addCrumb('Все магазины', '/admin/shop-all');
         $this->_breadcrumbs->addCrumb('Сатистика по магазину - '.$company->company_name, '/admin/company_statistic/'.$id);
 
         $company->perDayAmount = OrderController::getAmount($company->id, 0);
@@ -230,25 +251,27 @@ class AdminController extends Controller{
         $company->totalAmount = OrderController::getAmount($company->id, 365);
         $chData = $this->chData($id);
 
-        return view('admin.company.aboutSingleShop')->with('company', $company)->with('chart', $chData)->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.company.aboutSingleShop')->with('company', $company)->with('chart', $chData)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
 
     //Метод для выыода списка категорий.
     public function category(){
+        $this->_way = 'Категории';
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
         $this->_breadcrumbs->addCrumb('Список категорий', '/admin/category');
         $category = Category::all();
-        return view('admin.category.show')->with('category', $category)->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.category.show')->with('category', $category)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
 
     //Метод для перенаправления на форму создания новой категории товаров.
     public function categoryAdd(){
+        $this->_way = 'Категории';
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
         $this->_breadcrumbs->addCrumb('Форма создания новой категории', '/admin/category-add');
         $category = Category::all();
         $category_parent = Category::where('parent_id', 0)->get();
         $child_category = Category::where('parent_id', $category_parent[0]->id)->get();
-        return view('admin.category.add')->with('category', $category)->with('category_parent', $category_parent)->with('child_category', $child_category)->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.category.add')->with('category', $category)->with('category_parent', $category_parent)->with('child_category', $child_category)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
     
     //Метод создания новой категории.
@@ -308,19 +331,21 @@ class AdminController extends Controller{
 
     //Метод выводит список всех регионов.
     public function regionList(){
+        $this->_way = 'Локализация';
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
         $this->_breadcrumbs->addCrumb('Список регионов', '/admin/region-list');
         $region = Region::all();
-        return view('admin.region.list')->with('region', $region)->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.region.list')->with('region', $region)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
 
     //Страница просмотра региона.
     public function regionSingle($id){
+        $this->_way = 'Локализация';
         $region = Region::where('id_region', $id)->first();
         $city = City::where('region_id', $id)->get();
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
         $this->_breadcrumbs->addCrumb('Регион - '.$region->title, '/admin/single-region/'.$id);
-        return view('admin.region.addRegionCity')->with('region', $region)->with('city', $city)->with('breadcrumbs', $this->_breadcrumbs);
+        return view('admin.region.addRegionCity')->with('region', $region)->with('city', $city)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
     
     //Метод который удаляет город.

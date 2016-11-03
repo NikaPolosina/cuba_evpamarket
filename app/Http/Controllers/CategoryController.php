@@ -263,7 +263,6 @@ class CategoryController extends Controller{
         foreach($addParam->getAddParam as $item){
             $item->value = json_decode($item->value, true);
         }
-
         return view('product.additionParam')->with('addParam', $addParam->getAddParam)->with('value', $value);
 
 

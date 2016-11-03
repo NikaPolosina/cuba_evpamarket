@@ -23,6 +23,7 @@
                     </div>
                     <div class="col-md-8 col-md-offset-2 ">
                         <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p">
+
                         @foreach($products as $val)
 
 
@@ -84,6 +85,7 @@
                             </div>
 
                         @endforeach
+
                         <div class="col-sm-6 col-sm-offset-3">
                             <hr/>
                             <table class="table_product" border="0"  width="100%">
@@ -97,6 +99,7 @@
                                         </div>
                                    </td>
                                 </tr>
+
                                 @if($total_discount > 0)
                                     <tr>
                                         <td width="50%" class="right">
@@ -134,7 +137,6 @@
                                                 {!! Form::text('name', $info_user->name, ['class' => 'form-control', 'data-name' =>'name']) !!}
                                             </div>
                                         </div>
-
                                     <div class="form-group col-sm-12" style="margin-bottom: 3px">
                                         {!! Form::label('surname', 'Фамилия: ', ['class' => 'col-sm-3 control-label']) !!}
                                         <div class="col-sm-9">
@@ -155,20 +157,19 @@
                                         <div class="col-sm-9">
                                         {!! Form::text('region_id', $region->title, ['class' => 'form-control', 'data-name' =>'region_id']) !!}
                                         </div>
-
                                     </div>
                                     <div class="form-group col-sm-12" style="margin-bottom: 3px">
                                         {!! Form::label('city_id', 'Город: ', ['class' => 'col-sm-3 control-label']) !!}
                                         <div class="col-sm-9">
                                         {!! Form::text('city_id', $city->title_cities, ['class' => 'form-control', 'data-name' =>'city_id']) !!}
                                         </div>
-
                                     </div>
                                     <div class="form-group col-sm-12" style="margin-bottom: 3px">
                                         {!! Form::label('street', 'Улица: ', ['class' => 'col-sm-3 control-label']) !!}
                                         <div class="col-sm-9">
                                         {!! Form::text('street', $info_user->street, ['class' => 'form-control', 'data-name' =>'street']) !!}
                                         </div>
+
 
                                     </div>
                                     <div class="form-group col-sm-12" style="margin-bottom: 3px">
