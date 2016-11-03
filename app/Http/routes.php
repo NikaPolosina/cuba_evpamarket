@@ -15,12 +15,9 @@
 
 Route::any('/test/{run?}', 'IndexController@test');
 
-
 Route::any('/test-my', 'TestController@myTest');
 
-
-
-/*-------------------------------------------Index----------------------------------------------*/
+//Входная точка сайта. КОРЕНЬ
 Route::get('/', 'IndexController@Index');
 
 /*-------------------------------------------Auth----------------------------------------------*/
@@ -32,7 +29,9 @@ Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
 Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
 
 /*---------------------------------CompanyController------------------------------------*/
+//Просмотр компании пользователем.
 Route::any('/show-company/{id}', 'CompanyController@show');
+//Для создания дополнительной информации о компании.
 Route::any('/company-content', ['as' => 'company-content', 'uses' => 'CompanyController@companyContent']);
 
 Route::get('/my_shops', ['as' => 'my_shops', 'uses' => 'CompanyController@getMyShop']);
@@ -61,13 +60,15 @@ Route::any('/products-category', ['as' => 'products-category', 'uses' => 'Produc
 Route::get('/get-product-paginate', ['as' => 'get-product-paginate', 'uses' => 'ProductsController@productPaginate']);
 Route::get('/product-editor/{id}', 'ProductsController@productEditor');
 Route::post('/products/edit-categoty', 'ProductsController@editCategory');
+//Удаление продукта.
 Route::post('/product/destroy', 'ProductsController@destroy');
 //Просмотр товара пользователем (описание товара);
 Route::get('/single-product/{id}', 'ProductsController@singleProduct');
 //Просмотр соьственного товара продавцом.
 Route::get('/single-product-my-shop/{id}', 'ProductsController@singleProductMyShop');
-
+//Редактирование товара с помощу ajax.
 Route::post('/products/ajax-update', ['as'=>'product-ajax-update', 'uses'=>'ProductsController@productAjaxUpdate']);
+//страница где можно присоединить категории к компании.
 Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 'uses'=>'ProductsController@attachCategoryToCompany']);
 
 Route::post('/products/ajax-single-product',['as'=>'ajax_single_product', 'uses'=>'ProductsController@ajaxSingleProduct']);
@@ -77,8 +78,6 @@ Route::get('/product-form/{companyId}/{categoryId?}/{productId?}', ['as'=>'produ
 
 
 Route::match(['post', 'patch'], '/save-product', ['as'=>'save_product_form', 'uses'=>'ProductsController@saveProductForm']);
-
-
 
 
 /*-------------------------------------------User----------------------------------------------*/
@@ -94,7 +93,6 @@ Route::any('/user/simple_user/setting/security/edit-simple', 'UserController@set
 Route::post('/user/simple_user/setting/security/edit-owner', 'UserController@settingOverallEditOwner');
 Route::get('/show-user/{id}', 'UserController@getUserPage');
 
-
 /*-------------------------------------------Category----------------------------------------------*/
 Route::any('category/category-setup/{id}', 'CategoryController@categorySetup');
 Route::post('/category/edit-categoty', ['as' => 'attach_categories', 'uses'=>'CategoryController@attachCategoriesToCompany']);
@@ -103,8 +101,6 @@ Route::post('/category/remove-categoty', ['as' => 'remove_categories', 'uses'=>'
 
 
 Route::any('/get-add-param/{id}', ['as' => 'get-add-param', 'uses'=>'CategoryController@getAddParamFromCategory']);
-
-
 
 
 /*-------------------------------------------File--Uploader--------------------------------------------*/
@@ -121,17 +117,21 @@ Route::post('/products/ajax_cart', ['as'=>'ajax_add_to_cart', 'uses'=>'CartContr
 Route::post('/products/cart-update-cnt', 'CartController@cartAddCnt');
 
 /*-------------------------------------------Like----------------------------------------------*/
+//Избранное (при нажатии на картинку - сердце).
 Route::any('/like', 'LikeController@index');
+//Добавление товара в избранное при нажатии на картинку - серце у товара.
 Route::post('/products/like', 'LikeController@like');
+//Для удаления товара из списка избранного.
 Route::any('/like/destroy-product', 'LikeController@destroy');
 
 /*-------------------------------------------Find----------------------------------------------*/
+//Поиск.
 Route::any('/find', [ 'as' => 'find', 'uses' => 'FindController@findProduct' ]);
+//Найти товары по данной категории.
 Route::get('/find/category/{id}', 'FindController@findByCategory');
 
-/*-------------------------------------------Admin----------------------------------------------*/
+/*-------------------------------------------Админка    ----------------------------------------------*/
 Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function (){
-    
     //Переход на домашнюю сраницу админа.
     Route::get('/', ['as' => 'admin', 'uses'=>'AdminController@index']);
     //Список всех пользователей зарегестрированных в системе.
@@ -183,14 +183,6 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     //Статистика по компании.
     Route::get('/company_statistic/{id}', ['as' => 'admin', 'uses'=>'AdminController@shopStatistic']);
 
-
-
-
-
-
-
-
-
 });
 
 /*-------------------------------------------Home--------------------------------------------*/
@@ -209,10 +201,15 @@ Route::group([ 'middleware' => [ 'role:company_owner'] ], function (){
 Route::post('/new-user-dashboard', ['as'=>'set_user_role', 'uses'=>'UserController@setRole']);
 
 /*-------------------------------------------Order--------------------------------------------*/
+//Форма заказа товара.
 Route::post('/order', [ 'as' => 'order', 'uses' => 'OrderController@createOrder' ]);
+
+//Заказ товара.
 Route::post('/order-ready', [ 'as' => 'order-ready', 'uses' => 'OrderController@ready' ]);
 
+//Просмотр заказа
 Route::get('/show-order/{id}', 'OrderController@showOrder');
+
 Route::get('/change-order-status/{order}/{status}', ['as'=>'change_order_status', 'uses'=>'OrderController@changStatus']);
 Route::get('/show-simple-order/{id}', ['as'=>'show-simple-order', 'uses'=>'OrderController@showSimpleOrder']);
 Route::get('/show-list-order-simple', ['as'=>'show-list-order-simple', 'uses'=>'OrderController@showSimpleOrderList']);

@@ -46,22 +46,18 @@ class CompanyController extends Controller{
             ->with('city', $city)
             ->with('user', $user);
     }
-
+    
+    //Мтод создания компании.
     public function store(Request $request, Company $company){
-
         $company->company_name = $request['company_name'];
         $company->company_description = $request['company_description'];
         $company->company_logo = $request['company_logo'];
-        /* 'company_content'     => $request['company_content'],*/
         $company->company_contact_info = $request['company_contact_info'];
         $company->region_id = $request->input('region');
         $company->city_id = $request->input('city');
         $company->street = $request->input('street');
         $company->address = $request->input('address');
         $company->country = 'Росcия';
-
-
-
         $curentUser = Auth::user();
         $curentUser->getCompanies()->save($company);
 
@@ -82,19 +78,17 @@ class CompanyController extends Controller{
            File::move($source_t, $dest_t);
            File::deleteDirectory(public_path().'/img/custom/companies/thumbnail');
        }
-
         return view('company.companyContent')->with('company_id', $company['id']);
     }
-
+    
+    //Метод для создания дополнительного описния компании.
     public function companyContent(Request $request){
-
         $id = $request['company_id'];
         $company = Company::find($id);
         $company_content = [
             'company_content' => $request['company_content']
         ];
         $company->update($company_content);
-
         return redirect()->route('homeOwnerUser');
     }
 
