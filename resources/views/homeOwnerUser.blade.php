@@ -115,14 +115,9 @@
                                                 <p>
                                                     <a href="javascript:;">{{$userInfo->my_site}} </a>
                                                 </p>
-                                                <ul class="list-inline">
-                                                    <li>
-                                                        <i class="fa fa-briefcase"></i> Отправка </li>
-                                                    <li>
-                                                        <i class="fa fa-star"></i> Отзывы </li>
-                                                    <li>
-                                                        <a href="/like">   <li> <i class="fa fa-heart"></i> В избранных </li></a>
-                                                </ul>
+
+                                                <a href="/like"> <i class="fa fa-heart"></i> В избранных </a>
+
                                             </div>
 
                                         </div>
@@ -131,7 +126,7 @@
 
                                                 @if(count($curentUser->getCompanies))
                                                 <div class="">
-                                                        <h3 class="font-green sbold uppercase">Мои магазины <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Добавить магазин</a></h3>
+                                                        <h3 class="font-green sbold uppercase my_font_css">Мои магазины <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Добавить магазин</a></h3>
                                                         <div class="table">
                                                             <table class="table table-bordered table-striped table-hover">
                                                                 <thead>
@@ -193,7 +188,12 @@
     </div>
     </div>
 
+        <style>
+            .my_font_css{
+                font-size: 18px;
+            }
 
+        </style>
 
         <script>
 

@@ -52,14 +52,14 @@
                         <div class="row">
                             {!! Form::label('user_name', 'Имя: ', ['class' => 'col-sm-4 control-label']) !!}
                             <div class="col-sm-6">
-                                {!! Form::text('name', NULL, ['class' => 'form-group advanced_search_name form-control', 'required' => 'required']) !!}
+                                {!! Form::text('name', NULL, ['class' => 'form-group advanced_search_name form-control my_form_control', 'required' => 'required']) !!}
                                 {!! $errors->first('user_name', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
                         <div class="row">
                             {!! Form::label('surname', 'Фамилия: ', ['class' => 'col-sm-4 control-label']) !!}
                             <div class="col-sm-6">
-                                {!! Form::text('surname', NULL, ['class' => 'form-group advanced_search_surname form-control']) !!}
+                                {!! Form::text('surname', NULL, ['class' => 'form-group advanced_search_surname form-control my_form_control']) !!}
                                 {!! $errors->first('surname', '<p class="help-block">:message</p>') !!}
                             </div>
                         </div>
@@ -143,7 +143,7 @@
                     </div>
                     <div class="people_group_css">
                         <div class="people_simple_css">
-                            <p style="font-size: 14px">Учасники
+                            <p style="font-size: 14px">Участники
                                 <span style="color: #939393; padding: 0 6px;">{{count($users)}}</span></p>
                             @foreach($users as $val)
                                 <div style="display: inline-block">
@@ -265,8 +265,8 @@
        padding: 2px;
         border-radius: 4px;
     }
-    .form-control{
-        height: 30px!important;
+    .my_form_control{
+        height: 25px!important;
     }
     .css_peo {
 

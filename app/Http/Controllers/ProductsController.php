@@ -375,22 +375,18 @@ class ProductsController extends Controller{
             ->with('myCategories', $currentCompanyCategories)
             ->with('breadcrumbs', $this->_breadcrumbs);
     }
-
+    //Метод показывающий информацию о компании в кабинете продавца. Принимает id магазина.
     public function productEditor(CategoryController $category, $id){
-
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
         $company = Company::find($id);
-
         $company->perDayAmount = OrderController::getAmount($company->id, 0);
         $company->perWeekAmount = OrderController::getAmount($company->id, 7);
         $company->totalAmount = OrderController::getAmount($company->id, 365);
-        
         $order  = $company->getOrder()->get();
         foreach($order as $item){
             $item->getStatusOwner->where('key', 'not_processed')->get();
         }
-
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Магазин - '.$company->company_name, '/product-editor/'.$company->id);
 
@@ -484,15 +480,31 @@ class ProductsController extends Controller{
      *
      * @return json
      * */
+    //Метод для добавления товара в корзину.
     public function ajaxSingleProduct(Request $request, CartController $cartController){
         $this->validate($request, [
             'id' => 'required|integer'
         ]);
 
+        $param = null;
         try{
             $this->_product = self::getSingleProduct($request->input('id'));
+
+
+            //Для того что бы взять дполнительные параметры.
+            if($this->_product->value){
+                $this->_product->value =  json_decode($this->_product->value, true);
+                $param = AdditionParam::whereIn('key', array_keys( $this->_product->value))->get();
+                foreach($param as  $key=>$val){
+                    $val->value = json_decode($val->value, true);
+                }
+            }
+
+
+            
             return response()->json([
-                'product' => self::getSingleProduct($request->input('id')),
+                'product' =>  $this->_product,
+                'addParam' =>  $param,
                 'cart_cnt'    => $cartController->getTotalProductCnt(),
                 'total_in_shop'    => $cartController->getTotalAmount($this->_product->getCompany[0]->id),
             ], 200);

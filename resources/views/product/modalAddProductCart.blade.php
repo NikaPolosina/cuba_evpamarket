@@ -71,6 +71,9 @@
                                             </div>
                                         </td>
                                     </tr>
+
+                                            @include('product.additionParamOrder')
+
                                     <tr>
                                         <td width="45%" class="right">
                                             <span class="title_span_css">

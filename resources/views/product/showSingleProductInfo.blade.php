@@ -139,19 +139,23 @@
                                                     </div>
                                                     <h2 class="detail-tabs-i-title"><span style="font-weight: 600">Описание</span>
                                                         <span class="detail-tabs-i-title-inner">{{ $singleProduct->product_name }} </span>
-                                                        @if(isset($addParam))
-                                                            @include('product.additionParamShow')
-                                                        @endif
+
                                                     </h2>
                                                     <div>
                                                         {!! $singleProduct->content !!}
                                                     </div>
-
+                                                    @if(isset($addParam))
+                                                        @include('product.additionParamShow')
+                                                    @endif
 
 
                                                 </div>
                                                 <div class="tab-pane" id="tab_5_2">
                                                     <p style="font-size: 16px; font-weight: bold"> Xарактеристики  {{ $singleProduct->product_name }} </p>
+
+                                                    @if(isset($addParam))
+                                                        @include('product.additionParamShow')
+                                                    @endif
 
 
                                                 </div>
@@ -265,6 +269,10 @@
                                                                 td{
                                                                     padding:8px!important;
                                                                 }
+                                                                hr, p {
+                                                                    margin: 0px 0;
+                                                                }
+
 
                                                             </style>
 

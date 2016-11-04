@@ -58,6 +58,7 @@ Route::any('/products/destroy-check', 'ProductsController@destroyCheck');
 Route::any('/products/create-by-category', 'ProductsController@createByCategory');
 Route::any('/products-category', ['as' => 'products-category', 'uses' => 'ProductsController@storeCategory']);
 Route::get('/get-product-paginate', ['as' => 'get-product-paginate', 'uses' => 'ProductsController@productPaginate']);
+//При нажатии на свой магазин в кабинете продавца. Просмотр свого магазина.Список товаров, категорий и статистика.
 Route::get('/product-editor/{id}', 'ProductsController@productEditor');
 Route::post('/products/edit-categoty', 'ProductsController@editCategory');
 //Удаление продукта.
@@ -70,7 +71,7 @@ Route::get('/single-product-my-shop/{id}', 'ProductsController@singleProductMySh
 Route::post('/products/ajax-update', ['as'=>'product-ajax-update', 'uses'=>'ProductsController@productAjaxUpdate']);
 //страница где можно присоединить категории к компании.
 Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 'uses'=>'ProductsController@attachCategoryToCompany']);
-
+//При нажатии пользователем кнопки купить. Добавление товара в корзину. Для того что бы появилось модальное окно.
 Route::post('/products/ajax-single-product',['as'=>'ajax_single_product', 'uses'=>'ProductsController@ajaxSingleProduct']);
 
 

@@ -14,7 +14,7 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <div class="col-sm-5 col-sm-offset-1 col-md-6 col-md-offset-3">
+            <div class="col-sm-5 col-sm-offset-1 col-md-5 col-md-offset-3">
 
                 <div class="input-group col-sm-12">
                     <form style=" margin: 7px 0px 0px 0px;" class="input-group" method="POST" action="/find">

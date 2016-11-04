@@ -1,5 +1,16 @@
 $(document).ready(function(){
     var cart_modal = $('#cart_modal');
+    //При закрытии модального окна нужно убрать все li класс active.
+        $('#cart_modal').on('hidden.bs.modal', function () {
+            $('ul.sku-attr-list').find('li').removeClass('active');
+        });
+    //При выборе дополнительного параметра даетмя li класс active.
+    $("a[data-role='sku']").on('click', function () {
+        $(this).parents('ul').find('li').removeClass('active');
+        $(this).parents('li').addClass('active');
+
+    });
+
     /**
     * Show modal window with current product
     * */
@@ -17,6 +28,36 @@ $(document).ready(function(){
                 },
                 data    : {id : productId},
                 success : function(response){
+
+                    /*-------------------------------------------------------------*/
+                  /*  function array_key_exists (key, search ) {
+                        if( !search || (search.constructor !== Array && search.constructor !== Object) ){
+                            return false;
+                        }
+                        return search[key] !== undefined;
+                    }
+
+                    function in_array(needle, haystack, strict) {
+                        var found = false, key, strict = !!strict;
+                        for (key in haystack) {
+                            if ((strict && haystack[key] === needle) || (!strict && haystack[key] == needle)) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        return found;
+                    }*/
+
+                    $.each(response.product.value, function(key, value) {
+                        
+                        return false;
+
+                    });
+
+                    /*-------------------------------------------------------------*/
+
+
+                    
                     cart_modal.find('.m_car_cnt').text(response.cart_cnt);
                     cart_modal.find('.m_product_title').text(response.product.product_name);
                     cart_modal.find('.m_product_description').text(response.product.product_description);
@@ -39,6 +80,7 @@ $(document).ready(function(){
         });
 
         $('.m_close_modal').on('click', function(){
+            $('ul.sku-attr-list').find('li').removeClass('active');
             cart_modal.modal('hide');
         });
 
@@ -67,6 +109,7 @@ $(document).ready(function(){
                 if(button.hasClass('go_cart')){
                     window.location = cartUrl;
                 }
+                $('ul.sku-attr-list').find('li').removeClass('active');
                 cart_modal.modal('hide');
             },
             error   : function(response){
@@ -100,6 +143,8 @@ $(document).ready(function(){
     });
 
 });
+
+
 /**
  * Clear modal window
  * */

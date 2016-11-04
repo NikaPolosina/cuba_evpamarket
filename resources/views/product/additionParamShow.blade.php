@@ -10,13 +10,15 @@ $ar = array();
         $s = 0;
         $b = 0;
 ?>
+{{--{{dd($singleProduct)}}
+{{dd($addParam)}}--}}
 
-
-<div class="row" style=" border: 1px solid rgba(0, 0, 0, 0.09);; text-align: center">
+<div class="row" style="text-align: center">
     <h4>Дополнительные параметры</h4>
+    <hr>
     @foreach($addParam as $item)
         <div class="div_container col-sm-12 param_holder" data-key="{{$item['key']}}" data-type="{{$item['type']}}" style="margin-bottom: 30px; ">
-            <div class="col-sm-2">
+            <div class="col-sm-2 title">
                 {{$item['title']}}:
             </div>
             <div class="col-sm-10">
@@ -38,7 +40,7 @@ $ar = array();
                                     @if($b==1)<div class="col-sm-4"> @endif
                                         <div style="text-align: left;">
                                             <div style="min-width: 90px; display: inline-block;" class="<?=(in_array($key, $singleProduct->value[$item['key']]))?'':'disabled' ?>">
-                                                <input type="checkbox" name="{{$key}}" value="{{$key}}" <?=(in_array($key, $singleProduct->value[$item['key']]))?'checked':'disabled' ?>>
+                                                <input onclick="return false;" type="checkbox" name="{{$key}}" value="{{$key}}" <?=(in_array($key, $singleProduct->value[$item['key']]))?'checked':'disabled' ?>>
                                                 {{$val['name']}}
                                             </div>
                                             @if(isset($val['css']))
@@ -110,7 +112,17 @@ $ar = array();
     @endforeach
 </div>
 
+<style>
+    .disabled{
+        color: #bfbfbf;
+    }
+    .title{
+        font-size: 16px;
+    }
 
+
+
+</style>
 
 
 

@@ -5,15 +5,13 @@
     <link href="/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css"/>
     <link href="/assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css"/>
 
+    @include('layouts.breadcrumbs')
 
     <div class="col-sm-12">
-        @include('layouts.breadcrumbs')
-
         <div class="table-responsive">
             <h1 style="text-align: center">{{ $company->company_name }}</h1>
             <hr>
         </div>
-
         <div class="row">
             <div class="col-md-2">
                 <a id="addCategory" href="{{url('/company-discount-setup', $company->id)}}">Установка накопительных скидок</a>
@@ -55,8 +53,6 @@
                 var images          = [];
 
                 $(document).ready(function(){
-
-
 
                     /*---------------------Работа с катигориями-----------------------*/
                     $('#custom-checkable').treeview({
