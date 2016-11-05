@@ -144,9 +144,6 @@
                                                     <div>
                                                         {!! $singleProduct->content !!}
                                                     </div>
-                                                    @if(isset($addParam))
-                                                        @include('product.additionParamShow')
-                                                    @endif
 
 
                                                 </div>

@@ -19,7 +19,8 @@ use App\StatusOwner;
 use App\UserMoney;
 use App\Group;
 use Creitive\Breadcrumbs\Breadcrumbs;
-use Illuminate\Support\Facades\Cookie;      
+use Illuminate\Support\Facades\Cookie;
+use App\AdditionParam;
 class OrderController extends Controller{
     protected $_breadcrumbs;
 
@@ -31,6 +32,7 @@ class OrderController extends Controller{
     }
 
     public function createOrder(Request $request, CartController $cartController){
+
 
         if(!Auth::user()){
             return view('auth.login');
@@ -58,6 +60,12 @@ class OrderController extends Controller{
             }
             $currentProduct->total = $currentProduct->product_price*$currentProduct->cnt;
             $total = $total+$currentProduct->total;
+
+            if(array_key_exists('add_param', $request->product[$currentProduct->id])){
+                $currentProduct->value = $request->product[$currentProduct->id]['add_param'];
+            }else{
+                $currentProduct->value = array();
+            }
         }
         
         $user = Auth::user();
@@ -84,12 +92,24 @@ class OrderController extends Controller{
             $total_discount = 0;
             $persent = null;
         }
-        
+
+        $addParam = array();
+        if(count($request->product)){
+            foreach ($request->product as $single) {
+                if(array_key_exists('add_param', $single) && is_array($single['add_param'])){
+                    $addParam = array_merge($addParam, array_keys($single['add_param']));
+                }
+            }
+        }
+        $addParam = array_unique($addParam);
+        $addParam = AdditionParam::whereIn('key', $addParam)->get()->lists('title', 'key')->toArray();
+
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Корзина', '/cart');
         $this->_breadcrumbs->addCrumb('Офрмление заказа', '/order');
 
         return view('order.create')
+            ->with('addParam', $addParam)
             ->with('user', $user)
             ->with('info_user', $info_user)
             ->with('region', $region)
@@ -103,7 +123,6 @@ class OrderController extends Controller{
     }
 
     public function ready(Request $request){
-
 
         $this->validate($request, [ 'company_id' => 'required',
                                     'name' => 'required',
@@ -178,11 +197,20 @@ class OrderController extends Controller{
             ]);
 
             foreach($products as $currentProduct){
-                $order_product = ProductOrder::create([
+
+                $add_param = '';
+                if(array_key_exists($currentProduct->id, $request->product)){
+                    if(array_key_exists('add_param', $request->product[$currentProduct->id])){
+                        $add_param = json_encode($request->product[$currentProduct->id]['add_param']);
+                    }
+                }
+
+                ProductOrder::create([
                     'product_id'    => $currentProduct['id'] ,
                     'cnt'           => $currentProduct['cnt'] ,
                     'price'         => $currentProduct['product_price'] ,
                      'order_id'         => $order->id ,
+                    'add_param'         => $add_param
                 ]);
             }
 
@@ -299,6 +327,7 @@ class OrderController extends Controller{
 
         
     }
+
     public function showSimpleOrder($id){
 
 
@@ -308,7 +337,11 @@ class OrderController extends Controller{
           ->join('product_order', function($join) use ($id){
               $join->on('products.id', '=', 'product_order.product_id')->where('product_order.order_id', '=',$id);
           })
-          ->get(['products.*', 'product_order.cnt']);
+          ->get(['products.*', 'product_order.cnt', 'product_order.add_param']);
+
+        foreach ($products as $value) {
+            $value->add_param = json_decode($value->add_param, true);
+        }
 
         if(count($products))
             $order->products = IndexController::showProduct($products);

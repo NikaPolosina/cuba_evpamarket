@@ -11,7 +11,7 @@ $ar = array();
         $b = 0;
 ?>
 {{--{{dd($singleProduct)}}
-{{dd($addParam)}}--}}
+{{--{{dd($addParam)}}--}}
 
 <div class="row" style="text-align: center">
     <h4>Дополнительные параметры</h4>

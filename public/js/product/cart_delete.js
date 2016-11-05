@@ -1,8 +1,8 @@
 $('.button_delete').on('click', function(){
-    var id = $(this).parents('.my_my').find('input.input_id_del').val()
+    var id = $(this).parents('.product_item_p').find('input.input_id_del').val();
     var currentBlock = $(this).parents('.product_item_cart').eq(0);
     var button = $(this);
-    
+
     $.ajax({
         type: "POST",
         url: "/cart/destroy-product",

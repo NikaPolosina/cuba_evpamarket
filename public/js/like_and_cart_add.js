@@ -29,34 +29,15 @@ $(document).ready(function(){
                 data    : {id : productId},
                 success : function(response){
 
-                    /*-------------------------------------------------------------*/
-                  /*  function array_key_exists (key, search ) {
-                        if( !search || (search.constructor !== Array && search.constructor !== Object) ){
-                            return false;
-                        }
-                        return search[key] !== undefined;
-                    }
-
-                    function in_array(needle, haystack, strict) {
-                        var found = false, key, strict = !!strict;
-                        for (key in haystack) {
-                            if ((strict && haystack[key] === needle) || (!strict && haystack[key] == needle)) {
-                                found = true;
-                                break;
+                    $.ajax({
+                        type    : "GET",
+                        url     : '/product/ajax-to-cart-add-param/'+response.product.id,
+                        success : function(response){
+                            if(response.length){
+                                cart_modal.find('.add_param_chosen').after(response);
                             }
                         }
-                        return found;
-                    }*/
-
-                    $.each(response.product.value, function(key, value) {
-                        
-                        return false;
-
                     });
-
-                    /*-------------------------------------------------------------*/
-
-
                     
                     cart_modal.find('.m_car_cnt').text(response.cart_cnt);
                     cart_modal.find('.m_product_title').text(response.product.product_name);
@@ -90,8 +71,42 @@ $(document).ready(function(){
 
 
     $('.buy_button').on('click', function(){
+
         event.preventDefault();
         var button = $(this);
+
+        var data = {};
+        if(cart_modal.find('.param_holder').length){
+            data = {};
+            cart_modal.find('.param_holder').each(function(index, item){
+                item = $(item);
+                if(item.attr('data-key').length){
+                    switch (item.attr('data-type')){
+                        case 'checkbox':
+                            if(item.find('input:checked').length){
+                                data[item.attr('data-key')] = [];
+                                item.find('input:checked').each(function(k, i){
+                                    data[item.attr('data-key')].push($(i).val());
+                                });
+                            }
+                            break;
+                        case 'radio':
+                            if(item.find('input:checked').length){
+                                data[item.attr('data-key')] = item.find('input:checked').val();
+                            }
+                            break;
+                        case 'select':
+                            if(item.find('select').length){
+                                data[item.attr('data-key')] = item.find('select').val();
+                            }
+                            break;
+                    }
+                }
+            });
+            data = JSON.stringify(data);
+        }else{
+            data = '';
+        }
 
         $.ajax({
             type    : "POST",
@@ -101,7 +116,8 @@ $(document).ready(function(){
             },
             data    : {
                 product_id : cart_modal.find('.m_h_product_id').val(),
-                cnt : cart_modal.find('.my_counter').val()
+                cnt : cart_modal.find('.my_counter').val(),
+                'add_param': data
             },
             success : function(response){
                 $('.cart_count').html(response.total_count);
@@ -160,6 +176,7 @@ function clearModal(cart_modal){
     cart_modal.find('.m_h_product_price_one').val('');
     cart_modal.find('.m_h_product_id').val('');
     cart_modal.find('.m_h_total_in_shop').val('');
+    cart_modal.find('.temp').remove();
 }
 /*
 

@@ -74,6 +74,9 @@ Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 
 //При нажатии пользователем кнопки купить. Добавление товара в корзину. Для того что бы появилось модальное окно.
 Route::post('/products/ajax-single-product',['as'=>'ajax_single_product', 'uses'=>'ProductsController@ajaxSingleProduct']);
 
+Route::get('/product/ajax-to-cart-add-param/{id}',['as'=>'ajax_single_product_add_param_chose', 'uses'=>'ProductsController@ajaxSingleProductAdd']);
+
+
 
 Route::get('/product-form/{companyId}/{categoryId?}/{productId?}', ['as'=>'product_form', 'uses'=>'ProductsController@productForm']);
 

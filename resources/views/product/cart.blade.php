@@ -160,6 +160,14 @@
 
                                                     </td>
                                                 </tr>
+                                                @if(is_array($val->value) && count($val->value))
+                                                <tr>
+                                                    <td colspan="2">
+                                                        @include('product.cartAddParamShow', ['singleProduct'=>$val]);
+                                                    </td>
+                                                </tr>
+                                                @endif
+
                                                 <tr>
                                                     <td width="40%" class="right option_table">
 

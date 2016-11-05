@@ -55,6 +55,31 @@
                                             </td>
                                         </tr>
 
+                                        @if(count($val['value']))
+                                            <tr>
+                                                <td  width="40%" class="right">
+                                                    <div class="control-label option_table_order">Дополнительные параметры</div>
+                                                </td>
+                                                <td  width="60%" class="left">
+
+                                                    @foreach($val['value'] as $key => $singleParamScope)
+                                                        @if(is_array($singleParamScope))
+                                                                @if(array_key_exists($key, $addParam))
+                                                                    <div>
+                                                                    <span>{{$addParam[$key]}}:</span>
+                                                                        <input type="hidden"  name="product[{{$val->id}}][add_param][{{$key}}][param_name]" value="{{$addParam[$key]}}"/>
+                                                                    @foreach($singleParamScope['name'] as $name)
+                                                                        <div class="option_table_order">{{$name}}</div>
+                                                                            <input type="hidden"  name="product[{{$val->id}}][add_param][{{$key}}][value_name][]" value="{{$name}}"/>
+                                                                    @endforeach
+                                                                    </div>
+                                                                @endif
+                                                        @endif
+                                                    @endforeach
+                                                </td>
+                                            </tr>
+                                        @endif
+
                                         <tr>
                                             <td  width="40%" class="right">
                                                 {!! Form::label('price', 'Цена: ', ['class' => 'control-label option_table_order']) !!}

@@ -16,6 +16,7 @@ use App\Company;
 use Auth;
 use App\StatusOwner;
 use Creitive\Breadcrumbs\Breadcrumbs;
+use App\AdditionParam;
 
 class CartController extends Controller{
 
@@ -61,14 +62,30 @@ class CartController extends Controller{
         $k = (Auth::user()) ? Auth::user()->id.'_id' : '0_id';
 
         $cart[$k] = (isset($cart[$k])) ? $cart[$k] : array();
-     
+
+        $addParam = array();
+
         if($cart[$k]){
             foreach($cart[$k] as $key => $company){
                 $companies[$key]['company'] = Company::find($key);
 
-                 $companies[$key]['products'] = $companies[$key]['company']->getProducts()->whereIn('id', array_keys($company['products']))->get();
+                $companies[$key]['products'] = $companies[$key]['company']->getProducts()->whereIn('id', array_keys($company['products']))->get();
+
+                foreach ($companies[$key]['products'] as $num => $prod) {
+                    if(array_key_exists($prod->id, $company['products']) && array_key_exists('add_param', $company['products'][$prod->id])){
+                        $companies[$key]['products'][$num]->value = json_decode($company['products'][$prod->id]['add_param'], true);
+                        if(is_array($companies[$key]['products'][$num]->value)){
+                            $addParam = array_merge($addParam, array_keys($companies[$key]['products'][$num]->value));
+                        }
+                    }else{
+                        $companies[$key]['products'][$num]->value = array();
+                    }
+                }
+
+                $addParam = array_unique($addParam);
 
                 $companies[$key]['products'] = IndexController::showProduct($companies[$key]['products']);
+
 
                 foreach($companies[$key]['products'] as $value){
                     if(array_key_exists($value->id, $company['products'])){
@@ -94,20 +111,21 @@ class CartController extends Controller{
 
                  }
 
-
-
             }
 
+        }
+
+        $addParam = AdditionParam::whereIn('key', $addParam)->get();
+        foreach ($addParam as $value) {
+            $value->value=json_decode($value->value, true);
         }
 
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Корзина', '/cart');
 
-        
-        
-
         return view('product.cart')
             ->with('breadcrumbs', $this->_breadcrumbs)
+            ->with('addParam', $addParam)
             ->with('companies', $companies);
     }
 
@@ -283,11 +301,12 @@ class CartController extends Controller{
                     $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][$singleProduct['product_id']]['cnt'] = $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][$singleProduct['product_id']]['cnt'] + $singleProduct['cnt'];
                 }else{
                     $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][$singleProduct['product_id']]['cnt'] = $singleProduct['cnt'];
+                    $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][$singleProduct['product_id']]['add_param'] = $singleProduct['add_param'];
                 }
             }else{
-
                 $this->_cart[$this->_currentUserKey][$currentCompanyId] = array();
                 $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][$singleProduct['product_id']]['cnt'] = $singleProduct['cnt'];
+                $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][$singleProduct['product_id']]['add_param'] = $singleProduct['add_param'];
             }
         }
     }

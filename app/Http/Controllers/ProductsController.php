@@ -357,7 +357,6 @@ class ProductsController extends Controller{
 
     //Метод для просмотра одного товара.
     public function singleProduct(CategoryController $category, $id){
-
         return $this->way($category, '.singleProductInfo', $id);
     }
 
@@ -511,6 +510,23 @@ class ProductsController extends Controller{
         }catch(\Exception $e){
             return response()->json([ 'error' => $e->getMessage() ], 422);
         }
+    }
+
+    public function ajaxSingleProductAdd($id){
+        if(!$id){
+            return '';
+        }
+        $this->_product = self::getSingleProduct($id);
+        $param = array();
+        if($this->_product->value){
+            $this->_product->value =  json_decode($this->_product->value, true);
+            $param = AdditionParam::whereIn('key', array_keys( $this->_product->value))->get();
+            foreach($param as  $key=>$val){
+                $val->value = json_decode($val->value, true);
+            }
+        }
+
+        return view ('product.additionParamOrder')->with(['singleProduct' =>  $this->_product, 'addParam' =>  $param]);
     }
 
     /**

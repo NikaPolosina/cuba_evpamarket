@@ -41,7 +41,22 @@
                                                 <span>{{$val->cnt}}</span>
                                             </td>
                                         </tr>
-
+                                        @if(count($val->add_param))
+                                            <tr>
+                                                <td width="30%" style="text-align: right"><span class="option_table_order">Дополнительные данные:</span></td>
+                                                <td align="center"  align="center">
+                                                    @foreach($val->add_param as $param)
+                                                        <div>
+                                                        <span>{{$param['param_name']}}:</span>
+                                                        @foreach($param['value_name'] as $valName)
+                                                            <div style="font-weight: bold">{{$valName}}</div>
+                                                        @endforeach
+                                                        </div>
+                                                        <hr />
+                                                    @endforeach
+                                                </td>
+                                            </tr>
+                                        @endif
                                         <tr>
                                             <td valign="top" width="30%" style="text-align: right">
                                                 {!! Form::label('price', 'Цена: ', ['class' => 'control-label option_table_order']) !!}

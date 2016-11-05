@@ -261,6 +261,7 @@ class BaseStructure extends Migration{
             $table->integer('cnt');
             $table->integer('price');
             $table->integer('order_id')->unsigned();
+            $table->text('add_param');
             $table->timestamps();
             $table->foreign('product_id')->references('id')->on('products');
             $table->foreign('order_id')->references('id')->on('order');
