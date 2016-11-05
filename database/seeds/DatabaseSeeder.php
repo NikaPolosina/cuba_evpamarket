@@ -378,7 +378,7 @@ class DatabaseSeeder extends Seeder{
             'product_name'        => 'Платья Красне',
             'category_id'         => $this->category[1]->id,
             'product_description' => 'длинное в пол',
-            'content'             => 'В наличии размер: s, m, l; Цвет: красный насышенный',
+            'content'             => 'В наличии размер: s, m, l; Цвет: красный насыщенный',
             'product_image'       => '',
             'product_price'       => 100,
         ]);
