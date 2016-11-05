@@ -61,7 +61,7 @@
                 </div>
 
             </div>
-            <div class="col-sm-5 value">
+            <div class="col-sm-7 value">
                 <div class="col-sm-12">
                     {{ Form::label('type', 'Тип : ', ['class' => 'col-sm-2 control-label'])}}
                     <div class="col-sm-10">

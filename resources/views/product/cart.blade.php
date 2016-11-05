@@ -163,7 +163,7 @@
                                                 @if(is_array($val->value) && count($val->value))
                                                 <tr>
                                                     <td colspan="2">
-                                                        @include('product.cartAddParamShow', ['singleProduct'=>$val]);
+                                                        @include('product.cartAddParamShow', ['singleProduct'=>$val])
                                                     </td>
                                                 </tr>
                                                 @endif

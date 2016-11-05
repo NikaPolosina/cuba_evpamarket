@@ -7,14 +7,14 @@
     @foreach($addParam as $item)
         <tr class="temp param_holder" data-key="{{$item['key']}}" data-type="{{$item['type_for_by']}}">
             <td width="45%" class="right"><b>{{$item['title']}}</b></td>
-            <td width="55%" class="left">
+            <td width="55%" class="left rad">
                 <?php if(is_array($item['value'])){
                     switch($item['type_for_by']){
                         case 'checkbox':
-                            ?> <hr/> <?php
+                            ?> {{--<hr/>--}} <?php
                             foreach($item['value'] as $key => $val){
                                 if(in_array($key, $singleProduct->value[$item['key']])){ ?>
-                                    <br><input type="checkbox" name="{{$item['key']}}[]" value="{{$key}}"> {{$val['name']}}
+                                   {{-- <br>--}}<input type="checkbox" name="{{$item['key']}}[]" value="{{$key}}"> {{$val['name']}}
                                     <?php if(isset($val['css'])){?>
                                         <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
                                     <?php }
@@ -22,10 +22,10 @@
                             }
                             break;
                         case 'radio':
-                            ?> <hr/> <?php
+                            ?> {{--<hr/>--}} <?php
                             foreach($item['value'] as $key => $val){
                                 if(in_array($key, $singleProduct->value[$item['key']])){ ?>
-                                    <br><input type="radio" name="{{$item['key']}}" value="{{$key}}"> {{$val['name']}}
+                                   {{-- <br>--}}<input type="radio" name="{{$item['key']}}" value="{{$key}}"> {{$val['name']}}
                                     <?php if(isset($val['css'])){?>
                                     <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
                                     <?php }
@@ -34,7 +34,7 @@
                             break;
 
                         case 'select': ?>
-                            <hr/>
+                           {{-- <hr/>--}}
                             <select name="{{$item['key']}}">
                                 <?php foreach($item['value'] as $key => $val){
                                     if(in_array($key, $singleProduct->value[$item['key']])){ ?>
@@ -49,3 +49,9 @@
         </tr>
     @endforeach
 @endif
+<style>
+    .rad>input{
+        width: 50%;
+    }
+
+</style>

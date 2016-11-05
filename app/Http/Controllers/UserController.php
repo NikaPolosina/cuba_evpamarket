@@ -196,14 +196,12 @@ class UserController extends Controller{
         if($request->input('role') == 'simple_user'){
             $curentUser->detachRoles($curentUser->roles);
             $curentUser->attachRole(Role::where('name', 'simple_user')->first());
-          
             return $homeController->registerSimple($mesage);
         }
-
         if($request->input('role') == 'company_owner'){
             $curentUser->detachRoles($curentUser->roles);
             $curentUser->attachRole(Role::where('name', 'company_owner')->first());
-            return $homeController->registerOwner();
+            return $homeController->registerOwner($mesage);
         }
     }
 

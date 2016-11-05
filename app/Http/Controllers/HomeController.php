@@ -226,7 +226,6 @@ class HomeController extends Controller{
 
     public function registerOwner(MessageController $mesage ){
 
-
         if(Auth::check()){
             foreach(Auth::user()->getCompanies as $value){
                 $value->company_logo = $this->_companyController->showCompanyLogo($value->id);
