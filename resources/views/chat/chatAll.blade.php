@@ -1,12 +1,22 @@
+<?php
+$show = false;
+?>
+
+
 <div class="row">
     <div class="col-sm-12">
         <div class="container_user_msg">
+            <div class="con">
+                Разговоры
+            </div>
             @if(count($userInfo['msgAll']))
 
                 @foreach($userInfo['msgAll'] as $itemMsg)
+                    @if(count($itemMsg['get_chat_msgs']) != 0)
+                        <?php
+                        $show = true;
+                        ?>
 
-                    @if(count($itemMsg['get_chat_msgs']) !== 0)
-                {{--    @foreach($itemMsg['get_chat_msgs'] as $it)--}}
                     <a href="/get-single-conversation/{{Auth::user()->id}}/{{(Auth::user()->id == $itemMsg['get_chat_msgs'][0]['get_user_to']['id'] )? $itemMsg['get_chat_msgs'][0]['get_user_from']['id']: $itemMsg['get_chat_msgs'][0]['get_user_to']['id']}}">
                         <div class="single_msg">
                             <div class="single_img col-sm-2">
@@ -32,13 +42,40 @@
                         </div>
                         </a>
                     @endif
-                    @endforeach
-         {{--       @endforeach--}}
+                @endforeach
+
+                <?php
+
+                    if(!$show){?>
+                    <div class="single_msg">
+                        <div class="body_sm" style="text-align: center">
+
+                            <h4 style="line-height: 33px;">У Вас разговоров нет.</h4>
+
+                        </div>
+                    </div>
+                   <?php }
+                    ?>
+
 
             @endif
         </div>
     </div>
 </div>
+<style>
+    .container_user_msg{
+        min-height: 384px;
+        background-color: rgb(240, 246, 250);
+        padding: 20px 10px 20px 10px;
+    }
+    .con{
+        padding: 0px 0px 5px 0px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #169ef4;
+    }
+
+</style>
 
 {{--<script>
 
