@@ -103,7 +103,7 @@ Route::post('/category/edit-categoty', ['as' => 'attach_categories', 'uses'=>'Ca
 Route::post('/category/edit-categoty_two', ['as' => 'attach_categories_two', 'uses'=>'CategoryController@attachCategoriesToCompanyTwo']);
 Route::post('/category/remove-categoty', ['as' => 'remove_categories', 'uses'=>'CategoryController@detachCategoriesToCompany']);
 
-
+//При создании продукта, выбираются дополнительные параметры которые нужно указать продавцом.
 Route::any('/get-add-param/{id}', ['as' => 'get-add-param', 'uses'=>'CategoryController@getAddParamFromCategory']);
 
 

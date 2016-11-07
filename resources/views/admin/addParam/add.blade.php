@@ -84,10 +84,10 @@
 
 
                 <div class="col-sm-12">
-                    {{ Form::label('default', 'По умолчанию: ', ['class' => 'col-sm-2 control-label'])}}
+                    {{--{{ Form::label('default', 'По умолчанию: ', ['class' => 'col-sm-2 control-label'])}}--}}
                     <div class="col-sm-10">
                         <div class="col-sm-8">
-                            {!! Form::text('default', NULL, ['class' => 'form-control my_form_add_param ']) !!}
+                            {!! Form::hidden('default', NULL, ['class' => 'form-control my_form_add_param ']) !!}
                             {!! $errors->first('default', '<p class="help-block">:message</p>') !!}
                         </div>
                     </div>

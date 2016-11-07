@@ -258,7 +258,10 @@ class CategoryController extends Controller{
             $value = json_decode($request->input('value'), true);
         }
 
-        $addParam = Category::where('id',$id)->with('getAddParam')->first();
+        $addParam = Category::where('id',$id)->with(['getAddParam'=>function($query){
+            $query->orderBy('sort')->get();
+        }])->first();
+        
 
         foreach($addParam->getAddParam as $item){
             $item->value = json_decode($item->value, true);
