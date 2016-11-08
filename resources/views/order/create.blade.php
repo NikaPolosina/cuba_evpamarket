@@ -62,19 +62,27 @@
                                                 </td>
                                                 <td  width="60%" class="left">
 
-                                                    @foreach($val['value'] as $key => $singleParamScope)
-                                                        @if(is_array($singleParamScope))
-                                                                @if(array_key_exists($key, $addParam))
-                                                                    <div>
-                                                                    <span>{{$addParam[$key]}}:</span>
-                                                                        <input type="hidden"  name="product[{{$val->id}}][add_param][{{$key}}][param_name]" value="{{$addParam[$key]}}"/>
-                                                                    @foreach($singleParamScope['name'] as $name)
-                                                                        <div class="option_table_order">{{$name}}</div>
-                                                                            <input type="hidden"  name="product[{{$val->id}}][add_param][{{$key}}][value_name][]" value="{{$name}}"/>
+                                                    @foreach ($val['addParam'] as $k => $param)
+                                                        @foreach ($addParam as $singleParam)
+                                                            @if($k == $singleParam['key'])
+                                                                <div>
+                                                                    <span>{{$singleParam['title']}}:</span>
+                                                                    <input type="hidden"  name="product[{{$val->id}}][add_param][{{$k}}][param_name]" value="{{$singleParam['title']}}"/>
+                                                                    @foreach ($param['key'] as $p)
+                                                                        @if(array_key_exists($p, $singleParam['value']))
+                                                                            <div class="option_table_order">
+                                                                                {{$singleParam['value'][$p]['name']}}
+                                                                                <input type="hidden"  name="product[{{$val->id}}][add_param][{{$k}}][param_value][name][]" value="{{$singleParam['value'][$p]['name']}}"/>
+                                                                                @if(array_key_exists('css', $singleParam['value'][$p]))
+                                                                                    <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$singleParam['value'][$p]['css']}}"></div>
+                                                                                    <input type="hidden"  name="product[{{$val->id}}][add_param][{{$k}}][param_value][css][]" value="{{$singleParam['value'][$p]['css']}}"/>
+                                                                                @endif
+                                                                            </div>
+                                                                        @endif
                                                                     @endforeach
-                                                                    </div>
-                                                                @endif
-                                                        @endif
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
                                                     @endforeach
                                                 </td>
                                             </tr>

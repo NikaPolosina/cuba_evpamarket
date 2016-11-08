@@ -48,8 +48,15 @@
                                                     @foreach($val->add_param as $param)
                                                         <div>
                                                         <span>{{$param['param_name']}}:</span>
-                                                        @foreach($param['value_name'] as $valName)
-                                                            <div style="font-weight: bold">{{$valName}}</div>
+                                                        @foreach($param['param_value']['name'] as $cnt => $valName)
+                                                            <div style="font-weight: bold">
+                                                                {{$valName}}
+                                                                @if(array_key_exists('css', $param['param_value']))
+                                                                    @if(array_key_exists($cnt, $param['param_value']['css']))
+                                                                        <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$param['param_value']['css'][$cnt]}}"></div>
+                                                                    @endif
+                                                                @endif
+                                                            </div>
                                                         @endforeach
                                                         </div>
                                                         <hr />

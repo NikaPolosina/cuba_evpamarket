@@ -93,6 +93,16 @@ class OrderController extends Controller{
             $persent = null;
         }
 
+
+        foreach ($products as $product) {
+            $product->addParam = array();
+            if(array_key_exists($product->id, $request->product)){
+                if(array_key_exists('add_param', $request->product[$product->id])){
+                    $product->addParam = $request->product[$product->id]['add_param'];
+                }
+            }
+        }
+
         $addParam = array();
         if(count($request->product)){
             foreach ($request->product as $single) {
@@ -102,7 +112,10 @@ class OrderController extends Controller{
             }
         }
         $addParam = array_unique($addParam);
-        $addParam = AdditionParam::whereIn('key', $addParam)->get()->lists('title', 'key')->toArray();
+        $addParam = AdditionParam::whereIn('key', $addParam)->get()->toArray();
+        foreach ($addParam as $key => $value) {
+            $addParam[$key]['value'] = json_decode($value['value'], true);
+        }
 
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Корзина', '/cart');
@@ -205,7 +218,7 @@ class OrderController extends Controller{
                     }
                 }
 
-                ProductOrder::create([
+                $r = ProductOrder::create([
                     'product_id'    => $currentProduct['id'] ,
                     'cnt'           => $currentProduct['cnt'] ,
                     'price'         => $currentProduct['product_price'] ,
