@@ -41,7 +41,9 @@
                                                 <span>{{$val->cnt}}</span>
                                             </td>
                                         </tr>
+
                                         @if(count($val->add_param))
+
                                             <tr>
                                                 <td width="30%" style="text-align: right"><span class="option_table_order">Дополнительные данные:</span></td>
                                                 <td align="center"  align="center">
@@ -52,6 +54,9 @@
                                                             <div style="font-weight: bold">{{$valName}}</div>
                                                         @endforeach
                                                         </div>
+
+                                                 {{--       <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: red"></div>--}}
+
                                                         <hr />
                                                     @endforeach
                                                 </td>

@@ -66,7 +66,7 @@
                     {{ Form::label('type', 'Тип : ', ['class' => 'col-sm-2 control-label'])}}
                     <div class="col-sm-10">
                         <div class="col-sm-8">
-                            {!! Form::select('type', array('checkbox' => 'checkbox', 'radio' => 'radio', 'select' =>'select'), NULL, ['class' => 'form-control my_form_add_param ']) !!}
+                            {!! Form::select('type', array('checkbox' => 'checkbox', 'radio' => 'radio', 'select' =>'select', 'input' => 'input'), NULL, ['class' => 'form-control my_form_add_param ']) !!}
                             {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                     {{ Form::label('type_for_by', 'Тип при покупке: ', ['class' => 'col-sm-2 control-label'])}}
                     <div class="col-sm-10">
                         <div class="col-sm-8">
-                            {!! Form::select('type_for_by', array('checkbox' => 'checkbox', 'radio' => 'radio', 'select' =>'select'), NULL, ['class' => 'form-control my_form_add_param ']) !!}
+                            {!! Form::select('type_for_by', array('checkbox' => 'checkbox', 'radio' => 'radio', 'select' =>'select', 'input' => 'input'), NULL, ['class' => 'form-control my_form_add_param ']) !!}
                             {!! $errors->first('type_for_by', '<p class="help-block">:message</p>') !!}
                         </div>
                     </div>
