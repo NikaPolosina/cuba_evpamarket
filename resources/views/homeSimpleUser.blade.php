@@ -19,98 +19,97 @@
     <!-- END THEME LAYOUT STYLES -->
 
     <div class="container">
-        <div class="row">
+        <div class="row my_row_css">
+            <div class="col-sm-12">
+                <div class="profile">
 
-            <div class="profile">
+                    <div class="tabbable-line tabbable-full-width">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#tab_1_1" data-toggle="tab" id="profile"> Мой профиль </a>
+                            </li>
+                            <li style="display: none">
+                                <a href="#tab_1_2" data-toggle="tab"> Настройки аккаунта </a>
+                            </li>
 
-                <div class="tabbable-line tabbable-full-width">
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="#tab_1_1" data-toggle="tab" id="profile"> Мой профиль </a>
-                        </li>
-                        <li style="display: none">
-                            <a href="#tab_1_2" data-toggle="tab"> Настройки аккаунта </a>
-                        </li>
+                            <li style="display: none">
+                                <a href="#tab_1_3" data-toggle="tab"> Помощь </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1_1">
 
-                        <li style="display: none">
-                            <a href="#tab_1_3" data-toggle="tab"> Помощь </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab_1_1">
-                            <div class="row">
-                                <div class="col-sm-3 col-md-3">
-                                    <ul class="list-unstyled profile-nav">
-                                        <li>
-                                            <div class="img_avatar_css">
-                                                @if(!empty($userInfo->avatar) && file_exists(public_path().$userInfo->avatar))
-                                                    <img src="{{$userInfo->avatar}}" alt="avatar">
+                                    <div class="col-sm-3 col-md-3">
+                                        <ul class="list-unstyled profile-nav">
+                                            <li>
+                                                <div class="img_avatar_css">
+                                                    @if(!empty($userInfo->avatar) && file_exists(public_path().$userInfo->avatar))
+                                                        <img src="{{$userInfo->avatar}}" alt="avatar">
+                                                    @else
+                                                        <img src="/img/placeholder/avatar.jpg" alt="avatar"/>
+                                                    @endif
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a id="msg" href="javascript:;"> Сообщения
+                                                    <span> 0 </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/cart"> Корзина
+                                                    <span> @if(isset($product_cnt)){{$product_cnt}}@endif </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/like"> Избранные
+                                                    <span> @if(isset($product_cnt_like)){{$product_cnt_like}}@endif </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/show-list-order-simple"> Заказы
+                                                    @if(count($order) > 0) <span>{{count($order)}}</span>@endif
+                                                </a>
+                                            </li>
+                                            <li>
+                                                @if(isset($groupInvites) && $groupInvites>0)
+                                                    <a href="/show-group-list#invite"> Группы
+                                                        @if(isset($groupInvites)) <span>{{$groupInvites}}</span>@endif
+                                                    </a>
                                                 @else
-                                                    <img src="/img/placeholder/avatar.jpg" alt="avatar"/>
+                                                    <a href="/show-group-list"> Группы
+                                                        @if(isset($groupInvites)) <span>{{$groupInvites}}</span>@endif
+                                                    </a>
                                                 @endif
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a id="msg" href="javascript:;"> Сообщения
-                                                <span> 0 </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/cart"> Корзина
-                                                <span> @if(isset($product_cnt)){{$product_cnt}}@endif </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/like"> Избранные
-                                                <span> @if(isset($product_cnt_like)){{$product_cnt_like}}@endif </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/show-list-order-simple"> Заказы
-                                                @if(count($order) > 0) <span>{{count($order)}}</span>@endif
-                                            </a>
-                                        </li>
-                                        <li>
-                                            @if(isset($groupInvites) && $groupInvites>0)
-                                                <a href="/show-group-list#invite"> Группы
-                                                    @if(isset($groupInvites)) <span>{{$groupInvites}}</span>@endif
-                                                </a>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-9 col-md-9">
+                                        <div class="row">
+
+                                            @if($userInfo['beetwenTwo'])
+                                                <div class="chat_beet">
+                                                    @include('chat.chat')
+                                                </div>
+
+                                                <div class="chat" style="display: none;">
+                                                    @include('chat.chatAll')
+                                                </div>
                                             @else
-                                                <a href="/show-group-list"> Группы
-                                                    @if(isset($groupInvites)) <span>{{$groupInvites}}</span>@endif
-                                                </a>
+                                                <div class="chat" style="display: none;">
+                                                    @include('chat.chatAll')
+                                                </div>
                                             @endif
 
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="col-sm-9 col-md-9">
-                                    <div class="row">
-
-                                        @if($userInfo['beetwenTwo'])
-                                            <div class="chat_beet">
-                                                    @include('chat.chat')
-                                            </div>
-
-                                            <div class="chat" style="display: none;">
-                                                @include('chat.chatAll')
-                                            </div>
-                                        @else
-                                            <div class="chat" style="display: none;">
-                                                    @include('chat.chatAll')
-                                            </div>
-                                        @endif
-
-                                        <?php
+                                            <?php
                                             $class = '';
-                                                if($userInfo['beetwenTwo']){
-                                                    $class = 'style="display: none";';
-                                                }
+                                            if($userInfo['beetwenTwo']){
+                                                $class = 'style="display: none";';
+                                            }
                                             ?>
 
                                             <div class="col-md-12 profile-info" <?=$class?> >
-                                            <h1 class="font-green sbold uppercase">{{$userInfo->name}} {{$userInfo->surname}}</h1>
+                                                <h1 class="font-green sbold uppercase">{{$userInfo->name}} {{$userInfo->surname}}</h1>
 
                                                 <ul class="nav nav-tabs">
                                                     <li class="active" id="li_like">
@@ -128,7 +127,7 @@
                                                             @if(count($product) > 0 )
                                                                 @foreach($product as $v)
                                                                     <div class="col-sm-12  product_item_like product_item_p tom" style="padding-right: 2px; padding-left: 2px">
-                                                                            @include('product.likeSingleView')
+                                                                        @include('product.likeSingleView')
 
                                                                     </div>
                                                                 @endforeach
@@ -153,57 +152,61 @@
                                                     </div>
 
                                                 </div>
+                                            </div>
+
+
+                                            <script>
+
+                                                $(document).ready(function () {
+
+                                                    $('#msg').on('click', function (event) {
+
+                                                        event.preventDefault();
+                                                        $( ".chat" ).show();
+                                                        $( ".profile-info" ).hide();
+                                                        $('.chat_beet').hide();
+                                                    });
+
+                                                    $('#profile').on('click', function (event) {
+                                                        event.preventDefault();
+                                                        $('.chat_beet').hide();
+                                                        $( ".chat" ).hide();
+                                                        $( ".profile-info" ).show();
+
+                                                    });
+
+                                                });
+
+                                            </script>
+
+
+                                            <!--end col-md-8-->
                                         </div>
-
-
-                                                    <script>
-
-                                                        $(document).ready(function () {
-
-                                                            $('#msg').on('click', function (event) {
-
-                                                                event.preventDefault();
-                                                                $( ".chat" ).show();
-                                                                $( ".profile-info" ).hide();
-                                                                $('.chat_beet').hide();
-                                                            });
-
-                                                            $('#profile').on('click', function (event) {
-                                                                event.preventDefault();
-                                                                $('.chat_beet').hide();
-                                                                $( ".chat" ).hide();
-                                                                $( ".profile-info" ).show();
-
-                                                            });
-
-                                                        });
-
-                                                    </script>
-
-
-                                        <!--end col-md-8-->
+                                        <!--end row-->
                                     </div>
-                                    <!--end row-->
-                                </div>
+
+                            </div>
+                            <!--tab_1_2-->
+
+                            <div class="tab-pane" id="tab_1_2">
+                                @include('user.homeTab12')
+
+                            </div>
+
+                            <div class="tab-pane" id="tab_1_3">
+                                @include('user.homeTab13')
+
                             </div>
                         </div>
-                        <!--tab_1_2-->
 
-                        <div class="tab-pane" id="tab_1_2">
-                        @include('user.homeTab12')
-
-                        </div>
-
-                        <div class="tab-pane" id="tab_1_3">
-                            @include('user.homeTab13')
-
-                        </div>
+                        <!--end tab-pane-->
                     </div>
 
-                    <!--end tab-pane-->
                 </div>
-
             </div>
+
+
+
         </div>
     </div>
     <script>
@@ -246,7 +249,25 @@
 
 
     </div>
-
+    <style>
+        .my_row_css{
+            border: solid 1px rgba(196, 213, 223, 0.61);
+        }
+        .img_avatar_css{
+            position: relative;
+        }
+        .img_avatar_css>img{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: auto;
+            max-width: 100%;
+            max-height: 100%;
+            margin: auto;
+        }
+    </style>
 
 
 @endsection

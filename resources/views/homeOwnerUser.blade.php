@@ -15,184 +15,209 @@
 
     <div class="container">
         <div class="row">
-
-        <div class="profile">
-            <div class="tabbable-line tabbable-full-width">
-                <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#tab_1_1" data-toggle="tab" id="profile"> Мой профиль </a>
-                    </li>
-                    <li style="display: none">
-                        <a href="#tab_1_2" data-toggle="tab"> Настройки аккаунта </a>
-                    </li>
-                    <li style="display: none">
-                        <a href="#tab_1_3" data-toggle="tab"> Помощь </a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="tab_1_1">
-                        <div class="row">
-                            <div class="col-sm-3 col-md-3">
-                                <ul class="list-unstyled profile-nav">
-                                    <li>
-                                        <div class="img_avatar_css">
-                                            @if(!empty($userInfo->avatar) && file_exists(public_path().$userInfo->avatar))
-                                                <img src="{{$userInfo->avatar}}" alt="avatar">
-                                            @else
-                                                 <img src="/img/placeholder/avatar.jpg" alt="avatar" />
-                                            @endif
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="/my_shops"> Заказы
-                                            <span> {{$count}} </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a id="msg"  href="javascript:;"> Сообщения
-                                            <span> 0 </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/cart"> Корзина
-                                            <span> @if(isset($product_cnt)){{$product_cnt}}@endif </span></a>
-                                    </li>
-                                    <li>
-                                        <a href="/like"> Избранное
-                                            <span> @if(isset($product_cnt_like)){{$product_cnt_like}}@endif</span></a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;"> Платежи
-                                            <span> 0 </span></a>
-                                    </li>
-                                    <li>
-                                        @if(isset($groupInvites) && $groupInvites>0)
-                                            <a href="/show-group-list#invite"> Группы
-                                                @if(isset($groupInvites)) <span>{{$groupInvites}}</span>@endif
-                                            </a>
-                                        @else
-                                            <a href="/show-group-list"> Группы
-                                                @if(isset($groupInvites)) <span>{{$groupInvites}}</span>@endif
-                                            </a>
-                                        @endif
-                                    </li>
-                                </ul>
-
-                            </div>
-                            <div class="col-sm-9 col-md-9">
-
-                                @if($userInfo['beetwenTwo'])
-                                    <div class="chat_beet">
-                                        @include('chat.chat')
-                                    </div>
-
-                                    <div class="chat" style="display: none;">
-                                        @include('chat.chatAll')
-                                    </div>
-                                @else
-                                    <div class="chat" style="display: none;">
-                                        @include('chat.chatAll')
-                                    </div>
-                                @endif
-
-                                    <?php
-                                    $class = '';
-                                    if($userInfo['beetwenTwo']){
-                                        $class = 'style="display: none";';
-                                    }
-                                    ?>
-
-                                    <div class="col-md-12 profile-info" <?=$class?> >
-                                        <div class="row">
-
-
-
-                                            <div class="col-md-8 profile-info">
-                                                <h1 class="font-green sbold uppercase">{{$userInfo->name}} {{$userInfo->surname}}</h1>
-                                                <p>
-                                                   {{$userInfo->about_me}}
-                                                </p>
-                                                <p>
-                                                    <a href="javascript:;">{{$userInfo->my_site}} </a>
-                                                </p>
-
-                                                <a href="/like"> <i class="fa fa-heart"></i> В избранных </a>
-
-                                            </div>
-
-                                        </div>
-                                        <div class="row">
-                                            <div class="panel">
-
-                                                @if(count($curentUser->getCompanies))
-                                                <div class="">
-                                                        <h3 class="font-green sbold uppercase my_font_css">Мои магазины <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Добавить магазин</a></h3>
-                                                        <div class="table">
-                                                            <table class="table table-bordered table-striped table-hover">
-                                                                <thead>
-                                                                <tr bgcolor="#FBFBEF">
-                                                                    <th>№</th><th>Logo</th><th>Имя магазина</th><th>Описание магазина</th>{{--<th width="350px">Детальное описание</th>--}}<th>Действие</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                {{-- */$x=0;/* --}}
-                                                                @foreach($curentUser->getCompanies as $item)
-                                                                    {{-- */$x++;/* --}}
-                                                                    <tr data-id="{{$item->id}}">
-                                                                        <td>{{ $x }}</td>
-                                                                        <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="{{$item->company_logo}}"></td><td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td>{{--<td width="200">{!!$item->company_content!!}</td>--}}
-
-                                                                        <td width="165">
-                                                                            <a href="{{ url('company/' . $item->id . '/edit') }}">
-                                                                                <button   data-toggle="tooltip" data-placement="top" title="Редактировать" type="submit" class="btn btn-primary btn-xs">
-                                                                                    <span class="glyphicon  glyphicon-pencil" aria-hidden="true"></span>
-                                                                                </button>
-                                                                            </a>
-                                                                            <button  data-toggle="tooltip" data-placement="top" title="Удалить" data-id="{{$item->id}}" type="" class="btn btn-danger btn-xs tut">
-                                                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                                                            </button>
-
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                            {{--<div class="pagination"> {!! $company->render() !!} </div>--}}
-                                                        </div>
-                                                    </div>
+            <div class="col-sm-12">
+                <div class="profile">
+                    <div class="tabbable-line tabbable-full-width">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#tab_1_1" data-toggle="tab" id="profile"> Мой профиль </a>
+                            </li>
+                            <li style="display: none">
+                                <a href="#tab_1_2" data-toggle="tab"> Настройки аккаунта </a>
+                            </li>
+                            <li style="display: none">
+                                <a href="#tab_1_3" data-toggle="tab"> Помощь </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab_1_1">
+                                <div class="row">
+                                    <div class="col-sm-3 col-md-3">
+                                        <ul class="list-unstyled profile-nav">
+                                            <li>
+                                                <div class="img_avatar_css">
+                                                    @if(!empty($userInfo->avatar) && file_exists(public_path().$userInfo->avatar))
+                                                        <img src="{{$userInfo->avatar}}" alt="avatar">
+                                                    @else
+                                                        <img src="/img/placeholder/avatar.jpg" alt="avatar" />
+                                                    @endif
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a href="/my_shops"> Заказы
+                                                    <span> {{$count}} </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a id="msg"  href="javascript:;"> Сообщения
+                                                    <span> 0 </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="/cart"> Корзина
+                                                    <span> @if(isset($product_cnt)){{$product_cnt}}@endif </span></a>
+                                            </li>
+                                            <li>
+                                                <a href="/like"> Избранное
+                                                    <span> @if(isset($product_cnt_like)){{$product_cnt_like}}@endif</span></a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;"> Платежи
+                                                    <span> 0 </span></a>
+                                            </li>
+                                            <li>
+                                                @if(isset($groupInvites) && $groupInvites>0)
+                                                    <a href="/show-group-list#invite"> Группы
+                                                        @if(isset($groupInvites)) <span>{{$groupInvites}}</span>@endif
+                                                    </a>
                                                 @else
+                                                    <a href="/show-group-list"> Группы
+                                                        @if(isset($groupInvites)) <span>{{$groupInvites}}</span>@endif
+                                                    </a>
+                                                @endif
+                                            </li>
+                                        </ul>
 
-                                                <div><h3>У вас пока нет ни одного магазина. Воспользуйтесь кнопкой "создать" для того что бы создать магазин.</h3></div>
-                                                <a href="{{ url('company/create') }}" class="btn btn-primary pull-left btn-sm btn green">Создать магазин</a>
-                                               @endif
+                                    </div>
+                                    <div class="col-sm-9 col-md-9">
+
+                                        @if($userInfo['beetwenTwo'])
+                                            <div class="chat_beet">
+                                                @include('chat.chat')
+                                            </div>
+
+                                            <div class="chat" style="display: none;">
+                                                @include('chat.chatAll')
+                                            </div>
+                                        @else
+                                            <div class="chat" style="display: none;">
+                                                @include('chat.chatAll')
+                                            </div>
+                                        @endif
+
+                                        <?php
+                                        $class = '';
+                                        if($userInfo['beetwenTwo']){
+                                            $class = 'style="display: none";';
+                                        }
+                                        ?>
+
+                                        <div class="col-md-12 profile-info" <?=$class?> >
+                                            <div class="row">
+
+
+
+                                                <div class="col-md-8 profile-info">
+                                                    <h1 class="font-green sbold uppercase">{{$userInfo->name}} {{$userInfo->surname}}</h1>
+                                                    <p>
+                                                        {{$userInfo->about_me}}
+                                                    </p>
+                                                    <p>
+                                                        <a href="javascript:;">{{$userInfo->my_site}} </a>
+                                                    </p>
+
+                                                    <a href="/like"> <i class="fa fa-heart"></i> В избранных </a>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="panel">
+
+                                                    @if(count($curentUser->getCompanies))
+                                                        <div class="">
+                                                            <h3 class="font-green sbold uppercase my_font_css">Мои магазины <a href="{{ url('company/create') }}" class="btn btn-primary pull-right btn-sm">Добавить магазин</a></h3>
+                                                            <div class="table">
+                                                                <table class="table table-bordered table-striped table-hover">
+                                                                    <thead>
+                                                                    <tr bgcolor="#FBFBEF">
+                                                                        <th>№</th><th>Logo</th><th>Имя магазина</th><th>Описание магазина</th>{{--<th width="350px">Детальное описание</th>--}}<th>Действие</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    {{-- */$x=0;/* --}}
+                                                                    @foreach($curentUser->getCompanies as $item)
+                                                                        {{-- */$x++;/* --}}
+                                                                        <tr data-id="{{$item->id}}">
+                                                                            <td>{{ $x }}</td>
+                                                                            <td> <img class="img-thumbnail" style="display: block; width: 100px;" src="{{$item->company_logo}}"></td><td><a href="{{ url('/product-editor', $item->id) }}">{{ $item->company_name }}</a></td><td>{{ $item->company_description }}</td>{{--<td width="200">{!!$item->company_content!!}</td>--}}
+
+                                                                            <td width="165">
+                                                                                <a href="{{ url('company/' . $item->id . '/edit') }}">
+                                                                                    <button   data-toggle="tooltip" data-placement="top" title="Редактировать" type="submit" class="btn btn-primary btn-xs">
+                                                                                        <span class="glyphicon  glyphicon-pencil" aria-hidden="true"></span>
+                                                                                    </button>
+                                                                                </a>
+                                                                                <button  data-toggle="tooltip" data-placement="top" title="Удалить" data-id="{{$item->id}}" type="" class="btn btn-danger btn-xs tut">
+                                                                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                                                                </button>
+
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                                {{--<div class="pagination"> {!! $company->render() !!} </div>--}}
+                                                            </div>
+                                                        </div>
+                                                    @else
+
+                                                        <div><h3>У вас пока нет ни одного магазина. Воспользуйтесь кнопкой "создать" для того что бы создать магазин.</h3></div>
+                                                        <a href="{{ url('company/create') }}" class="btn btn-primary pull-left btn-sm btn green">Создать магазин</a>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
-                                        </div>
-                                <!--end row-->
+                                        <!--end row-->
+                                    </div>
+                                </div>
                             </div>
+                            <!--tab_1_2-->
+                            <div class="tab-pane" id="tab_1_2">
+
+                                @include('user.homeTab_owner_12')
+
+                            </div>
+                            <!--end tab-pane-->
+                            <div class="tab-pane" id="tab_1_3">
+                                @include('user.homeTab13')
+                            </div>
+                            <!--end tab-pane-->
                         </div>
                     </div>
-                    <!--tab_1_2-->
-                    <div class="tab-pane" id="tab_1_2">
-
-                        @include('user.homeTab_owner_12')
-
-                    </div>
-                    <!--end tab-pane-->
-                    <div class="tab-pane" id="tab_1_3">
-                        @include('user.homeTab13')
-                    </div>
-                    <!--end tab-pane-->
                 </div>
             </div>
-    </div>
+
+
+
+
+
     </div>
 
         <style>
+            .tabbable-line>.tab-content {
+                padding: 0px 0!important;
+            }
             .my_font_css{
                 font-size: 18px;
             }
-
+             .my_row_css{
+                 border: solid 1px rgba(196, 213, 223, 0.61);
+             }
+            .img_avatar_css{
+                position: relative;
+            }
+            .img_avatar_css>img{
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: auto;
+                max-width: 100%;
+                max-height: 100%;
+                margin: auto;
+            }
         </style>
 
         <script>

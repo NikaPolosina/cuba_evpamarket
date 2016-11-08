@@ -12,6 +12,8 @@
 
                     <div class="seller" style="margin: 6px 6px 6px 30px">
                         <span>Продавец:</span> <a href="/show-user/{{$singleProduct->getCompany[0]->getUser[0]->id}}">{{$singleProduct->getCompany[0]->getUser[0]->getUserInformation->name}}{{$singleProduct->getCompany[0]->getUser[0]->getUserInformation->surname}}</a>
+                       @if(Auth::user()) <a href="/get-single-conversation/{{Auth::user()->id}}/{{$singleProduct->getCompany[0]->getUser[0]->id}}"><button type="button" class="btn btn-default btn-sm">Связаться с продавцом</button></a>@endif
+
                     </div>
 
                     <style>
@@ -143,6 +145,10 @@
                                                     </h2>
                                                     <div>
                                                         {!! $singleProduct->content !!}
+
+                                                        @if(isset($addParam))
+                                                            @include('product.additionParamShow')
+                                                        @endif
                                                     </div>
 
 

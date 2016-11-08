@@ -33,14 +33,25 @@
                     </div>
                 @endforeach
             </div>
+            <div class="col-sm-6">
+                <div style="display: none" class="alert alert-success my_success" role="alert"> Сохранение прошло успешно.</div>
+            </div>
         </div>
     </div>
     {{Form::submit('Сохранить')}}
     {{ Form::close() }}
 @endsection
 
+
+
 <script>
     window.onload = function(){
+        if('{{$a}}'== true){
+            $('.my_success').show();
+            setTimeout(function() {$('.my_success').hide() }, 2000)
+
+            console.log('sfjsdghdj');
+        }
         $('.show_more').on('click', function(){
             $('#' + $(this).attr('data-id')).toggle();
         });

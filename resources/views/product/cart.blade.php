@@ -161,11 +161,11 @@
                                                     </td>
                                                 </tr>
                                                 @if(is_array($val->value) && count($val->value))
-                                                <tr>
-                                                    <td colspan="2">
-                                                        @include('product.cartAddParamShow', ['singleProduct'=>$val]);
-                                                    </td>
-                                                </tr>
+                                               {{-- <tr>
+                                                    <td colspan="2">--}}
+                                                        @include('product.cartAddParamShow', ['singleProduct'=>$val])
+                                             {{--       </td>
+                                                </tr>--}}
                                                 @endif
 
                                                 <tr>

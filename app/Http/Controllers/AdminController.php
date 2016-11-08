@@ -210,7 +210,9 @@ class AdminController extends Controller{
      * */
     //Метод для построения связи между категорией товара и дополнительнымы параметрами товара.
     public function addCategoryAddParam($id, Request $request){
+        $a = false;
         if($request->isMethod('post')){
+            $a = true;
             $category = Category::find($request->input('category_id'));
             $category->getAddParam()->sync($request->input('param_id', array()));
         }else{
@@ -226,8 +228,8 @@ class AdminController extends Controller{
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
         $this->_breadcrumbs->addCrumb('Список категорий', '/admin/category');
         $this->_breadcrumbs->addCrumb('Дополнительные параметры по категории - '.$category->title, '/admin//category-param/'.$id);
-
-        return view('admin.category.showAddParam')->with('category', $category)->with('addParam', $addParam)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
+       
+        return view('admin.category.showAddParam')->with('category', $category)->with('addParam', $addParam)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way)->with('a', $a);
     }
 
     //Метод удаление дополнитеьного параметра по товару.

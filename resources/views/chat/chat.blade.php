@@ -2,7 +2,7 @@
 
 
 
-<div class="col-md-10" id="chat_content">
+<div class="col-md-12" id="chat_content">
     <!-- BEGIN PORTLET-->
     <div class="portlet light ">
         <div class="portlet-title">
@@ -22,7 +22,7 @@
         <div class="up">
             ещё.....
         </div>
-        <div class="portlet-body" id="chats" style="    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;">
+        <div class="portlet-body" id="chats" style="box-shadow: 1px 0px 0px 0px #d7d8db, -1px 0px 0 0px #e3e4e8;">
             <div class="scroller" style="height: 500px;" data-always-visible="1" data-rail-visible1="1">
 
 
@@ -137,6 +137,9 @@
     .up:hover{
         background-color: rgba(128, 128, 128, 0.31);
         color: darkblue;
+    }
+    .ya{
+        margin-bottom: 32px;
     }
 </style>
 

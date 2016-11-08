@@ -9,6 +9,8 @@
                     <div class="caption font-dark">
                         <i class="icon-settings font-dark"></i>
                         <span class="caption-subject bold uppercase"> Список Дополнительных параметров</span>
+                        <a href="/admin/addition-param-add" style="margin-left: 30px;">
+                            <button type="button">Добавить</button> </a>
                     </div>
 
                 </div>

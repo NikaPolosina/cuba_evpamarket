@@ -25,18 +25,13 @@ use App\AdditionParam;
 class TestController extends Controller{
     public function myTest(){
 
-        $addParam = AdditionParam::all();
-        
-        
-        
-
-        foreach($addParam as $item){
-            $item->value = json_decode($item->value, true);
-        }
+       
+       
+      
 
         
         
 
-        return view('product.additionParam')->with('addParam', $addParam->toArray());
+        return view('test');
     }
 }
