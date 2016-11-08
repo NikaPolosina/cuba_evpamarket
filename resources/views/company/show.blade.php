@@ -15,7 +15,7 @@
                 <div class="table-responsive">
                     <div class="seller" style="margin: 6px 6px 6px 30px">
                         <span>Продавец:</span> <a href="/show-user/{{$company->getUser[0]->id}}">{{$company->getUser[0]->getUserInformation->name}}{{$company->getUser[0]->getUserInformation->surname}}</a>
-                        <a href="/get-single-conversation/{{Auth::user()->id}}/{{$company->getUser[0]->id}}"><button type="button" class="btn btn-default btn-sm">Связаться с продавцом</button></a>
+                        @if(Auth::user()) <a href="/get-single-conversation/{{Auth::user()->id}}/{{$company->getUser[0]->id}}"><button type="button" class="btn btn-default btn-sm">Связаться с продавцом</button></a>@endif
 
                     </div>
                     <table class="table table-bordered table-striped table-hover">

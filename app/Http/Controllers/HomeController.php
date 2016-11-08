@@ -214,7 +214,7 @@ class HomeController extends Controller{
             $data['user'] = $curentUser;
             $data['groupInvites'] = $groupInvites;
             $data['product'] = $product;
-
+/*dd($userInfo);*/
         return view('user.simple_user.home')
             ->with('userInfo', $data['userInfo'])
             ->with('order', $data['order'])
