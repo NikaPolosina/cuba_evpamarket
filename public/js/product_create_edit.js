@@ -291,6 +291,11 @@ $(document).ready(function() {
                                     data['value'][item.attr('data-key')] = item.find('input:checked').val();
                                 }
                                 break;
+                            case 'input':
+                                if(item.find('input:text').length){
+                                    data['value'][item.attr('data-key')] = item.find('input').val();
+                                }
+                                break;
                             case 'select':
                                 if(item.find('select').length){
                                     data['value'][item.attr('data-key')] = item.find('select').val();
