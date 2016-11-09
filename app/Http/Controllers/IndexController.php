@@ -2,12 +2,14 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\ChatUsers;
 use App\Group;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use League\Flysystem\Exception;
 use Session;
 use App\Company;
 use Auth;
@@ -150,6 +152,11 @@ class IndexController extends Controller{
             'body'         => $request->body,
             'chat_user_id' => $request->chat_user_id
         ]);
+
+        try{
+            ChatUsers::where('id', $request->chat_user_id)->update(['updated_at' => Carbon::now()]);
+        }catch(\Exception $e){
+        }
 
         return response()->json([ 'success' => $r->toArray() ], 200);
     }

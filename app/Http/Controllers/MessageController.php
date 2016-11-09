@@ -148,9 +148,9 @@ class MessageController extends Controller{
 
                 }
             ])
-
+            ->orderBy('updated_at', 'DESC')
             ->get()->toArray();
-        
+
 //dd($msgAll);
         return $msgAll;
     }
