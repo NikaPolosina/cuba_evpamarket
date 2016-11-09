@@ -142,6 +142,7 @@ class AdminController extends Controller{
             $this->_param = AdditionParam::find($id);
             $this->_param->value = json_decode($this->_param->value, true);
         }
+    /*    dd($this->_param);*/
         return view('admin.addParam.add')->with('param', $this->_param)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
     /**

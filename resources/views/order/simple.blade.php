@@ -55,7 +55,7 @@
                                                                 {{$valName}}
                                                                 @if(array_key_exists('css', $param['param_value']))
                                                                     @if(array_key_exists($cnt, $param['param_value']['css']))
-                                                                        <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$param['param_value']['css'][$cnt]}}"></div>
+                                                                        <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-left: 15px;  background-color: {{$param['param_value']['css'][$cnt]}}"></div>
                                                                     @endif
                                                                 @endif
                                                             </div>

@@ -52,10 +52,11 @@
                         {!! $errors->first('required', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
-                {{ Form::label('request', 'Запрашивать наличие: ', ['class' => 'col-md-2 control-label'])}}
+
+                {{ Form::label('request', 'Возможность выбора: ', ['class' => 'col-md-2 control-label'])}}
                 <div class="col-sm-10">
                     <div class="col-sm-12">
-                        {!! Form::select('request', array('0' => 'НЕТ', '1' => 'ДА'), NULL, ['class' => 'form-control my_form_add_param ']) !!}
+                        {!! Form::select('request', array('1' => 'ДА', '0' => 'НЕТ'), NULL, ['class' => 'form-control my_form_add_param request']) !!}
                         {!! $errors->first('request', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
@@ -66,7 +67,7 @@
                     {{ Form::label('type', 'Тип : ', ['class' => 'col-sm-2 control-label'])}}
                     <div class="col-sm-10">
                         <div class="col-sm-8">
-                            {!! Form::select('type', array('checkbox' => 'checkbox', 'radio' => 'radio', 'select' =>'select', 'input' => 'input'), NULL, ['class' => 'form-control my_form_add_param ']) !!}
+                            {!! Form::select('type', array('checkbox' => 'checkbox', 'radio' => 'radio', 'select' =>'select', 'input' => 'input'), NULL, ['class' => 'form-control my_form_add_param type']) !!}
                             {!! $errors->first('type', '<p class="help-block">:message</p>') !!}
                         </div>
                     </div>
@@ -75,7 +76,7 @@
                     {{ Form::label('type_for_by', 'Тип при покупке: ', ['class' => 'col-sm-2 control-label'])}}
                     <div class="col-sm-10">
                         <div class="col-sm-8">
-                            {!! Form::select('type_for_by', array('checkbox' => 'checkbox', 'radio' => 'radio', 'select' =>'select', 'input' => 'input'), NULL, ['class' => 'form-control my_form_add_param ']) !!}
+                            {!! Form::select('type_for_by', array('checkbox' => 'checkbox', 'radio' => 'radio', 'select' =>'select', 'input' => 'input'), NULL, ['class' => 'form-control my_form_add_param type_for_by']) !!}
                             {!! $errors->first('type_for_by', '<p class="help-block">:message</p>') !!}
                         </div>
                     </div>
@@ -102,7 +103,7 @@
 
 
                 <div id="list">
-                    @if(isset($param) && is_array($param->value) && count($param->value))
+                    @if(isset($param) && isset($param->value) && is_array($param->value) && count($param->value))
                         @foreach($param->value as $key=>$item)
                             <div class="value_holder"><label class="col-sm-2 control-label" for="value">Значение: </label>
                                 <div class="col-sm-10">
@@ -123,13 +124,13 @@
             </div>
 
 
-            <div class="form-group">
-                <div class="col-sm-offset-10 col-sm-1">
-                    {!! Form::submit('Сохранить', ['class' => 'btn btn-primary form-control']) !!}
-                </div>
-            </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-10 col-sm-1">
+                                {!! Form::submit('Сохранить', ['class' => 'btn btn-primary form-control']) !!}
+                            </div>
+                        </div>
 
-            {{ Form::close() }}
+                        {{ Form::close() }}
         </div>
 
         <style>
@@ -169,9 +170,95 @@
 
         <script>
 
+            $( document ).ready(function() {
+
+
+            $('select.request').on('change', function () {
+                if($(this).val() == 0){
+                    //Всем опшинам класса type кроме input даем класс disabled.
+                    $.each( $('select.type').find('option'), function( key, value ) {
+                        if(value.value == 'input'){
+                            value.disabled = false;
+                        }else{
+                            value.disabled = true;
+                        }
+                    });
+                    //Всем опшинам класса type_for_by кроме input даем класс disabled.
+                    $.each( $('select.type_for_by').find('option'), function( key, value ) {
+                        if(value.value == 'input'){
+                            value.disabled = false;
+                        }else{
+                            value.disabled = true;
+                        }
+                    });
+
+                    $('select.type').val('input');
+                    $('select.type_for_by').val('input');
+                    $('#list').find('input').val('');
+                    $('#list').html('');
+                    $('button.addButt').hide();
+
+
+                }else{
+                    $.each( $('select.type').find('option'), function( key, value ) {
+                        if(value.value == 'input'){
+                            value.disabled = true;
+                        }else{
+                            value.disabled = false;
+                        }
+                    });
+
+                    $.each( $('select.type_for_by').find('option'), function( key, value ) {
+                        if(value.value == 'input'){
+                            value.disabled = true;
+                        }else{
+                            value.disabled = false;
+                        }
+                    });
+
+                    $('select.type').val('checkbox');
+                    $('select.type_for_by').val('checkbox');
+                    $('button.addButt').show();
+                }
+            });
+
+            $('select.request').trigger('change');
+
+
+            $('select.type').on('change', function () {
+               if($(this).val() == 'input'){
+                   console.log($(this).val());
+               }
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             var randomId, currentSelector, tpl_b;
             var ids = [];
-            
+
             function addValueHolder(){
                 randomId = Math.random().toString(36).substring(2);
                 ids.push(randomId);
