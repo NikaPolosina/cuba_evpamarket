@@ -47,19 +47,26 @@
                                             <tr>
                                                 <td width="30%" style="text-align: right"><span class="option_table_order">Дополнительные данные:</span></td>
                                                 <td align="center"  align="center">
+
+
                                                     @foreach($val->add_param as $param)
                                                         <div>
                                                         <span>{{$param['param_name']}}:</span>
-                                                        @foreach($param['param_value']['name'] as $cnt => $valName)
-                                                            <div style="font-weight: bold">
-                                                                {{$valName}}
-                                                                @if(array_key_exists('css', $param['param_value']))
-                                                                    @if(array_key_exists($cnt, $param['param_value']['css']))
-                                                                        <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-left: 15px;  background-color: {{$param['param_value']['css'][$cnt]}}"></div>
+                                                        @if(is_array($param['param_value']['name']))
+                                                            @foreach($param['param_value']['name'] as $cnt => $valName)
+                                                                <div style="font-weight: bold">
+                                                                    {{$valName}}
+                                                                    @if(array_key_exists('css', $param['param_value']))
+                                                                        @if(array_key_exists($cnt, $param['param_value']['css']))
+                                                                            <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-left: 15px;  background-color: {{$param['param_value']['css'][$cnt]}}"></div>
+                                                                        @endif
                                                                     @endif
-                                                                @endif
-                                                            </div>
-                                                        @endforeach
+                                                                </div>
+                                                            @endforeach
+                                                        @else
+                                                            {{$param['param_value']['name']}}
+                                                        @endif
+
                                                         </div>
 
                                                  {{--       <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: red"></div>--}}

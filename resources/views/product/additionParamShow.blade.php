@@ -22,9 +22,7 @@ $ar = array();
                 {{$item['title']}}:
             </div>
             <div class="col-sm-10">
-                @if(is_array($item['value']))
                     <?php
-
                     switch($item['type']){
                             case 'checkbox':?>
 
@@ -104,9 +102,11 @@ $ar = array();
                                             <?php } ?>
                                         </select>
                                 </div>
-                            <?php break;
+                                <?php break;
+                            case 'input':
+                                echo '<div class="">'.$singleProduct->value[$item['key']].'</div>';
+                                break;
                     } ?>
-                @endif
             </div>
         </div>
     @endforeach

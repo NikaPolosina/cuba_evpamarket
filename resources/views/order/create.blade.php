@@ -69,7 +69,7 @@
                                                                     <span>{{$singleParam['title']}}:</span>
                                                                     <input type="hidden"  name="product[{{$val->id}}][add_param][{{$k}}][param_name]" value="{{$singleParam['title']}}"/>
                                                                     @foreach ($param['key'] as $p)
-                                                                        @if(array_key_exists($p, $singleParam['value']))
+                                                                        @if(is_array($singleParam['value']) && array_key_exists($p, $singleParam['value']))
                                                                             <div class="option_table_order">
                                                                                 {{$singleParam['value'][$p]['name']}}
                                                                                 <input type="hidden"  name="product[{{$val->id}}][add_param][{{$k}}][param_value][name][]" value="{{$singleParam['value'][$p]['name']}}"/>
@@ -78,6 +78,9 @@
                                                                                     <input type="hidden"  name="product[{{$val->id}}][add_param][{{$k}}][param_value][css][]" value="{{$singleParam['value'][$p]['css']}}"/>
                                                                                 @endif
                                                                             </div>
+                                                                        @else
+                                                                            {{$p}}
+                                                                            <input type="hidden"  name="product[{{$val->id}}][add_param][{{$k}}][param_value][name]" value="{{$p}}"/>
                                                                         @endif
                                                                     @endforeach
                                                                 </div>

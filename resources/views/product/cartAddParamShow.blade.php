@@ -43,6 +43,12 @@
                                     }
                                 }
                     } ?>
+                @else
+
+                    @if(array_key_exists($item['key'], $singleProduct['value']))
+                        <div class="">{{$singleProduct['value'][$item['key']]}}</div>
+                        <input type="hidden" name="product[{{$singleProduct->id}}][add_param][{{$item['key']}}][key][]" value="{{$singleProduct['value'][$item['key']]}}">
+                    @endif
                 @endif
             </div>
                 </td>

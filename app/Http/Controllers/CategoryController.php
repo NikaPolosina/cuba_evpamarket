@@ -268,6 +268,5 @@ class CategoryController extends Controller{
         }
         return view('product.additionParam')->with('addParam', $addParam->getAddParam)->with('value', $value);
 
-
     }
 }

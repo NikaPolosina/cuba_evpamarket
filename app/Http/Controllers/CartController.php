@@ -67,6 +67,7 @@ class CartController extends Controller{
 
         if($cart[$k]){
             foreach($cart[$k] as $key => $company){
+                //dd($company);
                 $companies[$key]['company'] = Company::find($key);
 
                 $companies[$key]['products'] = $companies[$key]['company']->getProducts()->whereIn('id', array_keys($company['products']))->with('getCategory')->get();

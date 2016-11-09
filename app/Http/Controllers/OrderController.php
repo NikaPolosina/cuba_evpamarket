@@ -67,7 +67,7 @@ class OrderController extends Controller{
                 $currentProduct->value = array();
             }
         }
-        
+
         $user = Auth::user();
         $info_user =  $user->getUserInformation;
         $region = Region::where('id_region', $info_user['region_id'])->first();

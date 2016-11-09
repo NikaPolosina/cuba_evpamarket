@@ -154,12 +154,7 @@ $(document).ready(function() {
 
                     tinyMCE.activeEditor.setContent(msg.product.content);
 
-
-
                     getBlockWithadParam(msg.productCategory.id, msg.product.value);
-
-
-
 
                     $('.mod').find('.form-group').find('input[data-name="photo"]').val(msg.product.product_image);
                     $('.mod').find('.form-group').find('input[data-name="price"]').val(msg.product.product_price);
@@ -294,6 +289,11 @@ $(document).ready(function() {
                             case 'select':
                                 if(item.find('select').length){
                                     data['value'][item.attr('data-key')] = item.find('select').val();
+                                }
+                                break;
+                            case 'input':
+                                if(item.find('input').length){
+                                    data['value'][item.attr('data-key')] = item.find('input').val();
                                 }
                                 break;
                         }

@@ -8,7 +8,8 @@
         <tr class="temp param_holder" data-key="{{$item['key']}}" data-type="{{$item['type_for_by']}}">
             <td width="45%" class="right"><b>{{$item['title']}}</b></td>
             <td width="55%" class="left rad">
-                <?php if(is_array($item['value'])){
+                <?php
+
                     switch($item['type_for_by']){
                         case 'checkbox':
                             ?> {{--<hr/>--}} <?php
@@ -34,7 +35,6 @@
                             break;
 
                         case 'select': ?>
-                           {{-- <hr/>--}}
                             <select name="{{$item['key']}}">
                                 <?php foreach($item['value'] as $key => $val){
                                     if(in_array($key, $singleProduct->value[$item['key']])){ ?>
@@ -43,8 +43,13 @@
                                 } ?>
                             </select> <?php
                             break;
+                    case 'input':?>
+                        <div class=""><?=$singleProduct->value[$item['key']]?></div>
+                        <input type="hidden" name="<?=$item['key']?>" value="<?=$singleProduct->value[$item['key']]?>">
+                        <?php
+                    break;
                     }
-                } ?>
+                 ?>
             </td>
         </tr>
     @endforeach

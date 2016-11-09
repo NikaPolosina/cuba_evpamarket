@@ -100,6 +100,11 @@ $(document).ready(function(){
                                 data[item.attr('data-key')] = item.find('select').val();
                             }
                             break;
+                        case 'input':
+                            if(item.find('input').length){
+                                data[item.attr('data-key')] = item.find('input').val();
+                            }
+                            break;
                     }
                 }
             });

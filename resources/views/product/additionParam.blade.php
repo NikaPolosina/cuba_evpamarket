@@ -81,8 +81,16 @@ $b = 0;
 
                                 /*----------------------------------------------------------------------------------------*/
                             case 'input':?>
-
-                                     <input name="{{$item['key']}}" class="form-control" placeholder="{{$item['placeholder']}}" data-name="{{$item['key']}}" type="text"/>
+                                    <?php
+                                        if(array_key_exists($item['key'], $value)){
+                                            if(is_array($value[$item['key']])){
+                                                $value[$item['key']] = $value[$item['key']][0];
+                                            }
+                                        }else{
+                                            $value[$item['key']] = '';
+                                        }
+                                        ?>
+                                     <input name="{{$item['key']}}" class="form-control" placeholder="{{$item['placeholder']}}" data-name="{{$item['key']}}" type="text" value="{{$value[$item['key']]}}"/>
 
                                 <?php break;
                                 /*----------------------------------------------------------------------------------------*/
