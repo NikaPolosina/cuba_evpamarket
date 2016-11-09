@@ -234,26 +234,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            });
 
 
             var randomId, currentSelector, tpl_b;
