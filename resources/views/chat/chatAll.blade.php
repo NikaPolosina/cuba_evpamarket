@@ -32,15 +32,24 @@ $show = false;
                                 <div class="user_name">
                                  {{--  <span>от кого </span>--}} <input class="id_from" value="{{$itemMsg['get_chat_msgs'][0]['get_user_from']['id']}}" type="hidden"/>
                                   {{-- <span>кому </span> --}}<input  class="id_to" value="{{$itemMsg['get_chat_msgs'][0]['get_user_to']['id']}}" type="hidden"/>
-                                   {{$itemMsg['get_chat_msgs'][0]['get_user_to']['get_user_information']['name']}} {{$itemMsg['get_chat_msgs'][0]['get_user_to']['get_user_information']['surname']}}
+
+                                   {{$itemMsg['get_chat_msgs'][0]['get_user_from']['get_user_information']['name']}} {{$itemMsg['get_chat_msgs'][0]['get_user_from']['get_user_information']['surname']}}
                                 </div>
-                                <div class="body_sm">
-                                    <div class="panel-body">
-                                        @if(is_file(public_path().'/img/users/'.$itemMsg['get_chat_msgs'][(count($itemMsg['get_chat_msgs'])-1)]['get_user_from']['get_user_information']['id'].'/avatar.png'))
-                                            <img class="img_sing" src="{{'/img/users/'.$itemMsg['get_chat_msgs'][(count($itemMsg['get_chat_msgs'])-1)]['get_user_from']['get_user_information']['id'].'/avatar.png'}}" alt="avatar">
-                                        @else
-                                            <img class="img_sing" src="/img/placeholder/avatar.jpg" alt="avatar"/>
-                                        @endif
+                                <div class="body_sm col-sm-12">
+                                    <div class="col-sm-2">
+                                           <div class="bloc_img">
+                                               @if(is_file(public_path().'/img/users/'.$itemMsg['get_chat_msgs'][(count($itemMsg['get_chat_msgs'])-1)]['get_user_from']['get_user_information']['id'].'/avatar.png'))
+                                                   <img class=" my_sing" src="{{'/img/users/'.$itemMsg['get_chat_msgs'][(count($itemMsg['get_chat_msgs'])-1)]['get_user_from']['get_user_information']['id'].'/avatar.png'}}" alt="avatar">
+                                               @else
+                                                   <img class=" my_sing" src="/img/placeholder/avatar.jpg" alt="avatar"/>
+                                               @endif
+                                           </div>
+                                    </div>
+
+
+                                    <div class="panel-body col-sm-10" style="padding: 0px!important;">
+
+
                                         <?=$itemMsg['get_chat_msgs'][(count($itemMsg['get_chat_msgs'])-1)]['get_user_from']['get_user_information']['name'].' '.$itemMsg['get_chat_msgs'][(count($itemMsg['get_chat_msgs'])-1)]['get_user_from']['get_user_information']['surname'].': '?>
                                         {!!$itemMsg['get_chat_msgs'][(count($itemMsg['get_chat_msgs'])-1)]['body']!!}
                                         <span class="time">{{ date('d.m.Y', strtotime($itemMsg['get_chat_msgs'][0]['created_at'])) }}</span>
@@ -71,6 +80,16 @@ $show = false;
     </div>
 </div>
 <style>
+    .bloc_img{
+        width: 30px;
+        height: 30px;
+        border: solid 1px grey;
+        border-radius: 50%!important;
+        overflow: hidden;
+    }
+    .bloc_img>img{
+        float: right;
+    }
     .container_user_msg{
         min-height: 384px;
         background-color: rgb(240, 246, 250);

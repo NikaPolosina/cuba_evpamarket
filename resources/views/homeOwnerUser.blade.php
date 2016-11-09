@@ -36,8 +36,8 @@
                                         <ul class="list-unstyled profile-nav">
                                             <li>
                                                 <div class="img_avatar_css">
-                                                    @if(!empty($userInfo->avatar) && file_exists(public_path().$userInfo->avatar))
-                                                        <img src="{{$userInfo->avatar}}" alt="avatar">
+                                                    @if(file_exists(public_path().'/img/users/'.$curentUser->id.'/avatar.png'))
+                                                        <img src="/img/users/{{$curentUser->id}}/avatar.png" alt="avatar">
                                                     @else
                                                         <img src="/img/placeholder/avatar.jpg" alt="avatar" />
                                                     @endif

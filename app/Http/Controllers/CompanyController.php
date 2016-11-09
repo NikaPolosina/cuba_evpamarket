@@ -47,7 +47,7 @@ class CompanyController extends Controller{
             ->with('user', $user);
     }
     
-    //Мтод создания компании.
+    //Метод создания компании.
     public function store(Request $request, Company $company){
         $company->company_name = $request['company_name'];
         $company->company_description = $request['company_description'];
@@ -70,9 +70,9 @@ class CompanyController extends Controller{
            $dir_m_t = public_path().'/img/custom/companies/'.$company['id'].'/company/thumbnail';
            $source_t = public_path().'/img/custom/companies/thumbnail/'.$request['company_logo'];
            if(!is_dir($dir)){
-               mkdir($dir, 0700, true) ;
-               mkdir($dir_m,  0700, true) ;
-               mkdir($dir_m_t,  0700, true) ;
+               mkdir($dir, 0777, true) ;
+               mkdir($dir_m,  0777, true) ;
+               mkdir($dir_m_t,  0777, true) ;
            }
            File::move($source, $dest);
            File::move($source_t, $dest_t);
