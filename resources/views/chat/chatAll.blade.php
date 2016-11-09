@@ -35,8 +35,16 @@ $show = false;
                                    {{$itemMsg['get_chat_msgs'][0]['get_user_to']['get_user_information']['name']}} {{$itemMsg['get_chat_msgs'][0]['get_user_to']['get_user_information']['surname']}}
                                 </div>
                                 <div class="body_sm">
-                                    {!!$itemMsg['get_chat_msgs'][(count($itemMsg['get_chat_msgs'])-1)]['body']  !!}
-                                    <span class="time">{{ date('d.m.Y', strtotime($itemMsg['get_chat_msgs'][0]['created_at'])) }}</span>
+                                    <div class="panel-body">
+                                        @if(is_file(public_path().'/img/users/'.$itemMsg['get_chat_msgs'][(count($itemMsg['get_chat_msgs'])-1)]['get_user_from']['get_user_information']['id'].'/avatar.png'))
+                                            <img class="img_sing" src="{{'/img/users/'.$itemMsg['get_chat_msgs'][(count($itemMsg['get_chat_msgs'])-1)]['get_user_from']['get_user_information']['id'].'/avatar.png'}}" alt="avatar">
+                                        @else
+                                            <img class="img_sing" src="/img/placeholder/avatar.jpg" alt="avatar"/>
+                                        @endif
+                                        <?=$itemMsg['get_chat_msgs'][(count($itemMsg['get_chat_msgs'])-1)]['get_user_from']['get_user_information']['name'].' '.$itemMsg['get_chat_msgs'][(count($itemMsg['get_chat_msgs'])-1)]['get_user_from']['get_user_information']['surname'].': '?>
+                                        {!!$itemMsg['get_chat_msgs'][(count($itemMsg['get_chat_msgs'])-1)]['body']!!}
+                                        <span class="time">{{ date('d.m.Y', strtotime($itemMsg['get_chat_msgs'][0]['created_at'])) }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
