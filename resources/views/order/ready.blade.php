@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     @include('layouts.header_menu')
-
+    @include('layouts.breadcrumbs')
 
     <div class="row">
         {{--@include('layouts.breadcrumbs')--}}
