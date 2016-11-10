@@ -12,35 +12,47 @@
 
                     switch($item['type_for_by']){
                         case 'checkbox':
-                            ?> {{--<hr/>--}} <?php
+
                             foreach($item['value'] as $key => $val){
-                                if(in_array($key, $singleProduct->value[$item['key']])){ ?>
-                                   {{-- <br>--}}<input type="checkbox" name="{{$item['key']}}[]" value="{{$key}}"> {{$val['name']}}
+                                if(in_array($key, $singleProduct->value[$item['key']])){
+                                    if(count($singleProduct->value[$item['key']]) == 1){?>
+                                        <input style="display: none" type="checkbox" name="{{$item['key']}}[]" value="{{$key}}" checked> {{$val['name']}}
+                                    <?php }else{ ?>
+                                        <input type="checkbox" name="{{$item['key']}}[]" value="{{$key}}"> {{$val['name']}}
+                                    <?php }?>
                                     <?php if(isset($val['css'])){?>
                                         <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
                                     <?php }
                                 }
                             }
+
                             break;
                         case 'radio':
-                            ?> {{--<hr/>--}} <?php
-                            foreach($item['value'] as $key => $val){
-                                if(in_array($key, $singleProduct->value[$item['key']])){ ?>
-                                   {{-- <br>--}}<input type="radio" name="{{$item['key']}}" value="{{$key}}"> {{$val['name']}}
-                                    <?php if(isset($val['css'])){?>
-                                    <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
-                                    <?php }
+                            if(is_array($item['value'])){
+                                foreach($item['value'] as $key => $val){
+                                    if(in_array($key, $singleProduct->value[$item['key']])){ ?>
+                                        {{-- <br>--}}<input type="radio" name="{{$item['key']}}" value="{{$key}}"> {{$val['name']}}
+                                        <?php if(isset($val['css'])){?>
+                                            <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
+                                        <?php }
+                                    }
                                 }
                             }
                             break;
-
                         case 'select': ?>
                             <select name="{{$item['key']}}">
-                                <?php foreach($item['value'] as $key => $val){
-                                    if(in_array($key, $singleProduct->value[$item['key']])){ ?>
-                                        <option value="{{$key}}">{{$key}} <?php $key ?></option>
-                                    <?php }
-                                } ?>
+                                <?php
+                                    if(is_array($item['value'])){
+                                        foreach($item['value'] as $key => $val){
+                                            if(in_array($key, $singleProduct->value[$item['key']])){ ?>
+                                                <option value="{{$key}}">{{$key}} <?php $key ?></option>
+                                            <?php }
+                                        }
+                                    }else{?>
+                                            <option value="">Пусто</option>
+                                    <?php } ?>
+
+
                             </select> <?php
                             break;
                     case 'input':?>
