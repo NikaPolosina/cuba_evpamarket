@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
 
-                                <div class="">Полное описание:  <span class="required_css">*</span> </div>
+                                <div class="">Подробное описание:  <span class="required_css">*</span> </div>
 
                                 <div class="form-group {{ $errors->has('content') ? 'has-error' : ''}}">
                                     {!! Form::label('', 'Полное описание: ', ['class' => 'col-sm-3 control-label']) !!}

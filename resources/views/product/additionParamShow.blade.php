@@ -104,7 +104,7 @@ $ar = array();
                                 </div>
                                 <?php break;
                             case 'input':
-                                echo '<div class="">'.$singleProduct->value[$item['key']].'</div>';
+                                echo '<div class="" style="float: left;">'.$singleProduct->value[$item['key']].'</div>';
                                 break;
                     } ?>
             </div>
@@ -117,6 +117,7 @@ $ar = array();
         color: #bfbfbf;
     }
     .title{
+        text-align: left;
         font-size: 16px;
     }
 
