@@ -129,8 +129,10 @@ Route::post('/products/like', 'LikeController@like');
 Route::any('/like/destroy-product', 'LikeController@destroy');
 
 /*-------------------------------------------Find----------------------------------------------*/
-//Поиск.
+//Поиск товаров по сайту.
 Route::any('/find', [ 'as' => 'find', 'uses' => 'FindController@findProduct' ]);
+//Поиск пользователя если тот был зарегестрированный по номеру телефона.
+Route::post('/find-user-by-number', [ 'as' => 'find-user-by-number', 'uses' => 'FindController@findUserByNumber' ]);
 //Найти товары по данной категории.
 Route::get('/find/category/{id}', 'FindController@findByCategory');
 
@@ -210,16 +212,19 @@ Route::post('/order', [ 'as' => 'order', 'uses' => 'OrderController@createOrder'
 
 //Заказ товара.
 Route::post('/order-ready', [ 'as' => 'order-ready', 'uses' => 'OrderController@ready' ]);
-
 //Просмотр заказа
 Route::get('/show-order/{id}', 'OrderController@showOrder');
 
 Route::get('/change-order-status/{order}/{status}', ['as'=>'change_order_status', 'uses'=>'OrderController@changStatus']);
+//Просмотр единичного заказа(просмотр деталей заказа) покупателем. Принимает id заказа.
 Route::get('/show-simple-order/{id}', ['as'=>'show-simple-order', 'uses'=>'OrderController@showSimpleOrder']);
+//Просмотр списка закзав сделанных покупателем.
 Route::get('/show-list-order-simple', ['as'=>'show-list-order-simple', 'uses'=>'OrderController@showSimpleOrderList']);
 
 /*---------------------------------------Status----------------------------------*/
+//Изменение статуса по заказу продавцом.
 Route::get('/change-order-status/{order}/{status}', ['as'=>'change_order_status', 'uses'=>'OrderController@changStatus']);
+//Список заказав который видит подавец по своему магазину с возможностью изменить статус заказа и списком статусов которые у него активные.
 Route::any('/order-by-status/{company}/{status}', ['as'=>'order-by-status', 'uses'=>'OrderController@showOrder']);
 
 // Groups

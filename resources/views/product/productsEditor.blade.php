@@ -1,4 +1,4 @@
-@extends('...layouts.app')
+@extends('layouts.app')
 
 @section('content')
     @include('layouts.header_menu')
@@ -14,6 +14,9 @@
         </div>
         <div class="row">
             <div class="col-md-2">
+                {{--Подклучение страницы с статистикой продаж по данному магазину.--}}
+                @include('company.shopStatistic')
+
                 <a id="addCategory" href="{{url('/company-discount-setup', $company->id)}}">Установка накопительных скидок</a>
                 <hr>
                 <a id="addCategory" href="{{url('/category/category-setup', $company->id)}}">Добавить категорию</a>
@@ -24,9 +27,10 @@
 
                     </div>
                 </div>
+
             </div>
 
-            <div class="col-sm-10">
+            <div class="col-sm-8">
                 <div class="table" id="product_list">
                     @include('product.productListBody', array(
                                     'products' => $company->getProducts()->paginate($paginCnt),
@@ -34,18 +38,20 @@
                                      ))
                 </div>
             </div>
+            <div class="col-sm-2">
+                @include('company.registerUserHandle')
+
+            </div>
+
         </div>
 
         @include('product.productModalEdit')
         @include('file_upload')
+
+
         <script>
            var file_uploader = '{{route('file_uploader')}}';
            var company_id = '{{$company->id}}';
-
-        </script>
-
-
-            <script>
 
                 var categories      = [];
                 var currentCategory = null;

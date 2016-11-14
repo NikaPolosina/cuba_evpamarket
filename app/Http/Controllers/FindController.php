@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\User;
 use Session;
 use Auth;
 use Illuminate\Http\Request;
@@ -26,6 +27,26 @@ class FindController extends Controller{
 
         return view('welcome');
     }
+
+    public function findUserByNumber(Request $request){
+        $this->validate($request, [
+            'number' => 'required',
+        ]);
+        
+        $find = false;
+        $user = User::where('phone', $request['number'])->with('getUserInformation')->first();
+          if($user){
+              $find = true;
+          }
+
+        return response(['user' => $user, 'find' =>$find]);
+
+
+
+
+    }
+
+
     public function findByCategory($id, CategoryController $category, IndexController $index){
 
         $data = Product::where('category_id', $id)->paginate(12);
