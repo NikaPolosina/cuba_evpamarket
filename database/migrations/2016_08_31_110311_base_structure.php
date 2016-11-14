@@ -250,6 +250,7 @@ class BaseStructure extends Migration{
             $table->string('address');
             $table->string('name');
             $table->string('surname');
+            $table->text('note');
             $table->timestamps();
             $table->foreign('simple_user_id')->references('id')->on('users');
             $table->foreign('owner_user_id')->references('id')->on('users');

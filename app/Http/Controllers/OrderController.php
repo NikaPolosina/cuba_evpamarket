@@ -137,6 +137,7 @@ class OrderController extends Controller{
 
     public function ready(Request $request){
 
+
         $this->validate($request, [ 'company_id' => 'required',
                                     'name' => 'required',
                                     'surname' => 'required',
@@ -194,19 +195,20 @@ class OrderController extends Controller{
 
         try{
             $order = Order::create([
-                'simple_user_id'    => $userSeller,
-                'owner_user_id'     => $userOwner[0]['id'],
-                'status'            => $satus[0]['id'],
-                'total_price'       => $total,
-                'discount_price'    => $a,
-                'percent'           => $persent,
-                'order_phone'       => $request['phone'] ,
-                'region'            => $request['region_id'] ,
-                'city'              => $request['city_id'] ,
-                'street'            => $request['street'] ,
-                'address'           => $request['address'] ,
-                'name'              => $request['name'] ,
-                'surname'           => $request['surname'] ,
+                'simple_user_id' => $userSeller,
+                'owner_user_id'  => $userOwner[0]['id'],
+                'status'         => $satus[0]['id'],
+                'total_price'    => $total,
+                'discount_price' => $a,
+                'percent'        => $persent,
+                'order_phone'    => $request['phone'],
+                'region'         => $request['region_id'],
+                'city'           => $request['city_id'],
+                'street'         => $request['street'],
+                'address'        => $request['address'],
+                'name'           => $request['name'],
+                'surname'        => $request['surname'],
+                'note'           => $request['note'],
             ]);
 
             foreach($products as $currentProduct){
@@ -370,8 +372,7 @@ class OrderController extends Controller{
             $this->_breadcrumbs->addCrumb('Мои заказы', '/show-list-order-simple');
             $this->_breadcrumbs->addCrumb('Заказ', '/show-simple-order/'.$id);
         }
-
-
+        
         return view('order.simple')
             ->with('order', $order)
             ->with('breadcrumbs', $this->_breadcrumbs);

@@ -109,14 +109,14 @@
                                             </td>
 
                                         </tr>
-
+                                        <tr>
+                                            <td width="30%" style="text-align: right"><span class="option_table_order">Примечание к заказу:</span></td>
+                                            <td align="center" valign="top"><span class="product_description"> {{$order->note}}</span></td>
+                                        </tr>
 
                                     </table>
 
                                 </div>
-
-
-
 
                             </div>
                         @endforeach

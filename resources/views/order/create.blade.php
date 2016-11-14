@@ -54,7 +54,7 @@
 
                                             </td>
                                         </tr>
-
+                                                {{--Выводим дополнительные параметры указанные по этому товару--}}
                                         @if(count($val['value']))
                                             <tr>
                                                 <td  width="40%" class="right">
@@ -123,7 +123,6 @@
                         @endforeach
 
                         <div class="col-sm-6 col-sm-offset-3">
-                            <hr/>
                             <table class="table_product" border="0"  width="100%">
                                 <tr>
                                     <td width="50%" class="right">
@@ -208,13 +207,24 @@
 
 
                                     </div>
+
                                     <div class="form-group col-sm-12" style="margin-bottom: 3px">
                                         {!! Form::label('address', 'Дом: ', ['class' => 'col-sm-3 control-label']) !!}
                                         <div class="col-sm-9">
                                         {!! Form::text('address', $info_user->address, ['class' => 'form-control', 'data-name' =>'address']) !!}
                                             </div>
                                     </div>
+
+
                                 </div>
+                                {{--------------------------------------------------------------------}}
+                                <div class="form-group col-sm-12" style="margin-bottom: 3px">
+                                    {!! Form::label('note', 'Примечание к заказу: ', ['class' => 'col-sm-3 control-label']) !!}
+                                    <div class="col-sm-9">
+                                        {!! Form::textarea('note', '', ['class' => 'form-control', 'data-name' =>'note', 'rows' => '3    ']) !!}
+                                    </div>
+                                </div>
+                                {{-----------------------------------------------------------------------}}
 
                                 <div class="form-group col-sm-5" style="margin-bottom: 3px">
                                     {!! Form::hidden('user_id', $user->id, ['class' => 'form-control', 'data-name' =>'user_id']) !!}
