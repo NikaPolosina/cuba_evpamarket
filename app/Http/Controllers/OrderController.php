@@ -24,11 +24,118 @@ use App\AdditionParam;
 class OrderController extends Controller{
     protected $_breadcrumbs;
 
-
-
     public function __construct(Request $request, Breadcrumbs $breadcrumbs){
         $this->_breadcrumbs = $breadcrumbs;
         $this->_breadcrumbs->setDivider('<img style="display: inline-block;  height: 37px;" src="/img/system/next-bread.png">');
+    }
+
+    //Метод направляющий на страницу заполнения заказа продавцом в ручном режиме.
+    public function orderRegistrHandle($id, $shop){
+        $user = User::where('id', $id)->with('getUserInformation')->first();
+        $seller =  User::where('id', Auth::user()->id)->with(['getCompanies' =>function($query) use ($shop){
+            $query->where('id', $shop);
+        }])->first();
+        $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+        $this->_breadcrumbs->addCrumb('Магазин - '.$seller->getCompanies[0]['company_name'], '/product-editor/'.$seller->getCompanies[0]['id']);
+        $this->_breadcrumbs->addCrumb('Офорление заказа в ручном режиме', '/add-handle-order/'.$id.'/'.$shop);
+
+        $region = Region::where('id_region', $user->getUserInformation->region_id)->first();
+        $city = City::where('id_cities', $user->getUserInformation->city_id)->first();
+        $money = UserMoney::where('user_id', $user->id)->where('company_id', $seller->getCompanies[0]['id'])->first();
+
+        $group = $user->getGroup()->where('company_id', $shop)->first();
+        if($group){
+            $money = $group;
+        }
+
+        return view('order.createHandle')
+            ->with('breadcrumbs', $this->_breadcrumbs)
+            ->with('seller', $seller)
+            ->with('region', $region)
+            ->with('city', $city)
+            ->with('money', $money)
+            ->with('user', $user);
+    }
+
+    //Метод сохранения заказа в ручном режиме.
+    public function orderHandleReady(Request $request, $id = null){
+
+        if($id){
+            $company = Company::find($id);//Обьект компании.
+
+            $this->_breadcrumbs->addCrumb('Домой', '/login-user');
+            $this->_breadcrumbs->addCrumb('Магазин - '.$company->company_name, '/product-editor/'.$company->id);
+            $this->_breadcrumbs->addCrumb('Завершение заказа в ручном режиме', '/');
+
+            return view('order.readyHandle')
+                ->with('breadcrumbs', $this->_breadcrumbs);
+           }
+
+
+        $this->validate($request, [ 'company_id' => 'required',
+                                    'user_id' => 'required',
+                                    'phone' => 'required', ]);//Проводим валидацию полей. Данные поля должны быть обязательными.
+        $company = Company::find($request['company_id']);//Обьект компании.
+        $seller = $company->getUser->first();//Обьект продавца.
+        $user = User::where('id', $request['user_id'])->first();//Обьект покупателя.
+        $satus = StatusOwner::where('key', 'sending_buyer')->first();//Берем обьект status owner для того что бы поставить статус заказа при оформлении что он завершенный.
+        $group = $user->getGroup()->where('company_id', $request['company_id'])->first();//Если покупатель сосоит в группе то берем обект этой группы по магазину.
+        $money = UserMoney::where('user_id', $user->id)->where('company_id', $request['company_id'])->first();//Обьект UserMoney.
+        if($group){
+            $t = $group->money + $request['total_price'];
+        }else{
+            $t = $money->money + $request['total_price'];
+        }//Если покупатель состоит в группе, то нужно взять сумму для учета скидки с группы.
+
+        $discount = $company->getDiscountAccumulativ()->where('from', '<=', $t)->orderBy('from', 'desc')->first();
+        if($discount){
+            $total_discount = ($request['total_price']*$discount['percent'])/100;//скидка в рублях
+            $persent = $discount['percent'];//скидка в процентах
+        }else{
+            $total_discount = 0;
+            $persent = 0;
+        }//Выщитываем скидку
+
+        $a =  $request['total_price'] - $total_discount;//Сумма по заказу с учетем скидки
+        $order = new Order([
+            'simple_user_id' => $user->id,
+            'owner_user_id'  => $seller->id,
+            'status'         => $satus->id,
+            'total_price'    => $request['total_price'],
+            'discount_price' => $a,
+            'percent'        => $persent,
+            'hand'           => 1,
+            'order_phone'    => $request['phone'],
+            'region'         => $request['region_id'],
+            'city'           => $request['city_id'],
+            'street'         => $request['street'],
+            'address'        => $request['address'],
+            'name'           => $request['name'],
+            'surname'        => $request['surname'],
+            'note'           => $request['note'],
+        ]);//Создаем новый заказ
+
+        if($money){
+            $money->money = $money->money+$a;//Добавляем в таблицу user_money в ячейку money сумму по текущему заказу.
+        }else{
+            $money = new UserMoney([
+                'user_id' => $user->id,
+                'company_id' => $request['company_id'],
+                'money' => $a,
+            ]);
+        }//Если покупатель покупает в первы, то нужно создать запись в таблице user_money и занести туда сумму текущей покупки.
+
+        $money->save();//Сохраняем данные по таблице user_money.
+        $order->save();//Сохраняем наш заказ (таблица orders)
+        $company->getOrder()->save($order);//Сохраняем запись в таблице company_order (создаем связь в связующей таблице между заказом и магазином).
+        if($group){
+            $group->money = $group->money+$a;
+            $group->save();
+        }//Если покупатель состоит в группе то добавляем сумму по даному заказу к общему колличеству денег в группе и сохраняем.
+
+
+        header("Location:/order-ready-handle/".$company->id );
+        exit;
     }
 
     public function createOrder(Request $request, CartController $cartController){
@@ -136,8 +243,6 @@ class OrderController extends Controller{
     }
 
     public function ready(Request $request){
-
-
         $this->validate($request, [ 'company_id' => 'required',
                                     'name' => 'required',
                                     'surname' => 'required',

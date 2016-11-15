@@ -209,7 +209,6 @@ Route::post('/new-user-dashboard', ['as'=>'set_user_role', 'uses'=>'UserControll
 /*-------------------------------------------Order--------------------------------------------*/
 //Форма заказа товара.
 Route::post('/order', [ 'as' => 'order', 'uses' => 'OrderController@createOrder' ]);
-
 //Заказ товара.
 Route::post('/order-ready', [ 'as' => 'order-ready', 'uses' => 'OrderController@ready' ]);
 //Просмотр заказа
@@ -220,6 +219,16 @@ Route::get('/change-order-status/{order}/{status}', ['as'=>'change_order_status'
 Route::get('/show-simple-order/{id}', ['as'=>'show-simple-order', 'uses'=>'OrderController@showSimpleOrder']);
 //Просмотр списка закзав сделанных покупателем.
 Route::get('/show-list-order-simple', ['as'=>'show-list-order-simple', 'uses'=>'OrderController@showSimpleOrderList']);
+
+//Регистрация заказа пользователя в ручном режиме (регестрирует продавец у сея в кабинете) (принимат id пользователя-покупателя)
+Route::get('/add-handle-order/{id}/{shop}', ['as'=>'add-handle-order', 'uses'=>'OrderController@orderRegistrHandle']);
+
+//Оформление заказа в ручную.
+Route::any('/order-ready-handle/{id?}', ['as'=>'order-ready-handle', 'uses'=>'OrderController@orderHandleReady']);
+
+
+
+
 
 /*---------------------------------------Status----------------------------------*/
 //Изменение статуса по заказу продавцом.

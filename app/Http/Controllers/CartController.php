@@ -123,7 +123,6 @@ class CartController extends Controller{
 
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Корзина', '/cart');
-
         return view('product.cart')
             ->with('breadcrumbs', $this->_breadcrumbs)
             ->with('addParam', $addParam)

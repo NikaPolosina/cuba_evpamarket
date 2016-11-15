@@ -15,111 +15,118 @@
 
                     <div class="col-sm-10 col-sm-offset-1">
 
-                        @foreach($order->products as $val)
-                            <div class="row product_item_p">
+                        @if($order->products)
 
-                                <div class="col-sm-3">
-                                    <div class="class_img">
+                            @foreach($order->products as $val)
+                                <div class="row product_item_p">
 
-                                        <img class="img-thumbnail" src="{{$val->firstFile}}" alt=""/>
+                                    <div class="col-sm-3">
+                                        <div class="class_img">
 
+                                            <img class="img-thumbnail" src="{{$val->firstFile}}" alt=""/>
+
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-8">
-                                    <table class="table_product" border="1" bordercolor="#cecdc9"  width="100%">
-                                        <tr>
-                                            <td width="30%" style="text-align: right"><span class="option_table_order">Товар:</span></td>
-                                            <td align="center" valign="top"><span class="name">{{$val->product_name}}</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td width="30%" style="text-align: right"><span class="option_table_order">Краткое описание:</span></td>
-                                            <td align="center" valign="top"><span class="product_description"> {{$val->product_description}}</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td width="30%" style="text-align: right"><span class="option_table_order">Колличество:</span></td>
-                                            <td align="center"  align="center">
-                                                <span>{{$val->cnt}}</span>
-                                            </td>
-                                        </tr>
-
-                                        @if(count($val->add_param))
-
+                                    <div class="col-sm-8">
+                                        <table class="table_product" border="1" bordercolor="#cecdc9"  width="100%">
                                             <tr>
-                                                <td width="30%" style="text-align: right"><span class="option_table_order">Дополнительные данные:</span></td>
+                                                <td width="30%" style="text-align: right"><span class="option_table_order">Товар:</span></td>
+                                                <td align="center" valign="top"><span class="name">{{$val->product_name}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td width="30%" style="text-align: right"><span class="option_table_order">Краткое описание:</span></td>
+                                                <td align="center" valign="top"><span class="product_description"> {{$val->product_description}}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td width="30%" style="text-align: right"><span class="option_table_order">Колличество:</span></td>
                                                 <td align="center"  align="center">
-
-
-                                                    @foreach($val->add_param as $param)
-                                                        <div>
-                                                        <span>{{$param['param_name']}}:</span>
-                                                        @if(is_array($param['param_value']['name']))
-                                                            @foreach($param['param_value']['name'] as $cnt => $valName)
-                                                                <div style="font-weight: bold">
-                                                                    {{$valName}}
-                                                                    @if(array_key_exists('css', $param['param_value']))
-                                                                        @if(array_key_exists($cnt, $param['param_value']['css']))
-                                                                            <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-left: 15px;  background-color: {{$param['param_value']['css'][$cnt]}}"></div>
-                                                                        @endif
-                                                                    @endif
-                                                                </div>
-                                                            @endforeach
-                                                        @else
-                                                            {{$param['param_value']['name']}}
-                                                        @endif
-
-                                                        </div>
-
-                                                 {{--       <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: red"></div>--}}
-
-                                                        <hr />
-                                                    @endforeach
+                                                    <span>{{$val->cnt}}</span>
                                                 </td>
                                             </tr>
-                                        @endif
-                                        <tr>
-                                            <td valign="top" width="30%" style="text-align: right">
-                                                {!! Form::label('price', 'Цена: ', ['class' => 'control-label option_table_order']) !!}
-                                            </td>
-                                            <td valign="top" align="center">
-                                                <div class="form-control product_price">
-                                                    {{$val->product_price}} <span> руб.</span>
-                                                </div>
-                                            </td>
 
-                                        </tr>
-                                        <tr>
-                                            <td valign="top" width="30%" style="text-align: right">
-                                                {!! Form::label('price_product', 'Вместе: ', ['class' => ' control-label option_table_order']) !!}
-                                            </td>
-                                            <td valign="top" align="center">
-                                                <div class="form-control product_price">
-                                                    {{$val->product_price*$val->cnt}}<span> руб.</span>
-                                                </div>
-                                            </td>
+                                            @if(count($val->add_param))
 
-                                        </tr>
-                                        <tr>
-                                            <td valign="top" width="30%" style="text-align: right">
-                                                {!! Form::label('discount_price', 'С учётом скидки -  '.$order->percent.' %', ['class' => ' control-label option_table_order']) !!}
-                                            </td>
-                                            <td valign="top" align="center">
-                                                <div class="form-control product_price" style="color: red;">
-                                                    {{$order->discount_price}}<span> руб.</span>
-                                                </div>
-                                            </td>
+                                                <tr>
+                                                    <td width="30%" style="text-align: right"><span class="option_table_order">Дополнительные данные:</span></td>
+                                                    <td align="center"  align="center">
 
-                                        </tr>
-                                        <tr>
-                                            <td width="30%" style="text-align: right"><span class="option_table_order">Примечание к заказу:</span></td>
-                                            <td align="center" valign="top"><span class="product_description"> {{$order->note}}</span></td>
-                                        </tr>
 
-                                    </table>
+                                                        @foreach($val->add_param as $param)
+                                                            <div>
+                                                            <span>{{$param['param_name']}}:</span>
+                                                            @if(is_array($param['param_value']['name']))
+                                                                @foreach($param['param_value']['name'] as $cnt => $valName)
+                                                                    <div style="font-weight: bold">
+                                                                        {{$valName}}
+                                                                        @if(array_key_exists('css', $param['param_value']))
+                                                                            @if(array_key_exists($cnt, $param['param_value']['css']))
+                                                                                <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-left: 15px;  background-color: {{$param['param_value']['css'][$cnt]}}"></div>
+                                                                            @endif
+                                                                        @endif
+                                                                    </div>
+                                                                @endforeach
+                                                            @else
+                                                                {{$param['param_value']['name']}}
+                                                            @endif
+
+                                                            </div>
+
+                                                     {{--       <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: red"></div>--}}
+
+                                                            <hr />
+                                                        @endforeach
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                            <tr>
+                                                <td valign="top" width="30%" style="text-align: right">
+                                                    {!! Form::label('price', 'Цена: ', ['class' => 'control-label option_table_order']) !!}
+                                                </td>
+                                                <td valign="top" align="center">
+                                                    <div class="form-control product_price">
+                                                        {{$val->product_price}} <span> руб.</span>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td valign="top" width="30%" style="text-align: right">
+                                                    {!! Form::label('price_product', 'Вместе: ', ['class' => ' control-label option_table_order']) !!}
+                                                </td>
+                                                <td valign="top" align="center">
+                                                    <div class="form-control product_price">
+                                                        {{$val->product_price*$val->cnt}}<span> руб.</span>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td valign="top" width="30%" style="text-align: right">
+                                                    {!! Form::label('discount_price', 'С учётом скидки -  '.$order->percent.' %', ['class' => ' control-label option_table_order']) !!}
+                                                </td>
+                                                <td valign="top" align="center">
+                                                    <div class="form-control product_price" style="color: red;">
+                                                        {{$order->discount_price}}<span> руб.</span>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td width="30%" style="text-align: right"><span class="option_table_order">Примечание к заказу:</span></td>
+                                                <td align="center" valign="top"><span class="product_description"> {{$order->note}}</span></td>
+                                            </tr>
+
+                                        </table>
+
+                                    </div>
 
                                 </div>
+                            @endforeach
 
-                            </div>
-                        @endforeach
+                        @else
+                            <h3>Заказ был выполнен в ручном режиме</h3>
+                        @endif
+
                     </div>
 
                         <div class="col-sm-3 col-sm-offset-9">

@@ -15,18 +15,29 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-12 user_holder">
-                <div class="col-sm-4">
-                    <div class="user_photo">
-                        <img src="/img/placeholder/avatar.jpg" alt="">
-                    </div>
-                </div>
-                <div class="col-sm-8" style="margin-top: 10%;">
-                    <div class="user_name">
+            <div class="user_holder col-sm-12" style="display: none">
+                <a class="add_hendle_order" href="">
+                    <div class="col-sm-12">
+                        <div class="col-sm-4">
+                            <div class="user_photo">
+                                <img src="/img/placeholder/avatar.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="user_name">
 
+                            </div>
+                        </div>
                     </div>
+                </a>
+            </div>
+
+            <div class="user_none col-sm-12" style="display: none">
+                <div class="col-sm-12">
+                    Под таким номером пользователь не найден.
                 </div>
             </div>
+
         </div>
 
 
@@ -37,7 +48,14 @@
 
 <script>
 $('.find_user_number').on('click', function () {
+
+    $('a.add_hendle_order').attr('href','');
+    $('.user_holder').find('.user_name').html('');
+    $('.user_photo').find('img').attr('src', '/img/placeholder/avatar.jpg');
+
     var number = $('.input_find_user').val();
+
+
     $.ajax({
         type    : "POST",
         url     : "/find-user-by-number",
@@ -51,32 +69,36 @@ $('.find_user_number').on('click', function () {
 
 
             if(msg.user != null){
+                $('a.add_hendle_order').attr('href','/add-handle-order/'+msg.user.id+'/'+ company_id);
                 $('.user_holder').find('.user_name').html(msg.user.get_user_information.name+ '   ' + msg.user.get_user_information.surname);
-
 
                 if(!msg.user.get_user_information.avatar.length){
                     $('.user_photo').find('img').attr('src', '/img/placeholder/avatar.jpg');
                 }else{
                     $('.user_photo').find('img').attr('src', msg.user.get_user_information.avatar);
                 }
+                $('.user_none').hide();
+                $('.user_holder').show();
 
+            }else{
+                $('.user_holder').hide();
+                $('.user_none').show();
             }
 
-
-           /* $('.user_holder').show();*/
-
-            
         }
     });
 });
 
-
-  
 </script>
 <style>
 
     .user_holder{
         border: solid 1px #dddddd;
         background-color: whitesmoke;
+    }
+    .user_none{
+        border: solid 1px #dddddd;
+        background-color: whitesmoke;
+        margin: 5px;
     }
 </style>
