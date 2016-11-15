@@ -195,6 +195,9 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
 
 Route::get('/login-user', ['as' => 'login-user', 'uses' => 'HomeController@Index' ]);
 
+//Ргистрация покупателя в ручном режиме продавцом.
+Route::post('/register-handle', ['as' => 'register-handle', 'uses' => 'Auth\AuthController@createUserHandle' ]);
+
 Route::group([ 'middleware' => [ 'role:simple_user'] ], function (){
     Route::get('/homeSimpleUser', ['as' => 'homeSimpleUser', 'uses' => 'HomeController@registerSimple' ]);
 

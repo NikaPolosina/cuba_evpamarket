@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AdditionParam;
+use App\Region;
 use App\Category;
 use App\Order;
 use App\Http\Requests;
@@ -388,6 +389,8 @@ class ProductsController extends Controller{
         }
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Магазин - '.$company->company_name, '/product-editor/'.$company->id);
+        
+        $region = Region::all();//берем обект region где хранятся все регионы, для того что бы можно было зарегистрировать покупателя в ручном режиме.
 
         return view('product.productsEditor')->with([
             'category'     => json_encode($currentCompanyCategoriesSorted),
@@ -396,6 +399,7 @@ class ProductsController extends Controller{
             'paginCnt'     => $this->paginCnt,
             'categories'   => json_encode($category->getAllCategoris())
         ])
+            ->with('region', $region)
             ->with('breadcrumbs', $this->_breadcrumbs);
     }
 

@@ -31,6 +31,7 @@ class AuthController extends Controller{
 //        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
+    //Валидация стандартных полей
     protected function validator(array $data){
         return Validator::make($data, [
             'email' => 'required|email|max:255|unique:users',
@@ -38,6 +39,7 @@ class AuthController extends Controller{
             'password' => 'required|min:6|confirmed',
         ]);
     }
+    //Валидация дополнительных полей при записи информации по пользователю.
     protected function myValidator(array $data){
         return Validator::make($data, [
             'name' => 'required|max:255',
@@ -54,6 +56,12 @@ class AuthController extends Controller{
         ]
         );
     }
+
+    //Метод для регистрации покупателя в пучном режиме продавцом.
+    public function createUserHandle(Request $request){
+        dd($request->all());
+    }
+    
     protected function create(array $data){
 
         $user = User::create([
@@ -95,7 +103,7 @@ class AuthController extends Controller{
 
     public function registerAditional(Request $request, UserInformation $userInformation){
 
-
+        
         $userinfo =  Auth::user()->getUserInformation;
        if(!Auth::user()->getUserInformation){
 
