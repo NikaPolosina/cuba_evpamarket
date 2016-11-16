@@ -59,7 +59,8 @@ Route::any('/products/create-by-category', 'ProductsController@createByCategory'
 Route::any('/products-category', ['as' => 'products-category', 'uses' => 'ProductsController@storeCategory']);
 Route::get('/get-product-paginate', ['as' => 'get-product-paginate', 'uses' => 'ProductsController@productPaginate']);
 //При нажатии на свой магазин в кабинете продавца. Просмотр свого магазина.Список товаров, категорий и статистика.
-Route::get('/product-editor/{id}', 'ProductsController@productEditor');
+Route::get('/product-editor/{id}/{user_new?}', ['as'=>'product-editor','uses'=>'ProductsController@productEditor']);
+
 Route::post('/products/edit-categoty', 'ProductsController@editCategory');
 //Удаление продукта.
 Route::post('/product/destroy', 'ProductsController@destroy');

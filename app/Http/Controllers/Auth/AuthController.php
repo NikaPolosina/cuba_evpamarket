@@ -56,14 +56,71 @@ class AuthController extends Controller{
         ]
         );
     }
+    protected function validationHandle(array $data){
+//        dd($data);
+        return Validator::make($data, [
+            'email'      => 'required|email|max:255|unique:users,email',
+            'phone'      => 'required|string|max:15|unique:users,phone',
+            'name'       => 'required|max:255',
+            'surname'    => 'required|max:255',
+            'date_birth' => 'required',
+            'gender'     => 'required|boolean',
+            'region'     => 'required',
+            'city'       => 'required|max:255',
+            'street'     => 'max:255',
+            'add  ress'  => 'max:255',
+        ], [
+                'required' => 'Поле :attribute должно быть заполнено.',
+            ]);
+    }
 
     //Метод для регистрации покупателя в пучном режиме продавцом.
     public function createUserHandle(Request $request){
-        dd($request->all());
+        $v = $this->validationHandle($request->all());
+        $v->setAttributeNames([
+            'name'=> 'Имя',
+            'surname'=> 'Фамилия',
+            'date_birth'=> 'Дата рождения',
+            'gender'=> 'Пол',
+            'email'=> 'email',
+            'phone'=> 'Телефон',
+        ]);
+        //Если мы проваливаем валидацию то возвращаем превидущую страницу с ошибками и старыми значениями в импутах.
+        if($v->fails()){
+            return redirect()->back()->withInput()->withErrors($v);
+        }
+        //Создаем нового пользователя  и записываем данные в таблицу users.
+        $newUser =  User::create([
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'password' => bcrypt(123456),
+        ]);
+        //Выьираем с БД обект roli по id=2 (роль покупателя) и аттачим ее к нашему новому пользователю которого регистируем.
+        $role = Role::findOrFail(2);
+        $newUser->attachRole($role);
+        //Создаем запись для БД о дополнительной информации о пользователе в таблицу user_information.
+        $newUserInform = new UserInformation([
+            'name'       => $request['name'],
+            'surname'    => $request[ 'surname' ],
+            'date_birth' => Carbon::createFromFormat('Y.m.d', $request['date_birth']),
+            'gender'     => $request['gender'],
+            'region_id'  => $request['region'],
+            'city_id'    => $request['city'],
+            'street'     => $request['street'],
+            'address'    => $request['address'],
+            'country'    => 'Росcия',
+        ]);
+        //Делаем свяь между таблицей users и таблицей user_information по id.
+        $newUser->getUserInformation()->save($newUserInform);
+        //Сохраняем данные в таблице user_information.
+        $newUserInform->save();
+
+
+        return redirect()->route('product-editor', ['id' => $request['company_id'], 'user_new' => $newUser['id']]);
+
     }
     
     protected function create(array $data){
-
         $user = User::create([
             'email' => $data['email'],
             'phone' => $data['phone'],

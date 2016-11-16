@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\AdditionParam;
 use App\Region;
 use App\Category;
 use App\Order;
 use App\Http\Requests;
+use App\User;
 use Doctrine\DBAL\Schema\View;
 use Illuminate\Http\Request;
 use App\StatusOwner;
@@ -376,7 +376,7 @@ class ProductsController extends Controller{
             ->with('breadcrumbs', $this->_breadcrumbs);
     }
     //Метод показывающий информацию о компании в кабинете продавца. Принимает id магазина.
-    public function productEditor(CategoryController $category, $id){
+    public function productEditor(CategoryController $category, $id, $user_new = null){
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
         $company = Company::find($id);
@@ -392,6 +392,9 @@ class ProductsController extends Controller{
         
         $region = Region::all();//берем обект region где хранятся все регионы, для того что бы можно было зарегистрировать покупателя в ручном режиме.
 
+        if($user_new){
+            $user_new = User::where('id', $user_new)->with('getUserInformation')->first();
+        }
         return view('product.productsEditor')->with([
             'category'     => json_encode($currentCompanyCategoriesSorted),
             'company'      => $company,
@@ -400,7 +403,8 @@ class ProductsController extends Controller{
             'categories'   => json_encode($category->getAllCategoris())
         ])
             ->with('region', $region)
-            ->with('breadcrumbs', $this->_breadcrumbs);
+            ->with('breadcrumbs', $this->_breadcrumbs)
+            ->with('user_new', $user_new);
     }
 
     public function getProductList(Request $request, CategoryController $category){

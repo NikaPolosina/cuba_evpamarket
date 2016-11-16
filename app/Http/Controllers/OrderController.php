@@ -35,6 +35,7 @@ class OrderController extends Controller{
         $seller =  User::where('id', Auth::user()->id)->with(['getCompanies' =>function($query) use ($shop){
             $query->where('id', $shop);
         }])->first();
+
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Магазин - '.$seller->getCompanies[0]['company_name'], '/product-editor/'.$seller->getCompanies[0]['id']);
         $this->_breadcrumbs->addCrumb('Офорление заказа в ручном режиме', '/add-handle-order/'.$id.'/'.$shop);
@@ -81,10 +82,16 @@ class OrderController extends Controller{
         $satus = StatusOwner::where('key', 'sending_buyer')->first();//Берем обьект status owner для того что бы поставить статус заказа при оформлении что он завершенный.
         $group = $user->getGroup()->where('company_id', $request['company_id'])->first();//Если покупатель сосоит в группе то берем обект этой группы по магазину.
         $money = UserMoney::where('user_id', $user->id)->where('company_id', $request['company_id'])->first();//Обьект UserMoney.
+
         if($group){
             $t = $group->money + $request['total_price'];
         }else{
-            $t = $money->money + $request['total_price'];
+            if(!$money){
+                $t = 0;
+            }else{
+                $t = $money->money + $request['total_price'];
+
+            }
         }//Если покупатель состоит в группе, то нужно взять сумму для учета скидки с группы.
 
         $discount = $company->getDiscountAccumulativ()->where('from', '<=', $t)->orderBy('from', 'desc')->first();

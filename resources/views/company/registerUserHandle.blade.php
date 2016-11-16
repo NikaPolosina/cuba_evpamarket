@@ -6,7 +6,7 @@
 
 
                 <span style="right: 0px!important; top: 0px!important; display:table-cell;" class="input-group-addon  glyphicon glyphicon-search" aria-hidden="true"></span>
-                <input class="form-control input_find_user" name="find-number" type="number" placeholder="Введите номер телефона..."/>
+                <input @if($user_new) @endif class="form-control input_find_user" name="find-number" type="number" placeholder="Введите номер телефона..."/>
                                   <span class="input-group-btn find_user_number">
                                         <button class="btn btn-default" type="button">Поиск</button>
                                     </span>
@@ -15,6 +15,42 @@
         </div>
 
         <div class="row">
+            @if($user_new)
+
+                <div class="user_holder col-sm-12" style="">
+                    <a class="add_hendle_order" href="/add-handle-order/{{$user_new->id}}/{{$company->id}}">
+                        <div class="col-sm-12" style="border: solid 1px #dddddd; margin: 5px;">
+                            <div class="col-sm-4">
+                                <div class="user_photo">
+                                    <img src="/img/placeholder/avatar.jpg" alt="">
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="user_name">
+                                   {{ $user_new->getUserInformation->name}} {{$user_new->getUserInformation->surname}}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div>
+                        <div style="text-align: center; margin: 5px;">
+                            Пользователь был зареестрированым и для входа в свой кабинет нужно указать:
+                        </div>
+                        <div style="margin: 10px;">
+                            <div>
+                                Логин:  <span style="color: darkblue;"> {{$user_new->email}}</span>
+                            </div>
+                            <div>
+                                Пароль:  <span style="color: darkblue;">123456</span>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                @endif
             <div class="user_holder col-sm-12" style="display: none">
                 <a class="add_hendle_order" href="">
                     <div class="col-sm-12">
@@ -49,12 +85,13 @@
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/register-handle') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="company_id" value="{{ $company->id }}">
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label class="col-md-4 control-label">E-Mail <span class="required_css">*</span></label>
 
                                 <div class="col-md-8">
-                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
 
                                     @if ($errors->has('email'))
                                         <span class="help-block">
@@ -101,7 +138,7 @@
 
                                     @if ($errors->has('surname'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('surname') }}</strong>
+                                        <strong>{{ $errors->first('surname')}}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -183,7 +220,7 @@
 </div>
 {!! HTML::script('/js/registerList.js') !!}
 <script>
-    $('.find_user_number').on('click', function () {
+        $('.find_user_number').on('click', function () {
 
         $('a.add_hendle_order').attr('href','');
         $('.user_holder').find('.user_name').html('');
@@ -225,8 +262,11 @@
         });
     });
     $('.user_none').find('button.handle_reg_new').on('click', function () {
+        $('.user_new_registr').show();
+
 
     });
+    $('.user_new_registr').hide();
 
 </script>
 <style>
@@ -239,5 +279,9 @@
         border: solid 1px #dddddd;
         background-color: whitesmoke;
         margin: 5px;
+    }
+
+    .chosen-container{
+        width: 100% !important;
     }
 </style>

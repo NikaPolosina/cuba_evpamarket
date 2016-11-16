@@ -6,7 +6,6 @@
     <link href="/assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css"/>
 
     @include('layouts.breadcrumbs')
-
     <div class="col-sm-12">
         <div class="table-responsive">
             <h1 style="text-align: center">{{ $company->company_name }}</h1>
