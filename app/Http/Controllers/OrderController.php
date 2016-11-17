@@ -476,7 +476,8 @@ class OrderController extends Controller{
         if(Auth::user()->hasRole('company_owner')){
             $this->_breadcrumbs->addCrumb('Домой', '/login-user');
             $this->_breadcrumbs->addCrumb('Мои магазины', '/my_shops');
-            $this->_breadcrumbs->addCrumb('Мои заказы по магазину - '.$order->products['0']->getCompany['0']->company_name, '/order-by-status/'.$order->products['0']->getCompany['0']->id.'/'.$order->status);
+            if($order->products)
+                $this->_breadcrumbs->addCrumb('Мои заказы по магазину - '.$order->products['0']->getCompany['0']->company_name, '/order-by-status/'.$order->products['0']->getCompany['0']->id.'/'.$order->status);
             $this->_breadcrumbs->addCrumb('Заказ', '/show-simple-order/'.$id);
         }
         if(Auth::user()->hasRole('simple_user')){
