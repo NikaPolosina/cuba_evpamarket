@@ -99,18 +99,18 @@
                                 <div class=" product_price">
                                     <input class="total_history_amount" type="hidden" value="{{$money->money}}"/>
                                     <h4>
-                                        Сумма завершенных заказов составляет -  <span style="color: darkblue;">  <span class="">{{$money->money}} </span> руб.</span>
+                                        Сумма завершенных заказов </br>по данному магазину составляет -  <span style="color: darkblue;">  <span class="">{{$money->money}} </span> руб.</span>
                                     </h4>
 
                                     <h4>
                                         Общяя сумма заказов составляет -  <span style="color: darkblue;">  <span class="total">{{$money->money}} </span> руб.</span>
                                     </h4>
 
-                                    <h4>
+                                    <h4 style="font-weight: bold">
                                         Сумма к оплате -  <span style="color: darkblue;">  <span class="sum_for_pay">0 </span> руб.</span>
                                     </h4>
                                     <h4>
-                                        Текущая сумма -  <span style="color: darkblue;">  <span class="curent_sum">{{$money->money}} </span> руб.</span>
+                                        Текущая покупка на сумму -  <span style="color: darkblue;">  <span class="curent_sum">{{$money->money}} </span> руб.</span>
                                     </h4>
                                     <h4>
                                         Текущая скидка составляет - <span style="color: darkblue;">  <span class="current_percent">0 </span> %</span>

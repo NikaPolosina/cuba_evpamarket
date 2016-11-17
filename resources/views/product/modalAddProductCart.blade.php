@@ -71,7 +71,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr class="add_param_chosen">
+                                    <tr class="add_param_chosen" style="display: none">
                                     </tr>
                                     <tr>
                                         <td width="45%" class="right">
