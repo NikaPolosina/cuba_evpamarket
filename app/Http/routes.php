@@ -35,11 +35,14 @@ Route::any('/show-company/{id}', 'CompanyController@show');
 Route::any('/company-content', ['as' => 'company-content', 'uses' => 'CompanyController@companyContent']);
 
 Route::get('/my_shops', ['as' => 'my_shops', 'uses' => 'CompanyController@getMyShop']);
+//Роут для перехода на страницу установки накопительных скидок продавцом. Принимает id магазина.
 Route::get('/company-discount-setup/{id}', ['as' => 'company-discount-setup', 'uses' => 'CompanyController@setupDiscount']);
+//Роут для создания дисконта(накопительных скидок).
 Route::post('/company-create-discount/{id}', ['as' => 'company-create-discount', 'uses' => 'CompanyController@createDiscount']);
+//Роут для удаления дисконтных скидок продавцом.(Принимает id-магазина и id дисконтной скидки.)
 Route::post('/company-destroy-discount/{company_id}/{discount_id}', ['as' => 'company-destroy-discount', 'uses' => 'CompanyController@destroyDiscount']);
-/*
-Route::get('/company-create-view', ['as' => 'company-create-view', 'uses' => 'CompanyController@create']);*/
+
+//Route::get('/company-create-view', ['as' => 'company-create-view', 'uses' => 'CompanyController@create']);
 Route::get('company/{id}/edit', 'CompanyController@edit');
 Route::patch('company-create-single/{id}', 'CompanyController@update');
 Route::get('/company/create', ['as' => 'company-create', 'uses' => 'CompanyController@create']);

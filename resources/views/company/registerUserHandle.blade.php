@@ -79,7 +79,7 @@
             </div>
 
 {{-----------------------------------------------------------------------------------------------------}}
-            <div class="col-sm-12 user_new_registr" {{--style="display: none"--}}>
+            <div class="col-sm-12 user_new_registr"  @if(count($errors)) style="display: block" @else style="display: none"  @endif>
                 <div class="panel panel-default">
                     <div class="panel-heading">Регистрация</div>
                     <div class="panel-body">
@@ -266,7 +266,7 @@
 
 
     });
-    $('.user_new_registr').hide();
+   /* $('.user_new_registr').hide();*/
 
 </script>
 <style>

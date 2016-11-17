@@ -124,12 +124,12 @@
                             @endforeach
 
                         @else
-                            <h3>Заказ был выполнен в ручном режиме</h3>
+                            <h3>Заказ был выполнен в ручном режиме. </h3>
                         @endif
 
                     </div>
 
-                        <div class="col-sm-3 col-sm-offset-9">
+                        <div class="col-sm-3 col-sm-offset-9" style="margin-bottom: 20px;">
                             <span style="font-weight: bold;">Общяя стоимость: </span>
                             <div class="form-control product_price">
                                 {{$order->discount_price}}<span> руб.</span>
