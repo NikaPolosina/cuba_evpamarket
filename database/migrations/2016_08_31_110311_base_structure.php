@@ -148,7 +148,8 @@ class BaseStructure extends Migration{
             $table->string('placeholder');
             $table->string('type');
             $table->string('type_for_by');
-            $table->boolean('required');
+            $table->boolean('required'); 
+            $table->boolean('request_buyer');
             $table->float('sort');
             $table->string('default');
             $table->boolean('request');

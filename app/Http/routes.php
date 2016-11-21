@@ -23,6 +23,7 @@ Route::get('/', 'IndexController@Index');
 /*-------------------------------------------Auth----------------------------------------------*/
 Route::auth();
 Route::get('/register-c', 'Auth\AuthController@registerC');
+
 Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
 
 /*-------------------------------------------Location----------------------------------------------*/
@@ -33,7 +34,7 @@ Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
 Route::any('/show-company/{id}', 'CompanyController@show');
 //Для создания дополнительной информации о компании.
 Route::any('/company-content', ['as' => 'company-content', 'uses' => 'CompanyController@companyContent']);
-
+//При нажатии в кабинете продавца на (Мои заказы) - попадаем на список магазинов где светятся не просмотренные заказы по каждому магазину.
 Route::get('/my_shops', ['as' => 'my_shops', 'uses' => 'CompanyController@getMyShop']);
 //Роут для перехода на страницу установки накопительных скидок продавцом. Принимает id магазина.
 Route::get('/company-discount-setup/{id}', ['as' => 'company-discount-setup', 'uses' => 'CompanyController@setupDiscount']);
@@ -41,13 +42,17 @@ Route::get('/company-discount-setup/{id}', ['as' => 'company-discount-setup', 'u
 Route::post('/company-create-discount/{id}', ['as' => 'company-create-discount', 'uses' => 'CompanyController@createDiscount']);
 //Роут для удаления дисконтных скидок продавцом.(Принимает id-магазина и id дисконтной скидки.)
 Route::post('/company-destroy-discount/{company_id}/{discount_id}', ['as' => 'company-destroy-discount', 'uses' => 'CompanyController@destroyDiscount']);
-
-//Route::get('/company-create-view', ['as' => 'company-create-view', 'uses' => 'CompanyController@create']);
+//РОут что направлят на форму редактирования информации о компании (магазину).
 Route::get('company/{id}/edit', 'CompanyController@edit');
+//Сохраняет отредактированные даные по компании (магазину) принимает id-магазина.
 Route::patch('company-create-single/{id}', 'CompanyController@update');
+//Роут что направлет на форму создания новой компании(магазина).
 Route::get('/company/create', ['as' => 'company-create', 'uses' => 'CompanyController@create']);
+//Роут что направляет на страницу, где нужно внести дополнительную информацию по магазину (поле дополнительная информация)
 Route::get('/company-done-create', ['as' => 'company-done-create', 'uses' => 'CompanyController@store']);
+//Создание компании и запись данных в БД (таблица companies)/
 Route::post('/company-done-create', ['as' => 'company-done-create', 'uses' => 'CompanyController@store']);
+//Удаление компании (магазина) принимает id - магазина.
 Route::post ('company-delete/{id}', 'CompanyController@destroy');
 
 /*------------------------------------------ProductController---------------------------------------------*/
@@ -89,19 +94,20 @@ Route::match(['post', 'patch'], '/save-product', ['as'=>'save_product_form', 'us
 
 
 /*-------------------------------------------User----------------------------------------------*/
-Route::any('/user/simple_user/message', 'UserController@message');
+/*Route::any('/user/simple_user/message', 'UserController@message');
 Route::any('/user/simple_user/payments', 'UserController@payments');
 Route::any('/user/simple_user/delivery', 'UserController@delivery');
 Route::any('/user/simple_user/liked', 'UserController@liked');
 Route::any('/user/simple_user/basket', 'UserController@basket');
 Route::any('/user/simple_user/setting', 'UserController@setting');
 Route::any('/user/simple_user/setting/overall', 'UserController@settingOverall');
-Route::any('/user/simple_user/setting/security', 'UserController@settingSecurity');
-Route::any('/user/simple_user/setting/security/edit-simple', 'UserController@settingOverallEditSimple');
+Route::any('/user/simple_user/setting/security', 'UserController@settingSecurity');*/
+/*Route::any('/user/simple_user/setting/security/edit-simple', 'UserController@settingOverallEditSimple');
 Route::post('/user/simple_user/setting/security/edit-owner', 'UserController@settingOverallEditOwner');
-Route::get('/show-user/{id}', 'UserController@getUserPage');
+Route::get('/show-user/{id}', 'UserController@getUserPage');*/
 
 /*-------------------------------------------Category----------------------------------------------*/
+//Роут что переводит на страницу где можно добавить необходимые категории себе в магазин (продавцом), принимает id-магазина.
 Route::any('category/category-setup/{id}', 'CategoryController@categorySetup');
 Route::post('/category/edit-categoty', ['as' => 'attach_categories', 'uses'=>'CategoryController@attachCategoriesToCompany']);
 Route::post('/category/edit-categoty_two', ['as' => 'attach_categories_two', 'uses'=>'CategoryController@attachCategoriesToCompanyTwo']);

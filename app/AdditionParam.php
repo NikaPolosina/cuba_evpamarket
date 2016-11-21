@@ -11,7 +11,7 @@ class AdditionParam extends Model{
 
     protected $table = 'additional_param';
 
-    protected $fillable = ['title', 'description', 'placeholder', 'type', 'required', 'sort', 'default', 'value'];
+    protected $fillable = ['title', 'description', 'placeholder', 'type', 'required', 'request', 'request_buyer', 'sort', 'default', 'value'];
     
 }
 

@@ -166,6 +166,7 @@ class AdminController extends Controller{
         $this->_param->sort = $request['sort'];
         $this->_param->default = $request['default'];
         $this->_param->request = $request['request'];
+        $this->_param->request_buyer = $request['request_buyer'];
 
         if(is_array($request->input('value'))){
             $value = $request->input('value');

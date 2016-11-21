@@ -15,51 +15,91 @@
     <div class="form-group {{ $errors->has('title') ? 'has-error' : ''}}">
         <div class="col-sm-12">
             <div class="col-sm-4">
-                {{ Form::label('title', 'Имя: ', ['class' => 'col-sm-2 control-label'])}}
-                <div class="col-sm-10">
-                    <div class="col-sm-12">
-                        {!! Form::text('title', NULL, ['class' => 'form-control my_form_add_param', 'required' => 'required']) !!}
-                        {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
-                    </div>
 
-                </div>
-                {{ Form::label('description', 'Описание: ', ['class' => 'col-md-2 control-label'])}}
-                <div class="col-sm-10">
+                <div class="row">
                     <div class="col-sm-12">
-                        {!! Form::textarea('description', NULL, ['class' => 'form-control my_form_add_param my_textarea', 'rows' => '3',  'required' => 'required'  ]) !!}
-                        {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
-                    </div>
-                </div>
-                {{ Form::label('sort', 'Сортировка: ', ['class' => 'col-md-2 control-label'])}}
-                <div class="col-sm-10">
-                    <div class="col-sm-12">
-                        {!! Form::number('sort', NULL, ['class' => 'form-control my_form_add_param ', 'min' => 0, 'step' => '0.1' ]) !!}
-                        {!! $errors->first('sort', '<p class="help-block">:message</p>') !!}
-                    </div>
-                </div>
-                {{ Form::label('placeholder', 'Подсказка: ', ['class' => 'col-md-2 control-label'])}}
-                <div class="col-sm-10">
-                    <div class="col-sm-12">
-                        {!! Form::text('placeholder', NULL, ['class' => 'form-control my_form_add_param ']) !!}
-                        {!! $errors->first('placeholder', '<p class="help-block">:message</p>') !!}
+                        {{ Form::label('title', 'Имя: ', ['class' => 'col-sm-2 control-label'])}}
+                        <div class="col-sm-10">
+                            <div class="col-sm-12">
+                                {!! Form::text('title', NULL, ['class' => 'form-control my_form_add_param', 'required' => 'required']) !!}
+                                {!! $errors->first('title', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                {{ Form::label('required', 'Обязательно: ', ['class' => 'col-md-2 control-label'])}}
-                <div class="col-sm-10">
+                <div class="row">
                     <div class="col-sm-12">
-                        {!! Form::select('required', array('1' => 'ДА', '0' => 'НЕТ'), NULL, ['class' => 'form-control my_form_add_param ']) !!}
-                        {!! $errors->first('required', '<p class="help-block">:message</p>') !!}
+                        {{ Form::label('description', 'Описание: ', ['class' => 'col-sm-2 control-label'])}}
+                        <div class="col-sm-10">
+                            <div class="col-sm-12">
+                                {!! Form::textarea('description', NULL, ['class' => 'form-control my_form_add_param my_textarea', 'rows' => '3',  'required' => 'required'  ]) !!}
+                                {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                {{ Form::label('request', 'Возможность выбора: ', ['class' => 'col-md-2 control-label'])}}
-                <div class="col-sm-10">
+                <div class="row">
                     <div class="col-sm-12">
-                        {!! Form::select('request', array('1' => 'ДА', '0' => 'НЕТ'), NULL, ['class' => 'form-control my_form_add_param request']) !!}
-                        {!! $errors->first('request', '<p class="help-block">:message</p>') !!}
+                        {{ Form::label('sort', 'Сортировка: ', ['class' => 'col-sm-2 control-label'])}}
+                        <div class="col-sm-10">
+                            <div class="col-sm-12">
+                                {!! Form::number('sort', NULL, ['class' => 'form-control my_form_add_param ', 'min' => 0, 'step' => '0.1' ]) !!}
+                                {!! $errors->first('sort', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{ Form::label('placeholder', 'Подсказка: ', ['class' => 'col-sm-2 control-label'])}}
+                        <div class="col-sm-10">
+                            <div class="col-sm-12">
+                                {!! Form::text('placeholder', NULL, ['class' => 'form-control my_form_add_param ']) !!}
+                                {!! $errors->first('placeholder', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{ Form::label('required', 'Обязательно: ', ['class' => 'col-sm-2 control-label'])}}
+                        <div class="col-sm-10">
+                            <div class="col-sm-12">
+                                {!! Form::select('required', array('1' => 'ДА', '0' => 'НЕТ'), NULL, ['class' => 'form-control my_form_add_param ']) !!}
+                                {!! $errors->first('required', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{ Form::label('request', 'Возможность выбора продавцом: ', ['class' => 'col-sm-2 control-label'])}}
+                        <div class="col-sm-10">
+                            <div class="col-sm-12">
+                                {!! Form::select('request', array('1' => 'ДА', '0' => 'НЕТ'), NULL, ['class' => 'form-control my_form_add_param request']) !!}
+                                {!! $errors->first('request', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{ Form::label('request_buyer', 'Покупатель сам указывает значение: ', ['class' => 'col-sm-2 control-label'])}}
+                        <div class="col-sm-10">
+                            <div class="col-sm-12">
+                                {!! Form::select('request_buyer', array('1' => 'ДА', '0' => 'НЕТ'), NULL, ['class' => 'form-control my_form_add_param request_buyer']) !!}
+                                {!! $errors->first('request_buyer', '<p class="help-block">:message</p>') !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
             <div class="col-sm-7 value">
