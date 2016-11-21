@@ -29,7 +29,7 @@
 
             </div>
 
-            <div class="col-sm-8">
+            <div class="col-sm-7">
                 <div class="table" id="product_list">
                     @include('product.productListBody', array(
                                     'products' => $company->getProducts()->paginate($paginCnt),
@@ -37,7 +37,7 @@
                                      ))
                 </div>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 @include('company.registerUserHandle')
 
             </div>
