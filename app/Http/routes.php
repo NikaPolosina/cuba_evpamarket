@@ -85,26 +85,10 @@ Route::post('/products/ajax-single-product',['as'=>'ajax_single_product', 'uses'
 
 Route::get('/product/ajax-to-cart-add-param/{id}',['as'=>'ajax_single_product_add_param_chose', 'uses'=>'ProductsController@ajaxSingleProductAdd']);
 
-
-
 Route::get('/product-form/{companyId}/{categoryId?}/{productId?}', ['as'=>'product_form', 'uses'=>'ProductsController@productForm']);
 
 
 Route::match(['post', 'patch'], '/save-product', ['as'=>'save_product_form', 'uses'=>'ProductsController@saveProductForm']);
-
-
-/*-------------------------------------------User----------------------------------------------*/
-/*Route::any('/user/simple_user/message', 'UserController@message');
-Route::any('/user/simple_user/payments', 'UserController@payments');
-Route::any('/user/simple_user/delivery', 'UserController@delivery');
-Route::any('/user/simple_user/liked', 'UserController@liked');
-Route::any('/user/simple_user/basket', 'UserController@basket');
-Route::any('/user/simple_user/setting', 'UserController@setting');
-Route::any('/user/simple_user/setting/overall', 'UserController@settingOverall');
-Route::any('/user/simple_user/setting/security', 'UserController@settingSecurity');*/
-/*Route::any('/user/simple_user/setting/security/edit-simple', 'UserController@settingOverallEditSimple');
-Route::post('/user/simple_user/setting/security/edit-owner', 'UserController@settingOverallEditOwner');
-Route::get('/show-user/{id}', 'UserController@getUserPage');*/
 
 /*-------------------------------------------Category----------------------------------------------*/
 //Роут что переводит на страницу где можно добавить необходимые категории себе в магазин (продавцом), принимает id-магазина.
@@ -224,53 +208,53 @@ Route::post('/new-user-dashboard', ['as'=>'set_user_role', 'uses'=>'UserControll
 Route::post('/order', [ 'as' => 'order', 'uses' => 'OrderController@createOrder' ]);
 //Заказ товара.
 Route::post('/order-ready', [ 'as' => 'order-ready', 'uses' => 'OrderController@ready' ]);
-//Просмотр заказа
+//Просмотр заказа (принимает id-заказа).
 Route::get('/show-order/{id}', 'OrderController@showOrder');
-
+//РОут на изменение статуса заказа продавцом (принимает id-заказа и id-нового статуса).
 Route::get('/change-order-status/{order}/{status}', ['as'=>'change_order_status', 'uses'=>'OrderController@changStatus']);
 //Просмотр единичного заказа(просмотр деталей заказа) покупателем. Принимает id заказа.
 Route::get('/show-simple-order/{id}', ['as'=>'show-simple-order', 'uses'=>'OrderController@showSimpleOrder']);
 //Просмотр списка закзав сделанных покупателем.
 Route::get('/show-list-order-simple', ['as'=>'show-list-order-simple', 'uses'=>'OrderController@showSimpleOrderList']);
-
 //Регистрация заказа пользователя в ручном режиме (регестрирует продавец у сея в кабинете) (принимат id пользователя-покупателя)
 Route::get('/add-handle-order/{id}/{shop}', ['as'=>'add-handle-order', 'uses'=>'OrderController@orderRegistrHandle']);
-
 //Оформление заказа в ручную.
 Route::any('/order-ready-handle/{id?}', ['as'=>'order-ready-handle', 'uses'=>'OrderController@orderHandleReady']);
-
-
-
-
-
 /*---------------------------------------Status----------------------------------*/
 //Изменение статуса по заказу продавцом.
 Route::get('/change-order-status/{order}/{status}', ['as'=>'change_order_status', 'uses'=>'OrderController@changStatus']);
 //Список заказав который видит подавец по своему магазину с возможностью изменить статус заказа и списком статусов которые у него активные.
 Route::any('/order-by-status/{company}/{status}', ['as'=>'order-by-status', 'uses'=>'OrderController@showOrder']);
-
-// Groups
+/*--------------------------------------------Groups-------------------------------------------*/
 //Список групп пользователя
 Route::get('/show-group-list', ['as'=>'show-group-list', 'uses'=>'GroupController@showGroupList']);
-
+//Роут на создание группы. Происходит запись в таблицу groups.
 Route::post('/group-create', ['as'=>'group-create', 'uses'=>'GroupController@createGroup']);
+//Переход на страницу группы (где находится информация по группе) принимает id-группы.
 Route::get('/single-group/{id}', 'GroupController@showSingleGroup');
+//Отправление приглашения пользователю на вступление в группу.
 Route::post('/group/send-invite', ['as'=>'group_invite_action', 'uses'=>'GroupController@ajaxInviteToGroup']);
-
+//Отказатся от приглашения на вступление в группу (принимает id-группы).
 Route::get('/disable-invite/{id}', ['as'=>'disable_group_invite', 'uses'=>'GroupController@disableInvite']);
+//Принять приглашение на вступление в группу (принимает id-группы).
 Route::get('/enable-invite/{id}', ['as'=>'enable_group_invite', 'uses'=>'GroupController@enableInvite']);
-
+//Роут на удаление группы (удалить группу может только создатель группы) принимает id-группы.
 Route::post('/group-destroy/{id}', ['as'=>'group-destroy', 'uses'=>'GroupController@destroy']);
+//Роут для того что бы покинуть группу (покинуть может учасник группы, который вней состоит) принимает id-группы.
 Route::post('/group-left/{id}', ['as'=>'group-left', 'uses'=>'GroupController@left']);
-
+//Расширеный поиск пользователей в группе, для возможности пригласить в группу новых пользователей.
 Route::post('/user/advanced_ajax_search', ['as'=>'advanced_ajax_search', 'uses'=>'UserController@ajaxAdvancedSearch']);
 /*---------------------------------------------feedback------------------------------------------------------------------*/
+//Роут чот перевоит на страницу оформления отзыва (принимает id-заказа).
 Route::get('/feedback-view/{id}', ['as'=>'feedback-view', 'uses'=>'FeedbackController@start']);
+//РОут создания отзыва (принимает id-заказа).
 Route::post('/feedback-view/{id}', ['as'=>'feedback-view', 'uses'=>'FeedbackController@startSetup']);
+//Просмотр своего отзыва (который был оставлен ранее) принимает id-продукта, id-заказаid.
 Route::get('/show-my-feed/{product_id}/{order_id}/{user_id}', ['as'=>'show-my-feed', 'uses'=>'FeedbackController@showMyFeed']);
+//Редактирование собственного отзыва.
 Route::post('/add-ajax-change-feed', ['as'=>'add-ajax-change-feed', 'uses'=>'FeedbackController@editFeed']);
+//Добавление дополнения к собственному отзыву.
 Route::post('/add-ajax-addition-feed', ['as'=>'add-ajax-addition-feed', 'uses'=>'FeedbackController@additionFeed']);
-
 
 /*-----------------------------------------------------------chat------------------------------------------------------------*/
 Route::get('/get-single-conversation/{id_from}/{id_to}', ['as'=>'get-single-conversation', 'uses'=>'HomeController@getUserPageWithConversationUsers']);

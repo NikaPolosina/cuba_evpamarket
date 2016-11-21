@@ -219,7 +219,7 @@
                                                                                         @if($scroll_feed['order_id'] == $item->order_id && $scroll_feed['user_id'] == $item->user_id)
                                                                                             <td>
                                                                                                 <button type="submit" class="btn default edit_feed">Редактировать</button>
-                                                                                                <button type="reset" id="feed-edit" class="btn default">Дополнить</button>
+                                                                                                <button type="reset" id="feed-add" class="btn default">Дополнить</button>
                                                                                             </td>
                                                                                         @endif
                                                                                     @endif
@@ -332,12 +332,13 @@
         var id =  $(this).parents('.feedback').find('input.id_feed').val();
         $('input.input_id_modal_feed').val('');
         $('input.input_id_modal_feed').val(id);
+
         tinymce.activeEditor.setContent('');
         tinymce.activeEditor.setContent(body);
         $('#feed_modal').modal();
     });
 
-    $('button#feed-edit').on('click', function () {
+    $('button#feed-add').on('click', function () {
         var id =  $(this).parents('.feedback').find('input.id_feed').val();
         $('input.input_id_modal_feed').val(id);
         $('button#feed-change').addClass('adit_feed');
