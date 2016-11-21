@@ -12,7 +12,7 @@ if(isset($company)){
 
 ?>
 
-<table class="table table-bordered table-striped table-hover" style="display: <?=(isset($hide)) ? 'none' : '' ?>;">
+<table class="table table-bordered table-striped table-hover" style="display: <?=(isset($hide)) ? 'none' : '' ?>; margin-bottom: 0px;">
     <thead>
     <tr>
         <th colspan="7">

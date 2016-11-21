@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="col-sm-3">
-                @include('company.registerUserHandle')
+                @include('auth.registerUserHandle')
 
             </div>
 
