@@ -56,7 +56,7 @@
                                                     <a href="#tab_5_5" data-toggle="tab"> Доставка </a>
                                                 </li>
                                             </ul>
-                                            <div class="tab-content" style="min-height: 600px;">
+                                            <div class="tab-content" style="min-height: 600px; border: none;">
                                                 <div class="tab-pane @if(!isset($scroll_feed)) active @endif" id="tab_5_1">
                                                     <!-- blueimp Gallery styles -->
                                                     <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
@@ -207,7 +207,19 @@
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td align="right"  class="a"></td>
+                                                                                    <td align="right"  class="a">
+
+                                                                                        <div class="hand_img">
+
+                                                                                            @if(!empty($item->getUser->getUserInformation->avatar) && file_exists(public_path().$item->getUser->getUserInformation->avatar))
+                                                                                                <img src="{{$item->getUser->getUserInformation->avatar}}" alt="avatar">
+                                                                                            @else
+                                                                                                <img src="/img/placeholder/avatar.jpg" alt="avatar"/>
+                                                                                            @endif
+                                                                                        </div>
+
+
+                                                                                    </td>
                                                                                     <td>
                                                                                         <div class="feed_content">
                                                                                             {!!$item->feedback!!}
@@ -253,11 +265,21 @@
                                                             </div>
 
                                                             <style>
+                                                                .hand_img{
+                                                                    width: 100px;
+                                                                    height: 100px;
+                                                                    overflow: hidden;
+                                                                }
+                                                                .hand_img>img{
+                                                                    max-height: 100%;
+                                                                    margin: auto;
+                                                                }
+
                                                                 .it_css_block{
                                                                     margin-bottom: 3px;
+                                                                    margin-left: 20%;
                                                                     padding: 10px;
                                                                     background-color: white;
-                                                                    border: solid 2px #ddd;
                                                                 }
                                                                 .my_feed_back{
                                                                     background-color: #dff0d8;

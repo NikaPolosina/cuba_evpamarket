@@ -349,7 +349,7 @@ class BaseStructure extends Migration{
             $table->integer('order_id')->unsigned();
             $table->integer('product_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->string('feedback');
+            $table->text('feedback');
             $table->integer('rating');
             $table->text('file');
             $table->timestamps();
