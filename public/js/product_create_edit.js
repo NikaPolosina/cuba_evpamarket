@@ -58,8 +58,10 @@ $(function(){
                 },
                 data    : {'value':data},
                 success : function(response){
-                    $('.addParam').html(response);
-
+                    $('.mod').find('.add_param_holder').each(function(index, item){
+                        $(item).html('');
+                        $(item).append(response);
+                    });
                 }
              
             });
@@ -69,7 +71,7 @@ $(function(){
 $(document).ready(function() {
     /* Нажатие на кнопку изменить и создать новый*/
     $('#product_list').delegate('.open', 'click', function () {
-        
+
         nededPath = 'temp/' + Date.now() + '/';
         productId = false;
         mainImg = '';
@@ -85,7 +87,8 @@ $(document).ready(function() {
         $('.mod').find('.addParam').html('');
 
 
-
+        $('.mod').find('.add_price_holder').html('');
+        $('.mod').find('.add_param_holder').html('*Выбирите категорию для отображения дополнительных параметров');
 
 
         if($(this).hasClass('edit')){
@@ -372,5 +375,19 @@ $(document).ready(function() {
 
     });
 
+    $('.mod').find('.add_price').on('click', function(){
+        var add_price_origin = $('.mod').find('.add_price_origin').eq(0);
+        $('.mod').find('.add_price_holder').append(add_price_origin.clone().append('<span class="btn remove_add_price">Remove price</span>').show());
+
+    });
+
+    $('.mod').delegate('.remove_add_price', 'click', function(){
+        $(this).parents('.add_price_origin').eq(0).remove();
+        return;
+    });
+
+    $('.mod').delegate('.add_param_button', 'click', function(){
+        $(this).parent().find('div').eq(0).toggle();
+    });
 
 });

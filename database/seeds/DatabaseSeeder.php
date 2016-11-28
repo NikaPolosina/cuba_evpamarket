@@ -333,7 +333,7 @@ class DatabaseSeeder extends Seeder{
             'required'    => 0,
             'sort'        => 1,
             'default'     => '',
-            'request'     => 0,
+            'request'     => 1,
             'value'       => '{"XS":{"name":"xs"},"S":{"name":"s"},"L":{"name":"l"},"XL":{"name":"xl"},"XXL":{"name":"xxl"}}',
         ]);
         $this->additionParam['2'] = AdditionParam::create([

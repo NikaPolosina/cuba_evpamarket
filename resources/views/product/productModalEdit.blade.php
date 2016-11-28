@@ -75,29 +75,60 @@
 
                                 {!! Form::hidden('product_image', NULL, ['class' => 'form-control', 'data-name' =>'photo']) !!}
 
-                                <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
-                                    <label class="col-sm-3 control-label" for="product_price">Цена: <span class="required_css">*</span> </label>
+                                <div>
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a data-toggle="tab" href="#single">Одна базовая цена</a></li>
+                                        <li><a data-toggle="tab" href="#several">Несколько базовых цен</a></li>
+                                    </ul>
 
-                                    {!! Form::number('product_price', NULL, ['class' => 'form-control', 'data-name' =>'price', 'min'=>0]) !!}
+                                    <div class="tab-content">
+                                        <div id="single" class="tab-pane fade in active">
+                                            <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
+                                                <label class="col-sm-3 control-label" for="product_price">Цена: <span class="required_css">*</span> </label>
+                                                {!! Form::number('product_price[]', 0, ['class' => 'form-control', 'data-name' =>'price', 'min'=>0]) !!}
+                                                <div style="display: none"class="error" data-id="price">
+                                                    <strong>Внимание!</strong> <span></span>
+                                                </div>
+                                            </div>
+                                            <div class="add_param_parent">
+                                                <span class="add_param_button">Настроить дополнительный параметры</span>
+                                                <div class="add_param_holder" style="display: none">*Выбирите категорию для отображения дополнительных параметров</div>
+                                            </div>
+                                        </div>
 
-                                    <div style="display: none"class="error" data-id="price">
-                                        <strong>Внимание!</strong> <span></span>
+                                        <div id="several" class="tab-pane fade">
+
+
+                                            <div class="add_price_origin" style="display: none;">
+                                                <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
+                                                    <label class="col-sm-3 control-label" for="product_price">Цена: <span class="required_css">*</span> </label>
+                                                    {!! Form::number('product_price[]', 0, ['class' => 'form-control', 'data-name' =>'price', 'min'=>0]) !!}
+                                                    <div style="display: none"class="error" data-id="price">
+                                                        <strong>Внимание!</strong> <span></span>
+                                                    </div>
+                                                </div>
+                                                <div class="add_param_parent">
+                                                    <span class="add_param_button">Настроить дополнительный параметры</span>
+                                                    <div class="add_param_holder" style="display: none">*Выбирите категорию для отображения дополнительных параметров</div>
+                                                </div>
+                                            </div>
+
+                                            <span class="btn add_price">Добавить цену</span>
+
+
+                                            <div class="add_price_holder" style="border: solid black;">
+
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
-
-                                {{-------------------------------------Блок с доплнительной информацией------------------------------------------}}
-                                <div class="form-group addParam">
-
-                                </div>
-                                {{-------------------------------------Блок с доплнительной информацией------------------------------------------}}
-
 
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-3">
                                         {{--Картинка--}}
                                     </div>
                                 </div>
-
 
                                 <div class="row">
                                     <div class="col-sm-4 col-sm-offset-4">

@@ -81,30 +81,31 @@ $b = 0;
 
                                 /*----------------------------------------------------------------------------------------*/
                             case 'input':?>
-                                    <?php
-                                        if(array_key_exists($item['key'], $value)){
-                                            if(is_array($value[$item['key']])){
-                                                $value[$item['key']] = $value[$item['key']][0];
-                                            }
-                                        }else{
-                                            $value[$item['key']] = '';
-                                        }
-                                        ?>
-                                     <input name="{{$item['key']}}" class="form-control" placeholder="{{$item['placeholder']}}" data-name="{{$item['key']}}" type="text" value="{{$value[$item['key']]}}"/>
+
+                                    @if(array_key_exists($item['key'], $value))
+                                        @if(is_array($value[$item['key']]))
+                                            {{-- */$value[$item['key']] = $value[$item['key']][0];/* --}}
+                                        @endif
+                                    @else
+                                        {{-- */$value[$item['key']] = '';/* --}}
+                                    @endif
+
+                                    @if($item->request_buyer)
+                                        <input name="{{$item['key']}}" class="form-control" placeholder="{{$item['placeholder']}}" data-name="{{$item['key']}}" type="text" value="{{$value[$item['key']]}}" readonly/>
+                                    @else
+                                        <input name="{{$item['key']}}" class="form-control" placeholder="{{$item['placeholder']}}" data-name="{{$item['key']}}" type="text" value="{{$value[$item['key']]}}"/>
+                                    @endif
 
                                 <?php break;
-                                /*----------------------------------------------------------------------------------------*/
-
                             case 'select':?>
-                                <?php
-                                if(array_key_exists($item['key'], $value)){
-                                    if(is_array($value[$item['key']])){
-                                        $value[$item['key']] = $value[$item['key']][0];
-                                    }
-                                }else{
-                                    $value[$item['key']] = '';
-                                }
-                                ?>
+                                {{-- */ /* --}}
+                                @if(array_key_exists($item['key'], $value))
+                                    @if(is_array($value[$item['key']]))
+                                        {{-- */$value[$item['key']] = $value[$item['key']][0];/* --}}
+                                    @endif
+                                @else
+                                    {{-- */ $value[$item['key']] = ''; /* --}}
+                                @endif
                                 <select name="{{$item['key']}}">
                                     <option value="">Выбирете значение</option>
                                     <?php foreach($item['value'] as $key => $val){ ?>
@@ -118,6 +119,8 @@ $b = 0;
             </div>
         @endforeach
     </div>
+@else
+    *В данной категории нет дополнительных параметров для отображения
 @endif
 
 
