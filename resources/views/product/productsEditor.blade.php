@@ -6,12 +6,14 @@
     <link href="/assets/pages/css/profile-2.min.css" rel="stylesheet" type="text/css"/>
 
     @include('layouts.breadcrumbs')
+
     <div class="col-sm-12">
         <div class="table-responsive">
             <h1 style="text-align: center">{{ $company->company_name }}</h1>
             <hr>
         </div>
-        <div class="row">
+
+
             <div class="col-md-2">
                 {{--Подклучение страницы с статистикой продаж по данному магазину.--}}
                 @include('company.shopStatistic')
@@ -42,7 +44,7 @@
 
             </div>
 
-        </div>
+
 
         @include('product.productModalEdit')
         @include('file_upload')
