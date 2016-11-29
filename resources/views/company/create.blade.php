@@ -232,4 +232,14 @@
     </div>
 </div>
 </div>
+
+    <style>
+      .chosen-container-active{
+            width: 50% !important;
+        }
+      .chosen-container{
+            width: 50% !important;
+        }
+    </style>
+
 @endsection
