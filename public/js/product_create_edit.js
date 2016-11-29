@@ -431,7 +431,7 @@ $(document).ready(function() {
 
     $('.mod').find('.add_price').on('click', function(){
         var add_price_origin = $('.mod').find('.add_price_origin').eq(0);
-        $('.mod').find('.add_price_holder').append(add_price_origin.clone().append('<span class="btn remove_add_price">Remove price</span>').show());
+        $('.mod').find('.add_price_holder').append(add_price_origin.clone().append('<div class="col-sm-12"><span style="float: right;" class="btn remove_add_price"><button type="button" class="btn btn-danger">Удалить добавлнную цену</button></span></div>').show());
 
     });
 

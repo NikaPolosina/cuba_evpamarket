@@ -15,7 +15,7 @@ $b = 0;
         <h4>Дополнительные параметры</h4>
         @foreach($addParam as $item)
             <div class="div_container col-sm-12 param_holder" data-key="{{$item['key']}}" data-type="{{$item['type']}}"
-                 style="margin-bottom: 30px; ">
+                 style="margin-bottom: 10px; ">
                 <div class="col-sm-2">
                     {{$item['title']}}:
                 </div>
@@ -61,7 +61,7 @@ $b = 0;
                                         {{-- */$b++;/* --}}
                                         @if($b==1)
                                             <div class="col-sm-4"> @endif
-                                                <div>
+                                                <div style="text-align: left;">
                                                     <div style="min-width: 90px; display: inline-block;">
                                                         <input type="radio" name="{{$item['key']}}"
                                                                value="{{$key}}" <?=($key == $value[$item['key']]) ? 'checked' : '' ?>>
