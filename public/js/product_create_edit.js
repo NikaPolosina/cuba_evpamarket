@@ -49,7 +49,7 @@ $(function(){
         /*
         * Функция для получения дополнительных параметров товарав при выборе категории.
         * */
-        function getBlockWithadParam(id, data) {
+        function getBlockWithadParam(id, data, item) {
             $.ajax({
                 type    : "POST",
                 url     : '/get-add-param/'+id,
@@ -58,12 +58,16 @@ $(function(){
                 },
                 data    : {'value':data},
                 success : function(response){
-                    $('.mod').find('.add_param_holder').each(function(index, item){
-                        $(item).html('');
-                        $(item).append(response);
-                    });
+                    if(item){
+                        item.html('');
+                        item.append(response);
+                    }else{
+                        $('.mod').find('.add_param_holder').each(function(index, item){
+                            $(item).html('');
+                            $(item).append(response);
+                        });
+                    }
                 }
-             
             });
             
         }
@@ -106,7 +110,7 @@ $(document).ready(function() {
 
         modalSelect.on('change', function () {
            if($(this).val().length) {
-               getBlockWithadParam($(this).val(), []);
+               getBlockWithadParam($(this).val(), [], false);
            }
         });
 
@@ -157,10 +161,30 @@ $(document).ready(function() {
 
                     tinyMCE.activeEditor.setContent(msg.product.content);
 
-                    getBlockWithadParam(msg.productCategory.id, msg.product.value);
+                    getBlockWithadParam(msg.productCategory.id, []);
+                    if(msg.product.product_price){
+                        console.log(msg.product.product_price);
+                        console.log(msg.product.value);
+                        if($('.mod').find('#single').find('.add_param_holder').length){
+                            getBlockWithadParam(msg.productCategory.id, msg.product.value, $('.mod').find('#single').find('.add_param_holder'));
+                        }
+                        $('.mod').find('#single').find('input[data-name="price"]').val(msg.product.product_price);
+                    }else{
+                        console.log(JSON.parse(msg.product.value));
+
+                        JSON.parse(msg.product.value).forEach(function(value){
+                            console.log(value.val);
+                            console.log(JSON.stringify(value.add_param));
+                        });
+
+                    }
+
+
+
+                    // getBlockWithadParam(msg.productCategory.id, msg.product.value);
 
                     $('.mod').find('.form-group').find('input[data-name="photo"]').val(msg.product.product_image);
-                    $('.mod').find('.form-group').find('input[data-name="price"]').val(msg.product.product_price);
+
                     $('.mod').find('#product_form').find('input[type="text"]').eq(0).focus();
 
 
@@ -353,8 +377,6 @@ $(document).ready(function() {
                     x : number
                 },
                 success : function(data){
-
-                    return false;
 
                     if(data.error){
                         $.each(data.error, function( index, value ) {

@@ -147,15 +147,14 @@ class ProductsController extends Controller{
                 'error'  => $validator->errors() ], 200);
         }
 
-        dd($request->all());
         $newProduct = new Product([
             'product_name'        => $request['product']['name'],
             'product_description' => $request['product']['description'],
             'content'             => $request['product']['content'],
             'product_image'       => $request['product']['photo'],
-            'product_price'       => $request['product']['price'],
+            'product_price'       => (count($request['product']['price']) == 1) ? $request['product']['price'][0]['val'] : null,
             'category_id'         => $request['product']['category_name'],
-            'value'               => $request['product']['value'],
+            'value'               => (count($request['product']['price']) == 1) ? json_encode($request['product']['price'][0]['add_param']) : json_encode($request['product']['price']),
         ]);
 
         $companyId = $request['company_id'];
@@ -172,6 +171,7 @@ class ProductsController extends Controller{
 
             return view('product.singleProductTr')->with([ 'item' => $newProduct ])->with(['x'=>$request->x+1]);;
         }
+
         return response()->json([ 'success' => false ]);
     }
 
