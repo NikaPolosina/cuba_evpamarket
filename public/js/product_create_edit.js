@@ -227,8 +227,10 @@ $(document).ready(function() {
 
     /* Сохранение (кнопка сохранить изминения) изменения товаров при нажатии на кнопку (изменить)*/
     $('.submit_modal_form').on('click', function(){
-        
+
         var modForm = $('.mod').find('form');
+
+
         if(modForm.length){
 
             var data = {};
@@ -267,51 +269,78 @@ $(document).ready(function() {
 
             if(!productId)
                 data.filesPath = nededPath;
-            
-            var add_holder = modForm.find('.addParam');
-            
-            if(add_holder.find('.param_holder').length){
-                data['value'] = {};
-                add_holder.find('.param_holder').each(function(index, item){
-                    item = $(item);
-                    if(item.attr('data-key').length){
-                        switch (item.attr('data-type')){
-                            case 'checkbox':
-                                if(item.find('input:checked').length){
-                                    data['value'][item.attr('data-key')] = [];
-                                    item.find('input:checked').each(function(k, i){
-                                        data['value'][item.attr('data-key')].push($(i).val());
-                                    });
+
+
+
+
+
+
+            var price_type = modForm.find('.add_param_type').find('li.active').attr('data-type');
+
+            var price_main_holder = modForm.find('div#'+price_type);
+
+            var price_list = price_main_holder.find('.price_list');
+
+            if(price_list.find('.add_price_origin').length){
+
+                data['price'] = [];
+
+                // foreach base prices
+                price_list.find('.add_price_origin').each(function(index, ite){
+                    ite = $(ite);
+
+                    var price = {};
+                    price['val'] = ite.find('[data-name="price"]').val();
+                    price['add_param'] = {};
+
+                    var add_param_holder = ite.find('.add_param_holder');
+
+                    if(add_param_holder.find('.param_holder').length){
+                        add_param_holder.find('.param_holder').each(function(ind, item){
+                            item = $(item);
+
+                            if(item.attr('data-key').length){
+
+                                price['add_param'][item.attr('data-key')] = [];
+
+                                switch (item.attr('data-type')){
+                                    case 'checkbox':
+                                        if(item.find('input:checked').length){
+                                            item.find('input:checked').each(function(k, i){
+                                                price['add_param'][item.attr('data-key')].push($(i).val());
+                                            });
+                                        }
+                                        break;
+                                    case 'radio':
+                                        if(item.find('input:checked').length){
+                                            if(item.find('input:checked').val().length){
+                                                price['add_param'][item.attr('data-key')].push(item.find('input:checked').val());
+                                            }
+                                        }
+                                        break;
+                                    case 'select':
+                                        if(item.find('select').length){
+                                            if(item.find('select').val().length){
+                                                price['add_param'][item.attr('data-key')].push(item.find('select').val());
+                                            }
+                                        }
+                                        break;
+                                    case 'input':
+                                        if(item.find('input').length){
+                                            price['add_param'][item.attr('data-key')].push(item.find('input').val());
+                                        }
+                                        break;
                                 }
-                                break;
-                            case 'radio':
-                                if(item.find('input:checked').length){
-                                    data['value'][item.attr('data-key')] = item.find('input:checked').val();
-                                }
-                                break;
-                            case 'input':
-                                if(item.find('input:text').length){
-                                    data['value'][item.attr('data-key')] = item.find('input').val();
-                                }
-                                break;
-                            case 'select':
-                                if(item.find('select').length){
-                                    data['value'][item.attr('data-key')] = item.find('select').val();
-                                }
-                                break;
-                            case 'input':
-                                if(item.find('input').length){
-                                    data['value'][item.attr('data-key')] = item.find('input').val();
-                                }
-                                break;
-                        }
+                            }
+                        });
+
                     }
+
+                    data['price'].push(price);
+
                 });
-                data['value'] = JSON.stringify(data['value']);
-            }else{
-                data['value'] = '';
             }
-            
+
             $.ajax({
                 type    : "POST",
                 url     : path,
@@ -324,6 +353,9 @@ $(document).ready(function() {
                     x : number
                 },
                 success : function(data){
+
+                    return false;
+
                     if(data.error){
                         $.each(data.error, function( index, value ) {
 

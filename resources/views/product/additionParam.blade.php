@@ -21,51 +21,22 @@ $b = 0;
                 </div>
                 <div class="col-sm-10">
                         <?php
-                        switch($item['type']){
+                            switch($item['type']){
+                                case 'checkbox':?>
+                                    <?php
+                                    if(!array_key_exists($item['key'], $value)){
+                                        $value[$item['key']] = array();
+                                    }
+                                    ?>
 
-                            case 'checkbox':?>
-                                <?php
-                                if(!array_key_exists($item['key'], $value)){
-                                    $value[$item['key']] = array();
-                                }
-                                ?>
-
-                                <?php foreach($item['value'] as $key => $val){ ?>
-                                <?php $b++; ?>
-                                @if($b==1)
-                                    <div class="col-sm-4"> @endif
-                                        <div style="text-align: left;">
-                                            <div style="min-width: 90px; display: inline-block;">
-                                                <input type="checkbox" name="{{$key}}"
-                                                       value="{{$key}}" <?=(in_array($key, $value[$item['key']])) ? 'checked' : '' ?>>
-                                                {{$val['name']}}
-                                            </div>
-                                            @if(isset($val['css']))
-                                                <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
-                                            @endif
-                                        </div>
-                                        @if($b==4)</div> <?php $b = 0; ?>@endif
-                                <?php } ?>
-                                @if($b!=0) </div> @endif
-                                            <?php $b = 0; ?>
-
-                                <?php break;
-                            case 'radio':?>
-                                @if(array_key_exists($item['key'], $value))
-                                    @if(is_array($value[$item['key']]))
-                                        {{$value[$item['key']] = $value[$item['key']][0]}}
-                                    @endif
-                                @else
-                                    {{ $value[$item['key']] = ''}}
-                                @endif
-                                @foreach($item['value'] as $key => $val)
-                                    {{$b++}}
+                                    <?php foreach($item['value'] as $key => $val){ ?>
+                                    <?php $b++; ?>
                                     @if($b==1)
                                         <div class="col-sm-4"> @endif
-                                            <div>
+                                            <div style="text-align: left;">
                                                 <div style="min-width: 90px; display: inline-block;">
-                                                    <input type="radio" name="{{$item['key']}}"
-                                                           value="{{$key}}" <?=($key == $value[$item['key']]) ? 'checked' : '' ?>>
+                                                    <input type="checkbox" name="{{$key}}"
+                                                           value="{{$key}}" <?=(in_array($key, $value[$item['key']])) ? 'checked' : '' ?>>
                                                     {{$val['name']}}
                                                 </div>
                                                 @if(isset($val['css']))
@@ -73,47 +44,74 @@ $b = 0;
                                                 @endif
                                             </div>
                                             @if($b==4)</div> <?php $b = 0; ?>@endif
-                                @endforeach
-                                @if($b!=0) </div> @endif
-                                <?php $b = 0; ?>
+                                    <?php } ?>
+                                    @if($b!=0) </div> @endif
+                                                <?php $b = 0; ?>
 
-                                <?php break;
+                                    <?php break;
+                                case 'radio':?>
+                                    @if(array_key_exists($item['key'], $value))
+                                        @if(is_array($value[$item['key']]))
+                                            {{$value[$item['key']] = $value[$item['key']][0]}}
+                                        @endif
+                                    @else
+                                        {{ $value[$item['key']] = ''}}
+                                    @endif
+                                    @foreach($item['value'] as $key => $val)
+                                        {{-- */$b++;/* --}}
+                                        @if($b==1)
+                                            <div class="col-sm-4"> @endif
+                                                <div>
+                                                    <div style="min-width: 90px; display: inline-block;">
+                                                        <input type="radio" name="{{$item['key']}}"
+                                                               value="{{$key}}" <?=($key == $value[$item['key']]) ? 'checked' : '' ?>>
+                                                        {{$val['name']}}
+                                                    </div>
+                                                    @if(isset($val['css']))
+                                                        <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
+                                                    @endif
+                                                </div>
+                                                @if($b==4)</div> <?php $b = 0; ?>@endif
+                                    @endforeach
+                                    @if($b!=0) </div> @endif
+                                    <?php $b = 0; ?>
 
-                                /*----------------------------------------------------------------------------------------*/
-                            case 'input':?>
+                                    <?php break;
+                                case 'input':?>
 
+                                        @if(array_key_exists($item['key'], $value))
+                                            @if(is_array($value[$item['key']]))
+                                                {{-- */$value[$item['key']] = $value[$item['key']][0];/* --}}
+                                            @endif
+                                        @else
+                                            {{-- */$value[$item['key']] = '';/* --}}
+                                        @endif
+
+                                        @if($item->request_buyer)
+                                            <input name="{{$item['key']}}" class="form-control" placeholder="{{$item['placeholder']}}" data-name="{{$item['key']}}" type="text" value="{{$value[$item['key']]}}" readonly/>
+                                        @else
+                                            <input name="{{$item['key']}}" class="form-control" placeholder="{{$item['placeholder']}}" data-name="{{$item['key']}}" type="text" value="{{$value[$item['key']]}}"/>
+                                        @endif
+
+                                    <?php break;
+                                case 'select':?>
+                                    {{-- */ /* --}}
                                     @if(array_key_exists($item['key'], $value))
                                         @if(is_array($value[$item['key']]))
                                             {{-- */$value[$item['key']] = $value[$item['key']][0];/* --}}
                                         @endif
                                     @else
-                                        {{-- */$value[$item['key']] = '';/* --}}
+                                        {{-- */ $value[$item['key']] = ''; /* --}}
                                     @endif
-
-                                    @if($item->request_buyer)
-                                        <input name="{{$item['key']}}" class="form-control" placeholder="{{$item['placeholder']}}" data-name="{{$item['key']}}" type="text" value="{{$value[$item['key']]}}" readonly/>
-                                    @else
-                                        <input name="{{$item['key']}}" class="form-control" placeholder="{{$item['placeholder']}}" data-name="{{$item['key']}}" type="text" value="{{$value[$item['key']]}}"/>
-                                    @endif
-
-                                <?php break;
-                            case 'select':?>
-                                {{-- */ /* --}}
-                                @if(array_key_exists($item['key'], $value))
-                                    @if(is_array($value[$item['key']]))
-                                        {{-- */$value[$item['key']] = $value[$item['key']][0];/* --}}
-                                    @endif
-                                @else
-                                    {{-- */ $value[$item['key']] = ''; /* --}}
-                                @endif
-                                <select name="{{$item['key']}}">
-                                    <option value="">Выбирете значение</option>
-                                    <?php foreach($item['value'] as $key => $val){ ?>
-                                    <option value="{{$key}}" <?=($key == $value[$item['key']]) ? 'selected' : '' ?>>{{$key}} <?php $key ?></option>
-                                    <?php } ?>
-                                </select>
-                                <?php break;
-                                } ?>
+                                    <select name="{{$item['key']}}">
+                                        <option value="">Выбирете значение</option>
+                                        <?php foreach($item['value'] as $key => $val){ ?>
+                                        <option value="{{$key}}" <?=($key == $value[$item['key']]) ? 'selected' : '' ?>>{{$key}} <?php $key ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <?php break;
+                            }
+                        ?>
 
                 </div>
             </div>

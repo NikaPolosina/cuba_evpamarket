@@ -341,7 +341,7 @@ class DatabaseSeeder extends Seeder{
             'key'         => 'color',
             'description' => 'Выбор цвета товара',
             'placeholder' => 'Выбирте цвет...',
-            'type'        => 'checkbox',
+            'type'        => 'radio',
             'type_for_by' => 'checkbox',
             'required'    => 0,
             'sort'        => 2,
@@ -354,13 +354,43 @@ class DatabaseSeeder extends Seeder{
             'key'         => 'inch',
             'description' => 'Диагонали экранов телевизоров (дюйм)',
             'placeholder' => 'Выбирте диагональ...',
-            'type'        => 'checkbox',
+            'type'        => 'select',
             'type_for_by' => 'checkbox',
             'required'    => 0,
             'sort'        => 1,
             'default'     => '',
             'request'     => 0,
             'value'       => '{"22":{"name":"22"},"26":{"name":"26"},"32":{"name":"32"},"37":{"name":"37"},"40":{"name":"40"},"42":{"name":"42"},"46":{"name":"46"},"50":{"name":"50"},"60":{"name":"60"},"65":{"name":"65"}}',
+        ]);
+
+        $this->additionParam['4'] = AdditionParam::create([
+            'title'         => 'Произвольное поле продавца',
+            'key'           => 'owner_field',
+            'description'   => 'Произвольное поле покупателя',
+            'placeholder'   => 'Произвольное поле продавца',
+            'type'          => 'input',
+            'type_for_by'   => 'input',
+            'required'      => 0,
+            'sort'          => 1,
+            'default'       => '',
+            'request'       => 0,
+            'request_buyer' => 0,
+            'value'         => '',
+        ]);
+
+        $this->additionParam['5'] = AdditionParam::create([
+            'title'         => 'Произвольное поле покупателя',
+            'key'           => 'client_field',
+            'description'   => 'Произвольное поле покупателя',
+            'placeholder'   => 'Произвольное поле покупателя',
+            'type'          => 'input',
+            'type_for_by'   => 'input',
+            'required'      => 0,
+            'sort'          => 1,
+            'default'       => '',
+            'request'       => 0,
+            'request_buyer' => 1,
+            'value'         => '',
         ]);
     }
 

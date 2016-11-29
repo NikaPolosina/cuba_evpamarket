@@ -135,20 +135,19 @@ class ProductsController extends Controller{
             $request->input('product'),
             array(
                 'name' => 'required|max:255|min:2',
-                'description' => 'required|min:2',
-                'price' => 'required|integer|min:1'
+                'description' => 'required|min:2'
             )
         );
         $validator->setAttributeNames([
             'name'=> 'Имя товара',
-            'description'=> 'Описание',
-            'price'=> 'Цена',
+            'description'=> 'Описание'
         ]);
         if($validator->fails()){
-
             return response()->json([
                 'error'  => $validator->errors() ], 200);
         }
+
+        dd($request->all());
         $newProduct = new Product([
             'product_name'        => $request['product']['name'],
             'product_description' => $request['product']['description'],
