@@ -101,7 +101,7 @@
                                         padding: 5px;
                                     }
                                     tr{
-                                        height: 40px;
+                                        height: 35px;
                                     }
                                     .a{
                                         text-align: right;
@@ -116,6 +116,9 @@
                                     }
                                     .table_product{
                                          border-spacing: 0px!important;
+                                        border-bottom: 1px solid #c1c1c1;
+                                        margin-bottom: 3px;
+                                        padding-bottom: 5px;
                                     }
 
 
@@ -161,11 +164,9 @@
                                                     </td>
                                                 </tr>
                                                 @if(is_array($val->value) && count($val->value))
-                                               {{-- <tr>
-                                                    <td colspan="2">--}}
+
                                                         @include('product.cartAddParamShow', ['singleProduct'=>$val])
-                                             {{--       </td>
-                                                </tr>--}}
+
                                                 @endif
 
                                                 <tr>
@@ -229,7 +230,6 @@
                                                 </tr>
 
                                             </table>
-                                            <hr/>
                                             <div class="buttom_menu">
                                                 <input style="display: none" value="{{$val['id']}}" type="text"/>
                                                 <button type="button" class="btn btn-default button_delete">Удалить</button>
@@ -244,34 +244,38 @@
                                 <div>
                                         @if(count($value['company']->getDiscountAccumulativ) > 0)
                                             <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p discount_zone" style="background-color: white;">
-                                                <tr style="background-color: #f7f7f9; outline: 1px solid #dedee4;">
-                                                    <td width="50%" valign="top">
-                                                        <span class="option_table" style="margin: 10px;">Cкидки магазина:</span>
-                                                        <p style="font-size: 13px; margin: 10px">Это накопительная скидка, которую предоставляет магазин.
-                                                            Эта скидка действует при заказе на сумму, которая соответствует диапазону соответствующей процентной скидки.
-                                                            После оформления заказа и подтверждени продавцом о его получении покупателем - эта скидка закрепляется за Вами до тех пор,
-                                                            пока Вы не повысите сумму накоплений в этом магазине до следующей болие высокой скидки. </p>
-                                                    </td>
 
 
+                                                <div class="row" style="background-color: #f7f7f9; outline: 1px solid #dedee4;">
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-6">
+                                                            <span class="option_table" style="margin: 10px;">Cкидки магазина:</span>
+                                                            <p style="font-size: 13px; margin: 10px">Это накопительная скидка, которую предоставляет магазин.
+                                                                Эта скидка действует при заказе на сумму, которая соответствует диапазону соответствующей процентной скидки.
+                                                                После оформления заказа и подтверждени продавцом о его получении покупателем - эта скидка закрепляется за Вами до тех пор,
+                                                                пока Вы не повысите сумму накоплений в этом магазине до следующей болие высокой скидки. </p>
+                                                        </div>
+                                                        <div class="col-sm-6" style="margin-bottom: 5px;">
 
-                                                    <td>
-                                                        <table class="my_table discount_table" border="2" align="center" bordercolor="#ddd">
-                                                            <tr>
-                                                                <th>При заказе на сумму от:</th>
-                                                                <th>Скидка</th>
-                                                            </tr>
-                                                            @foreach($value['company']->getDiscountAccumulativ as $val)
-
-                                                                <tr data-from="{{$val['from']}}" data-percent="{{$val->percent}}" class=" @if(array_key_exists("discount", $value)) <?=($value['discount']['id'] == $val->id)? 'current_discount':'' ?> @endif"  >
-                                                                    <td><span style="color: #2a62bc;">{{$val->from}} руб.</span></td>
-                                                                    <td><span style="color: indianred;">{{$val->percent}} %</span></td>
+                                                            <table class="my_table discount_table" border="2" align="center" bordercolor="#ddd">
+                                                                <tr>
+                                                                    <th>При заказе на сумму от:</th>
+                                                                    <th>Скидка</th>
                                                                 </tr>
-                                                            @endforeach
+                                                                @foreach($value['company']->getDiscountAccumulativ as $val)
 
-                                                        </table>
-                                                    </td>
-                                                </tr>
+                                                                    <tr data-from="{{$val['from']}}" data-percent="{{$val->percent}}" class=" @if(array_key_exists("discount", $value)) <?=($value['discount']['id'] == $val->id)? 'current_discount':'' ?> @endif"  >
+                                                                        <td><span style="color: #2a62bc;">{{$val->from}} руб.</span></td>
+                                                                        <td><span style="color: indianred;">{{$val->percent}} %</span></td>
+                                                                    </tr>
+                                                                @endforeach
+
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
                                             </div>
                                         @endif
 
@@ -310,7 +314,7 @@
                                         </div>
                                 </div>
 
-                                <div class="col-sm-10 col-sm-offset-1" style="margin-bottom: 25px;">
+                                <div class="col-sm-10 col-sm-offset-1" style="margin-top: 5px; margin-bottom: 10px;">
 
                                         {!! Form::submit('Оформить заказ', ['class' => 'btn btn-lg btn-success button_my']) !!}
 
