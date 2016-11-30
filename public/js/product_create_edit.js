@@ -145,6 +145,7 @@ $(document).ready(function() {
                 },
                 data: {productId: id},
                 success: function (msg) {
+                    getBlockWithadParam(msg.productCategory.id, []);
 
                     
                     mainImg = msg.product.product_image;
@@ -161,21 +162,30 @@ $(document).ready(function() {
 
                     tinyMCE.activeEditor.setContent(msg.product.content);
 
-                    getBlockWithadParam(msg.productCategory.id, []);
+
                     if(msg.product.product_price){
-                        console.log(msg.product.product_price);
-                        console.log(msg.product.value);
                         if($('.mod').find('#single').find('.add_param_holder').length){
                             getBlockWithadParam(msg.productCategory.id, msg.product.value, $('.mod').find('#single').find('.add_param_holder'));
                         }
                         $('.mod').find('#single').find('input[data-name="price"]').val(msg.product.product_price);
                     }else{
-                        console.log(JSON.parse(msg.product.value));
+                        if($('.mod').find('#several').find('.add_price_origin').length){
+                            var add_price_origin = $('.mod').find('#several').find('.add_price_origin').eq(0);
 
-                        JSON.parse(msg.product.value).forEach(function(value){
-                            console.log(value.val);
-                            console.log(JSON.stringify(value.add_param));
-                        });
+                            JSON.parse(msg.product.value).forEach(function(value){
+                                var current = add_price_origin.clone();
+                                current.append('<div class="col-sm-12"><span style="float: right;" class="btn remove_add_price"><button type="button" class="btn btn-danger">Удалить добавлнную цену</button></span></div>').show();
+                                $('.mod').find('#several').find('.add_price_holder').append(current);
+
+                                current.find('input[data-name="price"]').val(value.val);
+
+                                getBlockWithadParam(msg.productCategory.id, JSON.stringify(value.add_param), current.find('.add_param_holder'));
+
+
+                            });
+                        }
+
+
 
                     }
 

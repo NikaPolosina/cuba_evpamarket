@@ -434,12 +434,10 @@ class ProductsController extends Controller{
         $validator = Validator::make($request->input('product'), array(
                 'name'        => 'required|max:255|min:2',
                 'description' => 'required|min:2',
-                'price'       => 'required|integer|min:1'
             ));
         $validator->setAttributeNames([
             'name'        => 'Имя товара',
             'description' => 'Описание',
-            'price'       => 'Цена',
         ]);
         if($validator->fails()){
             return response()->json([
@@ -449,15 +447,22 @@ class ProductsController extends Controller{
         $data = $request->all();
         if($request->input('product')['product_id']){
             $product = Product::findOrFail($request->input('product')['product_id']);
+
+
+
+
             $result = $product->update(array(
                 'product_name'        => $request->input('product')['name'],
                 'product_description' => $request->input('product')['description'],
                 'content'             => $request->input('product')['content'],
                 'product_image'       => $request->input('product')['photo'],
-                'product_price'       => $request->input('product')['price'],
+                'product_price'       => (count($request['product']['price']) == 1) ? $request['product']['price'][0]['val'] : null,
                 'category_id'         => $request->input('product')['category_name'],
-                'value'               => $request->input('product')['value'],
+                'value'               => (count($request['product']['price']) == 1) ? json_encode($request['product']['price'][0]['add_param']) : json_encode($request['product']['price']),
             ));
+
+
+
             if($result){
                 return view('product.singleProductTr')->with([ 'item' => $product ])->with([ 'x' => $request->x ]);
             }
