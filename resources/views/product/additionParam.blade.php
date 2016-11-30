@@ -49,7 +49,10 @@ $b = 0;
                                                 <?php $b = 0; ?>
 
                                     <?php break;
-                                case 'radio':?>
+                                case 'radio':
+                                    $random = substr( md5(rand()), 0, 7);
+                                    ?>
+
                                     @if(array_key_exists($item['key'], $value))
                                         @if(is_array($value[$item['key']]))
                                             {{$value[$item['key']] = $value[$item['key']][0]}}
@@ -63,7 +66,7 @@ $b = 0;
                                             <div class="col-sm-4"> @endif
                                                 <div style="text-align: left;">
                                                     <div style="min-width: 90px; display: inline-block;">
-                                                        <input type="radio" name="{{$item['key']}}"
+                                                        <input type="radio" name="{{$item['key']}}{{$random}}"
                                                                value="{{$key}}" <?=($key == $value[$item['key']]) ? 'checked' : '' ?>>
                                                         {{$val['name']}}
                                                     </div>
