@@ -85,7 +85,7 @@
                                         <div id="single" class="tab-pane fade in active ">
                                             <div class="price_list">
 
-                                                        <div class="add_price_origin">
+                                                        <div class="add_price_origin" style="padding: 0px 0px 5px 0px;">
 
                                                                 <div class="col-sm-12">
 
@@ -97,7 +97,9 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="add_param_parent">
-                                                                      <span class="add_param_button">   <button type="button" class="btn btn-default"> Настроить дополнительный параметры </button> </span>
+
+                                                                        <span class="add_param_button">   <button type="button" class="btn btn-default"> Настроить дополнительный параметры </button> </span>
+
                                                                         <div class="add_param_holder" style="display: none">*Выбирите категорию для отображения дополнительных параметров</div>
                                                                     </div>
 
@@ -120,13 +122,13 @@
                                                     </div>
                                                 </div>
                                                 <div class="add_param_parent">
-                                                   <span class="add_param_button">Настроить дополнительный параметры</span>
+                                                    <span class="add_param_button">Настроить дополнительный параметры</span>
                                                     <div class="add_param_holder" style="display: none">*Выбирите категорию для отображения дополнительных параметров</div>
 
                                                 </div>
                                             </div>
 
-                                            <span class="btn add_price"><button type="button" class="btn btn-success">Добавить цену</button></span>
+                                            <span class="btn add_price"><button type="button" class="btn btn-success">Добавить цену <span style="margin-left: 5px;" class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></span>
 
 
                                             <div class="add_price_holder price_list" style="border: solid black;">

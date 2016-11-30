@@ -8,7 +8,7 @@
 
                 <div class="col-sm-10 col-sm-offset-1">
 
-                    <h1 style="text-align: center">Оформление заказа</h1>
+                    <div style="text-align: center; font-size: 24px;">Оформление заказа</div>
                 </div>
 
 
@@ -18,7 +18,7 @@
                 {{  Form::token()}}
                 <div class="company_block_cart">
                     <div class="col-md-4 col-md-offset-4 cart_name">
-                        <h3 style="text-align: center">Магазин: <span style="color: darkblue;">{{$company->company_name}}</span> </h3>
+                        <div style="text-align: center; font-size: 22px;">Магазин: <span style="color: darkblue;">{{$company->company_name}}</span> </div>
 
                     </div>
                     <div class="col-md-8 col-md-offset-2 ">
@@ -27,7 +27,7 @@
                         @foreach($products as $val)
 
 
-                                <div class="ara">
+                                <div class="ara" style="margin-bottom: 5px!important;">
                                 <div class="col-sm-3">
                                     <div style="max-width: 100%;">
                                         <img class="img_product img-thumbnail" src="{{$val->firstFile}}" alt=""/>
@@ -161,8 +161,8 @@
 
 
                         </div>
-                            <div class="col-sm-12">
-                                <hr/>
+                            <div class="col-sm-12" style="border-top: solid 2px #eee; padding-top: 5px;">
+
                                 <div class="col-sm-6">
 
 
@@ -218,7 +218,7 @@
 
                                 </div>
                                 {{--------------------------------------------------------------------}}
-                                <div class="form-group col-sm-12" style="margin-bottom: 3px">
+                                <div class="form-group col-sm-12" style="margin-bottom: 3px; padding-left: 30px;padding-right: 30px;">
                                     {!! Form::label('note', 'Примечание к заказу: ', ['class' => 'col-sm-3 control-label']) !!}
                                     <div class="col-sm-9">
                                         {!! Form::textarea('note', '', ['class' => 'form-control', 'data-name' =>'note', 'rows' => '3    ']) !!}
@@ -250,7 +250,7 @@
     <style>
 
         td, th {
-            padding: 5px 10px 5px 10px!important;
+            padding: 0px 10px 0px 10px!important;
         }
         td>p{
             font-size: 1em!important;

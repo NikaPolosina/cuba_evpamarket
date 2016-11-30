@@ -144,7 +144,7 @@ class OrderController extends Controller{
         header("Location:/order-ready-handle/".$company->id );
         exit;
     }
-
+    //Метод который направляет на страницу просмотра правельности заполнение заказа (покупатель просматривает свой заказ визуально. Типа бланка.)
     public function createOrder(Request $request, CartController $cartController){
 
 
