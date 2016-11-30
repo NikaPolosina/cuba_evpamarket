@@ -196,7 +196,7 @@
     .add_price_origin{
         background-color: #f0f0f0;
         display: block;
-        border: solid 1px rgba(153, 153, 153, 0.77);
+        border: 1px solid rgba(0, 0, 0, 0.09);
         margin-bottom: 5px;
     }
 

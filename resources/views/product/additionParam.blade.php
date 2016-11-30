@@ -11,15 +11,15 @@ $b = 0;
 
 @if(count($addParam))
 
-    <div class="row" style=" border: 1px solid rgba(0, 0, 0, 0.09);; text-align: center">
+    <div class="row" style="text-align: center">
         <h4>Дополнительные параметры</h4>
         @foreach($addParam as $item)
             <div class="div_container col-sm-12 param_holder" data-key="{{$item['key']}}" data-type="{{$item['type']}}"
                  style="margin-bottom: 10px; ">
-                <div class="col-sm-2">
+                <div class="col-sm-3" style="text-align: right;">
                     {{$item['title']}}:
                 </div>
-                <div class="col-sm-10">
+                <div class="col-sm-9">
                         <?php
                             switch($item['type']){
                                 case 'checkbox':?>
