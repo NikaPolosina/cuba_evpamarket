@@ -92,7 +92,7 @@ $(document).ready(function() {
 
 
         $('.mod').find('.add_price_holder').html('');
-        $('.mod').find('.add_param_holder').html('*Выбирите категорию для отображения дополнительных параметров');
+        $('.mod').find('.add_param_holder').html('<p class="bg-warning" style="padding: 15px;">*Выбирите категорию для отображения дополнительных параметров</p>');
 
 
         if($(this).hasClass('edit')){

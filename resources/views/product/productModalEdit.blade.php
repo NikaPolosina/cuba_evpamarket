@@ -100,7 +100,7 @@
 
                                                                         <span class="add_param_button">   <button type="button" class="btn btn-default"> Настроить дополнительный параметры </button> </span>
 
-                                                                        <div class="add_param_holder" style="display: none">*Выбирите категорию для отображения дополнительных параметров</div>
+                                                                        <div class="add_param_holder" style="display: none"><p class="bg-warning" style="padding: 15px;">*Выбирите категорию для отображения дополнительных параметров</p></div>
                                                                     </div>
 
                                                                 </div>
@@ -123,7 +123,7 @@
                                                 </div>
                                                 <div class="add_param_parent">
                                                     <span class="add_param_button">Настроить дополнительный параметры</span>
-                                                    <div class="add_param_holder" style="display: none">*Выбирите категорию для отображения дополнительных параметров</div>
+                                                    <div class="add_param_holder" style="display: none"><p class="bg-warning" style="padding: 15px;">*Выбирите категорию для отображения дополнительных параметров</p></div>
 
                                                 </div>
                                             </div>
