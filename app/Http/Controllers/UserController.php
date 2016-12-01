@@ -314,20 +314,15 @@ class UserController extends Controller{
         return $params;
     }
 
-
+//Метод направляет на страницу просматревымаего пользователя где можно написать сообщение этому пльзователю (принимает id usera)
     public function getUserPage($id){
         $user = User::where('id', $id)->with('getUserInformation')->get();
         if(!count($user)){
           return redirect()->back();
 
         }
-
-
-
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb($user[0]->getUserInformation->name.' '.$user[0]->getUserInformation->surname, '/show-user/'.$user[0]->id);
-
-        
         return view('user.simple_page')
             ->with('breadcrumbs', $this->_breadcrumbs)
             ->with('user', $user);
