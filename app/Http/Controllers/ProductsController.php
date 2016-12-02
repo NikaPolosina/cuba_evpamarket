@@ -154,7 +154,7 @@ class ProductsController extends Controller{
             'product_image'       => $request['product']['photo'],
             'product_price'       => (count($request['product']['price']) == 1) ? $request['product']['price'][0]['val'] : null,
             'category_id'         => $request['product']['category_name'],
-            'value'               => (count($request['product']['price']) == 1) ? json_encode($request['product']['price'][0]['add_param']) : json_encode($request['product']['price']),
+            'value'               => (count($request['product']['price']) == 1) ? json_encode(array($request['product']['price'][0])) : json_encode($request['product']['price']),
         ]);
 
         $companyId = $request['company_id'];
@@ -340,7 +340,15 @@ class ProductsController extends Controller{
         //Для того что бы взять дполнительные параметры.
           if($product->value){
               $product->value =  json_decode($product->value, true);
-              $param = AdditionParam::whereIn('key', array_keys($product->value))->get();
+              $add_param_keys = array();
+              if(count($product->value)){
+                  if(array_key_exists('0', $product->value)){
+                      $add_param_keys = array_keys($product->value[0]['add_param']);
+                  }else{
+                      $add_param_keys = array_keys($product->value);
+                  }
+              }
+              $param = AdditionParam::whereIn('key', $add_param_keys)->get();
               foreach($param as  $key=>$val){
                   $val->value = json_decode($val->value, true);
               }
@@ -448,9 +456,6 @@ class ProductsController extends Controller{
         if($request->input('product')['product_id']){
             $product = Product::findOrFail($request->input('product')['product_id']);
 
-
-
-
             $result = $product->update(array(
                 'product_name'        => $request->input('product')['name'],
                 'product_description' => $request->input('product')['description'],
@@ -458,9 +463,8 @@ class ProductsController extends Controller{
                 'product_image'       => $request->input('product')['photo'],
                 'product_price'       => (count($request['product']['price']) == 1) ? $request['product']['price'][0]['val'] : null,
                 'category_id'         => $request->input('product')['category_name'],
-                'value'               => (count($request['product']['price']) == 1) ? json_encode($request['product']['price'][0]['add_param']) : json_encode($request['product']['price']),
+                'value'               => (count($request['product']['price']) == 1) ? json_encode(array($request['product']['price'][0])) : json_encode($request['product']['price']),
             ));
-
 
 
             if($result){

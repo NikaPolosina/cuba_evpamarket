@@ -87,6 +87,7 @@ $(document).ready(function() {
         tinyMCE.activeEditor.setContent('');
         $('.mod').find('.form-group').find('input[data-name="photo"]').val('');
         $('.mod').find('.form-group').find('input[data-name="price"]').val('');
+        $('.mod').find('.form-group').find('input[data-name="name"]').val('');
         $('.files').html('')
         $('.mod').find('.addParam').html('');
 
@@ -164,42 +165,34 @@ $(document).ready(function() {
 
 
                     if(msg.product.product_price){
+                        $('.mod').find('[href="#single"]').click();
                         if($('.mod').find('#single').find('.add_param_holder').length){
-                            getBlockWithadParam(msg.productCategory.id, msg.product.value, $('.mod').find('#single').find('.add_param_holder'));
+                            JSON.parse(msg.product.value).forEach(function(value){
+                                getBlockWithadParam(msg.productCategory.id, JSON.stringify(value.add_param), $('.mod').find('#single').find('.add_param_holder'));
+                            });
                         }
                         $('.mod').find('#single').find('input[data-name="price"]').val(msg.product.product_price);
                     }else{
+                        $('.mod').find('[href="#several"]').click();
                         if($('.mod').find('#several').find('.add_price_origin').length){
                             var add_price_origin = $('.mod').find('#several').find('.add_price_origin').eq(0);
-
                             JSON.parse(msg.product.value).forEach(function(value){
                                 var current = add_price_origin.clone();
-                                current.append('<div class="col-sm-12"><span style="float: right;" class="btn remove_add_price"><button type="button" class="btn btn-danger">Удалить добавлнную цену</button></span></div>').show();
+                                current
+                                .prepend('<div>Name</div><div><input data-name="name" type="text" name="name" value="'+value.name+'"><div>')
+                                .append('<div class="col-sm-12"><span style="float: right;" class="btn remove_add_price"><button type="button" class="btn btn-danger">Удалить добавлнную цену</button></span></div>').show();
                                 $('.mod').find('#several').find('.add_price_holder').append(current);
-
                                 current.find('input[data-name="price"]').val(value.val);
-
                                 getBlockWithadParam(msg.productCategory.id, JSON.stringify(value.add_param), current.find('.add_param_holder'));
-
-
                             });
                         }
-
-
-
                     }
 
-
-
-                    // getBlockWithadParam(msg.productCategory.id, msg.product.value);
 
                     $('.mod').find('.form-group').find('input[data-name="photo"]').val(msg.product.product_image);
 
                     $('.mod').find('#product_form').find('input[type="text"]').eq(0).focus();
 
-
-
-                    
                     productId = msg.product.id;
                     nededPath = '/companies/'+company_id+'/products/' + msg.product.id + '/';
                     $.ajax({
@@ -325,6 +318,7 @@ $(document).ready(function() {
 
                     var price = {};
                     price['val'] = ite.find('[data-name="price"]').val();
+                    price['name'] = ite.find('[data-name="name"]').val();
                     price['add_param'] = {};
 
                     var add_param_holder = ite.find('.add_param_holder');
@@ -341,27 +335,61 @@ $(document).ready(function() {
                                     case 'checkbox':
                                         if(item.find('input:checked').length){
                                             item.find('input:checked').each(function(k, i){
-                                                price['add_param'][item.attr('data-key')].push($(i).val());
+                                                var single_add_param = {};
+
+                                                single_add_param['val'] = $(i).val();
+                                                single_add_param['add_price'] = $(i).parent().find('.add_price').val();
+                                                single_add_param['add_price_type'] = $(i).parent().find('.add_price_type').val();
+                                                
+                                                price['add_param'][item.attr('data-key')].push(single_add_param);
                                             });
                                         }
+                                        
                                         break;
                                     case 'radio':
                                         if(item.find('input:checked').length){
                                             if(item.find('input:checked').val().length){
-                                                price['add_param'][item.attr('data-key')].push(item.find('input:checked').val());
+                                                var single_add_param = {};
+
+                                                single_add_param['val'] = item.find('input:checked').val();
+                                                single_add_param['add_price'] = item.find('input:checked').parent().find('.add_price').val();
+                                                single_add_param['add_price_type'] = item.find('input:checked').parent().find('.add_price_type').val();
+
+                                                price['add_param'][item.attr('data-key')].push(single_add_param);
                                             }
                                         }
+
                                         break;
                                     case 'select':
+                                        
                                         if(item.find('select').length){
                                             if(item.find('select').val().length){
-                                                price['add_param'][item.attr('data-key')].push(item.find('select').val());
+                                                var single_add_param = {};
+                                                
+                                                single_add_param['val'] = item.find('select').val();
+                                                single_add_param['add_price'] = item.find('select').parent().find('.add_price').val();
+                                                single_add_param['add_price_type'] = item.find('select').parent().find('.add_price_type').val();
+
+                                                price['add_param'][item.attr('data-key')].push(single_add_param);
+                                                
                                             }
                                         }
+
                                         break;
                                     case 'input':
                                         if(item.find('input').length){
-                                            price['add_param'][item.attr('data-key')].push(item.find('input').val());
+                                            var single_add_param = {};
+
+                                            if(item.find('input[data-name="owner_field"]').length){
+                                                single_add_param['val'] = item.find('input[data-name="owner_field"]').val();
+                                            }else{
+                                                single_add_param['val'] = item.find('input[data-name="client_field"]').val();
+                                            }
+                                            single_add_param['add_price'] = '';
+                                            single_add_param['add_price_type'] = '';
+
+                                            price['add_param'][item.attr('data-key')].push(single_add_param);
+
                                         }
                                         break;
                                 }
@@ -440,8 +468,10 @@ $(document).ready(function() {
     });
 
     $('.mod').find('.add_price').on('click', function(){
-        var add_price_origin = $('.mod').find('.add_price_origin').eq(0);
-        $('.mod').find('.add_price_holder').append(add_price_origin.clone().append('<div class="col-sm-12"><span style="float: right;" class="btn remove_add_price"><button type="button" class="btn btn-danger">Удалить добавлнную цену</button></span></div>').show());
+        var add_price_origin = $('.mod').find('#several').find('.add_price_origin').eq(0);
+        $('.mod').find('#several').find('.price_list').append(add_price_origin.clone()
+        .prepend('<div>Name</div><div><input data-name="name" type="text" name="name" value=""><div>')
+        .append('<div class="col-sm-12"><span style="float: right;" class="btn remove_add_price"><button type="button" class="btn btn-danger">Удалить добавлнную цену</button></span></div>').show());
 
     });
 
