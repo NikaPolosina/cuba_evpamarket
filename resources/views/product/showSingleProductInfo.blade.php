@@ -157,7 +157,7 @@
 
 
                                                     {{--Формирование цены для заказа (возможность выбора) --}}
-                                                    <div>
+                                                    <div class="add_price_holder">
                                                         {!! $singleProduct->content !!}
 
                                                         @if(isset($addParam) && is_array($singleProduct->value) )

@@ -57,6 +57,9 @@
                                             @endif
 
                                                 @if($enable === true)
+
+
+
                                                     <div style="min-width: 90px; display: inline-block;" class="{{$class}}">
                                                         <input type="checkbox" name="{{$key}}" value="{{$key}}">
                                                         {{$val['name']}}
@@ -67,6 +70,9 @@
                                                             <div> + {{$addPrice}}</div>
                                                         @endif
                                                     </div>
+
+
+
                                                     @if(isset($val['css']))
                                                         <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
                                                     @endif

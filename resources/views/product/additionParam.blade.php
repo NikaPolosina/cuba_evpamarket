@@ -57,7 +57,7 @@ $b = 0;
                                                             }?>
 
                                                             <input type="checkbox" name="{{$key}}" value="{{$key}}" <?=$valu?> >{{$val['name']}}
-                                                            <div class="add_price_holder">
+                                                            <div class="add_price_holder_demo">
                                                                 <input type="text" name="add_price" class="add_price" value="<?=$add_price ?> ">
                                                                 <select name="add_price_type" class="add_price_type">
                                                                     <option value="val" <?=($v['add_price_type'] == 'val') ? 'selected' : ''?>>ru</option>
@@ -119,7 +119,7 @@ $b = 0;
 
 
                                                     <input type="radio" name="{{$random}}" value="{{$key}}" <?=$valu?> >{{$val['name']}}
-                                                    <div class="add_price_holder">
+                                                    <div class="add_price_holder_demo">
                                                         <input type="text" name="add_price" class="add_price" value="<?=$add_price ?> ">
                                                         <select name="add_price_type" class="add_price_type">
                                                             <option value="val" <?=($v['add_price_type'] == 'val') ? 'selected' : ''?>>ru</option>
@@ -189,7 +189,7 @@ $b = 0;
                                         <option value="{{$key}}" <?=($key == $value[$item['key']]['val']) ? 'selected' : '' ?>>{{$key}} <?php $key ?></option>
                                         <?php } ?>
                                     </select>
-                                    <div class="add_price_holder">
+                                    <div class="add_price_holder_demo">
                                         <input type="text" name="add_price" class="add_price" value="{{$value[$item['key']]['add_price']}}">
 
                                         <select name="add_price_type" class="add_price_type">
