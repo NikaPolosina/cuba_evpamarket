@@ -141,24 +141,148 @@
                                                     </div>
                                                     <h2 class="detail-tabs-i-title"><span style="font-weight: 600">Описание</span>
                                                         <span class="detail-tabs-i-title-inner">{{ $singleProduct->product_name }} </span>
-
                                                     </h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                    {{--Формирование цены для заказа (возможность выбора) --}}
                                                     <div>
                                                         {!! $singleProduct->content !!}
 
-                                                        @if(isset($addParam))
-                                                            @include('product.additionParamShow')
+                                                        @if(isset($addParam) && is_array($singleProduct->value) )
+                                                            <?php $priceTab = 0; ?>
+                                                            @if(count($singleProduct->value) == 1)
+                                                                @foreach($singleProduct->value as $basePrice)
+                                                                    <?php $priceTab++ ?>
+                                                                    <div id="add_price_{{$priceTab}}" class="tab-pane fade in <?=($priceTab == 1)?'active':'' ?>">
+                                                                        @include('product.additionParamPrice', ['base_price'=>$basePrice['val'], 'add_price'=>$basePrice['add_param']])
+                                                                    </div>
+                                                                @endforeach
+                                                            @else
+                                                                <div class="base_price_holder">
+                                                                    <?php $priceTab = 0; ?>
+                                                                    <ul class="nav nav-tabs">
+                                                                        @foreach($singleProduct->value as $basePrice)
+                                                                            <?php $priceTab++ ?>
+                                                                            <li class="<?=($priceTab == 1)?'active':'' ?>" ><a data-toggle="tab" href="#add_price_{{$priceTab}}">
+                                                                                    <div>Name: {{$basePrice['name'] or ''}}</div>
+                                                                                    <div>Price: {{$basePrice['val']}}</div>
+                                                                                </a></li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                    <?php $priceTab = 0; ?>
+                                                                    <div class="tab-content">
+                                                                        @foreach($singleProduct->value as $basePrice)
+                                                                            <?php $priceTab++ ?>
+                                                                            <div id="add_price_{{$priceTab}}" class="tab-pane fade in <?=($priceTab == 1)?'active':'' ?>">
+                                                                                @include('product.additionParamPrice', ['base_price'=>$basePrice['val'], 'add_price'=>$basePrice['add_param']])
+                                                                            </div>
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+
+
+
                                                         @endif
                                                     </div>
+                                                    {{--Формирование цены для заказа (возможность выбора) --}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                                                 </div>
                                                 <div class="tab-pane" id="tab_5_2">
                                                     <p style="font-size: 16px; font-weight: bold"> Xарактеристики  {{ $singleProduct->product_name }} </p>
 
-                                                    @if(isset($addParam))
-                                                        @include('product.additionParamShow')
-                                                    @endif
+
+
+
+
+
+
+
+                                                    {{--Характеристики для каждой базовой цены (без возможности выбора) --}}
+                                                        @if(isset($addParam) && is_array($singleProduct->value))
+
+                                                            @if(count($singleProduct->value) == 1)
+                                                                <?php $paramTab = 0; ?>
+
+                                                                @foreach($singleProduct->value as $basePrice)
+                                                                    <?php $paramTab++ ?>
+                                                                    <div id="add_param_{{$paramTab}}" class="tab-pane fade in <?=($paramTab == 1)?'active':'' ?>">
+                                                                        @include('product.additionParamShow', ['add_price'=>$basePrice['add_param']])
+                                                                    </div>
+                                                                @endforeach
+                                                            @else
+                                                                <div class="base_price_holder">
+                                                                    <?php $paramTab = 0; ?>
+                                                                    <ul class="nav nav-tabs">
+                                                                        @foreach($singleProduct->value as $basePrice)
+                                                                            <?php $paramTab++ ?>
+                                                                            <li class="<?=($paramTab == 1)?'active':'' ?>"><a data-toggle="tab" href="#add_param_{{$paramTab}}">
+                                                                                    <div>Name: {{$basePrice['name'] or ''}}</div>
+                                                                                    <div>Price: {{$basePrice['val']}}</div>
+                                                                                </a></li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                    <?php $paramTab = 0; ?>
+                                                                    <div class="tab-content">
+                                                                        @foreach($singleProduct->value as $basePrice)
+                                                                            <?php $paramTab++ ?>
+                                                                            <div id="add_param_{{$paramTab}}" class="tab-pane fade in <?=($paramTab == 1)?'active':'' ?>">
+                                                                                @include('product.additionParamShow', ['add_price'=>$basePrice['add_param']])
+                                                                            </div>
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        @endif
+                                                    {{--Характеристики для каждой базовой цены (без возможности выбора) --}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                                                 </div>
