@@ -234,7 +234,7 @@
             </div>
         </div>
     @endforeach
-</div>
+
 </div>
 
 <style>
