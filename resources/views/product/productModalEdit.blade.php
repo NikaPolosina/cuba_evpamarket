@@ -190,6 +190,9 @@
     </div>
 </div>
 <style>
+    .form-group{
+        margin-bottom: 3px;
+    }
     .my_form_group:after{
         content: '';
         display: table;
