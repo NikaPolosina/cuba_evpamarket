@@ -25,9 +25,21 @@
                     <h1>В избранных нет ни одного товара. Вернитесь к сайту, что бы добавить товар в избранное.</h1>
                 </div>
             @else
-                <div class="col-sm-9 col-sm-offset-1 product_item_like like_empty product_item_p">
-                    <h1>В избранных нет ни одного товара. Вернитесь к сайту, что бы добавить товар в избранное.</h1>
+
+
+                <div class="col-sm-6 col-sm-offset-3 product_item_like like_empty product_item_p">
+                    <div class="col-sm-9">
+                        <p class="empty_cart_p">В избранных нет ни одного товара. Вернитесь к сайту, что бы добавить товар в избранное.</p>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="hold_img_empty_cart">
+                            <img src="/img/system/clip-art.png" alt="">
+                        </div>
+                    </div>
                 </div>
+
+
             @endif
         </div>
 
@@ -41,5 +53,15 @@
     </script>
 
     {!! HTML::script('/js/like_and_cart_add.js') !!}
+
+
+    <style>
+        .empty_cart_p{
+            font-size: 25px;
+            padding: 40px;
+        }
+
+
+    </style>
 
 @endsection

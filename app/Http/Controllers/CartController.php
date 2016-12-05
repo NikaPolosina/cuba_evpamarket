@@ -47,6 +47,7 @@ class CartController extends Controller{
     /**
      * Show cart
      * */
+    //Метод отвечающий за переход в корзину пользователя.
     public function index(Request $request){
 
 

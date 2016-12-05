@@ -106,6 +106,7 @@ Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@ind
 Route::any('/avatar-uploader', 'UserController@createAvatar');
 
 /*-------------------------------------------Cart----------------------------------------------*/
+//Переход в корзину.
 Route::any('/cart', ['as'=>'cart', 'uses'=>'CartController@index']);
 Route::any('/cart/destroy-product', 'CartController@destroy');
 Route::post('/products/cart', 'CartController@cart');
@@ -186,6 +187,8 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
 });
 
 /*-------------------------------------------Home--------------------------------------------*/
+//Роут что направляет на страниц просмотра профиля пользователя другим пользователем.
+Route::get('/show-user/{id}', 'UserController@getUserPage');
 
 Route::get('/login-user', ['as' => 'login-user', 'uses' => 'HomeController@Index' ]);
 

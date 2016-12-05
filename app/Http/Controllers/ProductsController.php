@@ -76,7 +76,7 @@ class ProductsController extends Controller{
         Session::flash('flash_message', 'Product added!');
         return redirect('company/'.$company->id);
     }
-
+    //Функция обрезки картинки.
     public static function cropFile($file, $newPath, $name){
         $size = getimagesize($file);
         $width = $size[0];
@@ -415,7 +415,6 @@ class ProductsController extends Controller{
     }
 
     public function getProductList(Request $request, CategoryController $category){
-
         $companyId = $request->input('companyId');
         $categoriId = $request->input('categoryId');
         $company = Company::find($companyId);

@@ -45,11 +45,13 @@
                                     <ul class="list-unstyled profile-nav">
                                         <li>
                                             <div class="img_avatar_css">
-                                                @if(!empty($user[0]->getUserInformation->avatar) && file_exists(public_path().$user[0]->getUserInformation->avatar))
-                                                    <img src="{{$user[0]->getUserInformation->avatar}}" alt="avatar">
+
+                                                @if(file_exists(public_path().'/img/users/'.$user[0]->id.'/avatar.png'))
+                                                    <img src="/img/users/{{$user[0]->id}}/avatar.png" alt="avatar">
                                                 @else
-                                                    <img src="/img/placeholder/avatar.jpg" alt="avatar"/>
+                                                    <img src="/img/placeholder/avatar.jpg" alt="avatar" />
                                                 @endif
+
                                             </div>
                                         </li>
                                         <li>

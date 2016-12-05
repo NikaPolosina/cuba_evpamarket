@@ -329,13 +329,28 @@
                 <h1>Ваша корзина пуста. Вернитесь к сайту что бы добавить товары в корзину.</h1>
             </div>
         @else
-            <div class="col-sm-9 col-sm-offset-1 product_item_cart cart_empty product_item_p">
-                <h1>Ваша корзина пуста. Вернитесь к сайту что бы добавить товары в корзину.</h1>
+            <div class="col-sm-6 col-sm-offset-3 product_item_cart cart_empty product_item_p">
+                <div class="col-sm-9">
+                    <p class="empty_cart_p">Ваша корзина пуста. Вернитесь к сайту что бы добавить товары в корзину.</p>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="hold_img_empty_cart">
+                        <img src="/img/system/noItems.png" alt="">
+                    </div>
+                </div>
             </div>
         @endif
     </div>
 
     {!! HTML::script('/js/product/cart_delete.js') !!}
 
+    <style>
+        .empty_cart_p{
+            font-size: 25px;
+            padding: 40px;
+        }
 
+
+    </style>
 @endsection
