@@ -165,6 +165,11 @@
                                                             @if(count($singleProduct->value) == 1)
                                                                 @foreach($singleProduct->value as $basePrice)
                                                                     <div class="add_price_holder active">
+                                                                        <?php
+                                                                            if(!array_key_exists('add_param', $basePrice)){
+                                                                                $basePrice['add_param'] = array();
+                                                                            }
+                                                                        ?>
                                                                         @include('product.additionParamPrice', ['base_price'=>$basePrice['val'], 'add_price'=>$basePrice['add_param']])
                                                                     </div>
                                                                 @endforeach
@@ -185,6 +190,11 @@
                                                                         @foreach($singleProduct->value as $basePrice)
                                                                             <?php $priceTab++ ?>
                                                                             <div id="add_price_{{$priceTab}}" class="add_price tab-pane fade in add_price_holder <?=($priceTab == 1)?'active':'' ?> ">
+                                                                                <?php
+                                                                                if(!array_key_exists('add_param', $basePrice)){
+                                                                                    $basePrice['add_param'] = array();
+                                                                                }
+                                                                                ?>
                                                                                 @include('product.additionParamPrice', ['base_price'=>$basePrice['val'], 'add_price'=>$basePrice['add_param']])
                                                                             </div>
                                                                         @endforeach
@@ -192,14 +202,13 @@
                                                                 </div>
                                                             @endif
 
-
-
+                                                        @else
+                                                            <div class="add_price_holder active">
+                                                                <input type="hidden"  value="{{$singleProduct->product_price}}" name="" class="base_price"/>
+                                                            </div>
                                                         @endif
                                                     </div>
                                                     {{--Формирование цены для заказа (возможность выбора) --}}
-
-                                                    <button class="get_add_price">Get Add Price</button>
-
                                                     <script>
                                                         function calculatePrice(){
                                                             var add_price_holder = $('.add_price_holder.active');
@@ -314,6 +323,11 @@
                                                                 @foreach($singleProduct->value as $basePrice)
                                                                     <?php $paramTab++ ?>
                                                                     <div id="add_param_{{$paramTab}}" class="tab-pane fade in <?=($paramTab == 1)?'active':'' ?>">
+                                                                        <?php
+                                                                        if(!array_key_exists('add_param', $basePrice)){
+                                                                            $basePrice['add_param'] = array();
+                                                                        }
+                                                                        ?>
                                                                         @include('product.additionParamShow', ['add_price'=>$basePrice['add_param']])
                                                                     </div>
                                                                 @endforeach
@@ -334,6 +348,11 @@
                                                                         @foreach($singleProduct->value as $basePrice)
                                                                             <?php $paramTab++ ?>
                                                                             <div id="add_param_{{$paramTab}}" class="tab-pane fade in <?=($paramTab == 1)?'active':'' ?>">
+                                                                                <?php
+                                                                                if(!array_key_exists('add_param', $basePrice)){
+                                                                                    $basePrice['add_param'] = array();
+                                                                                }
+                                                                                ?>
                                                                                 @include('product.additionParamShow', ['add_price'=>$basePrice['add_param']])
                                                                             </div>
                                                                         @endforeach

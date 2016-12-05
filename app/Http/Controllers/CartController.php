@@ -306,13 +306,10 @@ class CartController extends Controller{
      * */
     private function _countTotalAmount($companyId = false){
         if($companyId){
-
             if(array_key_exists($companyId, $this->_cart[$this->_currentUserKey])){
-                foreach(Product::whereIn('id', array_keys($this->_cart[$this->_currentUserKey][$companyId]['products']))->get([
-                    'id',
-                    'product_price'
-                ]) as $singleProduct){
-                    $this->_totalAmount = $this->_totalAmount + $this->_cart[$this->_currentUserKey][$companyId]['products'][$singleProduct->id]['cnt'] * $singleProduct->product_price;
+                foreach($this->_cart[$this->_currentUserKey][$companyId]['products'] as $singleProduct){
+                    $add_param = json_decode($singleProduct['add_param'], true);
+                    $this->_totalAmount = $this->_totalAmount + ($singleProduct['cnt'] * $add_param['current_price']);
                 }
             }
         }else{
