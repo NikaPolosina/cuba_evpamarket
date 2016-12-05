@@ -39,7 +39,7 @@ $b = 0;
                                     @foreach($item['value'] as $key => $val)
                                         <?php    $b++; ?>
                                         @if($b==1)
-                                        <div class="col-sm-4"> @endif
+                                        <div class="col-sm-5"> @endif
                                                 <div style="text-align: left;">
                                                     <div style="min-width: 90px; display: inline-block;">
 
@@ -63,7 +63,7 @@ $b = 0;
                                                                     <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
                                                                 @endif
                                                                 <select name="add_price_type" class="add_price_type">
-                                                                    <option value="val" <?=($v['add_price_type'] == 'val') ? 'selected' : ''?>>ru</option>
+                                                                    <option value="val" <?=($v['add_price_type'] == 'val') ? 'selected' : ''?>>руб.</option>
                                                                     <option value="per"  <?=($v['add_price_type'] == 'per') ? 'selected' : ''?>>%</option>
                                                                 </select>
                                                             </div>
@@ -200,7 +200,7 @@ $b = 0;
                                         <input type="text" name="add_price" class="add_price" value="{{$value[$item['key']]['add_price']}}">
 
                                         <select name="add_price_type" class="add_price_type">
-                                            <option value="val" <?=($value[$item['key']]['add_price_type'] == 'val') ? 'selected' : ''?>>ru</option>
+                                            <option value="val" <?=($value[$item['key']]['add_price_type'] == 'val') ? 'selected' : ''?>>руб.</option>
                                             <option value="per"  <?=($value[$item['key']]['add_price_type'] == 'per') ? 'selected' : ''?>>%</option>
                                         </select>
                                     </div>

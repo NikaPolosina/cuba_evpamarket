@@ -113,16 +113,25 @@
                                         </div>
 
                                         <div id="several" class="tab-pane fade">
-                                            <div class="add_price_origin" style="display: none;">
-                                                <div class="form-group {{ $errors->has('product_price') ? 'has-error' : ''}}">
-                                                    <label class="col-sm-3 control-label" for="product_price">Цена: <span class="required_css">*</span> </label>
-                                                    {!! Form::number('product_price[]', 0, ['class' => 'form-control', 'data-name' =>'price', 'min'=>0]) !!}
-                                                    <div style="display: none"class="error" data-id="price">
-                                                        <strong>Внимание!</strong> <span></span>
+                                            <div class="add_price_origin col-sm-12" style="display: none;">
+                                                <div class="form-group my_form_group {{ $errors->has('product_price') ? 'has-error' : ''}}">
+
+                                                    <div class="col-sm-12">
+                                                        <label class="col-sm-4 control-label" for="product_price">Цена: <span class="required_css">*</span> </label>
+
+                                                        <div class="col-sm-8">
+                                                            {!! Form::number('product_price[]', 0, ['class' => 'form-control', 'data-name' =>'price', 'min'=>0]) !!}
+                                                            <div style="display: none"class="error" data-id="price">
+                                                                <strong>Внимание!</strong> <span></span>
+                                                            </div>
+                                                        </div>
                                                     </div>
+
+
+
                                                 </div>
-                                                <div class="add_param_parent">
-                                                    <span class="add_param_button">Настроить дополнительный параметры</span>
+                                                <div class="form-group add_param_parent col-sm-12">
+                                                    <span class="add_param_button">  <button type="button" class="btn btn-default"> Настроить дополнительный параметры </button> </span>
                                                     <div class="add_param_holder" style="display: none"><p class="bg-warning" style="padding: 15px;">*Выбирите категорию для отображения дополнительных параметров</p></div>
 
                                                 </div>
@@ -181,6 +190,11 @@
     </div>
 </div>
 <style>
+    .my_form_group:after{
+        content: '';
+        display: table;
+        clear: both;
+    }
     .add_price_holder:after{
         content: '';
         clear: both;
