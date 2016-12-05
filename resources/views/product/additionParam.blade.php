@@ -16,10 +16,10 @@ $b = 0;
         @foreach($addParam as $item)
             <div class="div_container col-sm-12 param_holder" data-key="{{$item['key']}}" data-type="{{$item['type']}}"
                  style="margin-bottom: 10px; ">
-                <div class="col-sm-2" style="text-align: right;">
+                <div class="col-sm-3" style="text-align: right;">
                     {{$item['title']}}:
                 </div>
-                <div class="col-sm-10">
+                <div class="col-sm-9">
                         <?php
                             switch($item['type']){
                                 case 'checkbox':?>
@@ -39,7 +39,7 @@ $b = 0;
                                     @foreach($item['value'] as $key => $val)
                                         <?php    $b++; ?>
                                         @if($b==1)
-                                        <div class="col-sm-5"> @endif
+                                        <div class="col-sm-6" style="padding-left: 0px; padding-right: 0px;"> @endif
                                                 <div style="text-align: left;">
                                                     <div style="min-width: 90px; display: inline-block;">
 
@@ -62,7 +62,7 @@ $b = 0;
 
                                                                 <input type="text" style="width: 100px;" name="add_price" class="add_price" value="<?=$add_price ?> ">
                                                                 @if(isset($val['css']))
-                                                                    <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
+                                                                    <div style="display:inline-block; width: 30px; vertical-align: middle; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
                                                                 @endif
 
                                                                 <select name="add_price_type" class="add_price_type">
@@ -104,7 +104,7 @@ $b = 0;
                                     @foreach($item['value'] as $key => $val)
                                         {{-- */$b++;/* --}}
                                         @if($b==1)
-                                            <div class="col-sm-6"> @endif
+                                            <div class="col-sm-6" style="padding-left: 0px; padding-right: 0px;"> @endif
                                                 <div style="text-align: left;">
 
 
@@ -129,7 +129,7 @@ $b = 0;
                                                         <input style="width: 100px;" type="text" name="add_price" class="add_price" value="<?=$add_price ?> ">
 
                                                         @if(isset($val['css']))
-                                                            <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
+                                                            <div style="display:inline-block; width: 30px; vertical-align: middle;  min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
                                                         @endif
 
 
