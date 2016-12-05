@@ -248,37 +248,75 @@ class OrderController extends Controller{
         $order = self::getTotalCompanyAmount($company, StatusOwner::where('key','sending_buyer')->first(), Auth::user());
 
 
-        die('Surprise, you are here !!!');
 
-        $t = $total + $order;
-        if(Auth::user()->getGroup()->where('company_id', $company->id)->count()){
-            $t = $total + Auth::user()->getGroup()->where('company_id', $company->id)->max('money');
-        }
-        $discount = $company->getDiscountAccumulativ()->where('from', '<=', $t)->orderBy('from', 'desc')->first();
 
-        if($discount){
-            $total_discount = ($total*$discount['percent'])/100;
-            $persent = $discount['percent'];
-        }else{
-            $total_discount = 0;
-            $persent = 0;
+
+
+
+
+
+
+        if($request->cookie('cart')){
+            $cart = $request->cookie('cart')[Auth::user()->id.'_id'];
         }
-        /*--------------------------*/
-        $a =  $total - $total_discount;
+
+
+        $cOrder = $request->product;
+
+        $cOrder['totalAmount'] = 0;
+
+        foreach ($request->product as $k => $single) {
+
+            $product = Product::find($cart[$company->id]['products'][$k]['product_id']);
+
+            $product->cnt = $single['cnt'];
+            $cart[$company->id]['products'][$k]['add_param'] = json_decode($cart[$company->id]['products'][$k]['add_param'], true);
+            $product->product_price = $cart[$company->id]['products'][$k]['add_param']['current_price'];
+            $product->value = $cart[$company->id]['products'][$k]['add_param']['add_param'];
+            $product =  IndexController::showProduct($product);
+            $product->hash = $k;
+
+            $cOrder['totalAmount'] = $cOrder['totalAmount'] + ($product->cnt*$product->product_price);
+
+
+            $cOrder['product'][$k] = $product;
+
+        }
+
+
+        if(count($cOrder['product'])){
+            $cOrder['company'] = $company;
+
+            $cOrder['totalHistoryAmount'] = OrderController::getTotalCompanyAmount($cOrder['company'], StatusOwner::where('key','sending_buyer')->first(), Auth::user());
+
+            $cOrder['total'] = $cOrder['totalAmount'] + $cOrder['totalHistoryAmount'];
+
+            if(Auth::user()->getGroup()->where('company_id', $company->id)->count()){
+                $cOrder['totalHistoryAmount'] = Auth::user()->getGroup()->where('company_id', $company->id)->max('money');
+                $cOrder['total'] = $cOrder['totalAmount'] + $cOrder['totalHistoryAmount'];
+            }
+
+            $cOrder['discount'] = $cOrder['company']->getDiscountAccumulativ()->where('from', '<=', $cOrder['total'])->orderBy('from', 'desc')->first();
+        }
+
+
+        $cOrder['total_discount'] = ($cOrder['total']*$cOrder['discount']->percent)/100;
+
 
         $satus = StatusOwner::where('key', '=', 'not_processed')->get();
 
         DB::beginTransaction();
 
         try{
+
             $order = Order::create([
 
                 'simple_user_id' => $userSeller,
                 'owner_user_id'  => $userOwner[0]['id'],
                 'status'         => $satus[0]['id'],
-                'total_price'    => $total,
-                'discount_price' => $a,
-                'percent'        => $persent,
+                'total_price'    => $cOrder['total'],
+                'discount_price' => $cOrder['total'] - $cOrder['total_discount'],
+                'percent'        => $cOrder['discount']->percent,
                 'order_phone'    => $request['phone'],
                 'region'         => $request['region_id'],
                 'city'           => $request['city_id'],
@@ -289,22 +327,20 @@ class OrderController extends Controller{
                 'note'           => $request['note'],
             ]);
 
-            foreach($products as $currentProduct){
+            foreach($cOrder['product'] as $currentProduct){
 
-                $add_param = '';
-                if(array_key_exists($currentProduct->id, $request->product)){
-                    if(array_key_exists('add_param', $request->product[$currentProduct->id])){
-                        $add_param = json_encode($request->product[$currentProduct->id]['add_param']);
-                    }
-                }
+
+                $currentProduct->value = json_encode($currentProduct->value);
+
 
                 $r = ProductOrder::create([
                     'product_id'    => $currentProduct['id'] ,
                     'cnt'           => $currentProduct['cnt'] ,
                     'price'         => $currentProduct['product_price'] ,
                      'order_id'         => $order->id ,
-                    'add_param'         => $add_param
+                    'add_param'         => $currentProduct->value
                 ]);
+
             }
 
             $company->getOrder()->save($order);
@@ -321,21 +357,13 @@ class OrderController extends Controller{
             $k = (Auth::user()) ? Auth::user()->id.'_id' : '0_id';
             $cart[$k] =  (isset($cart[$k])) ? $cart[$k] : array();
 
-//            dd($cart);
 
-            if(array_key_exists($company['id'], $cart[$k]) && count($cart[$k][$company['id']]['products'])){
-                foreach($products as $currentProduct){
-                    if(array_key_exists($currentProduct['id'], $cart[$k][$company['id']]['products'])){
-                        unset($cart[$k][$company['id']]['products'][$currentProduct['id']]);
-                    }
-                    if(!count($cart[$k][$company['id']]['products'])){
-                        unset($cart[$k][$company['id']]);
-                        break;
-                    }
-                }
+            foreach ($cOrder['product'] as $hash => $v) {
+                unset($cart[$k][$company->id]['products'][$hash]);
             }
 
-//    dd($cart);
+
+
         }catch(\Exception $e){
                 DB::rollback();
                 return Redirect::back();
@@ -451,7 +479,7 @@ class OrderController extends Controller{
             $this->_breadcrumbs->addCrumb('Мои заказы', '/show-list-order-simple');
             $this->_breadcrumbs->addCrumb('Заказ', '/show-simple-order/'.$id);
         }
-        
+
         return view('order.simple')
             ->with('order', $order)
             ->with('breadcrumbs', $this->_breadcrumbs);
