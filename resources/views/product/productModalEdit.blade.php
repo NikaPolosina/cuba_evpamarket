@@ -140,7 +140,7 @@
                                             <span class="btn add_price"><button type="button" class="btn btn-success">Добавить цену <span style="margin-left: 5px;" class="glyphicon glyphicon-plus" aria-hidden="true"></span></button></span>
 
 
-                                            <div class="add_price_holder price_list" style="border: solid black;">
+                                            <div class="add_price_holder price_list">
 
                                             </div>
                                         </div>

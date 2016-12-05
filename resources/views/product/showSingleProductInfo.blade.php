@@ -180,8 +180,8 @@
                                                                         @foreach($singleProduct->value as $basePrice)
                                                                             <?php $priceTab++ ?>
                                                                             <li class="current_price <?=($priceTab == 1)?'active':'' ?>" ><a data-toggle="tab" href="#add_price_{{$priceTab}}">
-                                                                                    <div>Name: {{$basePrice['name'] or ''}}</div>
-                                                                                    <div>Price: {{$basePrice['val']}}</div>
+                                                                                    <div>Модель: {{$basePrice['name'] or ''}}</div>
+                                                                                    <div>Цена: {{$basePrice['val']}}</div>
                                                                                 </a></li>
                                                                         @endforeach
                                                                     </ul>
@@ -338,8 +338,8 @@
                                                                         @foreach($singleProduct->value as $basePrice)
                                                                             <?php $paramTab++ ?>
                                                                             <li class="<?=($paramTab == 1)?'active':'' ?>"><a data-toggle="tab" href="#add_param_{{$paramTab}}">
-                                                                                    <div>Name: {{$basePrice['name'] or ''}}</div>
-                                                                                    <div>Price: {{$basePrice['val']}}</div>
+                                                                                    <div>Модель: {{$basePrice['name'] or ''}}</div>
+                                                                                    <div>Цена: {{$basePrice['val']}}</div>
                                                                                 </a></li>
                                                                         @endforeach
                                                                     </ul>

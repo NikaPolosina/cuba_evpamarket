@@ -36,7 +36,7 @@
                             case 'checkbox':?>
                                 <div>
                                     <input data-type="checkbox" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
-                                <?php
+                                    <?php
                                     foreach($item['value'] as $key => $val){ ?>
                                         <?php $b++; ?>
                                         @if($b==1)<div class="col-sm-4"> @endif
@@ -95,7 +95,7 @@
                                 break;
 
                             case 'radio':?>
-                                <div >
+                                <div>
                                     <input data-type="radio" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
 
                                 <?php
@@ -155,7 +155,7 @@
                             break;
 
                             case 'select': ?>
-                                <div  >
+                                <div>
                                     <input data-type="select" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
 
                                 <?php
@@ -217,7 +217,7 @@
                             break;
 
                             case 'input':?>
-                                <div  >
+                                <div>
                                     <input data-type="input" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
                                     <div style="text-align: left;">
                                         @if(array_key_exists($item->key, $add_price))
@@ -231,10 +231,12 @@
                             <?php break;
                     }
                 ?>
-            </div>
+        @if(count($singleProduct->value) == 1)
+                </div>
+        @endif
+
         </div>
     @endforeach
-
 </div>
 
 <style>
