@@ -515,8 +515,9 @@ class ProductsController extends Controller{
                 }
             }
 
+            if($request->has('extra'))
+                $this->_product->product_price = $request->extra['current_price'];
 
-            
             return response()->json([
                 'product' =>  $this->_product,
                 'addParam' =>  $param,

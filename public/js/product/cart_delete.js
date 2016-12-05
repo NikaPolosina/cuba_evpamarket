@@ -1,7 +1,9 @@
 $('.button_delete').on('click', function(){
-    var id = $(this).parents('.product_item_p').find('input.input_id_del').val();
+    var hash = $(this).attr('data-hash');
+    var company = $(this).attr('data-company');
     var currentBlock = $(this).parents('.product_item_cart').eq(0);
     var button = $(this);
+
 
     $.ajax({
         type: "POST",
@@ -10,20 +12,11 @@ $('.button_delete').on('click', function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         data: {
-            id: id
+            hash: hash,
+            company: company
         },
         success: function(msg){
             window.location = '';
-            return;
-            if(msg.product_cnt == 0){
-                button.parents('.product_item_cart').parents('.row').eq(0).find('.cart_empty').show();
-            }
-            if(msg.in_current_company == 0){
-                currentBlock.parents('.company_block_cart').hide();
-            }
-
-            $('.cart_count').text(msg.product_cnt);
-            currentBlock.remove();
         }
     });
 });

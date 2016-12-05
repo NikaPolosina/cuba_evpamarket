@@ -20,13 +20,15 @@ $(document).ready(function(){
             clearModal(cart_modal);
             event.preventDefault();
             var productId = $(this).attr('data-product-id');
+            var extraPrice = calculatePrice();
+
             $.ajax({
                 type    : "POST",
                 url     : getProductUrl,
                 headers : {
                     'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
                 },
-                data    : {id : productId},
+                data : {id : productId, extra : extraPrice},
                 success : function(response){
 
                     $.ajax({
@@ -75,44 +77,6 @@ $(document).ready(function(){
         event.preventDefault();
         var button = $(this);
 
-        var data = {};
-        if(cart_modal.find('.param_holder').length){
-            data = {};
-            cart_modal.find('.param_holder').each(function(index, item){
-                item = $(item);
-                if(item.attr('data-key').length){
-                    switch (item.attr('data-type')){
-                        case 'checkbox':
-                            if(item.find('input:checked').length){
-                                data[item.attr('data-key')] = [];
-                                item.find('input:checked').each(function(k, i){
-                                    data[item.attr('data-key')].push($(i).val());
-                                });
-                            }
-                            break;
-                        case 'radio':
-                            if(item.find('input:checked').length){
-                                data[item.attr('data-key')] = item.find('input:checked').val();
-                            }
-                            break;
-                        case 'select':
-                            if(item.find('select').length){
-                                data[item.attr('data-key')] = item.find('select').val();
-                            }
-                            break;
-                        case 'input':
-                            if(item.find('input').length){
-                                data[item.attr('data-key')] = item.find('input').val();
-                            }
-                            break;
-                    }
-                }
-            });
-            data = JSON.stringify(data);
-        }else{
-            data = '';
-        }
-
         $.ajax({
             type    : "POST",
             url     : addToCartUrl,
@@ -122,7 +86,7 @@ $(document).ready(function(){
             data    : {
                 product_id : cart_modal.find('.m_h_product_id').val(),
                 cnt : cart_modal.find('.my_counter').val(),
-                'add_param': data
+                add_param: JSON.stringify(calculatePrice())
             },
             success : function(response){
                 $('.cart_count').html(response.total_count);

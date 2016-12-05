@@ -24,8 +24,8 @@
                     <div class="col-md-8 col-md-offset-2 ">
                         <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p">
 
-                        @foreach($products as $val)
 
+                        @foreach($products as $val)
 
                                 <div class="ara" style="margin-bottom: 5px!important;">
                                 <div class="col-sm-3">
@@ -50,7 +50,7 @@
                                             </td>
                                             <td  width="60%" class="left">
 
-                                                {!! Form::text('product['.$val->id.'][cnt]', $val->cnt, ['class' => 'form-control count_product', 'data-name' =>'cnt', 'readonly']) !!}
+{!! Form::text('product['.$val->hash.'][cnt]', $val->cnt, ['class' => 'form-control count_product', 'data-name' =>'cnt', 'readonly']) !!}
 
                                             </td>
                                         </tr>
@@ -61,32 +61,9 @@
                                                     <div class="control-label option_table_order">Дополнительные параметры</div>
                                                 </td>
                                                 <td  width="60%" class="left">
-
-                                                    @foreach ($val['addParam'] as $k => $param)
-                                                        @foreach ($addParam as $singleParam)
-                                                            @if($k == $singleParam['key'])
-                                                                <div>
-                                                                    <span>{{$singleParam['title']}}:</span>
-                                                                    <input type="hidden"  name="product[{{$val->id}}][add_param][{{$k}}][param_name]" value="{{$singleParam['title']}}"/>
-                                                                    @foreach ($param['key'] as $p)
-                                                                        @if(is_array($singleParam['value']) && array_key_exists($p, $singleParam['value']))
-                                                                            <div class="option_table_order">
-                                                                                {{$singleParam['value'][$p]['name']}}
-                                                                                <input type="hidden"  name="product[{{$val->id}}][add_param][{{$k}}][param_value][name][]" value="{{$singleParam['value'][$p]['name']}}"/>
-                                                                                @if(array_key_exists('css', $singleParam['value'][$p]))
-                                                                                    <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$singleParam['value'][$p]['css']}}"></div>
-                                                                                    <input type="hidden"  name="product[{{$val->id}}][add_param][{{$k}}][param_value][css][]" value="{{$singleParam['value'][$p]['css']}}"/>
-                                                                                @endif
-                                                                            </div>
-                                                                        @else
-                                                                            {{$p}}
-                                                                            <input type="hidden"  name="product[{{$val->id}}][add_param][{{$k}}][param_value][name]" value="{{$p}}"/>
-                                                                        @endif
-                                                                    @endforeach
-                                                                </div>
-                                                            @endif
-                                                        @endforeach
-                                                    @endforeach
+                                                    <table>
+                                                        @include('product.cartAddParamShow', ['add_param'=>$val->value])
+                                                    </table>
                                                 </td>
                                             </tr>
                                         @endif

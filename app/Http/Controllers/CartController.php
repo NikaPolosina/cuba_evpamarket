@@ -57,75 +57,63 @@ class CartController extends Controller{
             $cart = $request->cookie('cart');
         }
 
-//        dd($cart);
-
         $k = (Auth::user()) ? Auth::user()->id.'_id' : '0_id';
 
         $cart[$k] = (isset($cart[$k])) ? $cart[$k] : array();
 
-        $addParam = array();
-
         if($cart[$k]){
             foreach($cart[$k] as $key => $company){
-                //dd($company);
                 $companies[$key]['company'] = Company::find($key);
+                $companies[$key]['products'] = array();
+                $companies[$key]['totalAmount'] = 0;
 
-                $companies[$key]['products'] = $companies[$key]['company']->getProducts()->whereIn('id', array_keys($company['products']))->with('getCategory')->get();
+                if(count($company['products'])){
+                    foreach ($company['products'] as $hash => $cartProduct) {
+                        $product = $companies[$key]['company']->getProducts()->where('id', $cartProduct['product_id'])->with('getCategory')->first();
 
-                foreach ($companies[$key]['products'] as $num => $prod) {
-                    if(array_key_exists($prod->id, $company['products']) && array_key_exists('add_param', $company['products'][$prod->id])){
-                        $companies[$key]['products'][$num]->value = json_decode($company['products'][$prod->id]['add_param'], true);
-                        if(is_array($companies[$key]['products'][$num]->value)){
-                            $addParam = array_merge($addParam, array_keys($companies[$key]['products'][$num]->value));
+                        $product->cnt = $cartProduct['cnt'];
+
+                        if(array_key_exists('add_param', $cartProduct)){
+                            $cartProduct['add_param'] = json_decode($cartProduct['add_param'], true);
+                            if(is_array($cartProduct['add_param']) && array_key_exists('current_price', $cartProduct['add_param'])){
+                                $product->product_price = $cartProduct['add_param']['current_price'];
+                            }
+                            $product->value = $cartProduct['add_param']['add_param'];
+                        }else{
+                            $product->value = array();
+
                         }
-                    }else{
-                        $companies[$key]['products'][$num]->value = array();
+                        $companies[$key]['totalAmount'] = $companies[$key]['totalAmount']+ ($product->product_price*$product->cnt);
+                        $product->hash = $hash;
+                        $companies[$key]['products'][] = $product;
                     }
-                }
 
-                $addParam = array_unique($addParam);
+                    $companies[$key]['products'] = IndexController::showProduct($companies[$key]['products']);
 
-                $companies[$key]['products'] = IndexController::showProduct($companies[$key]['products']);
+                    if(Auth::user()){
+                        $companies[$key]['totalHistoryAmount'] = OrderController::getTotalCompanyAmount($companies[$key]['company'], StatusOwner::where('key','sending_buyer')->first(), Auth::user());
 
+                        $companies[$key]['total'] = $companies[$key]['totalAmount'] + $companies[$key]['totalHistoryAmount'];
 
-                foreach($companies[$key]['products'] as $value){
-                    if(array_key_exists($value->id, $company['products'])){
-                        $value->cnt = $company['products'][$value->id]['cnt'];
-                    }else{
-                        $value->cnt = 0;
+                        if(Auth::user()->getGroup()->where('company_id', $key)->count()){
+                            $companies[$key]['totalHistoryAmount'] = Auth::user()->getGroup()->where('company_id', $key)->max('money');
+                            $companies[$key]['total'] = $companies[$key]['totalAmount'] + $companies[$key]['totalHistoryAmount'];
+                        }
+
+                        $companies[$key]['discount'] = $companies[$key]['company']->getDiscountAccumulativ()->where('from', '<=', $companies[$key]['total'])->orderBy('from', 'desc')->first();
                     }
+                }else{
+                    unset($companies[$key]);
                 }
-
-
-                $companies[$key]['totalAmount'] = $this->getTotalAmount($key);
-                 if(Auth::user()){
-                     $companies[$key]['totalHistoryAmount'] = OrderController::getTotalCompanyAmount($companies[$key]['company'], StatusOwner::where('key','sending_buyer')->first(), Auth::user());
-                     $companies[$key]['total'] = $companies[$key]['totalAmount'] + $companies[$key]['totalHistoryAmount'];
-
-                     if(Auth::user()->getGroup()->where('company_id', $key)->count()){
-
-                         $companies[$key]['totalHistoryAmount'] = Auth::user()->getGroup()->where('company_id', $key)->max('money');
-                         $companies[$key]['total'] = $companies[$key]['totalAmount'] + $companies[$key]['totalHistoryAmount'];
-                     }
-                     
-                     $companies[$key]['discount'] = $companies[$key]['company']->getDiscountAccumulativ()->where('from', '<=', $companies[$key]['total'])->orderBy('from', 'desc')->first();
-
-                 }
-
             }
 
         }
 
-        $addParam = AdditionParam::whereIn('key', $addParam)->get();
-        foreach ($addParam as $value) {
-            $value->value=json_decode($value->value, true);
-        }
-
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Корзина', '/cart');
+
         return view('product.cart')
             ->with('breadcrumbs', $this->_breadcrumbs)
-            ->with('addParam', $addParam)
             ->with('companies', $companies);
     }
 
@@ -174,46 +162,28 @@ class CartController extends Controller{
 
     public function destroy(Request $request){
 
-        $id = $request['id'];
+        $hash = $request->hash;
+        $currentCompanyId = $request->company;
+
         $cart = array();
         $cnt = 0;
 
         if($request->cookie('cart')){
-            //            $cart = $request->cookie('cart');
 
             if($request->cookie('cart')){
                 $cart = $request->cookie('cart');
             }
             $k = (Auth::user()) ? Auth::user()->id.'_id' : '0_id';
             $cart[$k] = (isset($cart[$k])) ? $cart[$k] : array();
-            $currentCompany = Product::find($request->input('id'))->getCompany()->first();
-            $currentCompanyId = $currentCompany->id;
-            $cn = 0;
-            if(array_key_exists($currentCompanyId, $cart[$k])){
-                $cn = $cart[$k][$currentCompanyId]['products'][$request->input('id')]['cnt'];
-                unset($cart[$k][$currentCompanyId]['products'][$request->input('id')]);
-                $current_company_cnt = count($cart[$k][$currentCompanyId]['products']);
-                if(!$current_company_cnt){
-                    unset($cart[$k][$currentCompanyId]);
-                }
-            }
 
-            foreach($cart[$k] as $company){
-                foreach($company['products'] as $product){
-                    $cnt += $product['cnt'];
-                }
+            if(array_key_exists($currentCompanyId, $cart[$k])){
+                unset($cart[$k][$currentCompanyId]['products'][$hash]);
             }
-            $this->_userCartProductCnt();
 
             return response()->json([
-                'success'            => true,
-                'product_cnt'        => $cnt,
-                'product'            => Product::find($request->input('id')),
-                'total_in_shop'      => $this->_totalCnt,
-                'in_current_company' => $current_company_cnt
+                'success'            => true
             ], 200)->withCookie(cookie('cart', $cart));
         }
-        return response()->json([ 'success' => true ]);
     }
 
     public function cartAddCnt(Request $request){
@@ -295,19 +265,10 @@ class CartController extends Controller{
 
         foreach($products as $singleProduct){
             $currentCompanyId = Product::find($singleProduct['product_id'])->getCompany()->first()->id;
-
-            if(array_key_exists($currentCompanyId, $this->_cart[$this->_currentUserKey])){
-                if(array_key_exists($singleProduct['product_id'], $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'])){
-                    $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][$singleProduct['product_id']]['cnt'] = $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][$singleProduct['product_id']]['cnt'] + $singleProduct['cnt'];
-                }else{
-                    $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][$singleProduct['product_id']]['cnt'] = $singleProduct['cnt'];
-                    $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][$singleProduct['product_id']]['add_param'] = $singleProduct['add_param'];
-                }
-            }else{
+            if(!array_key_exists($currentCompanyId, $this->_cart[$this->_currentUserKey])){
                 $this->_cart[$this->_currentUserKey][$currentCompanyId] = array();
-                $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][$singleProduct['product_id']]['cnt'] = $singleProduct['cnt'];
-                $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][$singleProduct['product_id']]['add_param'] = $singleProduct['add_param'];
             }
+            $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][substr( md5(rand()), 0, 7)] = $singleProduct;
         }
     }
 

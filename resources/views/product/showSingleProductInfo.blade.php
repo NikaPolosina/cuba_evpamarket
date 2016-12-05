@@ -157,15 +157,14 @@
 
 
                                                     {{--Формирование цены для заказа (возможность выбора) --}}
-                                                    <div class="add_price_holder">
+                                                    <div class="add_price_block_holder">
                                                         {!! $singleProduct->content !!}
 
                                                         @if(isset($addParam) && is_array($singleProduct->value) )
                                                             <?php $priceTab = 0; ?>
                                                             @if(count($singleProduct->value) == 1)
                                                                 @foreach($singleProduct->value as $basePrice)
-                                                                    <?php $priceTab++ ?>
-                                                                    <div id="add_price_{{$priceTab}}" class="tab-pane fade in <?=($priceTab == 1)?'active':'' ?>">
+                                                                    <div class="add_price_holder active">
                                                                         @include('product.additionParamPrice', ['base_price'=>$basePrice['val'], 'add_price'=>$basePrice['add_param']])
                                                                     </div>
                                                                 @endforeach
@@ -175,7 +174,7 @@
                                                                     <ul class="nav nav-tabs">
                                                                         @foreach($singleProduct->value as $basePrice)
                                                                             <?php $priceTab++ ?>
-                                                                            <li class="<?=($priceTab == 1)?'active':'' ?>" ><a data-toggle="tab" href="#add_price_{{$priceTab}}">
+                                                                            <li class="current_price <?=($priceTab == 1)?'active':'' ?>" ><a data-toggle="tab" href="#add_price_{{$priceTab}}">
                                                                                     <div>Name: {{$basePrice['name'] or ''}}</div>
                                                                                     <div>Price: {{$basePrice['val']}}</div>
                                                                                 </a></li>
@@ -185,7 +184,7 @@
                                                                     <div class="tab-content">
                                                                         @foreach($singleProduct->value as $basePrice)
                                                                             <?php $priceTab++ ?>
-                                                                            <div id="add_price_{{$priceTab}}" class="tab-pane fade in <?=($priceTab == 1)?'active':'' ?>">
+                                                                            <div id="add_price_{{$priceTab}}" class="add_price tab-pane fade in add_price_holder <?=($priceTab == 1)?'active':'' ?> ">
                                                                                 @include('product.additionParamPrice', ['base_price'=>$basePrice['val'], 'add_price'=>$basePrice['add_param']])
                                                                             </div>
                                                                         @endforeach
@@ -199,23 +198,101 @@
                                                     </div>
                                                     {{--Формирование цены для заказа (возможность выбора) --}}
 
+                                                    <button class="get_add_price">Get Add Price</button>
 
+                                                    <script>
+                                                        function calculatePrice(){
+                                                            var add_price_holder = $('.add_price_holder.active');
+                                                            var price = {};
+                                                            var addParam = {};
+                                                            var type;
+                                                            var item;
+                                                            var add_param_holder;
+                                                            var addPrice = {};
 
+                                                            price['base_price'] = 0;
+                                                            price['current_price'] = price['base_price'];
+                                                            price['add_param'] = [];
 
+                                                            if(add_price_holder.length){
+                                                                price['base_price'] = parseFloat(add_price_holder.find('.base_price').val());
+                                                                price['current_price'] = price['base_price'];
 
+                                                                if(add_price_holder.find('.param_holder').length){
+                                                                    add_price_holder.find('.param_holder').each(function(index, item){
 
+                                                                        type = $(item).find('.add_price_title').attr('data-type');
 
+                                                                        if(type.length){
+                                                                            item = $(item);
 
+                                                                            switch (type){
+                                                                                case 'checkbox':
+                                                                                    if(item.find('input:checked').length){
 
+                                                                                        addParam = {};
+                                                                                        addParam['title'] = $(item).find('.add_price_title').val();
+                                                                                        addParam['add_param'] = [];
 
+                                                                                        item.find('input:checked').each(function(k, i){
+                                                                                            add_param_holder = $(i).parents('.add_param_holder').eq(0);
 
+                                                                                            addPrice = {};
+                                                                                            addPrice['price'] = add_param_holder.find('.add_param_price').val();
+                                                                                            price['current_price'] = price['current_price']+parseFloat(addPrice['price']);
+                                                                                            addPrice['name'] = add_param_holder.find('.add_param_name').val();
+                                                                                            addParam['add_param'].push(addPrice);
+                                                                                        });
+                                                                                        addPrice = {};
+                                                                                    }
+                                                                                    break;
+                                                                                case 'radio':
+                                                                                    if(item.find('input:checked').length){
+                                                                                        if(item.find('input:checked').val().length){
 
+                                                                                        }
+                                                                                    }
+                                                                                    break;
+                                                                                case 'select':
+                                                                                    if(item.find('select').length){
+                                                                                        if(item.find('select').val().length){
 
+                                                                                        }
+                                                                                    }
+                                                                                    break;
+                                                                                case 'input':
 
+                                                                                    break;
+                                                                            }
 
+                                                                            if(Object.keys(addParam).length)
+                                                                                price['add_param'].push(addParam);
 
+                                                                            addParam = {};
+                                                                        }
 
+                                                                    });
+                                                                }
 
+                                                            }
+
+                                                            return price;
+                                                        }
+
+                                                        var newPrice;
+
+                                                        $(document).ready(function(){
+
+                                                            $('.add_price_block_holder').delegate('*', 'change', function(event){
+                                                                event.stopPropagation();
+
+                                                                newPrice = calculatePrice();
+                                                                $('.desk-price').html(newPrice.current_price+' руб.');
+                                                                newPrice = null;
+                                                            });
+
+                                                        });
+                                                    </script>
 
                                                 </div>
                                                 <div class="tab-pane" id="tab_5_2">

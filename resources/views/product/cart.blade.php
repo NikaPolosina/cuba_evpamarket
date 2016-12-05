@@ -24,7 +24,6 @@
                         {{  Form::token()}}
 
 
-                        {!! Form::hidden('company_id', $value['company']->id, ['class' => 'form-control', 'data-name' =>'company_id']) !!}
 
                             <div class="col-md-12 my_my">
 
@@ -127,7 +126,7 @@
 
                                     <div class="col-sm-10 col-sm-offset-1 product_item_cart product_item_p on" style="background-color: white;     padding-top: 30px;">
                                         <div class="col-sm-1">
-                                            <input type="checkbox" name="{{'product['.$val->id.'][checked]'}}" value="true" class="switch" checked/>
+<input type="checkbox" name="{{'order['.$value['company']->id.'][product]['.$val->hash.'][checked]'}}" value="true" class="switch" checked/>
 {{--                                            {!! Form::checkbox('product['.$val->id.'][checked]', 'true', ['checked' => 'checked', 'class'=>'switch']) !!}--}}
                                             <input class="input_id_del" value="{{$val->id}}" type="hidden"/>
                                         </div>
@@ -164,9 +163,7 @@
                                                     </td>
                                                 </tr>
                                                 @if(is_array($val->value) && count($val->value))
-
-                                                        @include('product.cartAddParamShow', ['singleProduct'=>$val])
-
+                                                        @include('product.cartAddParamShow', ['add_param'=>$val->value])
                                                 @endif
 
                                                 <tr>
@@ -186,7 +183,8 @@
                                                                 </button>
                                                             </span>
 
-                                                                {!! Form::text('product['.$val->id.'][cnt]', $val['cnt'], ['class' => 'form-control my_input text-center my_b"', 'id'=>'input_b', 'data-name' =>'cnt',  "min"=>"1", "max"=>"40", "readonly" ]) !!}
+
+{!! Form::text('order['.$value['company']->id.'][product]['.$val->hash.'][cnt]', $val['cnt'], ['class' => 'form-control my_input text-center my_b"', 'id'=>'input_b', 'data-name' =>'cnt',  "min"=>"1", "max"=>"40", "readonly" ]) !!}
 
                                                             <span class="input-group-btn data-up">
                                                                 <button  type="button" class="btn btn-default btn-info right_b" data-dir="up" style="width: 30px;     height: 30px;">
@@ -232,7 +230,7 @@
                                             </table>
                                             <div class="buttom_menu">
                                                 <input style="display: none" value="{{$val['id']}}" type="text"/>
-                                                <button type="button" class="btn btn-default button_delete">Удалить</button>
+                                                <button type="button" class="btn btn-default button_delete" data-hash="{{$val->hash}}" data-company="{{$value['company']->id}}">Удалить</button>
 
                                             </div>
                                         </div>
