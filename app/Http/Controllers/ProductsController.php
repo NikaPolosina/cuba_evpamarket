@@ -343,14 +343,20 @@ class ProductsController extends Controller{
               $add_param_keys = array();
               if(count($product->value)){
                   if(array_key_exists('0', $product->value)){
-                      $add_param_keys = array_keys($product->value[0]['add_param']);
+                      if(array_key_exists('add_param', $product->value[0])){
+                          $add_param_keys = array_keys($product->value[0]['add_param']);
+                      }else{
+                          $add_param_keys = array();
+                      }
                   }else{
                       $add_param_keys = array_keys($product->value);
                   }
               }
               $param = AdditionParam::whereIn('key', $add_param_keys)->get();
-              foreach($param as  $key=>$val){
-                  $val->value = json_decode($val->value, true);
+              if($param->count()){
+                  foreach($param as  $key=>$val){
+                      $val->value = json_decode($val->value, true);
+                  }
               }
           }
 
@@ -516,6 +522,8 @@ class ProductsController extends Controller{
 
             if($request->has('extra'))
                 $this->_product->product_price = $request->extra['current_price'];
+
+            //die('Surprise, you are here !!!');
 
             return response()->json([
                 'product' =>  $this->_product,

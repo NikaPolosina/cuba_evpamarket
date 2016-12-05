@@ -187,7 +187,11 @@ class OrderController extends Controller{
             }
 
 
-            if(count($order['product'])){
+            if(!array_key_exists('product', $order)){
+
+                return Redirect::back();
+            }
+                if(count($order['product'])){
                 $order['company'] = Company::find($id);
 
                 $order['totalHistoryAmount'] = OrderController::getTotalCompanyAmount($order['company'], StatusOwner::where('key','sending_buyer')->first(), Auth::user());

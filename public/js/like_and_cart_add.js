@@ -48,10 +48,10 @@ $(document).ready(function(){
                     cart_modal.find('.m_single_product_price').text(response.product.product_price);
                     cart_modal.find('.m_all_product_price').text(response.product.product_price);
                     cart_modal.find('.m_img_product').attr('src', response.product.firstFile);
-                    cart_modal.find('.m_total_in_shop').html(parseInt(response.total_in_shop)+parseInt(response.product.product_price));
+                    cart_modal.find('.m_total_in_shop').html(parseFloat(response.total_in_shop)+parseFloat(response.product.product_price));
                     cart_modal.find('.m_h_product_price_one').val(response.product.product_price);
                     cart_modal.find('.m_h_product_id').val(response.product.id);
-                    cart_modal.find('.m_h_total_in_shop').val(parseInt(response.total_in_shop)+parseInt(response.product.product_price));
+                    cart_modal.find('.m_h_total_in_shop').val(parseFloat(response.total_in_shop)+parseFloat(response.product.product_price));
                     $('.carent_my_product').removeClass('activ');
                     cart_modal.modal('show');
                     $('.btn-success').attr('disabled', false);
