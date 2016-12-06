@@ -32,10 +32,10 @@
                 @if(count($userInfo['beetwenTwo']['data']))
                     @foreach(array_reverse($userInfo['beetwenTwo']['data']) as $val)
                         <li class="@if($val['from_id'] == Auth::user()->id) out @else in @endif">
-                            @if(!empty($val['get_user_from']['get_user_information']['avatar']) && file_exists(public_path().$val['get_user_from']['get_user_information']['avatar']))
+                            @if(file_exists(public_path().'/img/users/'.$val['get_user_from']['id'].'/avatar.png'))
                                 <div class="avatar avatar_css">
 
-                                    <img class="" src="{{$val['get_user_from']['get_user_information']['avatar']}}" alt="avatar">
+                                    <img class="" src="/img/users/{{$val['get_user_from']['id']}}/avatar.png" alt="avatar">
 
                                 </div>
                             @else
@@ -74,8 +74,8 @@
                     <div class="span6 ya">
                         <div class="di">
                             <div class="my_avatar avatar_css" style="float: left">
-                                @if(!empty($userInfo->avatar) && file_exists(public_path().$userInfo->avatar))
-                                    <img src="{{$userInfo->avatar}}" alt="avatar">
+                                @if(file_exists(public_path().'/img/users/'.$userInfo->id.'/avatar.png'))
+                                    <img src="/img/users/{{$userInfo->id}}/avatar.png" alt="avatar">
                                 @else
                                     <img src="/img/placeholder/avatar.jpg" alt="avatar"/>
                                 @endif
@@ -142,7 +142,6 @@
         margin-bottom: 32px;
     }
 </style>
-
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script>
     var url = '{{env('SOCKET_URL')}}';
@@ -153,13 +152,15 @@
 
     var from_id           = '{{$from->id}}';
     var from_email        = '{{$from->email}}';
-    var from_avatar = '{{$from->getUserInformation->avatar}}';
+   /* var from_avatar = '{{$from->getUserInformation->avatar}}';*/
+    var from_avatar = '/img/users/{{$from->id}}/avatar.png';
     var from_name = '{{$from->getUserInformation->name}}';
     var from_surname = '{{$from->getUserInformation->surname}}';
 
 
     var to_id = '{{$to->id}}';
-    var to_avatar = '{{$to->getUserInformation->avatar}}';
+   /* var to_avatar = '{{$to->getUserInformation->avatar}}';*/
+    var to_avatar = '/img/users/{{$to->id}}/avatar.png';
     var to_name = '{{$to->getUserInformation->name}}';
     var to_surname = '{{$to->getUserInformation->surname}}';
 
