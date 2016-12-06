@@ -59,7 +59,7 @@
                             @endif
 
                             @if($enable === true)
-                                <div class="col-md-4" style="outline: solid 1px black">
+                                <div class="col-md-4" style="/*outline: solid 1px black*/">
                                     <div class="row {{$class}} add_param_holder">
                                         <div class="col-md-2 text-center">
                                             <input type="checkbox" name="{{$key}}" value="{{$key}}">
@@ -116,7 +116,7 @@
                             @endif
 
                             @if($enable === true)
-                                <div class="col-md-4" style="outline: solid 1px black">
+                                <div class="col-md-4" style="/*outline: solid 1px black*/">
                                     <div class="row {{$class}} add_param_holder">
                                         <div class="col-md-2 text-center">
                                             <input type="radio" name="{{$random}}" value="{{$key}}">
@@ -161,7 +161,7 @@
                                 @endif
 
                                 <div class="row add_param_holder">
-                                    <div class="col-md-6" style="outline: solid black 1px;">
+                                    <div class="col-md-6" style="/*outline: solid black 1px;*/">
                                         <select name="{{$item['key']}}">
                                             <option value="">Выбирете значение</option>
                                             <?php foreach($item['value'] as $key => $val){ ?>
@@ -203,7 +203,7 @@
                             </div>
                             <?php break;
                             case 'input': ?>
-                            <div class="col-md-6" style="outline: solid 1px black">
+                            <div class="col-md-6" style="/*outline: solid 1px black*/">
                                 <input data-type="input" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
                                 <div style="text-align: left;">
                                     @if(array_key_exists($item->key, $add_price))

@@ -202,7 +202,7 @@ $b = 0;
                                         <option value="{{$key}}" <?=($key == $value[$item['key']]['val']) ? 'selected' : '' ?>>{{$key}} <?php $key ?></option>
                                         <?php } ?>
                                     </select>
-                                    <div class="add_price_holder_demo">
+                                    <div class="add_price_holder_demo" style="display: inline-block">
                                         <input type="text" name="add_price" class="add_price" value="{{$value[$item['key']]['add_price']}}">
 
                                         <select name="add_price_type" class="add_price_type">
