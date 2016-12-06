@@ -10,20 +10,20 @@
     <div class="col-sm-12">
         @foreach($addParam as $item)
             {{--Системный блок--}}
-                <?php $empty = true;
-                if($item['type']=='input'){
-                    if(array_key_exists($item->key, $add_price)){
-                        foreach($add_price[$item->key] as $addParam){
-                            if(!empty($addParam['val'])){
-                                $empty = false;
-                            }
+            <?php $empty = true;
+            if($item['type']=='input'){
+                if(array_key_exists($item->key, $add_price)){
+                    foreach($add_price[$item->key] as $addParam){
+                        if(!empty($addParam['val'])){
+                            $empty = false;
                         }
                     }
                 }
-                if($empty === false){
-                    continue;
-                }
-                ?>
+            }
+            if($empty === false){
+                continue;
+            }
+            ?>
             {{--Системный блок--}}
 
             <div class="row">
@@ -35,185 +35,185 @@
                         <div class="row">
                             <?php
                             switch($item['type_for_by']){
-                                case 'checkbox': ?>
-                                    <input data-type="checkbox" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
-                                    <?php
-                                    foreach($item['value'] as $key => $val){ ?>
-                                            <?php
+                            case 'checkbox': ?>
+                            <input data-type="checkbox" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
+                            <?php
+                            foreach($item['value'] as $key => $val){ ?>
+                            <?php
+                            $class='disabled';
+                            $enable=false;
+                            $addPrice = 0;
+                            $addPriceType = 'val';
+                            ?>
+                            @if(array_key_exists($item->key, $add_price))
+                                @foreach($add_price[$item->key] as $addParam)
+                                    @if($addParam['val'] == $key)
+                                        <?php
+                                        $class = '';
+                                        $enable=true;
+                                        $addPrice = $addParam['add_price'];
+                                        $addPriceType = $addParam['add_price_type'];
+                                        ?>
+                                    @endif
+                                @endforeach
+                            @endif
+
+                            @if($enable === true)
+                                <div class="col-md-4" style="outline: solid 1px black">
+                                    <div class="row {{$class}} add_param_holder">
+                                        <div class="col-md-2 text-center">
+                                            <input type="checkbox" name="{{$key}}" value="{{$key}}">
+                                        </div>
+                                        <div class="col-md-10">
+                                            {{$val['name']}}
+                                        </div>
+
+                                        <div class="col-md-2 text-center">
+                                            @if(isset($val['css']))
+                                                <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-10">
+                                            @if($addPrice)
+                                                @if($addPriceType == 'per')
+                                                    <?php $addPrice = $base_price*$addPrice/100 ;?>
+                                                @endif
+                                                <div> Доп. цена:  + {{round($addPrice, 2)}}</div>
+                                                <input class="add_param_price" type="hidden" value="{{round($addPrice, 2)}}"/>
+                                            @endif
+                                            <input class="add_param_name" type="hidden" value="{{$val['name']}}"/>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            @endif
+
+                            <?php }
+                            break;
+                            case 'radio':
+                            $random = substr( md5(rand()), 0, 7); ?>
+
+                            <input data-type="radio" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
+                            <?php
+                            foreach($item['value'] as $key => $val){ ?>
+                            <?php
+                            $class='disabled';
+                            $enable=false;
+                            $addPrice = 0;
+                            $addPriceType = 'val';
+                            ?>
+                            @if(array_key_exists($item->key, $add_price))
+                                @foreach($add_price[$item->key] as $addParam)
+                                    @if($addParam['val'] == $key)
+                                        <?php
+                                        $class = '';
+                                        $enable=true;
+                                        $addPrice = $addParam['add_price'];
+                                        $addPriceType = $addParam['add_price_type'];
+                                        ?>
+                                    @endif
+                                @endforeach
+                            @endif
+
+                            @if($enable === true)
+                                <div class="col-md-4" style="outline: solid 1px black">
+                                    <div class="row {{$class}} add_param_holder">
+                                        <div class="col-md-2 text-center">
+                                            <input type="radio" name="{{$random}}" value="{{$key}}">
+                                        </div>
+                                        <div class="col-md-10">
+                                            {{$val['name']}}
+                                        </div>
+
+                                        <div class="col-md-2 text-center">
+                                            @if(isset($val['css']))
+                                                <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-10">
+                                            @if($addPrice)
+                                                @if($addPriceType == 'per')
+                                                    <?php $addPrice = $base_price*$addPrice/100 ;?>
+                                                @endif
+                                                <div> Доп. цена:  + {{round($addPrice, 2)}}</div>
+                                                <input class="add_param_price" type="hidden" value="{{round($addPrice, 2)}}"/>
+                                            @endif
+                                            <input class="add_param_name" type="hidden" value="{{$val['name']}}"/>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            @endif
+
+                            <?php } break;
+                            case 'select': ?>
+                            <div class="col-md-4">
+                                <input data-type="select" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
+
+                                <?php
+                                $class='disabled';
+                                $enable='disabled';
+                                $addPrice = 0;
+                                $addPriceType = 'val';
+                                ?>
+                                @if(!array_key_exists($item->key, $add_price))
+                                    <?php $class = ''; ?>
+                                @endif
+
+                                <div class="row add_param_holder">
+                                    <div class="col-md-6" style="outline: solid black 1px;">
+                                        <select name="{{$item['key']}}">
+                                            <option value="">Выбирете значение</option>
+                                            <?php foreach($item['value'] as $key => $val){ ?>
+
+                                            @foreach($add_price[$item->key] as $addParam)
+                                                <?php
                                                 $class='disabled';
                                                 $enable=false;
                                                 $addPrice = 0;
                                                 $addPriceType = 'val';
-                                            ?>
-                                            @if(array_key_exists($item->key, $add_price))
-                                                @foreach($add_price[$item->key] as $addParam)
-                                                    @if($addParam['val'] == $key)
-                                                        <?php
-                                                        $class = '';
-                                                        $enable=true;
-                                                        $addPrice = $addParam['add_price'];
-                                                        $addPriceType = $addParam['add_price_type'];
-                                                        ?>
-                                                    @endif
-                                                @endforeach
+                                                ?>
+                                                @if($addParam['val'] == $key)
+                                                    <?php
+                                                    $class = '';
+                                                    $enable=true;
+                                                    $addPrice = $addParam['add_price'];
+                                                    $addPriceType = $addParam['add_price_type'];
+                                                    ?>
+                                                @endif
+                                            @endforeach
+                                            @if($enable)
+                                                <option value="{{$key}}">{{$key}} <?php $key ?></option>
                                             @endif
-
-                                            @if($enable === true)
-                                                <div class="col-md-4" style="outline: solid 1px black">
-                                                    <div class="row {{$class}} add_param_holder">
-                                                        <div class="col-md-2 text-center">
-                                                            <input type="checkbox" name="{{$key}}" value="{{$key}}">
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            {{$val['name']}}
-                                                        </div>
-
-                                                        <div class="col-md-2 text-center">
-                                                            @if(isset($val['css']))
-                                                                <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
-                                                            @endif
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                            @if($addPrice)
-                                                                @if($addPriceType == 'per')
-                                                                    <?php $addPrice = $base_price*$addPrice/100 ;?>
-                                                                @endif
-                                                                <div> Доп. цена:  + {{round($addPrice, 2)}}</div>
-                                                                <input class="add_param_price" type="hidden" value="{{round($addPrice, 2)}}"/>
-                                                            @endif
-                                                            <input class="add_param_name" type="hidden" value="{{$val['name']}}"/>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @if($addPrice)
+                                            @if($addPriceType == 'per')
+                                                <?php $addPrice = $base_price*$addPrice/100 ;?>
                                             @endif
+                                            <div> Доп. цена:  + {{round($addPrice, 2)}}</div>
+                                            <input class="add_param_price" type="hidden" value="{{round($addPrice, 2)}}"/>
+                                        @endif
+                                        <input class="add_param_name" type="hidden" value="{{$val['name']}}"/>
+                                    </div>
 
-                                    <?php }
-                                    break;
-                                case 'radio':
-                                    $random = substr( md5(rand()), 0, 7); ?>
-
-                                    <input data-type="radio" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
-                                    <?php
-                                    foreach($item['value'] as $key => $val){ ?>
-                                    <?php
-                                    $class='disabled';
-                                    $enable=false;
-                                    $addPrice = 0;
-                                    $addPriceType = 'val';
-                                    ?>
+                                </div>
+                            </div>
+                            <?php break;
+                            case 'input': ?>
+                            <div class="col-md-6" style="outline: solid 1px black">
+                                <input data-type="input" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
+                                <div style="text-align: left;">
                                     @if(array_key_exists($item->key, $add_price))
                                         @foreach($add_price[$item->key] as $addParam)
-                                            @if($addParam['val'] == $key)
-                                                <?php
-                                                $class = '';
-                                                $enable=true;
-                                                $addPrice = $addParam['add_price'];
-                                                $addPriceType = $addParam['add_price_type'];
-                                                ?>
-                                            @endif
+                                            <input class="jq_val_input" type="text" />
                                         @endforeach
                                     @endif
-
-                                    @if($enable === true)
-                                        <div class="col-md-4" style="outline: solid 1px black">
-                                            <div class="row {{$class}} add_param_holder">
-                                                <div class="col-md-2 text-center">
-                                                    <input type="radio" name="{{$random}}" value="{{$key}}">
-                                                </div>
-                                                <div class="col-md-10">
-                                                    {{$val['name']}}
-                                                </div>
-
-                                                <div class="col-md-2 text-center">
-                                                    @if(isset($val['css']))
-                                                        <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
-                                                    @endif
-                                                </div>
-                                                <div class="col-md-10">
-                                                    @if($addPrice)
-                                                        @if($addPriceType == 'per')
-                                                            <?php $addPrice = $base_price*$addPrice/100 ;?>
-                                                        @endif
-                                                        <div> Доп. цена:  + {{round($addPrice, 2)}}</div>
-                                                        <input class="add_param_price" type="hidden" value="{{round($addPrice, 2)}}"/>
-                                                    @endif
-                                                    <input class="add_param_name" type="hidden" value="{{$val['name']}}"/>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    @endif
-
-                                <?php } break;
-                                case 'select': ?>
-                                    <div class="col-md-4">
-                                        <input data-type="select" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
-
-                                        <?php
-                                            $class='disabled';
-                                            $enable='disabled';
-                                            $addPrice = 0;
-                                            $addPriceType = 'val';
-                                        ?>
-                                        @if(!array_key_exists($item->key, $add_price))
-                                            <?php $class = ''; ?>
-                                        @endif
-
-                                        <div class="row add_param_holder">
-                                            <div class="col-md-6" style="outline: solid black 1px;">
-                                                <select name="{{$item['key']}}">
-                                                    <option value="">Выбирете значение</option>
-                                                    <?php foreach($item['value'] as $key => $val){ ?>
-
-                                                    @foreach($add_price[$item->key] as $addParam)
-                                                        <?php
-                                                        $class='disabled';
-                                                        $enable=false;
-                                                        $addPrice = 0;
-                                                        $addPriceType = 'val';
-                                                        ?>
-                                                        @if($addParam['val'] == $key)
-                                                            <?php
-                                                            $class = '';
-                                                            $enable=true;
-                                                            $addPrice = $addParam['add_price'];
-                                                            $addPriceType = $addParam['add_price_type'];
-                                                            ?>
-                                                        @endif
-                                                    @endforeach
-                                                    @if($enable)
-                                                        <option value="{{$key}}">{{$key}} <?php $key ?></option>
-                                                    @endif
-                                                    <?php } ?>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6">
-                                                @if($addPrice)
-                                                    @if($addPriceType == 'per')
-                                                        <?php $addPrice = $base_price*$addPrice/100 ;?>
-                                                    @endif
-                                                    <div> Доп. цена:  + {{round($addPrice, 2)}}</div>
-                                                    <input class="add_param_price" type="hidden" value="{{round($addPrice, 2)}}"/>
-                                                @endif
-                                                <input class="add_param_name" type="hidden" value="{{$val['name']}}"/>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <?php break;
-                                case 'input': ?>
-                                    <div class="col-md-6" style="outline: solid 1px black">
-                                        <input data-type="input" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
-                                        <div style="text-align: left;">
-                                            @if(array_key_exists($item->key, $add_price))
-                                                @foreach($add_price[$item->key] as $addParam)
-                                                    <input class="jq_val_input" type="text" />
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <?php break;
+                                </div>
+                            </div>
+                            <?php break;
                             }
                             ?>
                         </div>
