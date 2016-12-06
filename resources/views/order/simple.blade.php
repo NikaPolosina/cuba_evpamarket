@@ -101,17 +101,6 @@
 
                                             </tr>
                                             <tr>
-                                                <td valign="top" width="30%" style="text-align: right">
-                                                    {!! Form::label('discount_price', 'С учётом скидки -  '.$order->percent.' %', ['class' => ' control-label option_table_order']) !!}
-                                                </td>
-                                                <td valign="top" align="center">
-                                                    <div class="form-control product_price" style="color: red;">
-                                                        {{$order->discount_price}}<span> руб.</span>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
                                                 <td width="30%" style="text-align: right"><span class="option_table_order">Примечание к заказу:</span></td>
                                                 <td align="center" valign="top"><span class="product_description"> {{$order->note}}</span></td>
                                             </tr>
@@ -132,9 +121,14 @@
                         <div class="col-sm-3 col-sm-offset-9" style="margin-bottom: 20px;">
                             <span style="font-weight: bold;">Общяя стоимость: </span>
                             <div class="form-control product_price">
+                                {{$order->total_price}}<span> руб.</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-sm-offset-9" style="margin-bottom: 20px;">
+                            <span style="font-weight: bold;">Общяя стоимость cо скидкой: </span>
+                            <div class="form-control product_price">
                                 {{$order->discount_price}}<span> руб.</span>
                             </div>
-
                         </div>
 
             </div>
