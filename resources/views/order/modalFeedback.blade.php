@@ -23,7 +23,7 @@
 <script src="/plugins/tinymce/tinymce.min.js"></script>
 <script>
     tinymce.init({
-        selector: "textarea",theme: "modern",width: 850 ,height: 300,
+        selector: "textarea",theme: "modern",width: 750 ,height: 300,
         language: 'ru',
         plugins: [
             "advlist autolink link image lists charmap print preview hr anchor pagebreak",
