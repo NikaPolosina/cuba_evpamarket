@@ -167,9 +167,11 @@ $(document).ready(function() {
                     if(msg.product.product_price){
                         $('.mod').find('[href="#single"]').click();
                         if($('.mod').find('#single').find('.add_param_holder').length){
-                            JSON.parse(msg.product.value).forEach(function(value){
-                                getBlockWithadParam(msg.productCategory.id, JSON.stringify(value.add_param), $('.mod').find('#single').find('.add_param_holder'));
-                            });
+                            if(msg.product.value.length){
+                                JSON.parse(msg.product.value).forEach(function(value){
+                                    getBlockWithadParam(msg.productCategory.id, JSON.stringify(value.add_param), $('.mod').find('#single').find('.add_param_holder'));
+                                });
+                            }
                         }
                         $('.mod').find('#single').find('input[data-name="price"]').val(msg.product.product_price);
                     }else{
