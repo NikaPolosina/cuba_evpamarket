@@ -458,18 +458,24 @@ class OrderController extends Controller{
 
       $order = Order::find($id);
 
-      $products =  Product::whereIn('products.id', ProductOrder::where('order_id', $id)->get()->lists(['product_id']))
-          ->join('product_order', function($join) use ($id){
-              $join->on('products.id', '=', 'product_order.product_id')->where('product_order.order_id', '=',$id);
-          })
-          ->get(['products.*', 'product_order.cnt', 'product_order.add_param']);
+      //$products =  Product::whereIn('products.id', ProductOrder::where('order_id', $id)->get()->lists(['product_id']))
+      //    ->join('product_order', function($join) use ($id){
+      //        $join->on('products.id', '=', 'product_order.product_id')->where('product_order.order_id', '=',$id);
+      //    //})
+          //->get(['products.*', 'product_order.cnt', 'product_order.add_param']);
 
-        foreach ($products as $value) {
-            $value->add_param = json_decode($value->add_param, true);
+
+
+        $prod = array();
+        foreach (ProductOrder::where('order_id', $id)->get() as $value) {
+            $pr = Product::find($value->product_id);
+            $pr->product_price = $value['price'];
+            $pr->cnt = $value['cnt'];
+            $pr->add_param = json_decode($value->add_param, true);
+            $prod[] = $pr;
         }
 
-        if(count($products))
-            $order->products = IndexController::showProduct($products);
+        $order->products = $prod;
 
         if(Auth::user()->hasRole('company_owner')){
             $this->_breadcrumbs->addCrumb('Домой', '/login-user');

@@ -129,7 +129,7 @@
                                         </td>
                                         <td width="50%" class="left">
                                             <div class="form-control product_price" style="background-color: #fdd0af; color: red;">
-                                                {{$total_price-$total_discount}}<span> руб.</span>
+                                                {{round($total_price-$total_discount, 2)}}<span> руб.</span>
                                             </div>
                                        </td>
                                     </tr>

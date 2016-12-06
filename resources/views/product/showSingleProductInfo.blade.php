@@ -208,7 +208,7 @@
                                                             </div>
                                                         @endif
                                                     </div>
-                                                    {{--Формирование цены для заказа (возможность выбора) --}}
+
                                                     <script>
                                                         function calculatePrice(){
                                                             var add_price_holder = $('.add_price_holder.active');
@@ -228,7 +228,11 @@
                                                                 price['current_price'] = price['base_price'];
 
                                                                 if(add_price_holder.find('.param_holder').length){
+                                                                    //console.log(add_price_holder.find('.param_holder'));
+                                                                    
                                                                     add_price_holder.find('.param_holder').each(function(index, item){
+                                                                        console.log();
+                                                                        
 
                                                                         type = $(item).find('.add_price_title').attr('data-type');
 
@@ -238,39 +242,81 @@
                                                                             switch (type){
                                                                                 case 'checkbox':
                                                                                     if(item.find('input:checked').length){
+                                                                                        if(item.find('.add_price_title').val().length){
+                                                                                            addParam = {};
+                                                                                            addParam['title'] = item.find('.add_price_title').val();
+                                                                                            addParam['add_param'] = [];
 
-                                                                                        addParam = {};
-                                                                                        addParam['title'] = $(item).find('.add_price_title').val();
-                                                                                        addParam['add_param'] = [];
+                                                                                            item.find('input:checked').each(function(k, i){
+                                                                                                add_param_holder = $(i).parents('.add_param_holder').eq(0);
 
-                                                                                        item.find('input:checked').each(function(k, i){
-                                                                                            add_param_holder = $(i).parents('.add_param_holder').eq(0);
-
+                                                                                                addPrice = {};
+                                                                                                addPrice['price'] = add_param_holder.find('.add_param_price').val();
+                                                                                                price['current_price'] = price['current_price']+parseFloat(addPrice['price']);
+                                                                                                addPrice['name'] = add_param_holder.find('.add_param_name').val();
+                                                                                                addParam['add_param'].push(addPrice);
+                                                                                            });
                                                                                             addPrice = {};
-                                                                                            addPrice['price'] = add_param_holder.find('.add_param_price').val();
-                                                                                            price['current_price'] = price['current_price']+parseFloat(addPrice['price']);
-                                                                                            addPrice['name'] = add_param_holder.find('.add_param_name').val();
-                                                                                            addParam['add_param'].push(addPrice);
-                                                                                        });
-                                                                                        addPrice = {};
+                                                                                        }
                                                                                     }
                                                                                     break;
                                                                                 case 'radio':
                                                                                     if(item.find('input:checked').length){
                                                                                         if(item.find('input:checked').val().length){
+                                                                                            addParam = {};
+                                                                                            addParam['title'] = item.find('.add_price_title').val();
+                                                                                            addParam['add_param'] = [];
 
+                                                                                            item.find('input:checked').each(function(k, i){
+                                                                                                add_param_holder = $(i).parents('.add_param_holder').eq(0);
+
+                                                                                                addPrice = {};
+                                                                                                addPrice['price'] = add_param_holder.find('.add_param_price').val();
+                                                                                                price['current_price'] = price['current_price']+parseFloat(addPrice['price']);
+                                                                                                addPrice['name'] = add_param_holder.find('.add_param_name').val();
+                                                                                                addParam['add_param'].push(addPrice);
+                                                                                            });
+                                                                                            addPrice = {};
                                                                                         }
                                                                                     }
                                                                                     break;
                                                                                 case 'select':
                                                                                     if(item.find('select').length){
                                                                                         if(item.find('select').val().length){
+                                                                                            addParam = {};
+                                                                                            addParam['title'] = item.find('.add_price_title').val();
+                                                                                            addParam['add_param'] = [];
 
+                                                                                            add_param_holder = item.find('select').parents('.add_param_holder').eq(0);
+
+                                                                                            addPrice = {};
+                                                                                            addPrice['price'] = add_param_holder.find('.add_param_price').val();
+                                                                                            price['current_price'] = price['current_price']+parseFloat(addPrice['price']);
+                                                                                            addPrice['name'] = add_param_holder.find('.add_param_name').val();
+                                                                                            addParam['add_param'].push(addPrice);
+
+                                                                                            addPrice = {};
                                                                                         }
                                                                                     }
                                                                                     break;
                                                                                 case 'input':
+                                                                                    if(item.find('input.jq_val_input').length){
+                                                                                        if(item.find('input.jq_val_input').val().length){
+                                                                                            addParam = {};
+                                                                                            addParam['title'] = item.find('.add_price_title').val();
+                                                                                            addParam['add_param'] = [];
 
+                                                                                            add_param_holder = item.find('select').parents('.add_param_holder').eq(0);
+
+                                                                                            addPrice = {};
+                                                                                            addPrice['price'] = 0;
+                                                                                            price['current_price'] = price['current_price']+parseFloat(addPrice['price']);
+                                                                                            addPrice['name'] = item.find('input.jq_val_input').val();
+                                                                                            addParam['add_param'].push(addPrice);
+
+                                                                                            addPrice = {};
+                                                                                        }
+                                                                                    }
                                                                                     break;
                                                                             }
 
@@ -302,6 +348,7 @@
 
                                                         });
                                                     </script>
+                                                    {{--Формирование цены для заказа (возможность выбора) --}}
 
                                                 </div>
                                                 <div class="tab-pane" id="tab_5_2">
