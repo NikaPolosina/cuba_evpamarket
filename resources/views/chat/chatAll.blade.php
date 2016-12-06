@@ -165,6 +165,7 @@ $show = false;
         background-color: rgba(0, 196, 255, 0.09);
     }
     .img_sing{
+        margin: auto;
         max-height: 60px;
     }
     .time{
