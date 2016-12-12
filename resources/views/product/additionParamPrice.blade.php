@@ -65,7 +65,12 @@
                                             <input type="checkbox" name="{{$key}}" value="{{$key}}">
                                         </div>
                                         <div class="col-md-10">
-                                            {{$val['name']}}
+                                            <div class="div_css_value">
+                                                @if(isset($val['css']))
+                                                    <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-top: 3px; background-color: {{$val['css']}}"></div>
+                                                @endif
+                                                <span>{{$val['name']}}</span>
+                                            </div>
                                         </div>
 
                                         <div class="col-md-2 text-center">
