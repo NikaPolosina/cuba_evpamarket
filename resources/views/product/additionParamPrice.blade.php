@@ -122,14 +122,43 @@
                                             <input type="radio" name="{{$random}}" value="{{$key}}">
                                         </div>
                                         <div class="col-md-10">
-                                            {{$val['name']}}
+                                          <div class="div_css_value">
+                                              @if(isset($val['css']))
+                                                  <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-top: 3px; background-color: {{$val['css']}}"></div>
+                                              @endif
+                                             <span>{{$val['name']}}</span>
+                                          </div>
+
                                         </div>
 
-                                        <div class="col-md-2 text-center">
+
+                                        <style>
+                                            .div_css_value{
+                                                margin: 3px;
+                                                float: left;
+                                                border: 1px solid #e9e9e9;
+                                                 line-height: 28px;
+                                                height: 30px;
+                                                padding: 0 10px;
+                                                color: #333;
+                                                border-radius: 3px;
+                                                background-color: #fff;
+                                                text-align: center;
+                                            }
+                                            .div_css_value:hover{
+                                                outline: 3px solid #f90;
+                                                border-radius: 4px;
+
+
+                                            }
+
+                                        </style>
+
+                                      {{--  <div class="col-md-2 text-center">
                                             @if(isset($val['css']))
                                                 <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
                                             @endif
-                                        </div>
+                                        </div>--}}
                                         <div class="col-md-10">
                                             @if($addPrice)
                                                 @if($addPriceType == 'per')
