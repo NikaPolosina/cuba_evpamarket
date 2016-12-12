@@ -4,7 +4,7 @@
 
         <div class="div_container col-sm-12 param_holder">
             <tr>
-                <td width="40%" class="right ">
+                <td width="40%" class="right option_table">
                         {{$item['title']}}:
                 </td>
                 <td width="60%" class="product_description left">

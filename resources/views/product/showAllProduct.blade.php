@@ -3,7 +3,7 @@
     <h3>Товары</h3>
     <hr/>
 </div>
-@include('product.modalAddProductCart')
+{{--@include('product.modalAddProductCart')--}}
 @include('product.modalAddProductLike')
 <div class="row row_row">
     <div class="item_class_3">
@@ -60,7 +60,9 @@
 
                                 </div>
                                 <div class="product_navigation">
-                                    <button class="btn btn-success to_cart" data-product-id="{{$v->id}}">В корзину</button>
+                                    <a href="/single-product/{{$v->id}}">
+                                        <button class="btn btn-success" data-product-id="{{$v->id}}">В корзину</button>
+                                    </a>
                                     @if(!Auth::guest())
                                         <span class="like"></span>
                                     @endif

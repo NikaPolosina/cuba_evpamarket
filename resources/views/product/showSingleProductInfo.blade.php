@@ -27,17 +27,17 @@
                     </style>
 
                     <div class="item_class_4 item_1">
-                        <input style="display: none" data-name="product-id" type="text" value="{{ $singleProduct->id}}"/>
+                        <input style="display: none" data-name="product-id" type="text" value="{{$singleProduct->id}}"/>
                         <div class="carent_my_product">
                             <div class="col-sm-12">
                                 <div class="portlet box">
                                     <div class="portlet-title">
-                                        <div class="caption" >
-                                            <h1>{{ $singleProduct->product_name}}</h1>
+                                        <div class="caption">
+                                            <div>{{ $singleProduct->product_name}} <span>ID: {{$singleProduct->id}}</span></div>
 
                                         </div>
                                     </div>
-                                    <div class="portlet-body">
+                                    <div class="portlet-body" style="padding: 0px;">
                                         <div class="tabbable-custom ">
                                             <ul class="nav nav-tabs ">
                                                 <li class="@if(!isset($scroll_feed))active @endif" style="border-top: 3px solid #32c5d2!important;">
@@ -532,6 +532,7 @@
                                                             </div>
 
                                                             <style>
+
                                                                 .hand_img{
                                                                     width: 100px;
                                                                     height: 100px;
