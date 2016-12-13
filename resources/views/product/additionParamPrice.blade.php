@@ -97,6 +97,9 @@
                                             <div class="div_css_value checkbox">
                                                 @if(isset($val['css']))
                                                     <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-top: 3px; background-color: {{$val['css']}}"></div>
+                                                    <input class="add_param_css" type="hidden" value="{{$val['css']}}"/>
+                                                @else
+                                                    <input class="add_param_css" type="hidden" value=""/>
                                                 @endif
                                                 <span>{{$val['name']}}</span>
                                             </div>
@@ -160,6 +163,9 @@
                                           <div class="div_css_value radio">
                                               @if(isset($val['css']))
                                                   <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-top: 3px; background-color: {{$val['css']}}"></div>
+                                                  <input class="add_param_css" type="hidden" value="{{$val['css']}}"/>
+                                              @else
+                                                  <input class="add_param_css" type="hidden" value=""/>
                                               @endif
                                              <span>{{$val['name']}}</span>
                                           </div>
