@@ -45,8 +45,15 @@
             if($empty === false){
                 continue;
             }
+
+            if(!array_key_exists($item->key, $add_price)){
+                continue;
+            }
             ?>
             {{--Системный блок--}}
+
+
+
 
             <div class="row" style="margin-top: 5px;">
                 <div class="div_container param_holder" data-key="{{$item['key']}}" data-type="{{$item['type']}}" style="margin-bottom: 30px; ">
