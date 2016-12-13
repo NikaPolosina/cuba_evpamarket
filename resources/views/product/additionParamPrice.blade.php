@@ -83,8 +83,10 @@
                                                 @if($addPriceType == 'per')
                                                     <?php $addPrice = $base_price*$addPrice/100 ;?>
                                                 @endif
-                                                <div> Доп. цена:  + {{round($addPrice, 2)}}</div>
+                                                {{--<div> Доп. цена:  + {{round($addPrice, 2)}}</div>--}}
                                                 <input class="add_param_price" type="hidden" value="{{round($addPrice, 2)}}"/>
+                                            @else
+                                                <input class="add_param_price" type="hidden" value="0"/>
                                             @endif
                                             <input class="add_param_name" type="hidden" value="{{$val['name']}}"/>
                                         </div>
@@ -169,8 +171,10 @@
                                                 @if($addPriceType == 'per')
                                                     <?php $addPrice = $base_price*$addPrice/100 ;?>
                                                 @endif
-                                                <div> Доп. цена:  + {{round($addPrice, 2)}}</div>
+                                                {{--<div> Доп. цена:  + {{round($addPrice, 2)}}</div>--}}
                                                 <input class="add_param_price" type="hidden" value="{{round($addPrice, 2)}}"/>
+                                            @else
+                                                <input class="add_param_price" type="hidden" value="0"/>
                                             @endif
                                             <input class="add_param_name" type="hidden" value="{{$val['name']}}"/>
                                         </div>
@@ -227,8 +231,10 @@
                                             @if($addPriceType == 'per')
                                                 <?php $addPrice = $base_price*$addPrice/100 ;?>
                                             @endif
-                                            <div> Доп. цена:  + {{round($addPrice, 2)}}</div>
+                                            {{--<div> Доп. цена:  + {{round($addPrice, 2)}}</div>--}}
                                             <input class="add_param_price" type="hidden" value="{{round($addPrice, 2)}}"/>
+                                        @else
+                                            <input class="add_param_price" type="hidden" value="0"/>
                                         @endif
                                         <input class="add_param_name" type="hidden" value="{{$val['name']}}"/>
                                     </div>

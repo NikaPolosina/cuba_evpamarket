@@ -335,6 +335,9 @@
 
                                                             }
 
+                                                            price.current_price = parseFloat(price.current_price, 2).toFixed(2);
+                                                            price.base_price = parseFloat(price.base_price, 2).toFixed(2);
+
                                                             return price;
                                                         }
 

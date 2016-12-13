@@ -342,7 +342,17 @@ $(document).ready(function() {
                                                 single_add_param['val'] = $(i).val();
                                                 single_add_param['add_price'] = $(i).parent().find('.add_price').val();
                                                 single_add_param['add_price_type'] = $(i).parent().find('.add_price_type').val();
-                                                
+
+                                                if(single_add_param['add_price'].length){
+                                                    if(single_add_param['add_price_type'] == 'val'){
+                                                        single_add_param['add_price'] = parseFloat(single_add_param['add_price']);
+                                                    }else{
+                                                        single_add_param['add_price'] = parseInt(single_add_param['add_price']);
+                                                    }
+                                                }else{
+                                                    single_add_param['add_price'] = 0;
+                                                }
+
                                                 price['add_param'][item.attr('data-key')].push(single_add_param);
                                             });
                                         }
@@ -356,6 +366,19 @@ $(document).ready(function() {
                                                 single_add_param['val'] = item.find('input:checked').val();
                                                 single_add_param['add_price'] = item.find('input:checked').parent().find('.add_price').val();
                                                 single_add_param['add_price_type'] = item.find('input:checked').parent().find('.add_price_type').val();
+
+                                                console.log(single_add_param['add_price_type']);
+
+
+                                                if(single_add_param['add_price'].length){
+                                                    if(single_add_param['add_price_type'] == 'val'){
+                                                        single_add_param['add_price'] = parseFloat(single_add_param['add_price']);
+                                                    }else{
+                                                        single_add_param['add_price'] = parseInt(single_add_param['add_price']);
+                                                    }
+                                                }else{
+                                                    single_add_param['add_price'] = 0;
+                                                }
 
                                                 price['add_param'][item.attr('data-key')].push(single_add_param);
                                             }
@@ -372,6 +395,16 @@ $(document).ready(function() {
                                                 single_add_param['add_price'] = item.find('select').parent().find('.add_price').val();
                                                 single_add_param['add_price_type'] = item.find('select').parent().find('.add_price_type').val();
 
+                                                if(single_add_param['add_price'].length){
+                                                    if(single_add_param['add_price_type'] == 'val'){
+                                                        single_add_param['add_price'] = parseFloat(single_add_param['add_price']);
+                                                    }else{
+                                                        single_add_param['add_price'] = parseInt(single_add_param['add_price']);
+                                                    }
+                                                }else{
+                                                    single_add_param['add_price'] = 0;
+                                                }
+
                                                 price['add_param'][item.attr('data-key')].push(single_add_param);
                                                 
                                             }
@@ -387,7 +420,7 @@ $(document).ready(function() {
                                             }else{
                                                 single_add_param['val'] = item.find('input[data-name="client_field"]').val();
                                             }
-                                            single_add_param['add_price'] = '';
+                                            single_add_param['add_price'] = 0;
                                             single_add_param['add_price_type'] = '';
 
                                             price['add_param'][item.attr('data-key')].push(single_add_param);
