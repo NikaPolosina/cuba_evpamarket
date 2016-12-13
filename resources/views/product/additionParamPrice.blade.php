@@ -281,7 +281,10 @@
 <script>
     $( document ).ready(function() {
         $('.div_css_value').on('click', function () {
-            console.log('jfjkr');
+
+            if( $(this).css('outline') == 'rgb(255, 153, 0) solid 3px'){
+               console.log('hhhhh2');
+            }
             $(this).css('outline', '3px solid #f90');
             if ($(this).parents('.add_param_holder').find('input').is("input[type='radio']")) {
                 var input = $(this).parents('.add_param_holder').parents('.my_md_10').find("input[type='radio']");
