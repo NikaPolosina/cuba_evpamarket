@@ -22,9 +22,16 @@
 
                                     <div class="col-sm-3">
                                         <div class="class_img">
-
-                                            <img class="img-thumbnail" src="{{$val->firstFile}}" alt=""/>
-
+                                            @if(empty($val->product_image) && is_dir(public_path().'/img/custom/companies/'.$val->getCompany[0]->id.'/products/'.$val->id))
+                                                <?php
+                                                $files = scandir(public_path().'/img/custom/companies/'.$val->getCompany[0]->id.'/products/'.$val->id);
+                                                ?>
+                                                <img class="img-thumbnail" src="/img/custom/companies/{{$val->getCompany[0]->id}}/products/{{$val->id}}/{{$files[2]}}" alt=""/>
+                                            @elseif(!empty($val->product_image) && file_exists(public_path().'/img/custom/companies/'.$val->getCompany[0]->id.'/products/'.$val->id.'/'.$val->product_image))
+                                                <img class="img-thumbnail" src="/img/custom/companies/{{$val->getCompany[0]->id}}/products/{{$val->id}}/{{$val->product_image}}" alt=""/>
+                                                @else
+                                                <img class="img-thumbnail" src="/img/system/plase.jpg" alt=""/>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-sm-8">

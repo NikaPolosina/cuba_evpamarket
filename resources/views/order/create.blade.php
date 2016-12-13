@@ -225,6 +225,9 @@
 
         </div>
     <style>
+        .option_table{
+            font-size: 14px!important;
+        }
 
         td, th {
             padding: 0px 10px 0px 10px!important;
