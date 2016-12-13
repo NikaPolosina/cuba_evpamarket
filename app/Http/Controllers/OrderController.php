@@ -452,7 +452,7 @@ class OrderController extends Controller{
 
         
     }
-
+    //Просмотр заказа продавцом.
     public function showSimpleOrder($id){
 
 
