@@ -95,7 +95,7 @@
                                                                 <td>
                                                                     <div class = "product_navigation desk">
                                                                         <div class="price">
-                                                                            @if($singleProduct->min_price && $singleProduct->max_price)
+                                                                            @if(($singleProduct->min_price && $singleProduct->max_price) && ($singleProduct->min_price != $singleProduct->max_price))
                                                                                 <span class="desk-price">{{ $singleProduct->min_price}} - {{$singleProduct->max_price}}  руб.</span>
                                                                             @else
                                                                                 <span class="desk-price">{{ $singleProduct->product_price}} руб.</span>
