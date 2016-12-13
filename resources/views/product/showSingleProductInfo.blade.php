@@ -213,7 +213,7 @@
                                                         @endif
                                                     </div>
 
-                                                    <button onclick="console.log(calculatePrice())">asdasdasdas</button>
+                                                    {{--<button onclick="console.log(calculatePrice())">asdasdasdas</button>--}}
                                                     <script>
                                                         function calculatePrice(){
                                                             var add_price_holder = $('.add_price_holder.active');
