@@ -36,12 +36,14 @@
             if($item['type']=='input'){
                 if(array_key_exists($item->key, $add_price)){
                     foreach($add_price[$item->key] as $name => $addParam){
-                        if(($item->key == 'owner_field') && empty($addParam['val'])){
+                        if(!$item->request_buyer && empty($addParam['val'])){
                             $empty = false;
                         }
                     }
                 }
             }
+
+
             if($empty === false){
                 continue;
             }
@@ -60,7 +62,7 @@
                     <div class="col-md-2 title">
                         {{$item['title']}}:
                     </div>
-                    <div class="col-md-4 my_md_10">
+                    <div class="col-md-6 my_md_10">
                         <div class="row">
                             <?php
                             switch($item['type_for_by']){
@@ -262,11 +264,11 @@
                                 <div style="text-align: left;">
                                     @if(array_key_exists($item->key, $add_price))
                                         @foreach($add_price[$item->key] as $addParam)
-                                            @if($item->key == 'owner_field')
-                                                {{$addParam['val']}}
-                                            @else
+                                            @if($item->request_buyer)
                                                 <input class="jq_val_input form-control" type="text" />
-                                            @endif
+                                            @else
+                                                {{$addParam['val']}}
+                                           @endif
                                         @endforeach
                                     @endif
                                 </div>

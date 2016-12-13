@@ -66,9 +66,12 @@
                                                                         {{$valName['name']}}
                                                                         <div style="font-weight: bold">
                                                                             @if(array_key_exists('css', $valName))
-                                                                                @if(array_key_exists($cnt, $param['param_value']['css']))
-                                                                                    <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-left: 15px;  background-color: {{$param['param_value']['css'][$cnt]}}"></div>
+
+                                                                                @if(!empty($valName['css']))
+                                                                                    <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-left: 15px;  background-color: {{$valName['css']}}"></div>
                                                                                 @endif
+
+
                                                                             @endif
                                                                         </div>
                                                                     @endforeach
@@ -80,7 +83,6 @@
 
                                                      {{--       <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: red"></div>--}}
 
-                                                            <hr />
                                                         @endforeach
                                                     </td>
                                                 </tr>

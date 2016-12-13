@@ -164,32 +164,38 @@ $(document).ready(function() {
                     tinyMCE.activeEditor.setContent(msg.product.content);
 
 
-                    if(msg.product.product_price){
-                        $('.mod').find('[href="#single"]').click();
-                        if($('.mod').find('#single').find('.add_param_holder').length){
-                            if(msg.product.value.length){
+                    setTimeout(function () {
+                        if(msg.product.product_price){
+                            $('.mod').find('[href="#single"]').click();
+                            if($('.mod').find('#single').find('.add_param_holder').length){
+                                if(msg.product.value.length){
+                                    JSON.parse(msg.product.value).forEach(function(value){
+                                        getBlockWithadParam(msg.productCategory.id, JSON.stringify(value.add_param), $('.mod').find('#single').find('.add_param_holder'));
+                                    });
+                                }
+                            }
+                            $('.mod').find('#single').find('input[data-name="price"]').val(msg.product.product_price);
+                        }else{
+                            $('.mod').find('[href="#several"]').click();
+                            if($('.mod').find('#several').find('.add_price_origin').length){
+                                var add_price_origin = $('.mod').find('#several').find('.add_price_origin').eq(0);
                                 JSON.parse(msg.product.value).forEach(function(value){
-                                    getBlockWithadParam(msg.productCategory.id, JSON.stringify(value.add_param), $('.mod').find('#single').find('.add_param_holder'));
+                                    var current = add_price_origin.clone();
+                                    current
+                                        .prepend('<div class="col-sm-12" style="margin-top: 5px;"><div class="col-sm-4">Имя (возможное указание модели товара).<span class="required_css">*</span></div><div></div><div class="col-sm-8"><input class="form-control" data-name="extra_name" type="text" name="name" value="'+value.name+'"><div>')
+                                        .append('<div class="col-sm-12"><span style="float: right;" class="btn remove_add_price"><button type="button" class="btn btn-danger">Удалить добавлнную цену</button></span></div>').show();
+
+                                    $('.mod').find('#several').find('.add_price_holder').append(current);
+                                    current.find('input[data-name="price"]').val(value.val);
+                                    getBlockWithadParam(msg.productCategory.id, JSON.stringify(value.add_param), current.find('.add_param_holder'));
                                 });
                             }
                         }
-                        $('.mod').find('#single').find('input[data-name="price"]').val(msg.product.product_price);
-                    }else{
-                        $('.mod').find('[href="#several"]').click();
-                        if($('.mod').find('#several').find('.add_price_origin').length){
-                            var add_price_origin = $('.mod').find('#several').find('.add_price_origin').eq(0);
-                            JSON.parse(msg.product.value).forEach(function(value){
-                                var current = add_price_origin.clone();
-                                current
-                                .prepend('<div class="col-sm-12" style="margin-top: 5px;"><div class="col-sm-4">Имя (возможное указание модели товара).<span class="required_css">*</span></div><div></div><div class="col-sm-8"><input class="form-control" data-name="extra_name" type="text" name="name" value="'+value.name+'"><div>')
-                                .append('<div class="col-sm-12"><span style="float: right;" class="btn remove_add_price"><button type="button" class="btn btn-danger">Удалить добавлнную цену</button></span></div>').show();
+                    }, 1000);
 
-                                $('.mod').find('#several').find('.add_price_holder').append(current);
-                                current.find('input[data-name="price"]').val(value.val);
-                                getBlockWithadParam(msg.productCategory.id, JSON.stringify(value.add_param), current.find('.add_param_holder'));
-                            });
-                        }
-                    }
+
+
+
 
 
                     $('.mod').find('.form-group').find('input[data-name="photo"]').val(msg.product.product_image);
@@ -416,11 +422,9 @@ $(document).ready(function() {
                                         if(item.find('input').length){
                                             var single_add_param = {};
 
-                                            if(item.find('input[data-name="owner_field"]').length){
-                                                single_add_param['val'] = item.find('input[data-name="owner_field"]').val();
-                                            }else{
-                                                single_add_param['val'] = item.find('input[data-name="client_field"]').val();
-                                            }
+
+                                            single_add_param['val'] = item.find('.input').val();
+
                                             single_add_param['add_price'] = 0;
                                             single_add_param['add_price_type'] = '';
 
@@ -438,6 +442,10 @@ $(document).ready(function() {
 
                 });
             }
+
+
+            // console.log(data['price']);
+            // return false;
 
             $.ajax({
                 type    : "POST",

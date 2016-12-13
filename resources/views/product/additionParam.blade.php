@@ -172,9 +172,9 @@ $b = 0;
 
 
                                         @if($item->request_buyer)
-                                            <input name="{{$item['key']}}" class="form-control" placeholder="{{$item['placeholder']}}" data-name="{{$item['key']}}" type="text" value="{{$value[$item['key']]['val']}}" readonly/>
+                                            <input name="{{$item['key']}}" class="form-control input" placeholder="{{$item['placeholder']}}" data-name="request_buyer" type="text" value="{{$value[$item['key']]['val']}}" readonly/>
                                         @else
-                                            <input name="{{$item['key']}}" class="form-control" placeholder="{{$item['placeholder']}}" data-name="{{$item['key']}}" type="text" value="{{$value[$item['key']]['val']}}"/>
+                                            <input name="{{$item['key']}}" class="form-control input" placeholder="{{$item['placeholder']}}" data-name="request_owner" type="text" value="{{$value[$item['key']]['val']}}"/>
                                         @endif
 
                                     <?php break;

@@ -397,7 +397,13 @@ class ProductsController extends Controller{
             if(count($product->value)){
                 if(array_key_exists('0', $product->value)){
                     if(array_key_exists('add_param', $product->value[0])){
-                        $add_param_keys = array_keys($product->value[0]['add_param']);
+
+                        foreach($product->value as $params){
+                            if(array_key_exists('add_param', $params)){
+                                $add_param_keys = array_merge($add_param_keys, array_keys($params['add_param']));
+                            }
+                        }
+                        $add_param_keys = array_unique($add_param_keys);
                     }else{
                         $add_param_keys = array();
                     }

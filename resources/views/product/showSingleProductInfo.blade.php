@@ -180,7 +180,7 @@
                                                             @else
                                                                 <div class="base_price_holder">
                                                                     <?php $priceTab = 0; ?>
-                                                                    <ul class="nav nav-tabs">
+                                                                    <ul class="nav nav-tabs call">
                                                                         @foreach($singleProduct->value as $basePrice)
                                                                             <?php $priceTab++ ?>
                                                                             <li class="current_price <?=($priceTab == 1)?'active':'' ?>" ><a data-toggle="tab" href="#add_price_{{$priceTab}}">
@@ -355,6 +355,15 @@
                                                                 newPrice = calculatePrice();
                                                                 $('.desk-price').html(newPrice.current_price+' руб.');
                                                                 newPrice = null;
+                                                            });
+
+                                                            $('.call').delegate('*', 'click', function(){
+                                                                setTimeout(function(){
+                                                                    newPrice = calculatePrice();
+                                                                    $('.desk-price').html(newPrice.current_price+' руб.');
+                                                                    newPrice = null;
+                                                                }, 500);
+
                                                             });
 
                                                         });
