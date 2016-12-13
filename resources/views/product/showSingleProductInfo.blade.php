@@ -95,7 +95,11 @@
                                                                 <td>
                                                                     <div class = "product_navigation desk">
                                                                         <div class="price">
-                                                                            <span class="desk-price">{{ $singleProduct->product_price}} руб.</span>
+                                                                            @if($singleProduct->min_price && $singleProduct->max_price)
+                                                                                <span class="desk-price">{{ $singleProduct->min_price}} - {{$singleProduct->max_price}}  руб.</span>
+                                                                            @else
+                                                                                <span class="desk-price">{{ $singleProduct->product_price}} руб.</span>
+                                                                            @endif
                                                                                         <span style="margin: auto;">
 
                                                                                             <button class=" btn-lg btn-success button_my to_cart"  data-product-id="{{$singleProduct->id}}" ><img style="display: inline-block;" src="/img/system/cart-white.png" alt=""><span style="font-weight: bold"> Купить</span></button>

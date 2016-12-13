@@ -8,13 +8,13 @@
     </div>
 
     <div class="col-sm-12">
-        @foreach($addParam as $item)
+        @foreach($addParam as $name => $item)
             {{--Системный блок--}}
             <?php $empty = true;
             if($item['type']=='input'){
                 if(array_key_exists($item->key, $add_price)){
-                    foreach($add_price[$item->key] as $addParam){
-                        if(!empty($addParam['val'])){
+                    foreach($add_price[$item->key] as $name => $addParam){
+                        if(($item->key == 'owner_field') && empty($addParam['val'])){
                             $empty = false;
                         }
                     }
@@ -242,7 +242,11 @@
                                 <div style="text-align: left;">
                                     @if(array_key_exists($item->key, $add_price))
                                         @foreach($add_price[$item->key] as $addParam)
-                                            <input class="jq_val_input" type="text" />
+                                            @if($item->key == 'owner_field')
+                                                {{$addParam['val']}}
+                                            @else
+                                                <input class="jq_val_input" type="text" />
+                                            @endif
                                         @endforeach
                                     @endif
                                 </div>

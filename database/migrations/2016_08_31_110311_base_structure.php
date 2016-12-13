@@ -3,6 +3,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class BaseStructure extends Migration{
+
     /**
      * Run the migrations.
      *
@@ -112,17 +113,11 @@ class BaseStructure extends Migration{
             $table->foreign('city_id')->references('id_cities')->on('cities')->onUpdate('cascade')->onDelete('set null');
         });
         //Create table for company_user
-        Schema::create('company_user', function (Blueprint $table) {
+        Schema::create('company_user', function (Blueprint $table){
             $table->integer('company_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->foreign('company_id')
-                ->references('id')->on('companies')
-                ->onDelete('cascade');
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
-
-
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
         //Create table for products
         Schema::create('products', function (Blueprint $table){
@@ -132,12 +127,14 @@ class BaseStructure extends Migration{
             $table->text('product_description');
             $table->text('content');
             $table->string('product_image');
-            $table->integer('product_price')->nullable();
+            $table->float('product_price')->nullable();
+            $table->float('min_price')->nullable();
+            $table->float('max_price')->nullable();
             $table->longText('value')->default('');
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('category');
         });
-        
+
         /*-------additional_param------*/
         //Create table for additional_param
         Schema::create('additional_param', function (Blueprint $table){
@@ -148,7 +145,7 @@ class BaseStructure extends Migration{
             $table->string('placeholder');
             $table->string('type');
             $table->string('type_for_by');
-            $table->boolean('required'); 
+            $table->boolean('required');
             $table->boolean('request_buyer');
             $table->float('sort');
             $table->string('default');
@@ -160,12 +157,8 @@ class BaseStructure extends Migration{
         Schema::create('additional_param_category', function (Blueprint $table){
             $table->integer('category_id')->unsigned();
             $table->integer('additional_param_id')->unsigned();
-            $table->foreign('category_id')
-                ->references('id')->on('category')
-                ->onDelete('cascade');
-            $table->foreign('additional_param_id')
-                ->references('id')->on('additional_param')
-                ->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('category')->onDelete('cascade');
+            $table->foreign('additional_param_id')->references('id')->on('additional_param')->onDelete('cascade');
         });
 
         /*-------additional_param------*/
@@ -364,7 +357,6 @@ class BaseStructure extends Migration{
             $table->text('msg');
             $table->timestamps();
             $table->foreign('feed_id')->references('id')->on('feedback_product');
-           
         });
         //Create table for chat_users
         Schema::create('chat_users', function (Blueprint $table){
@@ -375,7 +367,6 @@ class BaseStructure extends Migration{
             $table->timestamps();
             $table->foreign('from_id')->references('id')->on('users');
             $table->foreign('to_id')->references('id')->on('users');
-
         });
         //Create table for chat_msgs
         Schema::create('chat_msgs', function (Blueprint $table){
@@ -388,9 +379,7 @@ class BaseStructure extends Migration{
             $table->foreign('from_id')->references('id')->on('users');
             $table->foreign('to_id')->references('id')->on('users');
             $table->foreign('chat_user_id')->references('id')->on('chat_users');
-
         });
-
     }
 
     /**
@@ -431,7 +420,6 @@ class BaseStructure extends Migration{
 
         Schema::drop('additional_param_category');
         Schema::drop('additional_param');
-
 
         Schema::drop('category');
         Schema::drop('cities');

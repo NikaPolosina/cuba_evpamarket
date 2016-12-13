@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\AdditionParam;
 use App\Region;
 use App\Category;
@@ -26,15 +27,15 @@ use Creitive\Breadcrumbs\Breadcrumbs;
 
 class ProductsController extends Controller{
 
-    public $paginCnt = 5;
+    public    $paginCnt = 5;
     protected $_breadcrumbs;
-    private $_product;
+    private   $_product;
     protected $_user;
     protected $_company;
     protected $_category;
     protected $_request;
 
-    public function __construct(Request $request,  Breadcrumbs $breadcrumbs){
+    public function __construct(Request $request, Breadcrumbs $breadcrumbs){
         $this->_breadcrumbs = $breadcrumbs;
         $this->_breadcrumbs->setDivider('<img style="display: inline-block;  height: 37px;" src="/img/system/next-bread.png">');
         $this->_request = $request;
@@ -76,6 +77,7 @@ class ProductsController extends Controller{
         Session::flash('flash_message', 'Product added!');
         return redirect('company/'.$company->id);
     }
+
     //Функция обрезки картинки.
     public static function cropFile($file, $newPath, $name){
         $size = getimagesize($file);
@@ -131,30 +133,73 @@ class ProductsController extends Controller{
 
     public function storeCategory(Request $request){
 
-        $validator = Validator::make(
-            $request->input('product'),
-            array(
-                'name' => 'required|max:255|min:2',
+        $validator = Validator::make($request->input('product'), array(
+                'name'        => 'required|max:255|min:2',
                 'description' => 'required|min:2'
-            )
-        );
+            ));
         $validator->setAttributeNames([
-            'name'=> 'Имя товара',
-            'description'=> 'Описание'
+            'name'        => 'Имя товара',
+            'description' => 'Описание'
         ]);
         if($validator->fails()){
             return response()->json([
-                'error'  => $validator->errors() ], 200);
+                'error' => $validator->errors()
+            ], 200);
         }
+
+                    $minPrice = 0;
+                    $maxPrice = 0;
+                    $addParam = $request['product']['price'];
+                    foreach($addParam as $key => $value){
+                        $addParam[$key]['from_price'] = floatval($addParam[$key]['val']);
+                        $addParam[$key]['to_price'] = floatval($addParam[$key]['val']);
+                        foreach($value['add_param'] as $ke => $va){
+                            $addParam[$key]['val'] = floatval($addParam[$key]['val']);
+                            $maxPrice = 0;
+                            foreach($va as $k => $v){
+                                if($v['add_price_type'] == 'val'){
+                                    $addParam[$key]['add_param'][$ke][$k]['add_price'] = floatval($addParam[$key]['add_param'][$ke][$k]['add_price']);
+                                    if($addParam[$key]['add_param'][$ke][$k]['add_price'] > $maxPrice){
+                                        $maxPrice = $addParam[$key]['add_param'][$ke][$k]['add_price'];
+                                    }
+                                }else{
+                                    $addParam[$key]['add_param'][$ke][$k]['add_price'] = intval($addParam[$key]['add_param'][$ke][$k]['add_price']);
+                                    $curVal = $addParam[$key]['add_param'][$ke][$k]['add_price'];
+                                    if($curVal > 0){
+                                        $curVal = $addParam[$key]['val'] * $curVal / 100;
+                                    }
+                                    if($curVal > $maxPrice){
+                                        $maxPrice = $curVal;
+                                    }
+                                }
+                            }
+                            $addParam[$key]['to_price'] += $maxPrice;
+                        }
+                    }
+
+                    $minPrice = $addParam[0]['from_price'];
+                    $maxPrice = $addParam[0]['to_price'];
+
+                    foreach($addParam as $key => $value){
+                        if($minPrice > $value['from_price']){
+                            $minPrice = $value['from_price'];
+                        }
+                        if($maxPrice < $value['to_price']){
+                            $maxPrice = $value['to_price'];
+                        }
+                    }
+
 
         $newProduct = new Product([
             'product_name'        => $request['product']['name'],
             'product_description' => $request['product']['description'],
             'content'             => $request['product']['content'],
             'product_image'       => $request['product']['photo'],
-            'product_price'       => (count($request['product']['price']) == 1) ? $request['product']['price'][0]['val'] : null,
+            'product_price'       => (count($request['product']['price']) == 1) ? $request['product']['price'][0]['val'] : NULL,
+            'min_price'           => $minPrice,
+            'max_price'           => $maxPrice,
             'category_id'         => $request['product']['category_name'],
-            'value'               => (count($request['product']['price']) == 1) ? json_encode(array($request['product']['price'][0])) : json_encode($request['product']['price']),
+            'value'               => (count($request['product']['price']) == 1) ? json_encode(array( $request['product']['price'][0] )) : json_encode($request['product']['price']),
         ]);
 
         $companyId = $request['company_id'];
@@ -169,7 +214,7 @@ class ProductsController extends Controller{
                 File::deleteDirectory($originPath);
             }
 
-            return view('product.singleProductTr')->with([ 'item' => $newProduct ])->with(['x'=>$request->x+1]);;
+            return view('product.singleProductTr')->with([ 'item' => $newProduct ])->with([ 'x' => $request->x + 1 ]);;
         }
 
         return response()->json([ 'success' => false ]);
@@ -278,7 +323,10 @@ class ProductsController extends Controller{
         $directory = public_path().'/img/custom/companies/'.$companyId.'/products/'.$idProduct;
         $directoryMy = '/img/custom/companies/'.$companyId.'/products/'.$idProduct.'/';
         if(is_dir($directory)){
-            $allFile = array_diff(scandir($directory), array('.', '..'));
+            $allFile = array_diff(scandir($directory), array(
+                '.',
+                '..'
+            ));
             $singleFile = array();
             foreach($allFile as $value){
                 if(file_exists($directory.'/'.$value) && !is_dir($directory.'/'.$value)){
@@ -297,10 +345,11 @@ class ProductsController extends Controller{
                 $firstFile = $directoryMy.$files[2];// because [0] = "." [1] = ".."
 
                 if(is_dir(public_path().$firstFile)){
-                    if(isset($files[3]))
+                    if(isset($files[3])){
                         $firstFile = $directoryMy.$files[3];
-                    else
+                    }else{
                         $firstFile = '/img/custom/files/thumbnail/plase.jpg';
+                    }
                 }
             }else{
                 $firstFile = '/img/custom/files/thumbnail/plase.jpg';
@@ -317,10 +366,12 @@ class ProductsController extends Controller{
     static function preparationRating($id){
 
         $product = Product::where('id', $id)->with([
-            'getFeedback' => function($query){
-                $query->with(['getUser' => function($query){
-                    $query->with('getUserInformation');
-                }])->with('getAdditionFeed');
+            'getFeedback' => function ($query){
+                $query->with([
+                    'getUser' => function ($query){
+                        $query->with('getUserInformation');
+                    }
+                ])->with('getAdditionFeed');
             }
         ])->first();
         $product->raiting = 0;
@@ -336,37 +387,31 @@ class ProductsController extends Controller{
 
         $file = self::preparationFile($id);
         $product = self::preparationRating($file['singleProduct']['id']);
-        $param = null;
+        $param = NULL;
         //Для того что бы взять дполнительные параметры.
-          if($product->value){
-              $product->value =  json_decode($product->value, true);
-              $add_param_keys = array();
-              if(count($product->value)){
-                  if(array_key_exists('0', $product->value)){
-                      if(array_key_exists('add_param', $product->value[0])){
-                          $add_param_keys = array_keys($product->value[0]['add_param']);
-                      }else{
-                          $add_param_keys = array();
-                      }
-                  }else{
-                      $add_param_keys = array_keys($product->value);
-                  }
-              }
-              $param = AdditionParam::whereIn('key', $add_param_keys)->get();
-              if($param->count()){
-                  foreach($param as  $key=>$val){
-                      $val->value = json_decode($val->value, true);
-                  }
-              }
-          }
+        if($product->value){
+            $product->value = json_decode($product->value, true);
+            $add_param_keys = array();
+            if(count($product->value)){
+                if(array_key_exists('0', $product->value)){
+                    if(array_key_exists('add_param', $product->value[0])){
+                        $add_param_keys = array_keys($product->value[0]['add_param']);
+                    }else{
+                        $add_param_keys = array();
+                    }
+                }else{
+                    $add_param_keys = array_keys($product->value);
+                }
+            }
+            $param = AdditionParam::whereIn('key', $add_param_keys)->get();
+            if($param->count()){
+                foreach($param as $key => $val){
+                    $val->value = json_decode($val->value, true);
+                }
+            }
+        }
 
-        return view('product'.$wey)
-            ->with('singleProduct', $product)
-            ->with('firstFile', $file['firstFile'])
-            ->with('singleFile', $file['singleFile'])
-            ->with('category', $category->getAllCategoris())
-            ->with('addParam', $param)
-            ->with('companyId', $file['companyId']);
+        return view('product'.$wey)->with('singleProduct', $product)->with('firstFile', $file['firstFile'])->with('singleFile', $file['singleFile'])->with('category', $category->getAllCategoris())->with('addParam', $param)->with('companyId', $file['companyId']);
     }
 
     //Метод для просмотра одного товара.
@@ -383,26 +428,24 @@ class ProductsController extends Controller{
         $this->_breadcrumbs->addCrumb('Магазин - '.$company->company_name, '/product-editor/'.$companyId);
         $this->_breadcrumbs->addCrumb($product->product_name, '/single-product-my-shop/'.$id);
 
-
-        return $this->way($category, '.singleProductMyShop', $id)
-            ->with('myCategories', $currentCompanyCategories)
-            ->with('breadcrumbs', $this->_breadcrumbs);
+        return $this->way($category, '.singleProductMyShop', $id)->with('myCategories', $currentCompanyCategories)->with('breadcrumbs', $this->_breadcrumbs);
     }
+
     //Метод показывающий информацию о компании в кабинете продавца. Принимает id магазина.
-    public function productEditor(CategoryController $category, $id, $user_new = null){
+    public function productEditor(CategoryController $category, $id, $user_new = NULL){
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
         $company = Company::find($id);
         $company->perDayAmount = OrderController::getAmount($company->id, 0);
         $company->perWeekAmount = OrderController::getAmount($company->id, 7);
         $company->totalAmount = OrderController::getAmount($company->id, 365);
-        $order  = $company->getOrder()->get();
+        $order = $company->getOrder()->get();
         foreach($order as $item){
             $item->getStatusOwner->where('key', 'not_processed')->get();
         }
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Магазин - '.$company->company_name, '/product-editor/'.$company->id);
-        
+
         $region = Region::all();//берем обект region где хранятся все регионы, для того что бы можно было зарегистрировать покупателя в ручном режиме.
 
         if($user_new){
@@ -414,10 +457,7 @@ class ProductsController extends Controller{
             'myCategories' => $currentCompanyCategories,
             'paginCnt'     => $this->paginCnt,
             'categories'   => json_encode($category->getAllCategoris())
-        ])
-            ->with('region', $region)
-            ->with('breadcrumbs', $this->_breadcrumbs)
-            ->with('user_new', $user_new);
+        ])->with('region', $region)->with('breadcrumbs', $this->_breadcrumbs)->with('user_new', $user_new);
     }
 
     public function getProductList(Request $request, CategoryController $category){
@@ -436,18 +476,14 @@ class ProductsController extends Controller{
         $company->perWeekAmount = OrderController::getAmount($companyId, 7);
         $company->totalAmount = OrderController::getAmount($companyId, 365);
 
-
-
-        return view('product.productListBody')->with('products', $products)
-            ->with( 'company' , $company)
-            ->with('category', $this->nCategory);
+        return view('product.productListBody')->with('products', $products)->with('company', $company)->with('category', $this->nCategory);
     }
 
     public function productAjaxUpdate(Request $request){
         $validator = Validator::make($request->input('product'), array(
-                'name'        => 'required|max:255|min:2',
-                'description' => 'required|min:2',
-            ));
+            'name'        => 'required|max:255|min:2',
+            'description' => 'required|min:2',
+        ));
         $validator->setAttributeNames([
             'name'        => 'Имя товара',
             'description' => 'Описание',
@@ -461,14 +497,58 @@ class ProductsController extends Controller{
         if($request->input('product')['product_id']){
             $product = Product::findOrFail($request->input('product')['product_id']);
 
+                            $minPrice = 0;
+                            $maxPrice = 0;
+                            $addParam = $request['product']['price'];
+                            foreach($addParam as $key => $value){
+                                $addParam[$key]['from_price'] = floatval($addParam[$key]['val']);
+                                $addParam[$key]['to_price'] = floatval($addParam[$key]['val']);
+                                foreach($value['add_param'] as $ke => $va){
+                                    $addParam[$key]['val'] = floatval($addParam[$key]['val']);
+                                    $maxPrice = 0;
+                                    foreach($va as $k => $v){
+                                        if($v['add_price_type'] == 'val'){
+                                            $addParam[$key]['add_param'][$ke][$k]['add_price'] = floatval($addParam[$key]['add_param'][$ke][$k]['add_price']);
+                                            if($addParam[$key]['add_param'][$ke][$k]['add_price'] > $maxPrice){
+                                                $maxPrice = $addParam[$key]['add_param'][$ke][$k]['add_price'];
+                                            }
+                                        }else{
+                                            $addParam[$key]['add_param'][$ke][$k]['add_price'] = intval($addParam[$key]['add_param'][$ke][$k]['add_price']);
+                                            $curVal = $addParam[$key]['add_param'][$ke][$k]['add_price'];
+                                            if($curVal > 0){
+                                                $curVal = $addParam[$key]['val'] * $curVal / 100;
+                                            }
+                                            if($curVal > $maxPrice){
+                                                $maxPrice = $curVal;
+                                            }
+                                        }
+                                    }
+                                    $addParam[$key]['to_price'] += $maxPrice;
+                                }
+                            }
+
+                            $minPrice = $addParam[0]['from_price'];
+                            $maxPrice = $addParam[0]['to_price'];
+
+                            foreach($addParam as $key => $value){
+                        if($minPrice > $value['from_price']){
+                            $minPrice = $value['from_price'];
+                        }
+                        if($maxPrice < $value['to_price']){
+                            $maxPrice = $value['to_price'];
+                        }
+                    }
+
             $result = $product->update(array(
                 'product_name'        => $request->input('product')['name'],
                 'product_description' => $request->input('product')['description'],
                 'content'             => $request->input('product')['content'],
                 'product_image'       => $request->input('product')['photo'],
-                'product_price'       => (count($request['product']['price']) == 1) ? $request['product']['price'][0]['val'] : null,
+                'product_price'       => (count($request['product']['price']) == 1) ? $request['product']['price'][0]['val'] : NULL,
+                'min_price'           => $minPrice,
+                'max_price'           => $maxPrice,
                 'category_id'         => $request->input('product')['category_name'],
-                'value'               => (count($request['product']['price']) == 1) ? json_encode(array($request['product']['price'][0])) : json_encode($request['product']['price']),
+                'value'               => (count($request['product']['price']) == 1) ? json_encode(array( $request['product']['price'][0] )) : json_encode($request['product']['price']),
             ));
 
 
@@ -506,30 +586,30 @@ class ProductsController extends Controller{
             'id' => 'required|integer'
         ]);
 
-        $param = null;
+        $param = NULL;
         try{
             $this->_product = self::getSingleProduct($request->input('id'));
 
-
             //Для того что бы взять дполнительные параметры.
             if($this->_product->value){
-                $this->_product->value =  json_decode($this->_product->value, true);
-                $param = AdditionParam::whereIn('key', array_keys( $this->_product->value))->get();
-                foreach($param as  $key=>$val){
+                $this->_product->value = json_decode($this->_product->value, true);
+                $param = AdditionParam::whereIn('key', array_keys($this->_product->value))->get();
+                foreach($param as $key => $val){
                     $val->value = json_decode($val->value, true);
                 }
             }
 
-            if($request->has('extra'))
+            if($request->has('extra')){
                 $this->_product->product_price = $request->extra['current_price'];
+            }
 
             //die('Surprise, you are here !!!');
 
             return response()->json([
-                'product' =>  $this->_product,
-                'addParam' =>  $param,
-                'cart_cnt'    => $cartController->getTotalProductCnt(),
-                'total_in_shop'    => $cartController->getTotalAmount($this->_product->getCompany[0]->id),
+                'product'       => $this->_product,
+                'addParam'      => $param,
+                'cart_cnt'      => $cartController->getTotalProductCnt(),
+                'total_in_shop' => $cartController->getTotalAmount($this->_product->getCompany[0]->id),
             ], 200);
         }catch(\Exception $e){
             return response()->json([ 'error' => $e->getMessage() ], 422);
@@ -543,14 +623,17 @@ class ProductsController extends Controller{
         $this->_product = self::getSingleProduct($id);
         $param = array();
         if($this->_product->value){
-            $this->_product->value =  json_decode($this->_product->value, true);
-            $param = AdditionParam::whereIn('key', array_keys( $this->_product->value))->get();
-            foreach($param as  $key=>$val){
+            $this->_product->value = json_decode($this->_product->value, true);
+            $param = AdditionParam::whereIn('key', array_keys($this->_product->value))->get();
+            foreach($param as $key => $val){
                 $val->value = json_decode($val->value, true);
             }
         }
 
-        return view ('product.additionParamOrder')->with(['singleProduct' =>  $this->_product, 'addParam' =>  $param]);
+        return view('product.additionParamOrder')->with([
+            'singleProduct' => $this->_product,
+            'addParam'      => $param
+        ]);
     }
 
     /**
@@ -583,10 +666,10 @@ class ProductsController extends Controller{
             'categoryId' => $categoryId,
             'productId'  => $productId
         ], array(
-                'companyId'  => 'required|exists:companies,id',
-                'categoryId' => 'sometimes|required|exists:category,id',
-                'productId'  => 'sometimes|required|exists:products,id'
-            ));
+            'companyId'  => 'required|exists:companies,id',
+            'categoryId' => 'sometimes|required|exists:category,id',
+            'productId'  => 'sometimes|required|exists:products,id'
+        ));
 
         if($validator->fails()){
             return response()->json([
