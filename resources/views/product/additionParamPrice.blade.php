@@ -1,4 +1,41 @@
 {{-- При просмотре товара в этом окно учитываються дополнительные стоимости --}}
+//Vera
+<style>
+    .div_css_value{
+        min-width: 60px;
+        margin: 3px;
+        float: left;
+        border: 1px solid #e9e9e9;
+        line-height: 28px;
+        height: 30px;
+        padding: 0 10px;
+        color: #333;
+        border-radius: 3px;
+        background-color: #fff;
+        text-align: center;
+    }
+    .div_css_value:hover{
+        outline: 3px solid #f90;
+        border-radius: 4px;
+    }
+</style>
+<script>
+    $('.div_css_value').on('click', function () {
+        $(this).css('outline', '3px solid #f90');
+        if ($(this).parents('.add_param_holder').find('input').is("input[type='radio']")) {
+            var input = $(this).parents('.add_param_holder').parents('.my_md_10').find("input[type='radio']");
+            input.each(function( index ) {
+                $(this).parents('.add_param_holder').find('.div_css_value').css('outline', 'none');
+            });
+            $(this).css('outline', '3px solid #f90');
+        }
+       $(this).parents('.add_param_holder').find("input[type=checkbox]").trigger("click");
+       $(this).parents('.add_param_holder').find("input[type=radio]").trigger("click");
+
+
+    });
+</script>
+//Vera
 
 <div class="row">
     <div class="col-sm-12 text-center">
@@ -31,7 +68,7 @@
                     <div class="col-md-2 title">
                         {{$item['title']}}:
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-10 my_md_10">
                         <div class="row">
                             <?php
                             switch($item['type_for_by']){
@@ -65,7 +102,7 @@
                                             <input type="checkbox" name="{{$key}}" value="{{$key}}">
                                         </div>
                                         <div class="col-md-10">
-                                            <div class="div_css_value">
+                                            <div class="div_css_value checkbox">
                                                 @if(isset($val['css']))
                                                     <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-top: 3px; background-color: {{$val['css']}}"></div>
                                                 @endif
@@ -73,11 +110,11 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-2 text-center">
+                                        {{--<div class="col-md-2 text-center">
                                             @if(isset($val['css']))
                                                 <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; background-color: {{$val['css']}}"></div>
                                             @endif
-                                        </div>
+                                        </div>--}}
                                         <div class="col-md-10">
                                             @if($addPrice)
                                                 @if($addPriceType == 'per')
@@ -97,7 +134,6 @@
                             break;
                             case 'radio':
                             $random = substr( md5(rand()), 0, 7); ?>
-
                             <input data-type="radio" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
                             <?php
                             foreach($item['value'] as $key => $val){ ?>
@@ -127,7 +163,7 @@
                                             <input type="radio" name="{{$random}}" value="{{$key}}">
                                         </div>
                                         <div class="col-md-10">
-                                          <div class="div_css_value">
+                                          <div class="div_css_value radio">
                                               @if(isset($val['css']))
                                                   <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-top: 3px; background-color: {{$val['css']}}"></div>
                                               @endif
@@ -137,27 +173,7 @@
                                         </div>
 
 
-                                        <style>
-                                            .div_css_value{
-                                                margin: 3px;
-                                                float: left;
-                                                border: 1px solid #e9e9e9;
-                                                 line-height: 28px;
-                                                height: 30px;
-                                                padding: 0 10px;
-                                                color: #333;
-                                                border-radius: 3px;
-                                                background-color: #fff;
-                                                text-align: center;
-                                            }
-                                            .div_css_value:hover{
-                                                outline: 3px solid #f90;
-                                                border-radius: 4px;
 
-
-                                            }
-
-                                        </style>
 
                                       {{--  <div class="col-md-2 text-center">
                                             @if(isset($val['css']))
