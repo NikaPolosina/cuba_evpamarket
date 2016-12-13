@@ -12,7 +12,9 @@
                 @foreach($item['add_param'] as $key => $val)
                             {{$val['name']}}
                             @if(array_key_exists('css', $val))
-                                <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-top: 3px; background-color: {{$val['css']}}"></div>
+                                @if(!empty($val['css']))
+                                    <div style="display:inline-block; width: 30px; min-height: 20px; border: solid 1px grey; margin-top: 3px; background-color: {{$val['css']}}"></div>
+                                @endif
                             @endif
                             {{--Price: +{{$val['price']}}--}}
                 @endforeach

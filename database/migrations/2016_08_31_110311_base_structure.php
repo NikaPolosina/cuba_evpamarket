@@ -127,9 +127,9 @@ class BaseStructure extends Migration{
             $table->text('product_description');
             $table->text('content');
             $table->string('product_image');
-            $table->float('product_price')->nullable();
-            $table->float('min_price')->nullable();
-            $table->float('max_price')->nullable();
+            $table->string('product_price')->nullable();
+            $table->string('min_price')->nullable();
+            $table->string('max_price')->nullable();
             $table->longText('value')->default('');
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('category');
