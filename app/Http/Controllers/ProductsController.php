@@ -150,30 +150,33 @@ class ProductsController extends Controller{
                     $minPrice = 0;
                     $maxPrice = 0;
                     $addParam = $request['product']['price'];
+
                     foreach($addParam as $key => $value){
                         $addParam[$key]['from_price'] = floatval($addParam[$key]['val']);
                         $addParam[$key]['to_price'] = floatval($addParam[$key]['val']);
-                        foreach($value['add_param'] as $ke => $va){
-                            $addParam[$key]['val'] = floatval($addParam[$key]['val']);
-                            $maxPrice = 0;
-                            foreach($va as $k => $v){
-                                if($v['add_price_type'] == 'val'){
-                                    $addParam[$key]['add_param'][$ke][$k]['add_price'] = floatval($addParam[$key]['add_param'][$ke][$k]['add_price']);
-                                    if($addParam[$key]['add_param'][$ke][$k]['add_price'] > $maxPrice){
-                                        $maxPrice = $addParam[$key]['add_param'][$ke][$k]['add_price'];
-                                    }
-                                }else{
-                                    $addParam[$key]['add_param'][$ke][$k]['add_price'] = intval($addParam[$key]['add_param'][$ke][$k]['add_price']);
-                                    $curVal = $addParam[$key]['add_param'][$ke][$k]['add_price'];
-                                    if($curVal > 0){
-                                        $curVal = $addParam[$key]['val'] * $curVal / 100;
-                                    }
-                                    if($curVal > $maxPrice){
-                                        $maxPrice = $curVal;
+                        if(array_key_exists('add_param', $value)){
+                            foreach($value['add_param'] as $ke => $va){
+                                $addParam[$key]['val'] = floatval($addParam[$key]['val']);
+                                $maxPrice = 0;
+                                foreach($va as $k => $v){
+                                    if($v['add_price_type'] == 'val'){
+                                        $addParam[$key]['add_param'][$ke][$k]['add_price'] = floatval($addParam[$key]['add_param'][$ke][$k]['add_price']);
+                                        if($addParam[$key]['add_param'][$ke][$k]['add_price'] > $maxPrice){
+                                            $maxPrice = $addParam[$key]['add_param'][$ke][$k]['add_price'];
+                                        }
+                                    }else{
+                                        $addParam[$key]['add_param'][$ke][$k]['add_price'] = intval($addParam[$key]['add_param'][$ke][$k]['add_price']);
+                                        $curVal = $addParam[$key]['add_param'][$ke][$k]['add_price'];
+                                        if($curVal > 0){
+                                            $curVal = $addParam[$key]['val'] * $curVal / 100;
+                                        }
+                                        if($curVal > $maxPrice){
+                                            $maxPrice = $curVal;
+                                        }
                                     }
                                 }
+                                $addParam[$key]['to_price'] += $maxPrice;
                             }
-                            $addParam[$key]['to_price'] += $maxPrice;
                         }
                     }
 
@@ -188,7 +191,6 @@ class ProductsController extends Controller{
                             $maxPrice = $value['to_price'];
                         }
                     }
-
 
         $newProduct = new Product([
             'product_name'        => $request['product']['name'],
@@ -500,30 +502,33 @@ class ProductsController extends Controller{
                             $minPrice = 0;
                             $maxPrice = 0;
                             $addParam = $request['product']['price'];
+
                             foreach($addParam as $key => $value){
                                 $addParam[$key]['from_price'] = floatval($addParam[$key]['val']);
                                 $addParam[$key]['to_price'] = floatval($addParam[$key]['val']);
-                                foreach($value['add_param'] as $ke => $va){
-                                    $addParam[$key]['val'] = floatval($addParam[$key]['val']);
-                                    $maxPrice = 0;
-                                    foreach($va as $k => $v){
-                                        if($v['add_price_type'] == 'val'){
-                                            $addParam[$key]['add_param'][$ke][$k]['add_price'] = floatval($addParam[$key]['add_param'][$ke][$k]['add_price']);
-                                            if($addParam[$key]['add_param'][$ke][$k]['add_price'] > $maxPrice){
-                                                $maxPrice = $addParam[$key]['add_param'][$ke][$k]['add_price'];
-                                            }
-                                        }else{
-                                            $addParam[$key]['add_param'][$ke][$k]['add_price'] = intval($addParam[$key]['add_param'][$ke][$k]['add_price']);
-                                            $curVal = $addParam[$key]['add_param'][$ke][$k]['add_price'];
-                                            if($curVal > 0){
-                                                $curVal = $addParam[$key]['val'] * $curVal / 100;
-                                            }
-                                            if($curVal > $maxPrice){
-                                                $maxPrice = $curVal;
+                                if(array_key_exists('add_param', $value)){
+                                    foreach($value['add_param'] as $ke => $va){
+                                        $addParam[$key]['val'] = floatval($addParam[$key]['val']);
+                                        $maxPrice = 0;
+                                        foreach($va as $k => $v){
+                                            if($v['add_price_type'] == 'val'){
+                                                $addParam[$key]['add_param'][$ke][$k]['add_price'] = floatval($addParam[$key]['add_param'][$ke][$k]['add_price']);
+                                                if($addParam[$key]['add_param'][$ke][$k]['add_price'] > $maxPrice){
+                                                    $maxPrice = $addParam[$key]['add_param'][$ke][$k]['add_price'];
+                                                }
+                                            }else{
+                                                $addParam[$key]['add_param'][$ke][$k]['add_price'] = intval($addParam[$key]['add_param'][$ke][$k]['add_price']);
+                                                $curVal = $addParam[$key]['add_param'][$ke][$k]['add_price'];
+                                                if($curVal > 0){
+                                                    $curVal = $addParam[$key]['val'] * $curVal / 100;
+                                                }
+                                                if($curVal > $maxPrice){
+                                                    $maxPrice = $curVal;
+                                                }
                                             }
                                         }
+                                        $addParam[$key]['to_price'] += $maxPrice;
                                     }
-                                    $addParam[$key]['to_price'] += $maxPrice;
                                 }
                             }
 
