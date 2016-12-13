@@ -39,7 +39,16 @@
 
                                     <table align="center">
                                         <tr>
-                                            <td><span class="price">{{$v->product_price}} руб</span></td>
+                                            <td><span class="price">
+                                                    @if(count($v->min_price) && count($v->max_price))
+                                                        {{$v->min_price}} - {{$v->max_price}}
+                                                        @else
+                                                        {{$v->product_price}}
+                                                        @endif
+
+                                                     руб
+
+                                                </span></td>
                                             <td width="80">
                                                 <div class="par">
                                                     <div class="stars">
