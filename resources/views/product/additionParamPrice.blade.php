@@ -1,5 +1,5 @@
 {{-- При просмотре товара в этом окно учитываються дополнительные стоимости --}}
-//Vera
+
 <style>
     .div_css_value{
         min-width: 60px;
@@ -19,23 +19,8 @@
         border-radius: 4px;
     }
 </style>
-<script>
-    $('.div_css_value').on('click', function () {
-        $(this).css('outline', '3px solid #f90');
-        if ($(this).parents('.add_param_holder').find('input').is("input[type='radio']")) {
-            var input = $(this).parents('.add_param_holder').parents('.my_md_10').find("input[type='radio']");
-            input.each(function( index ) {
-                $(this).parents('.add_param_holder').find('.div_css_value').css('outline', 'none');
-            });
-            $(this).css('outline', '3px solid #f90');
-        }
-       $(this).parents('.add_param_holder').find("input[type=checkbox]").trigger("click");
-       $(this).parents('.add_param_holder').find("input[type=radio]").trigger("click");
 
 
-    });
-</script>
-//Vera
 
 <div class="row">
     <div class="col-sm-12 text-center">
@@ -63,12 +48,12 @@
             ?>
             {{--Системный блок--}}
 
-            <div class="row">
+            <div class="row" style="margin-top: 5px;">
                 <div class="div_container param_holder" data-key="{{$item['key']}}" data-type="{{$item['type']}}" style="margin-bottom: 30px; ">
                     <div class="col-md-2 title">
                         {{$item['title']}}:
                     </div>
-                    <div class="col-md-10 my_md_10">
+                    <div class="col-md-5 my_md_10">
                         <div class="row">
                             <?php
                             switch($item['type_for_by']){
@@ -260,14 +245,14 @@
                             <?php break;
                             case 'input': ?>
                             <div class="col-md-6" style="/*outline: solid 1px black*/">
-                                <input data-type="input" class="add_price_title" type="hidden" name="" value="{{$item['title']}}" />
+                                <input data-type="input" class="add_price_title form-control" type="hidden" name="" value="{{$item['title']}}" />
                                 <div style="text-align: left;">
                                     @if(array_key_exists($item->key, $add_price))
                                         @foreach($add_price[$item->key] as $addParam)
                                             @if($item->key == 'owner_field')
                                                 {{$addParam['val']}}
                                             @else
-                                                <input class="jq_val_input" type="text" />
+                                                <input class="jq_val_input form-control" type="text" />
                                             @endif
                                         @endforeach
                                     @endif
@@ -291,3 +276,25 @@
         font-size: 16px;
     }
 </style>
+
+
+<script>
+    $( document ).ready(function() {
+        $('.div_css_value').on('click', function () {
+            console.log('jfjkr');
+            $(this).css('outline', '3px solid #f90');
+            if ($(this).parents('.add_param_holder').find('input').is("input[type='radio']")) {
+                var input = $(this).parents('.add_param_holder').parents('.my_md_10').find("input[type='radio']");
+                input.each(function( index ) {
+                    $(this).parents('.add_param_holder').find('.div_css_value').css('outline', 'none');
+                });
+                $(this).css('outline', '3px solid #f90');
+            }
+            $(this).parents('.add_param_holder').find("input[type=checkbox]").trigger("click");
+            $(this).parents('.add_param_holder').find("input[type=radio]").trigger("click");
+
+        });
+    });
+
+
+</script>

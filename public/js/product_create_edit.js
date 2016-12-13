@@ -181,8 +181,9 @@ $(document).ready(function() {
                             JSON.parse(msg.product.value).forEach(function(value){
                                 var current = add_price_origin.clone();
                                 current
-                                .prepend('<div>Имя (возможное указание модели товара).</div><div><input data-name="extra_name" type="text" name="name" value="'+value.name+'"><div>')
+                                .prepend('<div class="col-sm-12" style="margin-top: 5px;"><div class="col-sm-4">Имя (возможное указание модели товара).<span class="required_css">*</span></div><div></div><div class="col-sm-8"><input class="form-control" data-name="extra_name" type="text" name="name" value="'+value.name+'"><div>')
                                 .append('<div class="col-sm-12"><span style="float: right;" class="btn remove_add_price"><button type="button" class="btn btn-danger">Удалить добавлнную цену</button></span></div>').show();
+
                                 $('.mod').find('#several').find('.add_price_holder').append(current);
                                 current.find('input[data-name="price"]').val(value.val);
                                 getBlockWithadParam(msg.productCategory.id, JSON.stringify(value.add_param), current.find('.add_param_holder'));
@@ -507,7 +508,7 @@ $(document).ready(function() {
     $('.mod').find('.add_price').on('click', function(){
         var add_price_origin = $('.mod').find('#several').find('.add_price_origin').eq(0);
         $('.mod').find('#several').find('.price_list').append(add_price_origin.clone()
-        .prepend('<div class="col-sm-12"><div class="col-sm-4">Имя (возможное указание модели товара). <span class="required_css">*</span>  </div><div class="col-sm-8"><input class="form-control" data-name="extra_name" type="text" name="name" value=""></div></div>')
+        .prepend('<div class="col-sm-12" style="margin-top: 5px;"><div class="col-sm-4">Имя (возможное указание модели товара). <span class="required_css">*</span>  </div><div class="col-sm-8"><input class="form-control" data-name="extra_name" type="text" name="name" value=""></div></div>')
         .append('<div class="col-sm-12"><span style="float: right;" class="btn remove_add_price"><button type="button" class="btn btn-danger">Удалить добавлнную цену</button></span></div>').show());
 
     });
