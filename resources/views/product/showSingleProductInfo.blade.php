@@ -213,6 +213,7 @@
                                                         @endif
                                                     </div>
 
+                                                    {{--<button onclick="console.log(calculatePrice())">asdasdasdas</button>--}}
                                                     <script>
                                                         function calculatePrice(){
                                                             var add_price_holder = $('.add_price_holder.active');
@@ -236,7 +237,6 @@
                                                                     
                                                                     add_price_holder.find('.param_holder').each(function(index, item){
                                                                         console.log();
-                                                                        
 
                                                                         type = $(item).find('.add_price_title').attr('data-type');
 
@@ -259,6 +259,7 @@
                                                                                                 price['current_price'] = price['current_price']+parseFloat(addPrice['price']);
                                                                                                 addPrice['name'] = add_param_holder.find('.add_param_name').val();
                                                                                                 addParam['add_param'].push(addPrice);
+                                                                                                addPrice['css'] = add_param_holder.find('.add_param_css').val().trim();
                                                                                             });
                                                                                             addPrice = {};
                                                                                         }
@@ -279,6 +280,7 @@
                                                                                                 price['current_price'] = price['current_price']+parseFloat(addPrice['price']);
                                                                                                 addPrice['name'] = add_param_holder.find('.add_param_name').val();
                                                                                                 addParam['add_param'].push(addPrice);
+                                                                                                addPrice['css'] = add_param_holder.find('.add_param_css').val().trim();
                                                                                             });
                                                                                             addPrice = {};
                                                                                         }
@@ -298,6 +300,8 @@
                                                                                             price['current_price'] = price['current_price']+parseFloat(addPrice['price']);
                                                                                             addPrice['name'] = add_param_holder.find('.add_param_name').val();
                                                                                             addParam['add_param'].push(addPrice);
+                                                                                            addPrice['css'] = add_param_holder.find('.add_param_css').val().trim();
+
 
                                                                                             addPrice = {};
                                                                                         }

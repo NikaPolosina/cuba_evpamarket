@@ -340,9 +340,9 @@ $(document).ready(function() {
                                             item.find('input:checked').each(function(k, i){
                                                 var single_add_param = {};
 
-                                                single_add_param['val'] = $(i).val();
-                                                single_add_param['add_price'] = $(i).parent().find('.add_price').val();
-                                                single_add_param['add_price_type'] = $(i).parent().find('.add_price_type').val();
+                                                single_add_param['val'] = $(i).val().trim();
+                                                single_add_param['add_price'] = $(i).parent().find('.add_price').val().trim();
+                                                single_add_param['add_price_type'] = $(i).parent().find('.add_price_type').val().trim();
 
                                                 if(single_add_param['add_price'].length){
                                                     if(single_add_param['add_price_type'] == 'val'){
@@ -353,7 +353,7 @@ $(document).ready(function() {
                                                 }else{
                                                     single_add_param['add_price'] = 0;
                                                 }
-
+                                                
                                                 price['add_param'][item.attr('data-key')].push(single_add_param);
                                             });
                                         }

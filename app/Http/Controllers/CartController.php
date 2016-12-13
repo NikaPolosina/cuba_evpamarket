@@ -50,7 +50,6 @@ class CartController extends Controller{
     //Метод отвечающий за переход в корзину пользователя.
     public function index(Request $request){
 
-
         $product = '';
         $companies = array();
 
@@ -69,7 +68,7 @@ class CartController extends Controller{
                 $companies[$key]['totalAmount'] = 0;
 
                 if(count($company['products'])){
-                    foreach ($company['products'] as $hash => $cartProduct) {
+                    foreach($company['products'] as $hash => $cartProduct){
                         $product = $companies[$key]['company']->getProducts()->where('id', $cartProduct['product_id'])->with('getCategory')->first();
 
                         $product->cnt = $cartProduct['cnt'];
@@ -82,9 +81,8 @@ class CartController extends Controller{
                             $product->value = $cartProduct['add_param']['add_param'];
                         }else{
                             $product->value = array();
-
                         }
-                        $companies[$key]['totalAmount'] = $companies[$key]['totalAmount']+ ($product->product_price*$product->cnt);
+                        $companies[$key]['totalAmount'] = $companies[$key]['totalAmount'] + ($product->product_price * $product->cnt);
                         $product->hash = $hash;
                         $companies[$key]['products'][] = $product;
                     }
@@ -92,7 +90,7 @@ class CartController extends Controller{
                     $companies[$key]['products'] = IndexController::showProduct($companies[$key]['products']);
 
                     if(Auth::user()){
-                        $companies[$key]['totalHistoryAmount'] = OrderController::getTotalCompanyAmount($companies[$key]['company'], StatusOwner::where('key','sending_buyer')->first(), Auth::user());
+                        $companies[$key]['totalHistoryAmount'] = OrderController::getTotalCompanyAmount($companies[$key]['company'], StatusOwner::where('key', 'sending_buyer')->first(), Auth::user());
 
                         $companies[$key]['total'] = $companies[$key]['totalAmount'] + $companies[$key]['totalHistoryAmount'];
 
@@ -107,15 +105,12 @@ class CartController extends Controller{
                     unset($companies[$key]);
                 }
             }
-
         }
 
         $this->_breadcrumbs->addCrumb('Домой', '/login-user');
         $this->_breadcrumbs->addCrumb('Корзина', '/cart');
 
-        return view('product.cart')
-            ->with('breadcrumbs', $this->_breadcrumbs)
-            ->with('companies', $companies);
+        return view('product.cart')->with('breadcrumbs', $this->_breadcrumbs)->with('companies', $companies);
     }
 
     public function cart(Request $request){
@@ -182,14 +177,12 @@ class CartController extends Controller{
             }
 
             return response()->json([
-                'success'            => true
+                'success' => true
             ], 200)->withCookie(cookie('cart', $cart));
         }
     }
 
     public function cartAddCnt(Request $request){
-    
-
 
         $cnt = 0;
 
@@ -269,7 +262,7 @@ class CartController extends Controller{
             if(!array_key_exists($currentCompanyId, $this->_cart[$this->_currentUserKey])){
                 $this->_cart[$this->_currentUserKey][$currentCompanyId] = array();
             }
-            $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][substr( md5(rand()), 0, 7)] = $singleProduct;
+            $this->_cart[$this->_currentUserKey][$currentCompanyId]['products'][substr(md5(rand()), 0, 7)] = $singleProduct;
         }
     }
 
