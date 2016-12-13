@@ -60,7 +60,7 @@
                     <div class="col-md-2 title">
                         {{$item['title']}}:
                     </div>
-                    <div class="col-md-5 my_md_10">
+                    <div class="col-md-4 my_md_10">
                         <div class="row">
                             <?php
                             switch($item['type_for_by']){
@@ -90,7 +90,7 @@
                             @if($enable === true)
                                 <div class="col-md-4" style="/*outline: solid 1px black*/">
                                     <div class="row {{$class}} add_param_holder">
-                                        <div class="col-md-2 text-center">
+                                        <div class="col-md-2 text-center" style="display: none">
                                             <input type="checkbox" name="{{$key}}" value="{{$key}}">
                                         </div>
                                         <div class="col-md-10">
@@ -153,7 +153,7 @@
                             @if($enable === true)
                                 <div class="col-md-4" style="/*outline: solid 1px black*/">
                                     <div class="row {{$class}} add_param_holder">
-                                        <div class="col-md-2 text-center">
+                                        <div class="col-md-2 text-center" style="display: none">
                                             <input type="radio" name="{{$random}}" value="{{$key}}">
                                         </div>
                                         <div class="col-md-10">
@@ -285,26 +285,4 @@
 </style>
 
 
-<script>
-    $( document ).ready(function() {
-        $('.div_css_value').on('click', function () {
 
-            if( $(this).css('outline') == 'rgb(255, 153, 0) solid 3px'){
-               console.log('hhhhh2');
-            }
-            $(this).css('outline', '3px solid #f90');
-            if ($(this).parents('.add_param_holder').find('input').is("input[type='radio']")) {
-                var input = $(this).parents('.add_param_holder').parents('.my_md_10').find("input[type='radio']");
-                input.each(function( index ) {
-                    $(this).parents('.add_param_holder').find('.div_css_value').css('outline', 'none');
-                });
-                $(this).css('outline', '3px solid #f90');
-            }
-            $(this).parents('.add_param_holder').find("input[type=checkbox]").trigger("click");
-            $(this).parents('.add_param_holder').find("input[type=radio]").trigger("click");
-
-        });
-    });
-
-
-</script>
