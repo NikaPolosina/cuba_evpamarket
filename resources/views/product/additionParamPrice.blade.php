@@ -88,7 +88,7 @@
                             @endif
 
                             @if($enable === true)
-                                <div class="col-md-4" style="/*outline: solid 1px black*/">
+                                <div class="col-md-6" style="/*outline: solid 1px black*/">
                                     <div class="row {{$class}} add_param_holder">
                                         <div class="col-md-2 text-center" style="display: none">
                                             <input type="checkbox" name="{{$key}}" value="{{$key}}">
