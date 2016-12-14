@@ -168,6 +168,14 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::post('/city-update', ['as' => 'admin', 'uses'=>'AdminController@cityUpdate']);
     //Статистика по компании.
     Route::get('/company_statistic/{id}', ['as' => 'admin', 'uses'=>'AdminController@shopStatistic']);
+    //Страница где отображается список статусов продуктов по продуктам.
+    Route::get('/status-product', ['as' => 'admin', 'uses'=>'AdminController@getStatusProduct']);
+    //Роут для сохранения отредактированной информации по статусу товара.
+    Route::post('/status-product-update', ['as' => 'admin', 'uses'=>'AdminController@statusProductUpdate']);
+    //Создание нового статуса по продуктам.
+    Route::post('/status-product-create', ['as' => 'admin', 'uses'=>'AdminController@statusProductCreate']);
+    //Удаление статуса по продукту.
+    Route::get('/status-product-delete/{id}', ['as' => 'admin', 'uses'=>'AdminController@statusProductDelete']);
 
 });
 
@@ -246,7 +254,6 @@ Route::post('/add-ajax-addition-feed', ['as'=>'add-ajax-addition-feed', 'uses'=>
 
 /*-----------------------------------------------------------chat------------------------------------------------------------*/
 Route::get('/get-single-conversation/{id_from}/{id_to}', ['as'=>'get-single-conversation', 'uses'=>'HomeController@getUserPageWithConversationUsers']);
-
 
 Route::group(['middleware' => 'cors'], function(){
     Route::get('/who-am-i/{id}', ['as'=>'who_am_i', 'uses'=>'IndexController@whoAmI']);

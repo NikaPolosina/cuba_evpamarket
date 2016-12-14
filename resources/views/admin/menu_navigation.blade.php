@@ -71,14 +71,19 @@
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
-                    <li class="nav-item  ">
+                    <li class="nav-item">
                         <a href="/admin/addition-param-list" class="nav-link ">
                             <span class="title">Дополнительные параметры</span>
                         </a>
                     </li>
-                    <li class="nav-item  ">
+                    <li class="nav-item">
                         <a href="/admin/addition-param-add" class="nav-link ">
                             <span class="title">Добавить дополнительный параметр</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/status-product" class="nav-link ">
+                            <span class="title">Статусы товаров</span>
                         </a>
                     </li>
 

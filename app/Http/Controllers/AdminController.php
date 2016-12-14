@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\UserInformation;
 use App\Company;
+use App\StatusProduct;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -375,6 +376,51 @@ class AdminController extends Controller{
 
         $city['0']->update($updateCity);
         return redirect()->back();
+    }
+
+
+    public function statusProductCreate(Request $request){
+        $this->validate($request, [
+            'status_key' => 'required',
+            'status_name' => 'required'
+        ]);//Проходим валиацию обязательных полей.
+        $newStatus = new StatusProduct([
+            'status_key'        => $request['status_key'],
+            'status_name'        => $request['status_name']
+        ]);//Создаем новый обьект статуса продукта.
+        $newStatus->save();//Сохраняем в базу данных в таблицу - status_product.
+        return redirect()->back();//Возвращаемя обратно на страницу от куда пришли.
+    }
+
+    //Метод который направляет на страницу просмотра списка статусов по продуктам.
+    public function getStatusProduct(){
+        $this->_way = 'Товары'; //Для отрисовки в бредкрамсе.
+        $status = StatusProduct::all();
+        $this->_breadcrumbs->addCrumb('Домой', '/admin/');
+        $this->_breadcrumbs->addCrumb('Список статусов по продуктам', '/admin/status-product');
+        return view('admin.product.show')->with('status', $status)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
+    }
+
+    //Метод который сохраняет отредактированнаю (новую) информацию по статусу товара.
+    public function statusProductUpdate(Request $request){
+        $this->validate($request, [
+            'id'          => 'required',
+            'status_key'  => 'required',
+            'status_name' => 'required',
+        ]);//Проходим валидаци обязательных полей (id, status_key, status_name).
+        $status = StatusProduct::find($request['id']);
+        $newStats = [
+            'status_key'         => $request['status_key'],
+            'status_name'  => $request['status_name'],
+        ];//Создаем новый обьект статуса.
+        $status->update($newStats);//Сохраняем новые данные по статусу.
+        return redirect()->back();//Возвращаемя обратно на страницу от куда пришли.
+    }
+
+    //Удаление статуса по продукту (принимает id статуса).
+    public function statusProductDelete($id){
+        StatusProduct::destroy($id);//Удаление объекта статуса продукта с таблицы status_product.
+        return redirect()->back();//Возвращаемя обратно на страницу от куда пришли.
     }
 
   
