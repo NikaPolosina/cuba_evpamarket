@@ -101,6 +101,7 @@
                             <div class="row">
                                 {!! Form::label('status_key', 'Ключ: ', ['class' => 'col-sm-4 control-label']) !!}
                                 <div class="col-sm-6">
+                                    <span style="font-weight: bold;">Примичание:</span><span> Ключ необходимо указать латынскими символами. </span>
                                     {!! Form::text('status_key', NULL, ['class' => 'form-group advanced_search_name form-control status_key', 'required' => 'required']) !!}
                                     {!! $errors->first('status_key', '<p class="help-block">:message</p>') !!}
                                 </div>
