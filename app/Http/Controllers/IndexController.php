@@ -24,11 +24,9 @@ use Illuminate\Support\Facades\Artisan;
 use App\ChatMsgs;
 use App\User;
 class IndexController extends Controller{
-
     public function test(MessageController $mesage){
         return view('test_s');
     }
-
     /**
      * Get products image
      *
@@ -36,6 +34,7 @@ class IndexController extends Controller{
      *
      * @return array
      * */
+    //Метод который отвечает за проверку наличия картинки (файла по данному товару) принимает колекцию товаров.
     public static function showProduct($arr){
         if($arr instanceof Product){
             $arr = self::getProductImg($arr);
@@ -66,7 +65,6 @@ class IndexController extends Controller{
         }
         return $arr;
     }
-
     /**
      * Get single product image
      *
@@ -99,9 +97,10 @@ class IndexController extends Controller{
         return $product;
     }
 
+    //Метод (входная точка сайта, для отрисовки титульной страницы сайта.)
     public function Index(ProductsController $product, CompanyController $company, CategoryController $category, Request $request){
-        $productAll = Product::paginate(8);
-        $companyAll = $company->getCompanyAll();
+        $productAll = Product::where('status_product_id', 1)->paginate(8);//достаем с баы данных все товары у которых статус (status_product_id == 1), тоесть активен (active) и ставим пагинацию.
+        $companyAll = $company->getCompanyAll(); //Берем с юазы данных все компании.
         foreach($companyAll['companyAll'] as $value){
             $value->company_logo = $company->showCompanyLogo($value->id);
         }
@@ -112,7 +111,6 @@ class IndexController extends Controller{
             '.'
         ));
         $this->showProduct($productAll);
-
         $this->addFeedProduct($productAll);
 
         return view('welcome')->with('productAll', $productAll)->with('companyAll', $companyAll['companyAll'])->with('slide_img', $slide_img)->with('category', $category->getAllCategoris())->with('vip_category', $vip_category);

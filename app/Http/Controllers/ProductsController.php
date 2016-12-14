@@ -41,6 +41,7 @@ class ProductsController extends Controller{
         $this->_request = $request;
     }
 
+    //Метод который удаляет папку с файлами по товару (принимает id-товара).
     public function destroyProductDir($id){
         $company = Product::find($id)->getCompany;
         $dir = public_path().'/img/custom/companies/'.$company[0]['id'].'/products/'.$id;
@@ -131,8 +132,8 @@ class ProductsController extends Controller{
         }
     }
 
+    //Функция которая выполняет сохранение товара в кабинете продавца.
     public function storeCategory(Request $request){
-
         $validator = Validator::make($request->input('product'), array(
                 'name'        => 'required|max:255|min:2',
                 'description' => 'required|min:2'
@@ -191,7 +192,7 @@ class ProductsController extends Controller{
                             $maxPrice = $value['to_price'];
                         }
                     }
-
+        //Создаем обьект продукта (товара) прописывая все основные поля.
         $newProduct = new Product([
             'product_name'        => $request['product']['name'],
             'product_description' => $request['product']['description'],
@@ -202,6 +203,7 @@ class ProductsController extends Controller{
             'max_price'           => $maxPrice,
             'category_id'         => $request['product']['category_name'],
             'value'               => (count($request['product']['price']) == 1) ? json_encode(array( $request['product']['price'][0] )) : json_encode($request['product']['price']),
+            'status_product_id'   => 1,
         ]);
 
         $companyId = $request['company_id'];
@@ -260,7 +262,7 @@ class ProductsController extends Controller{
         $product = Product::findOrFail($id);
         return view('product.edit', compact('product'));
     }
-
+    //Метод который отрабатывает при нажатии кнопки - редактировать товар в кабинете продавца для вызова модального окна и заполнения его данными о товаре корой мы хотим отредактировать.
     public function editCategory(Request $request){
 
         $id = $request->input('productId');
@@ -285,10 +287,12 @@ class ProductsController extends Controller{
         $company = Company::find($request->input('company_id'));
         return redirect('company/'.$company->id);
     }
-
+    //Метод который удаляет продукт. Продукт не удаляется с базы, мы меняем статус продукта на - УДАЛЕННЫЙ.
     public function destroy(Request $request){
-        $this->destroyProductDir($request['id']);
-        Product::destroy($request['id']);
+       // $this->destroyProductDir($request['id']);
+        $product = Product::find($request['id']);
+        $product['status_product_id'] = 2; //Меняем статус на удаленный (delete) - этот статус хранися в таблице status_product под 2-id.
+        $product->update();//Выполняем сохранение измененного статуса.
         Session::flash('flash_message', 'Product deleted!');
     }
 
@@ -486,7 +490,7 @@ class ProductsController extends Controller{
 
         return view('product.productListBody')->with('products', $products)->with('company', $company)->with('category', $this->nCategory);
     }
-
+    //Метод который сохраняет отредактированный товар в кабинете продавца (при редактировании).
     public function productAjaxUpdate(Request $request){
         $validator = Validator::make($request->input('product'), array(
             'name'        => 'required|max:255|min:2',

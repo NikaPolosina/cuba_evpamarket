@@ -119,6 +119,14 @@ class BaseStructure extends Migration{
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+        //Create table status product
+        Schema::create('status_product', function (Blueprint $table){
+            $table->increments('id');
+            $table->string('status_key');
+            $table->string('status_name');
+            $table->timestamps();
+        });
+        
         //Create table for products
         Schema::create('products', function (Blueprint $table){
             $table->increments('id');
@@ -131,11 +139,11 @@ class BaseStructure extends Migration{
             $table->string('min_price')->nullable();
             $table->string('max_price')->nullable();
             $table->longText('value')->default('');
+            $table->integer('status_product_id')->unsigned();
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('category');
+            $table->foreign('status_product_id')->references('id')->on('status_product');
         });
-
-        /*-------additional_param------*/
         //Create table for additional_param
         Schema::create('additional_param', function (Blueprint $table){
             $table->increments('id');
@@ -160,9 +168,6 @@ class BaseStructure extends Migration{
             $table->foreign('category_id')->references('id')->on('category')->onDelete('cascade');
             $table->foreign('additional_param_id')->references('id')->on('additional_param')->onDelete('cascade');
         });
-
-        /*-------additional_param------*/
-
         //Create table for company-product
         Schema::create('company_product', function (Blueprint $table){
             $table->integer('company_id')->unsigned();
@@ -409,6 +414,7 @@ class BaseStructure extends Migration{
         Schema::drop('user_informations');
         Schema::drop('company_product');
         Schema::drop('products');
+        Schema::drop('status_product');
         Schema::drop('company_user');
         Schema::drop('companies');
         Schema::drop('permission_role');
@@ -417,10 +423,8 @@ class BaseStructure extends Migration{
         Schema::drop('roles');
         Schema::drop('password_resets');
         Schema::drop('users');
-
         Schema::drop('additional_param_category');
         Schema::drop('additional_param');
-
         Schema::drop('category');
         Schema::drop('cities');
         Schema::drop('regions');

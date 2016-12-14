@@ -28,7 +28,8 @@ class Product extends Model{
         'product_price',
         'min_price',
         'max_price',
-        'value'
+        'value',
+        'status_product_id'
     ];
 
     public function getCompany(){

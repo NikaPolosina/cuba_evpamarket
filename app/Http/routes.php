@@ -1,7 +1,5 @@
 <?php
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -14,21 +12,16 @@
 */
 
 Route::any('/test/{run?}', 'IndexController@test');
-
 Route::any('/test-my', 'TestController@myTest');
 
 //Входная точка сайта. КОРЕНЬ
 Route::get('/', 'IndexController@Index');
-
 /*-------------------------------------------Auth----------------------------------------------*/
 Route::auth();
 Route::get('/register-c', 'Auth\AuthController@registerC');
-
 Route::post('/register-aditiona-info', 'Auth\AuthController@registerAditional');
-
 /*-------------------------------------------Location----------------------------------------------*/
 Route::get('/get-city-by-region/{id}', 'LocationController@getCityByRegion');
-
 /*---------------------------------CompanyController------------------------------------*/
 //Просмотр компании пользователем.
 Route::any('/show-company/{id}', 'CompanyController@show');
@@ -54,7 +47,6 @@ Route::get('/company-done-create', ['as' => 'company-done-create', 'uses' => 'Co
 Route::post('/company-done-create', ['as' => 'company-done-create', 'uses' => 'CompanyController@store']);
 //Удаление компании (магазина) принимает id - магазина.
 Route::post ('company-delete/{id}', 'CompanyController@destroy');
-
 /*------------------------------------------ProductController---------------------------------------------*/
 Route::group(['middleware' => ['web']], function () {
     Route::resource('products', 'ProductsController');
@@ -64,11 +56,12 @@ Route::any('/get-product-list', 'ProductsController@getProductList');
 Route::any('/products/show/', 'ProductsController@show');
 Route::any('/products/destroy-check', 'ProductsController@destroyCheck');
 Route::any('/products/create-by-category', 'ProductsController@createByCategory');
+//Роут на сохранение созданного товара продавцом. (В кабинете продавца).
 Route::any('/products-category', ['as' => 'products-category', 'uses' => 'ProductsController@storeCategory']);
 Route::get('/get-product-paginate', ['as' => 'get-product-paginate', 'uses' => 'ProductsController@productPaginate']);
 //При нажатии на свой магазин в кабинете продавца. Просмотр свого магазина.Список товаров, категорий и статистика.
 Route::get('/product-editor/{id}/{user_new?}', ['as'=>'product-editor','uses'=>'ProductsController@productEditor']);
-
+//При нажатии на кнопку редактировать в кабинете продавца. Для вызова модального окна и начала редактирования.
 Route::post('/products/edit-categoty', 'ProductsController@editCategory');
 //Удаление продукта.
 Route::post('/product/destroy', 'ProductsController@destroy');
@@ -84,12 +77,8 @@ Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 
 Route::post('/products/ajax-single-product',['as'=>'ajax_single_product', 'uses'=>'ProductsController@ajaxSingleProduct']);
 
 Route::get('/product/ajax-to-cart-add-param/{id}',['as'=>'ajax_single_product_add_param_chose', 'uses'=>'ProductsController@ajaxSingleProductAdd']);
-
 Route::get('/product-form/{companyId}/{categoryId?}/{productId?}', ['as'=>'product_form', 'uses'=>'ProductsController@productForm']);
-
-
 Route::match(['post', 'patch'], '/save-product', ['as'=>'save_product_form', 'uses'=>'ProductsController@saveProductForm']);
-
 /*-------------------------------------------Category----------------------------------------------*/
 //Роут что переводит на страницу где можно добавить необходимые категории себе в магазин (продавцом), принимает id-магазина.
 Route::any('category/category-setup/{id}', 'CategoryController@categorySetup');
@@ -99,8 +88,6 @@ Route::post('/category/remove-categoty', ['as' => 'remove_categories', 'uses'=>'
 
 //При создании продукта, выбираются дополнительные параметры которые нужно указать продавцом.
 Route::any('/get-add-param/{id}', ['as' => 'get-add-param', 'uses'=>'CategoryController@getAddParamFromCategory']);
-
-
 /*-------------------------------------------File--Uploader--------------------------------------------*/
 Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);
 Route::any('/avatar-uploader', 'UserController@createAvatar');
@@ -110,9 +97,7 @@ Route::any('/avatar-uploader', 'UserController@createAvatar');
 Route::any('/cart', ['as'=>'cart', 'uses'=>'CartController@index']);
 Route::any('/cart/destroy-product', 'CartController@destroy');
 Route::post('/products/cart', 'CartController@cart');
-
 Route::post('/products/ajax_cart', ['as'=>'ajax_add_to_cart', 'uses'=>'CartController@ajaxCart']);
-
 Route::post('/products/cart-update-cnt', 'CartController@cartAddCnt');
 
 /*-------------------------------------------Like----------------------------------------------*/

@@ -30,9 +30,10 @@ class CategoryController extends Controller{
         }
         return true;
     }
-
+    
+    //Метод который подготавливает и сортирует от родительськой категории до дочерней все катигории записанные в базе данных.
     public function getAllCategoris(){
-        $category = Category::all()->toArray();
+        $category = Category::all()->toArray();//Достаем массив всех категорий.
         $nCategory = array();
         foreach($category as $value){
             $value['text'] = $value['title'];

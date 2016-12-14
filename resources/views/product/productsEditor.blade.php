@@ -34,7 +34,7 @@
             <div class="col-sm-7">
                 <div class="table" id="product_list">
                     @include('product.productListBody', array(
-                                    'products' => $company->getProducts()->paginate($paginCnt),
+                                    'products' => $company->getProducts()->where('status_product_id', 1)->paginate($paginCnt),
                                     'category' => false
                                      ))
                 </div>

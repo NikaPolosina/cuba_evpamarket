@@ -13,6 +13,7 @@ use App\Category;
 use App\DiscountAccumulativ;
 use App\Group;
 use App\AdditionParam;
+use App\StatusProduct;
 
 class DatabaseSeeder extends Seeder{
 
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder{
     public $additionParam = array();
     public $discount;
     public $group;
+    public $status_product = array();
 
     /**
      * Run the database seeds.
@@ -38,6 +40,7 @@ class DatabaseSeeder extends Seeder{
         $this->createUserInformation();
         $this->createCategory();
         $this->createAdditionParam();
+        $this->createStatusProduct();
         $this->createProduct();
         $this->createDiscountAccumulative();
     }
@@ -329,7 +332,7 @@ class DatabaseSeeder extends Seeder{
             'description' => 'Указание размера товара',
             'placeholder' => 'Выбирте размер...',
             'type'        => 'checkbox',
-            'type_for_by' => 'checkbox',
+            'type_for_by' => 'radio',
             'required'    => 0,
             'sort'        => 1,
             'default'     => '',
@@ -341,8 +344,8 @@ class DatabaseSeeder extends Seeder{
             'key'         => 'color',
             'description' => 'Выбор цвета товара',
             'placeholder' => 'Выбирте цвет...',
-            'type'        => 'radio',
-            'type_for_by' => 'checkbox',
+            'type'        => 'checkbox',
+            'type_for_by' => 'radio',
             'required'    => 0,
             'sort'        => 2,
             'default'     => '',
@@ -393,6 +396,17 @@ class DatabaseSeeder extends Seeder{
             'value'         => '',
         ]);
     }
+    public function createStatusProduct(){
+        $this->status_product[1] = StatusProduct::create([
+            'status_key'        => 'active',
+            'status_name'         => 'Активен',
+        ]); 
+        $this->status_product[2] = StatusProduct::create([
+            'status_key'        => 'delete',
+            'status_name'         => 'Удаленный',
+        ]);
+        
+    }
 
     public function createProduct(){
         $this->product = Product::create([
@@ -402,6 +416,7 @@ class DatabaseSeeder extends Seeder{
             'content'             => 'В наличии размер: s, m, l; Цвет: синий',
             'product_image'       => '',
             'product_price'       => 500,
+            'status_product_id'    => 1,
         ]);
         $this->company->getProducts()->attach($this->product);
         $this->product = Product::create([
@@ -411,6 +426,7 @@ class DatabaseSeeder extends Seeder{
             'content'             => 'В наличии размер: s, m, l; Цвет: красный насыщенный',
             'product_image'       => '',
             'product_price'       => 100,
+            'status_product_id'   => 1,
         ]);
         $this->company->getProducts()->attach($this->product);
     }

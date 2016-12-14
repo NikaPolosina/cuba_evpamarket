@@ -29,25 +29,26 @@ class CompanyController extends Controller{
     protected $_breadcrumbs;
     public $category  = array();
     public $nCategory = array();
-    
+
+    //Конструктор класса (всегда выполняется первым).
     public function __construct(Request $request,  Breadcrumbs $breadcrumbs){
         $this->_breadcrumbs = $breadcrumbs;
         $this->_breadcrumbs->setDivider('<img style="display: inline-block;  height: 37px;" src="/img/system/next-bread.png">');
     }
 
+    //Метод который направляет на страницу где размещена форма создания новой компании.
     public function create(){
-        $region = Region::all();
+        $region = Region::all(); //Достаем с базы данных список регионов.
         $user = Auth::user()->getUserInformation;
-        $city = City::where('region_id', $user->region_id)->get();
-
-
+        $city = City::where('region_id', $user->region_id)->get(); //Достаем с базы данных список городов.
         return view('company.create')
             ->with('region', $region)
             ->with('city', $city)
             ->with('user', $user);
     }
-    
-    //Метод создания компании.
+
+    //Метод создания новой компании в кабинете продавца после чего идет перенаправление
+    // на страницу где необходимо ввести дополнительную информацию по компании..
     public function store(Request $request, Company $company){
         $company->company_name = $request['company_name'];
         $company->company_description = $request['company_description'];
@@ -60,7 +61,7 @@ class CompanyController extends Controller{
         $company->country = 'Росcия';
         $curentUser = Auth::user();
         $curentUser->getCompanies()->save($company);
-
+        //Подготавливаем файл - лого компании.
        if(!empty($request['company_logo'])){
            $dir = public_path().'/img/custom/companies/'.$company['id'];
            $dir_m = public_path().'/img/custom/companies/'.$company['id'].'/company';
@@ -84,11 +85,11 @@ class CompanyController extends Controller{
     //Метод для создания дополнительного описния компании.
     public function companyContent(Request $request){
         $id = $request['company_id'];
-        $company = Company::find($id);
+        $company = Company::find($id);//Берем обект компании.
         $company_content = [
             'company_content' => $request['company_content']
-        ];
-        $company->update($company_content);
+        ];//Создаем запись в ячейку обекта $company - company_content.
+        $company->update($company_content); //Выполняем сохранение (обновление информации).
         return redirect()->route('homeOwnerUser');
     }
 
@@ -107,7 +108,6 @@ class CompanyController extends Controller{
         die('Surprise, you are here 7!!!');
     }
 
-
     public function showCompanyLogo($id){
 
         $company = Company::findOrFail($id);
@@ -119,17 +119,16 @@ class CompanyController extends Controller{
         return $img;
     }
 
+    //Метод который отрабатывает при просмотре компании при нажатии на (картинку-лого компании) - метод переводит
+    // на страницу компании где находится краткая информаци о компании и все товары компании.
     public function show($id, CategoryController $category, IndexController $index){
-
+        //Достаем обект компании с БД с информацией о владельце компаниии.
         $company = Company::where('id',$id)->with(['getUser'=>function($query){
             $query->with('getUserInformation')->first();
         }])->first();
-        
         $img = $this->showCompanyLogo($company->id);
-        $res = $company->getProducts;
-
+        $res = $company->getProducts->where('status_product_id', 1);//достаем с БД все товары с статусом active(id - 1) по данной компании.
         $productAll = IndexController::showProduct($res);
-
         $productAll = $index->addFeedProduct($productAll);
 
         return view('company.show')
@@ -139,23 +138,23 @@ class CompanyController extends Controller{
             ->with('productAll', $productAll);
     }
 
+    //Метод который переводит на страницу редактирования информации о компании (приниимает id-компании).
     public function edit($id){
-
-        $company = Company::findOrFail($id);
-        $region = Region::all();
-        $city = City::where('region_id', $company->region_id)->get();
+        $company = Company::findOrFail($id);//Достаем с базы обьект компании.
+        $region = Region::all();//Достаем обьект всех регионов.
+        $city = City::where('region_id', $company->region_id)->get();//Достаем обьект всех городов.
         return view('company.edit', compact('company'))
             ->with('city', $city)
             ->with('region', $region);
-
     }
 
+    //Метод который сохраняет отредактированную информацию о компании (принимает id-компании и $request - новая информацию которая пришла).
     public function update($id, Request $request){
         $this->validate($request, [
             'company_name'        => 'required',
             'company_description' => 'required',
-        ]);
-        $company = Company::findOrFail($id);
+        ]);//Проходим валидаци обязательных полей (company_name, company_description).
+        $company = Company::findOrFail($id);//Находим в БД обьект компании по id.
         $updateCompany = [
             'company_name'         => $request['company_name'],
             'company_description'  => $request['company_description'],
@@ -167,15 +166,15 @@ class CompanyController extends Controller{
             'street'               => $request->input('street'),
             'address'              => $request->input('address'),
             'country'              => 'Росcия',
-        ];
-        $company->update($updateCompany);
+        ];//Создаем новый обьект компании.
+        $company->update($updateCompany);//Сохраняем новые данные по компании.
         Session::flash('flash_message', 'Company updated!');
         return redirect()->intended('homeOwnerUser');
     }
 
+    //Метод который выполняет удаление обьекта компании с базы данны.
     public function destroy($id){
-
-        $company = Company::find($id);
+        $company = Company::find($id);//Находим объект компании в БД по id.
         if(count($company->getProducts) > 0){
             Product::destroy($company->getProducts->lists('id'));
         }
@@ -183,7 +182,7 @@ class CompanyController extends Controller{
        if(is_dir($dir)){
            File::deleteDirectory($dir);
        }
-        Company::destroy($id);
+        Company::destroy($id);//Удаление объекта компании.
 
         Session::flash('flash_message', 'Company deleted!');
         return response($id);
