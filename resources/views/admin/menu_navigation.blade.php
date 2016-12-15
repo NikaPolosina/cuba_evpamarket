@@ -83,7 +83,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="/admin/status-product" class="nav-link ">
-                            <span class="title">Статусы товаров</span>
+                            <span class="title">Список статусов товаров</span>
                         </a>
                     </li>
                     <li class="nav-item">

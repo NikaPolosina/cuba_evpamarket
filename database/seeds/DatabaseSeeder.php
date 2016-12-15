@@ -396,14 +396,47 @@ class DatabaseSeeder extends Seeder{
             'value'         => '',
         ]);
     }
+    
+    //Заполняем первоначальными данными таблицу status_product - статусы продуктов.
+    //Это системнная информация, ее трогать не нужно (особенно ключи - status_key). 
+    //visible_admin, visible_seller, visible_buyer - булевого типа поля, это поля видимости для разного типа пользоваьеля.
+    //где 0 - не видно для данного типа пользователя товар с эти статусом.
+    //а 1 - видно (доступно для просмотра) .
     public function createStatusProduct(){
         $this->status_product[1] = StatusProduct::create([
-            'status_key'        => 'active',
-            'status_name'         => 'Активен',
-        ]); 
+            'status_key'     => 'active',
+            'status_name'    => 'Активен',
+            'visible_admin'  => 1,
+            'visible_seller' => 1,
+            'visible_buyer'  => 1,
+        ]);
         $this->status_product[2] = StatusProduct::create([
-            'status_key'        => 'delete',
-            'status_name'         => 'Удаленный',
+            'status_key'     => 'delete',
+            'status_name'    => 'Удаленный',
+            'visible_admin'  => 1,
+            'visible_seller' => 0,
+            'visible_buyer'  => 0,
+        ]);
+        $this->status_product[3] = StatusProduct::create([
+            'status_key'     => 'progress',
+            'status_name'    => 'В ожидании',
+            'visible_admin'  => 1,
+            'visible_seller' => 1,
+            'visible_buyer'  => 0,
+        ]);
+        $this->status_product[4] = StatusProduct::create([
+            'status_key'     => 'blocked',
+            'status_name'    => 'Заблокирован',
+            'visible_admin'  => 1,
+            'visible_seller' => 1,
+            'visible_buyer'  => 0,
+        ]);
+        $this->status_product[5] = StatusProduct::create([
+            'status_key'     => 'archive',
+            'status_name'    => 'Архивный',
+            'visible_admin'  => 1,
+            'visible_seller' => 1,
+            'visible_buyer'  => 0,
         ]);
         
     }

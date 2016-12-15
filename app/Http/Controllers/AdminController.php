@@ -406,12 +406,10 @@ class AdminController extends Controller{
     public function statusProductUpdate(Request $request){
         $this->validate($request, [
             'id'          => 'required',
-            'status_key'  => 'required',
             'status_name' => 'required',
         ]);//Проходим валидаци обязательных полей (id, status_key, status_name).
         $status = StatusProduct::find($request['id']);
         $newStats = [
-            'status_key'         => $request['status_key'],
             'status_name'  => $request['status_name'],
         ];//Создаем новый обьект статуса.
         $status->update($newStats);//Сохраняем новые данные по статусу.

@@ -119,14 +119,16 @@ class BaseStructure extends Migration{
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
-        //Create table status product
+        //Create table status product (Создаем таблицу статусов по продуктам с именем status_product).
         Schema::create('status_product', function (Blueprint $table){
             $table->increments('id');
             $table->string('status_key');
             $table->string('status_name');
+            $table->boolean('visible_admin');
+            $table->boolean('visible_seller');
+            $table->boolean('visible_buyer');
             $table->timestamps();
         });
-        
         //Create table for products
         Schema::create('products', function (Blueprint $table){
             $table->increments('id');
@@ -392,6 +394,7 @@ class BaseStructure extends Migration{
      *
      * @return void
      */
+    //Реверсивное действие миграции (В данном случае идет удаление всех рание сзданных таблиц в таком порядке, что бы не возникло конфликтов).
     public function down(){
         Schema::drop('chat_msgs');
         Schema::drop('chat_users');
