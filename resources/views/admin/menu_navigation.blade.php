@@ -86,6 +86,11 @@
                             <span class="title">Статусы товаров</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/admin/product-list" class="nav-link ">
+                            <span class="title">Список товаров</span>
+                        </a>
+                    </li>
 
                 </ul>
             </li>

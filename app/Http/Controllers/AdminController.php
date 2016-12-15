@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Carbon\Carbon;
 use App\Category;
 use App\City;
@@ -421,6 +422,14 @@ class AdminController extends Controller{
     public function statusProductDelete($id){
         StatusProduct::destroy($id);//Удаление объекта статуса продукта с таблицы status_product.
         return redirect()->back();//Возвращаемя обратно на страницу от куда пришли.
+    }
+    //Метод который направляет на страницу просмотра всего списка товарав которые есть у компаний.
+    public function listProduct(){
+        $this->_breadcrumbs->addCrumb('Домой', '/admin/');
+        $this->_breadcrumbs->addCrumb('Список товаров', '/admin/product-list');
+        $product = Product::all();//Достаем с БД список всех товаров.
+        $status = StatusProduct::all();//Достаем с БД список всех  ствтусов по товару.
+        return view('admin.product.list')->with('product', $product)->with('status', $status)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
 
   

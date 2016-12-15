@@ -176,6 +176,8 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::post('/status-product-create', ['as' => 'admin', 'uses'=>'AdminController@statusProductCreate']);
     //Удаление статуса по продукту.
     Route::get('/status-product-delete/{id}', ['as' => 'admin', 'uses'=>'AdminController@statusProductDelete']);
+    //Список всех товаров всех магазинов.
+    Route::get('/product-list', ['as' => 'admin', 'uses'=>'AdminController@listProduct']);
 
 });
 
