@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use App\StatusProduct;
 
 class Product extends Model{
 
@@ -29,7 +30,7 @@ class Product extends Model{
         'min_price',
         'max_price',
         'value',
-        'status_product_id'
+        'status_product'
     ];
 
     public function getCompany(){
@@ -42,6 +43,9 @@ class Product extends Model{
 
     public function getFeedback(){
         return $this->hasMany('App\FeedbackProduct', 'product_id', 'id');
+    }  
+    public function getStatusProduct(){
+        return $this->hasOne('App\StatusProduct', 'status_key', 'status_product');
     }
 
     protected $searchable = [ 'columns' => [ 'product_name' => 5, ], ];

@@ -8,13 +8,13 @@
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet light ">
                 <div class="portlet-title">
-                    {{--В админке придусмотрено добавление нового статуса администратором, если откоментировать нижний код то эта возможность станет доступга.--}}
-                    {{--<div class="caption font-dark">
+                    <div class="caption font-dark">
                         <i class="icon-settings font-dark"></i>
                         <span class="caption-subject bold uppercase"> Список статусов по товарам</span>
-                        <a href="javascript:;" style="margin-left: 30px;">
-                            <button type="button" class="add_new_status_product">Добавить</button> </a>
-                    </div>--}}
+                        {{--В админке придусмотрено добавление нового статуса администратором, если откоментировать нижний код то эта возможность станет доступга.--}}
+                        {{--<a href="javascript:;" style="margin-left: 30px;">
+                            <button type="button" class="add_new_status_product">Добавить</button> </a>--}}
+                    </div>
 
                 </div>
                 <div class="portlet-body">
@@ -71,7 +71,6 @@
                                                 <a class="confirm" href="/admin/status-product-delete/{{$item->id}}">
                                                     <i class="icon-tag"></i> Удалить </a>
                                             </li>--}}
-                                            <li class="divider"> </li>
 
                                         </ul>
                                     </div>
@@ -101,6 +100,14 @@
                             {{ Form::open(array('method' => 'post', 'url' => '/admin/status-product-update' , 'class' => 'form-group url_modal' )) }}
                             {!! csrf_field() !!}
 
+                            {{--<div class="row">
+                                {!! Form::label('status_key', 'Ключ: ', ['class' => 'col-sm-4 control-label']) !!}
+                                <div class="col-sm-6">
+                                    <span style="font-weight: bold">Примичание:</span><span> Ключ необходимо указать латынскими символами. </span>
+                                    {!! Form::text('status_key', NULL, ['class' => 'form-group advanced_search_name form-control status_key', 'required' => 'required']) !!}
+                                    {!! $errors->first('status_key', '<p class="help-block">:message</p>') !!}
+                                </div>
+                            </div>--}}
                             <div class="row">
                                 {!! Form::label('status_name', 'Название: ', ['class' => 'col-sm-4 control-label']) !!}
                                 <div class="col-sm-6">
@@ -135,9 +142,11 @@
             $('a.addChange').on('click', function () {
                 //Находим необходимую информацию.
                 var id = $(this).parents('tr.gradeX').find('td.id').text();
+                /*var kay = $(this).parents('tr.gradeX').find('td.kay').text();*/
                 var status_name = $(this).parents('tr.gradeX').find('td.status_name').text();
                 //Заполняем поля модального окна необходимой информацией.
                 $('div#modal_status_product').find('input.id_modal').val(id);
+               /* $('div#modal_status_product').find('input.status_key').val(kay);*/
                 $('div#modal_status_product').find('input.status_name').val(status_name);
                 $('#modal_status_product').modal();//Показ модалки.
             });

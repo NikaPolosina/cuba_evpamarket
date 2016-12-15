@@ -141,10 +141,10 @@ class BaseStructure extends Migration{
             $table->string('min_price')->nullable();
             $table->string('max_price')->nullable();
             $table->longText('value')->default('');
-            $table->integer('status_product_id')->unsigned();
+            $table->string('status_product');
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('category');
-            $table->foreign('status_product_id')->references('id')->on('status_product');
+            /*$table->foreign('status_product')->references('status_key')->on('status_product');*/
         });
         //Create table for additional_param
         Schema::create('additional_param', function (Blueprint $table){

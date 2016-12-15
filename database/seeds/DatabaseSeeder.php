@@ -449,7 +449,7 @@ class DatabaseSeeder extends Seeder{
             'content'             => 'В наличии размер: s, m, l; Цвет: синий',
             'product_image'       => '',
             'product_price'       => 500,
-            'status_product_id'    => 1,
+            'status_product'    => $this->status_product[1]->status_key,
         ]);
         $this->company->getProducts()->attach($this->product);
         $this->product = Product::create([
@@ -459,7 +459,7 @@ class DatabaseSeeder extends Seeder{
             'content'             => 'В наличии размер: s, m, l; Цвет: красный насыщенный',
             'product_image'       => '',
             'product_price'       => 100,
-            'status_product_id'   => 1,
+            'status_product'   => $this->status_product[1]->status_key,
         ]);
         $this->company->getProducts()->attach($this->product);
     }

@@ -48,9 +48,26 @@ if(isset($company)){
     <?php } ?>
 
 
+
     <div class="button_holder" style="display: <?=(isset($hide)) ? 'none' : 'block' ?>;">
         <a href="" id="destroycheck" class="destroycheck btn btn-danger  btn-sm">Удалить товар</a>
         <span class="open btn btn-success btn-sm pull-left">Добавить товар</span>
+        <div style="float: right">
+            @foreach($status as $singleSt)
+
+                <div class=" @if($type == $singleSt->status_key) active_type @endif" style="display: inline-block; border: solid 1px grey; padding: 4px 15px 4px 15px;">
+                    <a href="/product-editor/{{$company->id}}/0/{{$singleSt->status_key}}">
+                       {{$singleSt->status_name}}
+                        <span>
+                            {{count($company->getProducts()->where('status_product', $singleSt->status_key)->get())}}
+                        </span>
+
+                    </a>
+                </div>
+
+            @endforeach
+        </div>
+
 
     </div>
     <tr style="background-color: #e6f9eb">
@@ -110,6 +127,9 @@ if(isset($company)){
     </div>
 </div>
 
-
-
+<style>
+    .active_type{
+        background-color: #b6fab6;
+    }
+</style>
 

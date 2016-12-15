@@ -99,7 +99,7 @@ class IndexController extends Controller{
 
     //Метод (входная точка сайта, для отрисовки титульной страницы сайта.)
     public function Index(ProductsController $product, CompanyController $company, CategoryController $category, Request $request){
-        $productAll = Product::where('status_product_id', 1)->paginate(8);//достаем с баы данных все товары у которых статус (status_product_id == 1), тоесть активен (active) и ставим пагинацию.
+        $productAll = Product::where('status_product', 'active')->paginate(8);//достаем с баы данных все товары у которых статус (status_product == active), тоесть активен (active) и ставим пагинацию.
         $companyAll = $company->getCompanyAll(); //Берем с юазы данных все компании.
         foreach($companyAll['companyAll'] as $value){
             $value->company_logo = $company->showCompanyLogo($value->id);

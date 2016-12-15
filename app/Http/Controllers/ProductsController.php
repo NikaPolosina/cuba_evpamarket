@@ -7,6 +7,7 @@ use App\Region;
 use App\Category;
 use App\Order;
 use App\Http\Requests;
+use App\StatusProduct;
 use App\User;
 use Doctrine\DBAL\Schema\View;
 use Illuminate\Http\Request;
@@ -203,7 +204,7 @@ class ProductsController extends Controller{
             'max_price'           => $maxPrice,
             'category_id'         => $request['product']['category_name'],
             'value'               => (count($request['product']['price']) == 1) ? json_encode(array( $request['product']['price'][0] )) : json_encode($request['product']['price']),
-            'status_product_id'   => 1,
+            'status_product'   => 'active',
         ]);
 
         $companyId = $request['company_id'];
@@ -291,7 +292,12 @@ class ProductsController extends Controller{
     public function destroy(Request $request){
        // $this->destroyProductDir($request['id']);
         $product = Product::find($request['id']);
-        $product['status_product_id'] = 2; //Меняем статус на удаленный (delete) - этот статус хранися в таблице status_product под 2-id.
+        if($product->status_product == 'archive'){
+            $product['status_product'] = 'delete';//Меняем статус на удаленный (delete).
+        }else{
+            $product['status_product'] = 'archive'; //Меняем статус на удаленный (archive).
+        }
+
         $product->update();//Выполняем сохранение измененного статуса.
         Session::flash('flash_message', 'Product deleted!');
     }
@@ -444,7 +450,7 @@ class ProductsController extends Controller{
     }
 
     //Метод показывающий информацию о компании в кабинете продавца. Принимает id магазина.
-    public function productEditor(CategoryController $category, $id, $user_new = NULL){
+    public function productEditor(CategoryController $category, $id, $user_new = NULL, $type = 'active'){
         $currentCompanyCategories = $category->getCompanyCategorySorted($id);
         $currentCompanyCategoriesSorted = $category->treeBuilder($currentCompanyCategories);
         $company = Company::find($id);
@@ -463,13 +469,16 @@ class ProductsController extends Controller{
         if($user_new){
             $user_new = User::where('id', $user_new)->with('getUserInformation')->first();
         }
+        $status = StatusProduct::where('visible_seller', 1)->get();
+
+
         return view('product.productsEditor')->with([
             'category'     => json_encode($currentCompanyCategoriesSorted),
             'company'      => $company,
             'myCategories' => $currentCompanyCategories,
             'paginCnt'     => $this->paginCnt,
             'categories'   => json_encode($category->getAllCategoris())
-        ])->with('region', $region)->with('breadcrumbs', $this->_breadcrumbs)->with('user_new', $user_new);
+        ])->with('region', $region)->with('breadcrumbs', $this->_breadcrumbs)->with('user_new', $user_new)->with('status', $status)->with('type', $type);;
     }
 
     public function getProductList(Request $request, CategoryController $category){

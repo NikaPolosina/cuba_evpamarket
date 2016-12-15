@@ -60,7 +60,7 @@ Route::any('/products/create-by-category', 'ProductsController@createByCategory'
 Route::any('/products-category', ['as' => 'products-category', 'uses' => 'ProductsController@storeCategory']);
 Route::get('/get-product-paginate', ['as' => 'get-product-paginate', 'uses' => 'ProductsController@productPaginate']);
 //При нажатии на свой магазин в кабинете продавца. Просмотр свого магазина.Список товаров, категорий и статистика.
-Route::get('/product-editor/{id}/{user_new?}', ['as'=>'product-editor','uses'=>'ProductsController@productEditor']);
+Route::get('/product-editor/{id}/{user_new?}/{type?}', ['as'=>'product-editor','uses'=>'ProductsController@productEditor']);
 //При нажатии на кнопку редактировать в кабинете продавца. Для вызова модального окна и начала редактирования.
 Route::post('/products/edit-categoty', 'ProductsController@editCategory');
 //Удаление продукта.
@@ -178,7 +178,8 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::get('/status-product-delete/{id}', ['as' => 'admin', 'uses'=>'AdminController@statusProductDelete']);
     //Список всех товаров всех магазинов.
     Route::get('/product-list', ['as' => 'admin', 'uses'=>'AdminController@listProduct']);
-
+    //Изменение статуса продукта. Принимает id-продукта и key-статуса.
+    Route::get('/status-product-change/{id_product}/{status_key}', ['as' => 'admin', 'uses'=>'AdminController@changeStatusProduct']);
 });
 
 /*-------------------------------------------Home--------------------------------------------*/

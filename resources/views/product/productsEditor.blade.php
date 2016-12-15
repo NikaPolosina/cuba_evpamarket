@@ -33,8 +33,9 @@
 
             <div class="col-sm-7">
                 <div class="table" id="product_list">
+
                     @include('product.productListBody', array(
-                                    'products' => $company->getProducts()->where('status_product_id', 1)->paginate($paginCnt),
+                                    'products' => $company->getProducts()->where('status_product', $type)->paginate($paginCnt),
                                     'category' => false
                                      ))
                 </div>
@@ -43,8 +44,6 @@
                 @include('auth.registerUserHandle')
 
             </div>
-
-
 
         @include('product.productModalEdit')
         @include('file_upload')

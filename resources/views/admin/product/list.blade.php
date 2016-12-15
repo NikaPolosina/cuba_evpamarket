@@ -8,8 +8,6 @@
                     <div class="caption font-dark">
                         <i class="icon-settings font-dark"></i>
                         <span class="caption-subject bold uppercase"> Список статусов по товарам</span>
-                        <a href="javascript:;" style="margin-left: 30px;">
-                            <button type="button" class="add_new_status_product">Добавить</button> </a>
                     </div>
 
                 </div>
@@ -25,10 +23,12 @@
                                 </label>
                             </th>
                             <th> # </th>
+                            <th> Магазин </th>
                             <th> id </th>
-                            <th> Имя </th>
+                            <th> Имя товара</th>
                             <th> Описание </th>
-                            <th> Статус - id </th>
+                           {{-- <th> Статус - id </th>--}}
+                            <th> Статус</th>
                             <th> Действия </th>
                         </tr>
                         </thead>
@@ -45,13 +45,13 @@
                                     </label>
                                 </td>
                                 <td> {{ $x }} </td>
-
+                                <td class="id"> {{$item->getCompany[0]->company_name}}</td>
                                 <td class="id"> {{$item->id}}</td>
-
                                 <td class="status_name"><a href="">{{$item->product_name}}</a></td>
                                 <td class="status_name">{{$item->product_description}}</td>
 
-                                <td class="center kay"> {{$item->status_product_id}} </td>
+                              {{--  <td class="center kay"> {{$item->status_product}} </td>--}}
+                                <td class="center kay"> <span class="{{$item->getStatusProduct->status_key}} span_key">{{$item->getStatusProduct->status_name}}</span> </td>
 
                                 <td>
                                     <div class="btn-group">
@@ -61,7 +61,7 @@
                                         <ul class="dropdown-menu" role="menu">
                                             @foreach($status as $st)
                                                 <li>
-                                                    <a  class="addChange" href="javascript:;">
+                                                    <a  class="addChange" href="/admin/status-product-change/{{$item->id}}/{{$st->status_key}}">
                                                        {{$st->status_name}} </a>
                                                 </li>
                                                 @endforeach
@@ -82,6 +82,25 @@
 
 
     <script src="/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-
+    <style>
+        .span_key{
+            padding: 2px 8px 2px 8px;;
+        }
+        span.active{
+            background-color: #13c813;
+        }
+        span.delete{
+            background-color: red;
+        }
+        span.progress{
+            background-color: yellow;
+        }
+        span.blocked{
+            background-color: #d5d5d5;
+        }
+        span.archive{
+            background-color: cornflowerblue;
+        }
+    </style>
 
 @endsection

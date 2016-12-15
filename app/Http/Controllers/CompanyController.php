@@ -127,7 +127,7 @@ class CompanyController extends Controller{
             $query->with('getUserInformation')->first();
         }])->first();
         $img = $this->showCompanyLogo($company->id);
-        $res = $company->getProducts->where('status_product_id', 1);//достаем с БД все товары с статусом active(id - 1) по данной компании.
+        $res = $company->getProducts->where('status_product', 'active');//достаем с БД все товары с статусом active(id - 1) по данной компании.
         $productAll = IndexController::showProduct($res);
         $productAll = $index->addFeedProduct($productAll);
 

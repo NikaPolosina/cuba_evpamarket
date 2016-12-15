@@ -430,6 +430,15 @@ class AdminController extends Controller{
         return view('admin.product.list')->with('product', $product)->with('status', $status)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
 
+    //Метод который меняет статус продукта. Принимает id-продукта и key-статуса.
+    public function changeStatusProduct($id_product, $status_key){
+        $product = Product::find($id_product);
+        $status = StatusProduct::where('status_key', $status_key)->first();
+        $product->status_product = $status->status_key;
+        $product->update();
+        return redirect()->back();//Возвращаемя обратно на страницу от куда пришли.
+    }
+
   
 
     public function chData($id){
