@@ -10,7 +10,7 @@
                         <i class="icon-settings font-dark"></i>
                         <span class="caption-subject bold uppercase"> Список статусов по заказам</span>
                         <a href="javascript:;" style="margin-left: 30px;">
-                            <button type="button" class="add_new_status_product">Добавить</button> </a>
+                            <button type="button" class="add_new_status_owner_order">Добавить</button> </a>
                     </div>
 
                 </div>
@@ -66,12 +66,7 @@
                                                 <a  class="addChange" href="javascript:;">
                                                     <i class="icon-docs"></i> Редактировать </a>
                                             </li>
-                                            {{--Также предусматрена опция удаления статуса администратором, если откоментировать
-                                            ниже код, то моно будет удалять статус, но будьте внимательны лучше не удалять статус который уже задействованый какимто продуктом ибо возникнет ошибка--}}
-                                            {{-- <li>
-                                                 <a class="confirm" href="/admin/status-product-delete/{{$item->id}}">
-                                                     <i class="icon-tag"></i> Удалить </a>
-                                             </li>--}}
+
 
                                         </ul>
                                     </div>
@@ -100,15 +95,13 @@
                         <div class="modal-body">
                             {{ Form::open(array('method' => 'post', 'url' => '/admin/status-order-update' , 'class' => 'form-group url_modal' )) }}
                             {!! csrf_field() !!}
-
-                            <div class="row">
-                                {!! Form::label('status_title_owner', 'Статус для продавца: ', ['class' => 'col-sm-4 control-label']) !!}
-                                <div class="col-sm-6">
-                                    {!! Form::text('status_title_owner', NULL, ['class' => 'form-group advanced_search_name form-control status_title_owner', 'required' => 'required']) !!}
-                                    {!! $errors->first('status_title_owner', '<p class="help-block">:message</p>') !!}
+                                <div class="row">
+                                    {!! Form::label('status_title_owner', 'Статус для продавца: ', ['class' => 'col-sm-4 control-label']) !!}
+                                    <div class="col-sm-6">
+                                        {!! Form::text('status_title_owner', NULL, ['class' => 'form-group advanced_search_name form-control status_title_owner', 'required' => 'required']) !!}
+                                        {!! $errors->first('status_title_owner', '<p class="help-block">:message</p>') !!}
+                                    </div>
                                 </div>
-                            </div>
-
                             {!! Form::hidden('id_owner', NULL, ['class' => 'form-group advanced_search_surname form-control id_owner']) !!}
                             {!! Form::hidden('id_simple', NULL, ['class' => 'form-group advanced_search_surname form-control id_simple']) !!}
 
@@ -173,11 +166,14 @@
 
 
             });
+            //Нажатие на кнопку добавить новый статус по заказу тот что будет виден продавцу.
+            $('button.add_new_status_owner_order').on('click', function () {
+                $('form.url_modal').attr('action','/admin/status-order-owner-create');
 
-            /*$('button.add_new_status_product').on('click', function () {
-                $('form.url_modal').attr('action','/admin/status-product-create');
+                $('div.modal-body').find('form').append('<div class="row"><label class="col-sm-4 control-label" for="key">Ключ</label> <div class="col-sm-6"><span style="color: red;">* Обратите внимание что ключ нужно указать одним словом и латынскими символами.</span><input required name="key" class="form-group advanced_search_name form-control key" type="text" id="key"></div></div>');
+                $('div#modal_status_product').find('input.id_simple').val(1);
                 $('#modal_status_product').modal();
-            });*/
+            });
 
             $('.select_status').on('change', function () {
                 $('div#modal_status_product').find('input.id_simple').val($(this).val());

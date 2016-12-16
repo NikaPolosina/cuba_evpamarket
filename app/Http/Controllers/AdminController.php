@@ -484,9 +484,18 @@ class AdminController extends Controller{
         $statusSimple->update();//Обновляе данные в базе данных (таблица status_simple).
         return redirect()->back();//Возвращаемя обратно на страницу от куда пришли.
     }
+    //Метод для создания нового статуса по заказам который виден для продавца.
+    public function createOrderStatusOwner(Request $request){
+        $statusOwnerNew = new StatusOwner([
+            'title' => $request['status_title_owner'],
+            'key' => $request['key'],
+            'status_simple_id' => $request['id_simple']
+        ]);//Создаем новый обьект StatusOwner и записывам его имя которое пришло с реквнстом.
+        $statusOwnerNew->save(); //Сохраняем обьект в базу данных (таблица status_owner).
+        return redirect()->back();//Возвращаемя обратно на страницу от куда пришли.
 
-
-
+    }
+    
     public function chData($id){
         $monthStart = Carbon::now()->startOfMonth();
         $monthEnd = Carbon::now()->endOfMonth();

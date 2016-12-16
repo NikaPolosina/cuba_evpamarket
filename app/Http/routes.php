@@ -193,6 +193,8 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::post('/status-simple-create', ['as' => 'admin', 'uses'=>'AdminController@createOrderStatusSimple']);
     //Роут на обновление (имени статуса) статуса по заказам которые видны покупателю.
     Route::post('/status-simple-update', ['as' => 'admin', 'uses'=>'AdminController@updateOrderStatusSimple']);
+    //Роут для создания нового статуса по заказам который виден для продавца.
+    Route::post('/status-order-owner-create', ['as' => 'admin', 'uses'=>'AdminController@createOrderStatusOwner']);
     
  
 });
