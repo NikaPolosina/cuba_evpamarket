@@ -291,16 +291,28 @@ class ProductsController extends Controller{
     //Метод который удаляет продукт. Продукт не удаляется с базы, мы меняем статус продукта на - УДАЛЕННЫЙ.
     public function destroy(Request $request){
        // $this->destroyProductDir($request['id']);
-        $product = Product::find($request['id']);
+        $product = Product::find($request['id']);//Находим обьект товара по id  с базы данных.
         if($product->status_product == 'archive'){
             $product['status_product'] = 'delete';//Меняем статус на удаленный (delete).
         }else{
             $product['status_product'] = 'archive'; //Меняем статус на удаленный (archive).
         }
-
         $product->update();//Выполняем сохранение измененного статуса.
         Session::flash('flash_message', 'Product deleted!');
     }
+    
+    public function restoreArchiveProduct($id){
+        $product = Product::find($id);//Находим обьект товара по id  с базы данных.
+        if($product->status_product == 'archive'){
+            $product['status_product'] = 'active';//Меняем статус на удаленный (delete).
+        }else{
+           return redirect()->back();
+        }
+        $product->update();//Выполняем сохранение измененного статуса.
+        return redirect()->back();
+        
+    }
+    
 
     public function destroyCheck(Request $request){
         foreach($request['checkId'] as $value){
@@ -574,10 +586,9 @@ class ProductsController extends Controller{
                 'category_id'         => $request->input('product')['category_name'],
                 'value'               => (count($request['product']['price']) == 1) ? json_encode(array( $request['product']['price'][0] )) : json_encode($request['product']['price']),
             ));
-
-
+            
             if($result){
-                return view('product.singleProductTr')->with([ 'item' => $product ])->with([ 'x' => $request->x ]);
+                return view('product.singleProductTr')->with([ 'item' => $product ])->with('type', $product->status_product)->with([ 'x' => $request->x ]);
             }
             return '';
         }

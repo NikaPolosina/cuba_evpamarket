@@ -9,7 +9,7 @@ class StatusOwner extends Model{
     protected $table = 'status_owner';
     protected $fillable = [ 'title', 'status_simple_id'];
 
-    public function getStatusSiple(){
+    public function getStatusSimple(){
         return $this->hasOne('App\StatusSimple', 'id', 'status_simple_id');
     }
 

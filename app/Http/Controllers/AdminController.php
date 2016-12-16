@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\StatusOwner;
+use App\StatusSimple;
 use Carbon\Carbon;
 use App\Category;
 use App\City;
@@ -439,8 +441,31 @@ class AdminController extends Controller{
         return redirect()->back();//Возвращаемя обратно на страницу от куда пришли.
     }
 
-  
+    //Метод который выводит список статусов для продавцам и покупателям.
+      public function listOrderStatus(){
+          $this->_breadcrumbs->addCrumb('Домой', '/admin/');
+          $this->_breadcrumbs->addCrumb('Список статусов', '/admin/status-order-list');
+          $statusOwner = StatusOwner::all();
+          $statusSimple = StatusSimple::all();
+          return view('admin.order.list')->with('statusOwner', $statusOwner)->with('statusSimple', $statusSimple)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
+      }
 
+    //Метод который сохраняет изменения с названием статуса продавца и соответствие статуса покупателя.
+    public function updateOrderStatus(Request $request){
+        $statusOwner = StatusOwner::find($request['id_owner']);
+        $statusOwner->title = $request['status_title_owner'];
+        $statusOwner->status_simple_id = $request['id_simple'];
+        $statusOwner->update();
+        return redirect()->back();//Возвращаемя обратно на страницу от куда пришли.
+    }
+
+    public function listOrderStatusSimple(){
+        $this->_breadcrumbs->addCrumb('Домой', '/admin/');
+        $this->_breadcrumbs->addCrumb('Список статусов', '/admin/status-order-list');
+        $statusSimple = StatusSimple::all();
+        return view('admin.order.listSimple')->with('statusSimple', $statusSimple)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
+    }
+    
     public function chData($id){
         $monthStart = Carbon::now()->startOfMonth();
         $monthEnd = Carbon::now()->endOfMonth();

@@ -128,6 +128,26 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item  ">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-briefcase"></i>
+                    <span class="title">Заказы</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="/admin/status-order-list" class="nav-link ">
+                            <span class="title">Статусы заказов для продавца</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item  ">
+                        <a href="/admin/status-order-list-simple" class="nav-link ">
+                            <span class="title">Статусы заказов для покупателя</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
         </ul>
         <!-- END SIDEBAR MENU -->

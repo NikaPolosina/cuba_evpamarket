@@ -55,13 +55,14 @@ if(isset($company)){
         <div style="float: right">
             @foreach($status as $singleSt)
 
-                <div class=" @if($type == $singleSt->status_key) active_type @endif" style="display: inline-block; border: solid 1px grey; padding: 4px 15px 4px 15px;">
+                <div class=" @if($type == $singleSt->status_key) active_type @endif {{$singleSt->status_key}}_class" style="display: inline-block; border: solid 1px grey; padding: 4px 15px 4px 15px;">
                     <a href="/product-editor/{{$company->id}}/0/{{$singleSt->status_key}}">
                        {{$singleSt->status_name}}
-                        <span>
-                            {{count($company->getProducts()->where('status_product', $singleSt->status_key)->get())}}
-                        </span>
-
+                        @if(count($company->getProducts()->where('status_product', $singleSt->status_key)->get()) !== 0)
+                            <span style="margin-left: 7px;color: #ff3939;">
+                                {{count($company->getProducts()->where('status_product', $singleSt->status_key)->get())}}
+                            </span>
+                        @endif
                     </a>
                 </div>
 

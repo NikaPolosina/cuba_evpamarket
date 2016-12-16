@@ -75,6 +75,9 @@ Route::post('/products/ajax-update', ['as'=>'product-ajax-update', 'uses'=>'Prod
 Route::post('/attach-category-to-company', ['as'=>'attach-category-to-company', 'uses'=>'ProductsController@attachCategoryToCompany']);
 //При нажатии пользователем кнопки купить. Добавление товара в корзину. Для того что бы появилось модальное окно.
 Route::post('/products/ajax-single-product',['as'=>'ajax_single_product', 'uses'=>'ProductsController@ajaxSingleProduct']);
+//Роут который принимает id товаа и поменять товару статус с архивного на активный, тоесть восстановить товар продавцом.
+Route::get('/restore-product/{id}',['as'=>'restore-product', 'uses'=>'ProductsController@restoreArchiveProduct']);
+
 
 Route::get('/product/ajax-to-cart-add-param/{id}',['as'=>'ajax_single_product_add_param_chose', 'uses'=>'ProductsController@ajaxSingleProductAdd']);
 Route::get('/product-form/{companyId}/{categoryId?}/{productId?}', ['as'=>'product_form', 'uses'=>'ProductsController@productForm']);
@@ -180,6 +183,12 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::get('/product-list', ['as' => 'admin', 'uses'=>'AdminController@listProduct']);
     //Изменение статуса продукта. Принимает id-продукта и key-статуса.
     Route::get('/status-product-change/{id_product}/{status_key}', ['as' => 'admin', 'uses'=>'AdminController@changeStatusProduct']);
+    //Роут для вывода списка статусов по заказам (для покупателя и продавца).
+    Route::get('/status-order-list', ['as' => 'admin', 'uses'=>'AdminController@listOrderStatus']);
+    //роут на обновление (редактирование) статуса.
+    Route::post('/status-order-update', ['as' => 'admin', 'uses'=>'AdminController@updateOrderStatus']);
+    
+    Route::get('/status-order-list-simple', ['as' => 'admin', 'uses'=>'AdminController@listOrderStatusSimple']);
 });
 
 /*-------------------------------------------Home--------------------------------------------*/

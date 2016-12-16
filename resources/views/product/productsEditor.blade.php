@@ -232,6 +232,28 @@
                                 },
                                 success : function(msg){
                                     tr.remove();
+                                    var newVal = $('div.active_type').find('span').html() - 1;
+                                    $('div.active_type').find('span').html(newVal);
+
+                                    
+                                    
+                                   /* if($('div.archive_class').find('a').find('span').length){
+                                        console.log(1);
+                                        
+                                        var sp = $('div.archive_class').find('a').find('span').html() + 1;
+                                        console.log(sp);
+
+                                        $('div.archive_class').find('a').find('span').html(sp)
+                                        
+                                    }else{
+                                        console.log(2);
+                                        
+                                        
+                                        $('div.archive_class').find('a').append('<span style="margin-left: 7px;color: #ff3939;">1</span>')
+                                    }*/
+
+                                    
+
 
                                 },
                                 error   : function(response){
