@@ -459,13 +459,34 @@ class AdminController extends Controller{
         return redirect()->back();//Возвращаемя обратно на страницу от куда пришли.
     }
 
+    //Выводит список список статусов для простого пользователя.
     public function listOrderStatusSimple(){
         $this->_breadcrumbs->addCrumb('Домой', '/admin/');
         $this->_breadcrumbs->addCrumb('Список статусов', '/admin/status-order-list');
         $statusSimple = StatusSimple::all();
         return view('admin.order.listSimple')->with('statusSimple', $statusSimple)->with('breadcrumbs', $this->_breadcrumbs)->with('way', $this->_way);
     }
-    
+
+    //Метод который создает новый статус по заказу видный для покупателя.
+    public function createOrderStatusSimple(Request $request){
+        $statusSimpleNew = new StatusSimple([
+                'title' => $request['title_simple']
+            ]);//Создаем новый обьект StatusSimple и записывам его имя которое пришло с реквнстом.
+        $statusSimpleNew->save(); //Сохраняем обьект в базу данных (таблица status_simple).
+        return redirect()->back();//Возвращаемя обратно на страницу от куда пришли.
+
+    }
+
+    //Метод который обновляет имя статуса заказа который виден для покупателя.
+    public function updateOrderStatusSimple(Request $request){
+        $statusSimple = StatusSimple::find($request['id_simple']);
+        $statusSimple->title = $request['title_simple'];
+        $statusSimple->update();//Обновляе данные в базе данных (таблица status_simple).
+        return redirect()->back();//Возвращаемя обратно на страницу от куда пришли.
+    }
+
+
+
     public function chData($id){
         $monthStart = Carbon::now()->startOfMonth();
         $monthEnd = Carbon::now()->endOfMonth();

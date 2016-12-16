@@ -120,14 +120,10 @@
 
                                 <div class="col-sm-6">
                                     <select class="form-control select_status">
-                                        <option value="1">Уточнение</option>
-                                        <option value="2">Обработка</option>
-                                        <option value="3">Ждет оплаты</option>
-                                        <option value="4">Формирован</option>
-                                        <option value="5">Отправлен</option>
-                                       {{-- @foreach($statusSimple as $simple)
+
+                                        @foreach($statusSimple as $simple)
                                             <option value="{{$simple->id}}">{{$simple->title}}</option>
-                                        @endforeach--}}
+                                        @endforeach
 
                                     </select>
                                     {!! $errors->first('status_key', '<p class="help-block">:message</p>') !!}

@@ -10,7 +10,7 @@
                         <i class="icon-settings font-dark"></i>
                         <span class="caption-subject bold uppercase"> Список статусов по заказам</span>
                         <a href="javascript:;" style="margin-left: 30px;">
-                            <button type="button" class="add_new_status_product">Добавить</button> </a>
+                            <button type="button" class="add_new_status_order_simple">Добавить</button> </a>
                     </div>
 
                 </div>
@@ -45,9 +45,9 @@
                                 </td>
                                 <td> {{ $x }} </td>
 
-                                <td class="id_owner"> {{$item->id}}</td>
+                                <td class="id_simple"> {{$item->id}}</td>
 
-                                <td class="status_title_owner"><a href="">{{$item->title}}</a></td>
+                                <td class="title_simple"><a href="">{{$item->title}}</a></td>
 
 
                                 <td>
@@ -60,12 +60,6 @@
                                                 <a  class="addChange" href="javascript:;">
                                                     <i class="icon-docs"></i> Редактировать </a>
                                             </li>
-                                            {{--Также предусматрена опция удаления статуса администратором, если откоментировать
-                                            ниже код, то моно будет удалять статус, но будьте внимательны лучше не удалять статус который уже задействованый какимто продуктом ибо возникнет ошибка--}}
-                                            {{-- <li>
-                                                 <a class="confirm" href="/admin/status-product-delete/{{$item->id}}">
-                                                     <i class="icon-tag"></i> Удалить </a>
-                                             </li>--}}
 
                                         </ul>
                                     </div>
@@ -80,13 +74,84 @@
         </div>
     </div>
 
+    {{---------------------------------------------Модальное окно для создания и редактирования статусов по продуктам------------------------------------------------}}
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div id="modal_status_product" class="mod modal fade bs-example-modal-xs" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                <div class="modal-dialog modal-xs">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Форма редактирования статуса по товарам</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{ Form::open(array('method' => 'post', 'url' => '/admin/status-simple-create' , 'class' => 'form-group url_modal' )) }}
+                            {!! csrf_field() !!}
+
+                            <div class="row">
+                                {!! Form::label('title_simple', 'Статус для продавца: ', ['class' => 'col-sm-4 control-label']) !!}
+                                <div class="col-sm-6">
+                                    {!! Form::text('title_simple', NULL, ['class' => 'form-group advanced_search_name form-control title_simple', 'required' => 'required']) !!}
+                                    {!! $errors->first('title_simple', '<p class="help-block">:message</p>') !!}
+                                </div>
+                            </div>
+                            {!! Form::hidden('id_simple', NULL, ['class' => 'form-group advanced_search_surname form-control id_simple']) !!}
+
+
+                        </div>
+                        <div class="modal-footer">
+                            {!! Form::submit('Сохранить', ['class' => 'btn btn-primary save_change_status_product']) !!}
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Отменить</button>
+                        </div>
+                        {{ Form::close() }}
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
 
 
     <script src="/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
 
 
-
     <script>
+
+
+
+        $(document).ready(function(){
+            //При нажатии на кнопку - Редактировать.
+            $('a.addChange').on('click', function () {
+
+                $('form.url_modal').attr('action','/admin/status-simple-update');
+                //Находим необходимую информацию.
+                var id_simple = $(this).parents('tr.gradeX').find('td.id_simple').text();
+                var title_simple = $(this).parents('tr.gradeX').find('td.title_simple').text();
+                var x;
+                //Заполняем поля модального окна необходимой информацией.
+                $('div#modal_status_product').find('input.id_simple').val(id_simple);
+                $('div#modal_status_product').find('input.title_simple').val(title_simple);
+                $('#modal_status_product').modal();//Показ модалки.
+
+
+
+            });
+
+            $('button.add_new_status_order_simple').on('click', function () {
+                $('#modal_status_product').modal();
+            });
+
+
+
+
+
+        });
+
+
+
+
         document.addEventListener("DOMContentLoaded", function() {
             $('.confirm').on('click', function () {
                 if(!confirm(('Вы уверены ?'))){

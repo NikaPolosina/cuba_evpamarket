@@ -187,8 +187,14 @@ Route::group([ 'prefix' => 'admin', 'middleware' => [ 'role:admin'] ], function 
     Route::get('/status-order-list', ['as' => 'admin', 'uses'=>'AdminController@listOrderStatus']);
     //роут на обновление (редактирование) статуса.
     Route::post('/status-order-update', ['as' => 'admin', 'uses'=>'AdminController@updateOrderStatus']);
-    
+    //РОут для просмотра списка статусов по заказу видных для покупателя.
     Route::get('/status-order-list-simple', ['as' => 'admin', 'uses'=>'AdminController@listOrderStatusSimple']);
+    //Роут на создание нового статуса по заказу который будет видно покупателю.
+    Route::post('/status-simple-create', ['as' => 'admin', 'uses'=>'AdminController@createOrderStatusSimple']);
+    //Роут на обновление (имени статуса) статуса по заказам которые видны покупателю.
+    Route::post('/status-simple-update', ['as' => 'admin', 'uses'=>'AdminController@updateOrderStatusSimple']);
+    
+ 
 });
 
 /*-------------------------------------------Home--------------------------------------------*/
