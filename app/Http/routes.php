@@ -92,14 +92,17 @@ Route::post('/category/remove-categoty', ['as' => 'remove_categories', 'uses'=>'
 //При создании продукта, выбираются дополнительные параметры которые нужно указать продавцом.
 Route::any('/get-add-param/{id}', ['as' => 'get-add-param', 'uses'=>'CategoryController@getAddParamFromCategory']);
 /*-------------------------------------------File--Uploader--------------------------------------------*/
+//Загрузка файла.
 Route::any('/file-uploader', ['as'=>'file_uploader', 'uses'=>'FileController@index']);
 Route::any('/avatar-uploader', 'UserController@createAvatar');
 
 /*-------------------------------------------Cart----------------------------------------------*/
-//Переход в корзину.
+//Переход в корзину. Отображаем товары дбавленные в корзину.
 Route::any('/cart', ['as'=>'cart', 'uses'=>'CartController@index']);
+//Удаление товара с корзины.
 Route::any('/cart/destroy-product', 'CartController@destroy');
 Route::post('/products/cart', 'CartController@cart');
+//Добавление товара в корзину.(хранится в куках, так как в корзину могут добавлять и не зарегестрированные пользователи.).
 Route::post('/products/ajax_cart', ['as'=>'ajax_add_to_cart', 'uses'=>'CartController@ajaxCart']);
 Route::post('/products/cart-update-cnt', 'CartController@cartAddCnt');
 
@@ -273,6 +276,7 @@ Route::post('/add-ajax-change-feed', ['as'=>'add-ajax-change-feed', 'uses'=>'Fee
 Route::post('/add-ajax-addition-feed', ['as'=>'add-ajax-addition-feed', 'uses'=>'FeedbackController@additionFeed']);
 
 /*-----------------------------------------------------------chat------------------------------------------------------------*/
+//Роут отрабатывает при нажатии на кнопку - Связатся с продавцом. (Достает разговор между двумя пользователями.)
 Route::get('/get-single-conversation/{id_from}/{id_to}', ['as'=>'get-single-conversation', 'uses'=>'HomeController@getUserPageWithConversationUsers']);
 
 Route::group(['middleware' => 'cors'], function(){
